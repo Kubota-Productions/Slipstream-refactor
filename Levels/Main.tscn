@@ -30,7 +30,7 @@ current = true
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=290965200]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=965560353]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.350792, 10.975035, -6.212757)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0072402954, -0.7012353, -0.3386116)
 mesh = SubResource("BoxMesh_g0bp2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=201248708]
