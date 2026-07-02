@@ -2,8 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Characters/Player.tscn" id="1_a22an"]
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Main.gd" id="1_vbwdf"]
+[ext_resource type="Texture2D" uid="uid://ccjmfs2fpx3xi" path="res://Assets/checkerboard_pattern.png" id="3_h1khe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ep5k"]
+albedo_texture = ExtResource("3_h1khe")
+uv1_scale = Vector3(8.5, 8.5, 8.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_g0bp2"]
+material = SubResource("StandardMaterial3D_4ep5k")
 size = Vector3(95.31154, 1, 93.9466)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0bp2"]
