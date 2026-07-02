@@ -10,8 +10,8 @@
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_1ju47"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_a22an"]
-graph_offset = Vector2(-330.63776, 15.59169)
-nodes/output/position = Vector2(360, 160)
+graph_offset = Vector2(-88.46356, -82.74234)
+nodes/output/position = Vector2(400, 160)
 nodes/movement_anim_speed/node = SubResource("AnimationNodeTimeScale_1ju47")
 nodes/movement_anim_speed/position = Vector2(100, 140)
 nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_oo13o")
@@ -30,8 +30,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
 shape = SubResource("CapsuleShape3D_a22an")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1401353744]
+root_node = NodePath("../CharacterModel/character_mixamo")
 tree_root = SubResource("AnimationNodeBlendTree_a22an")
-anim_player = NodePath("../Player/CharacterModel/character_mixamo/AnimationPlayer")
+anim_player = NodePath("../CharacterModel/character_mixamo/AnimationPlayer")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
