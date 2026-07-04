@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dk4c8y3lvdj5m"
-path.s3tc="res://.godot/imported/traintracksingle_texture grand.png-17d1738733188824194ec77f572a7e03.s3tc.ctex"
+path.s3tc="res://.godot/imported/traintracksingle_texture grand.png-095aa2f56a8f0a39ec0f08e685b3cc37.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Assets/traintracksingle_texture grand.png"
-dest_files=["res://.godot/imported/traintracksingle_texture grand.png-17d1738733188824194ec77f572a7e03.s3tc.ctex"]
+source_file="res://AnimatedAssets/traintracksingle_texture grand.png"
+dest_files=["res://.godot/imported/traintracksingle_texture grand.png-095aa2f56a8f0a39ec0f08e685b3cc37.s3tc.ctex"]
 
 [params]
 

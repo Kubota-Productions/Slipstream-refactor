@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://elxth2roi3jg"
-path="res://.godot/imported/character_mixamo.fbx-a9d50e09bb35ea09a429379ff2952217.scn"
+uid="uid://d0abl7hgn6mmk"
+path="res://.godot/imported/ENV1.fbx-876b01065d29b8ee3c130330183c85a7.scn"
 
 [deps]
 
-source_file="res://Assets/character_mixamo.fbx"
-dest_files=["res://.godot/imported/character_mixamo.fbx-a9d50e09bb35ea09a429379ff2952217.scn"]
+source_file="res://EnvironmentalAssets/ENV1.fbx"
+dest_files=["res://.godot/imported/ENV1.fbx-876b01065d29b8ee3c130330183c85a7.scn"]
 
 [params]
 

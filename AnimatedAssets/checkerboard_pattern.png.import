@@ -2,24 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxi5lhxa638w1"
-path.s3tc="res://.godot/imported/train2top_MasterTexture.png-80daec046ea4634ee42e01948ce0bb7e.s3tc.ctex"
+uid="uid://ccjmfs2fpx3xi"
+path="res://.godot/imported/checkerboard_pattern.png-c94c1f5ea85faf5973052ff39b4692ef.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
-}
-generator_parameters={
-"md5": "24ce306d8acd8d0baca2fb19c794192f"
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/train2top_MasterTexture.png"
-dest_files=["res://.godot/imported/train2top_MasterTexture.png-80daec046ea4634ee42e01948ce0bb7e.s3tc.ctex"]
+source_file="res://AnimatedAssets/checkerboard_pattern.png"
+dest_files=["res://.godot/imported/checkerboard_pattern.png-c94c1f5ea85faf5973052ff39b4692ef.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
