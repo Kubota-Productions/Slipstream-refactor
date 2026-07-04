@@ -46,6 +46,7 @@ script = ExtResource("3_1ju47")
 [node name="CamPitch" type="Node3D" parent="CameraRoot/CamYaw" unique_id=165200873]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRoot/CamYaw/CamPitch" unique_id=1054947790]
+spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRoot/CamYaw/CamPitch/SpringArm3D" unique_id=1985421369]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
