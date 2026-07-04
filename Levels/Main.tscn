@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://cmpw2nts8hbua"]
+[gd_scene format=3 uid="uid://fd3ys2kflepd"]
 
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Characters/Player.tscn" id="1_a22an"]
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Main.gd" id="1_vbwdf"]
 [ext_resource type="Texture2D" uid="uid://ccjmfs2fpx3xi" path="res://Assets/checkerboard_pattern.png" id="3_h1khe"]
 [ext_resource type="PackedScene" uid="uid://1tre4i1xukka" path="res://Characters/Gravrushcustom1.fbx" id="4_1q67n"]
+[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="5_bl2xt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ep5k"]
 albedo_texture = ExtResource("3_h1khe")
@@ -15,6 +16,41 @@ size = Vector3(95.31154, 1, 93.9466)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0bp2"]
 size = Vector3(95.33087, 0.99560547, 94.0313)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
+render_priority = 0
+shader = ExtResource("5_bl2xt")
+shader_parameter/outlineColor = Color(0, 0, 0, 0.78)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 0.666000031635
+shader_parameter/normal_smoothing = 0.3850000182875
+shader_parameter/max_thickness = 1.590000075525
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 75.0
+shader_parameter/min_distance = 2.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yy7ei"]
+render_priority = 0
+shader = ExtResource("5_bl2xt")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 1.5
+shader_parameter/normal_smoothing = 1.0
+shader_parameter/max_thickness = 2.594000123215
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 75.0
+shader_parameter/min_distance = 2.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yf5fn"]
+material = SubResource("ShaderMaterial_yy7ei")
+flip_faces = true
+orientation = 2
 
 [node name="Main" type="Node3D" unique_id=482443075]
 script = ExtResource("1_vbwdf")
@@ -43,3 +79,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.940682, -0.03987038, -0.023
 
 [node name="Gravrushcustom2" parent="." unique_id=196543669 instance=ExtResource("4_1q67n")]
 transform = Transform3D(-1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, -1, 2.8523974, -0.03987038, -0.20278256)
+
+[node name="Shader" type="Node3D" parent="." unique_id=1809827013]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Shader" unique_id=1744256902]
+material_override = SubResource("ShaderMaterial_bl2xt")
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_yf5fn")
