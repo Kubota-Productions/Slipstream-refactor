@@ -30,7 +30,7 @@ extends CharacterBody3D
 		"movement_speed": 0.0,
 		"acceleration": 0.0,
 		"camera_fov": 75.0,
-		"animation_speed": 1.0,
+		"animation_speed": 3.5,
 	},
 	"Jog_Jump": {
 		"id": 4,
@@ -101,14 +101,27 @@ func _physics_process(delta):
 			#set run_timer to zero
 			run_timer = 0.0
 		else:
-			pass
-		
+			# no movement, check for idle jump state
+			if jump_pressed:
+				print("idle jump")
+				is_idle_jumping = true
+				is_jog_jumping = false
+				is_run_jumping = false
+				is_jumping = true
+				
 		if is_jumping:
 			if is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD:
 				
 				#iterate the timer
 				jump_timer += delta
-				pass
+			if is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD:
+				
+				#iterate the timer
+				jump_timer += delta
+			if is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD:
+				
+				#iterate the timer
+				jump_timer += delta
 			else:
 				#set jump to false
 				is_jumping = false
@@ -136,6 +149,8 @@ func _physics_process(delta):
 				run_timer = 0.0
 				
 			if is_running and run_pressed and jump_pressed and threshold:
+				print("run - case 1")
+				
 				#case 1: player running, run pressed, jump just pressed, threshold met
 				#default case to start run_jump anim
 				
@@ -144,72 +159,187 @@ func _physics_process(delta):
 				is_run_jumping = true
 				is_jumping = true
 			elif is_running and run_pressed and jump_pressed and not threshold:
-				#not handling jumps now
-				pass
-			elif is_running and run_pressed and not jump_pressed and threshold:
+				print("run - case 02")
 				
+				#case 2: player running, run pressed, jump just pressed, threshold not met
+				#bug state: player can't be running if threshold isn't met
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
+			elif is_running and run_pressed and not jump_pressed and threshold:
+				#print("run - case 3")
 				#case 3: player running, run pressed, jump not just pressed, threshold met
-				#default state for run loop - pass
+				#default state for run loop, nothing to do here - pass
 				pass
 			elif is_running and run_pressed and not jump_pressed and not threshold:
-				
-				#case 4: player running, run presed, jump not just pressed, threshold met
+				print("run - case 04")
+				#case 4: player running, run pressed, jump not just pressed, threshold not met
 				#default state to cancel run loop - running but threshold not met
+				
+				#revert speed back to jog
 				is_running = false
+				
+				#set the run_timer back to zero because the player is running
 				run_timer = 0.0
 				pass
 			elif is_running and not run_pressed and jump_pressed and threshold:
-				#not handling jumps now
-				pass
-			elif is_running and not run_pressed and jump_pressed and not threshold:
-				#not handling jumps now
-				pass
-			elif is_running and not run_pressed and not jump_pressed and threshold:
+				print("run - case 05")
+				#case 5: player running, run not pressed, jump just pressed and threshold met
+				#could be the state right before the player releases the run command
+				#we want this to be a run_jump because the player is technically still running
+				#and the threshold is also met
+				#but we need to set the speed to jog unfortunately
 				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player run_jumps
+				is_idle_jumping = false
+				is_jog_jumping = false
+				is_run_jumping = true
+				is_jumping = true
+			elif is_running and not run_pressed and jump_pressed and not threshold:
+				print("run - case 06")
+				#case 6: player running, run not pressed, jump just pressed and threshold not met
+				#this may be an empty state but we'll make it into a run jump as the previous state
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player run_jumps
+				is_idle_jumping = false
+				is_jog_jumping = false
+				is_run_jumping = true
+				is_jumping = true
+			elif is_running and not run_pressed and not jump_pressed and threshold:
+				print("run - case 07")
 				#case 7: player running, run not pressed, jump not just pressed, threshold met
 				#cancel run state -> run not pressed
-				is_running = false
-				run_timer = 0.0
-				pass
-			elif is_running and not run_pressed and not jump_pressed and not threshold:
 				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+			elif is_running and not run_pressed and not jump_pressed and not threshold:
+				print("run - case 08")
 				#case 8: player running, run not pressed, jump not just pressed, threshold not met
 				#cancel run state -> run not pressed and threshold not met
+				
+				#revert speed back to jog
 				is_running = false
+				
+				#set the run_timer back to zero because the player is running
 				run_timer = 0.0
-				pass
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
 			elif not is_running and run_pressed and jump_pressed and threshold:
-				#not handling jumps now
-				pass
+				print("run - case 09")
+				#case 9: player not running, run pressed, jum just pressed and threshold met
+				#this may be an empty state but we'll make it into a jog_jump since there's movement
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
 			elif not is_running and run_pressed and jump_pressed and not threshold:
-				#not handling jumps now
-				pass
+				print("run - case 10")
+				#case 10: player not running, run pressed, jump just pressed and threshold not met
+				#this may be an empty state but we'll make it into a jog_jump since there's movement
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
 			elif not is_running and run_pressed and not jump_pressed and threshold:
+				print("run - case 11")
 				#case 11: player not running, run pressed, jump not just pressed, threshold met
 				#default state to start run cycle
 				
 				#start run cycle
 				is_running = true
-				pass
 			elif not is_running and run_pressed and not jump_pressed and not threshold:
+				print("run - case 12")
 				#case 12: player not running, run pressed, jump not just pressed, threshold not met
 				#default state to load run cycle - pass
 				pass
 			elif not is_running and not run_pressed and jump_pressed and threshold:
-				#not handling jumps now
-				pass
+				print("run - case 13")
+				#case 13: player not running, run not pressed, jump just pressed, threshold met
+				#this may be an empty state but we'll make it into a jog_jump since there's movement
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
 			elif not is_running and not run_pressed and jump_pressed and not threshold:
-				#not handling jumps now
-				pass
+				print("run - case 14")
+				#case 14: player not running, run not pressed, jump just pressed, threshold not met
+				#default state for jog jump
+				
+				#revert speed back to jog
+				is_running = false
+				
+				#set the run_timer back to zero because the player is running
+				run_timer = 0.0
+				
+				#now set the jump states so the player jog_jumps
+				is_idle_jumping = false
+				is_jog_jumping = true
+				is_run_jumping = false
+				is_jumping = true
 			elif not is_running and not run_pressed and not jump_pressed and threshold:
+				print("run - case 15")
 				#case 15: player not running, run not pressed, jump not just pressed, threshold met
 				#bug state: need to zero timer 
 				
-				#zero timer
+				#revert speed back to jog
 				is_running = false
+				
+				#set the run_timer back to zero because the player is running
 				run_timer = 0.0
-				pass
 			elif not is_running and not run_pressed and not jump_pressed and not threshold:
+				print("run - case 16")
 				#case 16: player not running, run not pressed, jump not just pressed, not over threshold
 				#default state for jog cycle
 				
@@ -223,7 +353,7 @@ func _physics_process(delta):
 	if not movement_ongoing:
 		if is_jumping:
 			#sanity check -- set jump_timer back to zero if we're done jumping
-			is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < IDLE_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
+			is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
 			
 			#print("is_run_jumping = ", is_run_jumping, " // is_jog_jumping = ", is_jog_jumping, " // is_idle_jumping = ", is_idle_jumping)
 			#print("is_jumping = ", is_jumping)
@@ -239,11 +369,14 @@ func _physics_process(delta):
 			#otherwise continue
 			else:
 				pass
+	else:
+		#insert logic for idle jump state (such as air movement)
+		pass
 	#non-idle states
 	if movement_ongoing:
 		if is_jumping:
 			#sanity check -- set jump_timer back to zero if we're done jumping
-			is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < IDLE_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
+			is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
 			
 			#check if we're still jumping
 			if !is_jumping:
@@ -259,7 +392,7 @@ func _physics_process(delta):
 				jump_timer += delta
 				
 			if is_running and run_pressed and jump_pressed and threshold:
-				print("jump - case 1")
+				print("jump - case 01")
 				#case 1 TTTT
 				
 				#case 1: player is running, run is pressed, jump just pressed, threshold met
@@ -267,11 +400,11 @@ func _physics_process(delta):
 				# -> don't do anything unless you want a double jump
 				pass
 			elif is_running and run_pressed and jump_pressed and not threshold:
-				print("jump - case 2")
+				print("jump - case 02")
 				#case 2 TTTF
 				pass
 			elif is_running and run_pressed and not jump_pressed and threshold:
-				print("jump - case 3")
+				print("jump - case 03")
 				#case 3 TTFT
 				
 				
@@ -279,20 +412,20 @@ func _physics_process(delta):
 				# -> this is the main case for the run jump animation - pass
 				pass
 			elif is_running and run_pressed and not jump_pressed and not threshold:
-				print("jump - case 4")
+				print("jump - case 04")
 				#case 4 TTFF
 				pass
 			elif is_running and not run_pressed and jump_pressed and threshold:
-				print("jump - case 5")
+				print("jump - case 05")
 				#case 5 TFTT
 				pass
 			elif is_running and not run_pressed and jump_pressed and not threshold:
-				print("jump - case 6")
+				print("jump - case 06")
 				#case 6 TFTF
 				pass
 			elif is_running and not run_pressed and not jump_pressed and threshold:
 				
-				print("jump - case 7")
+				print("jump - case 07")
 				
 				# -- CASE 7: player is running, run not pressed, jump not just pressed, over threshold T/F/F/T
 				#bug state: can't run if run action not pressed 
@@ -348,7 +481,7 @@ func _physics_process(delta):
 				#              but because they either let go of the run button or the threshold was
 				#              no longer valid now they need to finish their run_jump animation at a slower speed
 				if previous_jump_case == 7:
-					if is_run_jumping:
+					if is_run_jumping and not is_jog_jumping:
 						#don't do anything if run_jump is still running
 						pass
 					else:
@@ -435,11 +568,20 @@ func _physics_process(delta):
 	elif movement_ongoing and is_running and not is_jumping:
 		_set_movement_state(movement_states["Run"])
 		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run")
-	elif movement_ongoing and is_run_jumping:
+	elif movement_ongoing and is_run_jumping and not is_jog_jumping and not is_idle_jumping:
 		_set_movement_state(movement_states["Run_Jump"])
 		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run_jump")
-		
-		
+	elif movement_ongoing and is_jog_jumping and not is_run_jumping and not is_idle_jumping:
+		_set_movement_state(movement_states["Jog_Jump"])
+		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run_jump")
+	#idle jump no movement
+	elif !movement_ongoing and is_idle_jumping and not is_jog_jumping and not is_run_jumping:
+		_set_movement_state(movement_states["Idle_Jump"])
+		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jump")
+	#idle jump movement
+	elif movement_ongoing and is_idle_jumping and not is_jog_jumping and not is_run_jumping:
+		_set_movement_state(movement_states["Jog_Jump"])
+		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jump")
 	
 	# Movement loop
 	if is_movement_ongoing():
@@ -458,6 +600,12 @@ func _physics_process(delta):
 			target_rotation,
 			rotation_speed * delta
 		)
+		
+		#idle jump fix - stops the player from moving unless they're in a certain time interval
+		#                so the player doesn't slide
+		if is_idle_jumping and (jump_timer > 1.25 or jump_timer < 0.45):
+			velocity.x = 0
+			velocity.z = 0
 	else:
 		velocity.x = 0
 		velocity.z = 0
