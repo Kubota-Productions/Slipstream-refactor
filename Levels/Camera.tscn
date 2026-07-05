@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://mmljxefmu8g3"]
+
+[node name="Camera_origin" type="SpringArm3D" unique_id=1097833472]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+spring_length = 2.5
+
+[node name="Camera" type="Camera3D" parent="." unique_id=163328382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.250376)
+current = true

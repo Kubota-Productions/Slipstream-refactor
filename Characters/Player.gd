@@ -146,6 +146,7 @@ func _physics_process(delta):
 
 	
 
+
 func _set_movement_state(state: Dictionary):
 	speed = state["movement_speed"]
 	acceleration = state["acceleration"]
