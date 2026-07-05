@@ -118,10 +118,6 @@ func _physics_process(delta):
 				
 				#iterate the timer
 				jump_timer += delta
-			if is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD:
-				
-				#iterate the timer
-				jump_timer += delta
 			else:
 				#set jump to false
 				is_jumping = false
