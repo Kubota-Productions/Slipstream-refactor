@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dkqdcmtmpay18"
-path="res://.godot/imported/enemy.glb-92ca11a746aa553dca03d5651bf9a0b0.scn"
+uid="uid://bwipvrhiymtod"
+path="res://.godot/imported/traintracksingle.glb-11c23c247c7ab39e5ef521881bd661d0.scn"
 
 [deps]
 
-source_file="res://AnimatedAssets/enemy.glb"
-dest_files=["res://.godot/imported/enemy.glb-92ca11a746aa553dca03d5651bf9a0b0.scn"]
+source_file="res://Assets/traintracksingle.glb"
+dest_files=["res://.godot/imported/traintracksingle.glb-11c23c247c7ab39e5ef521881bd661d0.scn"]
 
 [params]
 

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Materials/cherub_cherubbase_Normal.png" id="4_slk48"]
 [ext_resource type="PackedScene" uid="uid://dkqdcmtmpay18" path="res://Assets/enemy.glb" id="5_klm5g"]
 
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yglu3"]
 radius = 0.20654297
 height = 1.9392438

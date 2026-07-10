@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://07xgnhi3kg4e"
-path="res://.godot/imported/trainbottom.glb-9f5908cec2bfc7ba69ed771757004bfa.scn"
+uid="uid://raklh7j4x3ic"
+path="res://.godot/imported/train.glb-cc73c67f39db4ae027a2ec021be52b9e.scn"
 
 [deps]
 
-source_file="res://AnimatedAssets/trainbottom.glb"
-dest_files=["res://.godot/imported/trainbottom.glb-9f5908cec2bfc7ba69ed771757004bfa.scn"]
+source_file="res://Assets/train.glb"
+dest_files=["res://.godot/imported/train.glb-cc73c67f39db4ae027a2ec021be52b9e.scn"]
 
 [params]
 

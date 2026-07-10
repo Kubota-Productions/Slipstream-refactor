@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://ckudr8chj1kgo"]
+[gd_scene format=3 uid="uid://dhg3j0fuatu6n"]
 
-[ext_resource type="Script" uid="uid://drlldp7l6q0o4" path="res://player.gd" id="1_xhfnw"]
-[ext_resource type="Script" uid="uid://pq1470qbmebu" path="res://Scripts/Camera_Controller.gd" id="2_kpjcp"]
+[ext_resource type="Script" path="res://player.gd" id="1_xhfnw"]
+[ext_resource type="Script" uid="uid://pq1470qbmebu" path="res://Player/Camera_Controller.gd" id="2_kpjcp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fddh4"]
 

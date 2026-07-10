@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b500nje7xx76u"
-path.s3tc="res://.godot/imported/train_MasterTexture.png-c9f195640a6acbe0b0aad454f0c5e065.s3tc.ctex"
+path.s3tc="res://.godot/imported/train_MasterTexture.png-d7c01ece90deb8eb4019c5b38ecc8ae8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://AnimatedAssets/train_MasterTexture.png"
-dest_files=["res://.godot/imported/train_MasterTexture.png-c9f195640a6acbe0b0aad454f0c5e065.s3tc.ctex"]
+source_file="res://Assets/train_MasterTexture.png"
+dest_files=["res://.godot/imported/train_MasterTexture.png-d7c01ece90deb8eb4019c5b38ecc8ae8.s3tc.ctex"]
 
 [params]
 

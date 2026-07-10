@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d0abl7hgn6mmk"
-path="res://.godot/imported/ENV1.fbx-876b01065d29b8ee3c130330183c85a7.scn"
+path="res://.godot/imported/ENV1.fbx-3e3967d54c61192ce97669c4b1a2ba33.scn"
 
 [deps]
 
-source_file="res://EnvironmentalAssets/ENV1.fbx"
-dest_files=["res://.godot/imported/ENV1.fbx-876b01065d29b8ee3c130330183c85a7.scn"]
+source_file="res://Assets/EnvironmentBases/ENV1.fbx"
+dest_files=["res://.godot/imported/ENV1.fbx-3e3967d54c61192ce97669c4b1a2ba33.scn"]
 
 [params]
 

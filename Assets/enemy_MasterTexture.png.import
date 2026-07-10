@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccjmfs2fpx3xi"
-path="res://.godot/imported/checkerboard_pattern.png-c94c1f5ea85faf5973052ff39b4692ef.ctex"
+uid="uid://bx452anx4125m"
+path.s3tc="res://.godot/imported/enemy_MasterTexture.png-890ba77f481a49ed7785665aa2919caf.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "24ce306d8acd8d0baca2fb19c794192f"
 }
 
 [deps]
 
-source_file="res://AnimatedAssets/checkerboard_pattern.png"
-dest_files=["res://.godot/imported/checkerboard_pattern.png-c94c1f5ea85faf5973052ff39b4692ef.ctex"]
+source_file="res://Assets/enemy_MasterTexture.png"
+dest_files=["res://.godot/imported/enemy_MasterTexture.png-890ba77f481a49ed7785665aa2919caf.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

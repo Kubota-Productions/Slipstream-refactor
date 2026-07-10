@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5r7v71a3d8aw" path="res://Assets/train2top.glb" id="5_0rf7v"]
 [ext_resource type="Script" uid="uid://cmikrls0dhepb" path="res://Scripts/train_top.gd" id="6_jlyl3"]
 
+
 [node name="train" unique_id=1681857980 instance=ExtResource("1_si1ls")]
 transform = Transform3D(1, 0.00039994987, 0.00029283305, -0.00039991998, 0.99999994, -0.00010239512, -0.000292874, 0.000102278, 0.99999994, 0, 0, 0)
 script = ExtResource("2_swm5m")

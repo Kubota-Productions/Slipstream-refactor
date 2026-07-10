@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://elxth2roi3jg"
-path="res://.godot/imported/character_mixamo.fbx-740aaaacc4e8c2e9fd4e78a9467d40ad.scn"
+uid="uid://1tre4i1xukka"
+path="res://.godot/imported/Gravrushcustom1.fbx-9de73ae4fedfcacd4491314b398c877f.scn"
 
 [deps]
 
-source_file="res://AnimatedAssets/character_mixamo.fbx"
-dest_files=["res://.godot/imported/character_mixamo.fbx-740aaaacc4e8c2e9fd4e78a9467d40ad.scn"]
+source_file="res://Player/Gravrushcustom1.fbx"
+dest_files=["res://.godot/imported/Gravrushcustom1.fbx-9de73ae4fedfcacd4491314b398c877f.scn"]
 
 [params]
 
@@ -39,7 +39,15 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"clothing": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/clothing.tres",
+"use_external/path": "uid://ys3i1qniyqr3"
+}
+}
+}
 fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1

@@ -13,7 +13,6 @@ config_version=5
 config/name="Slipstream"
 run/main_scene="uid://fd3ys2kflepd"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
 
 [display]
 

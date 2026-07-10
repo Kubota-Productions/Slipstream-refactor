@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh101j1io86r3"
-path.s3tc="res://.godot/imported/trainbottom_MasterTexture.png-83a667fcac16b0b29939214ebb996e0e.s3tc.ctex"
+uid="uid://dk4c8y3lvdj5m"
+path.s3tc="res://.godot/imported/traintracksingle_texture grand.png-17d1738733188824194ec77f572a7e03.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "24ce306d8acd8d0baca2fb19c794192f"
+"md5": "97e0ca07035be4f4ef5324c3e6c35e3b"
 }
 
 [deps]
 
-source_file="res://AnimatedAssets/trainbottom_MasterTexture.png"
-dest_files=["res://.godot/imported/trainbottom_MasterTexture.png-83a667fcac16b0b29939214ebb996e0e.s3tc.ctex"]
+source_file="res://Assets/traintracksingle_texture grand.png"
+dest_files=["res://.godot/imported/traintracksingle_texture grand.png-17d1738733188824194ec77f572a7e03.s3tc.ctex"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://clrlc3jquwf1q"
-path="res://.godot/imported/traintop.glb-d68c1089448225be0903b8b6e63ec192.scn"
+uid="uid://dkqdcmtmpay18"
+path="res://.godot/imported/enemy.glb-3fa961b088908880b0d5ca4d26b20fb8.scn"
 
 [deps]
 
-source_file="res://AnimatedAssets/traintop.glb"
-dest_files=["res://.godot/imported/traintop.glb-d68c1089448225be0903b8b6e63ec192.scn"]
+source_file="res://Assets/enemy.glb"
+dest_files=["res://.godot/imported/enemy.glb-3fa961b088908880b0d5ca4d26b20fb8.scn"]
 
 [params]
 

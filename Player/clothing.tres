@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://ys3i1qniyqr3"]
 
-[ext_resource type="Texture2D" uid="uid://baynhwcyxswau" path="res://Characters/clothing_Normal_OpenGL.png" id="1_cphtw"]
+[ext_resource type="Texture2D" uid="uid://baynhwcyxswau" path="res://Player/clothing_Normal_OpenGL.png" id="1_cphtw"]
 
 [resource]
 normal_enabled = true
