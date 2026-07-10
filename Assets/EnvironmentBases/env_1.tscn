@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://8birfkxqo1k3"]
+
+[ext_resource type="PackedScene" uid="uid://d0abl7hgn6mmk" path="res://Assets/EnvironmentBases/ENV1.fbx" id="1_cgvwr"]
+
+[node name="ENV1" unique_id=2124020899 instance=ExtResource("1_cgvwr")]
