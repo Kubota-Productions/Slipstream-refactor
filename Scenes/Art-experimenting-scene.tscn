@@ -3,6 +3,17 @@
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="1_16kbs"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_8iuud"]
 [ext_resource type="PackedScene" uid="uid://d0abl7hgn6mmk" path="res://Assets/EnvironmentBases/ENV1.fbx" id="3_fdhc5"]
+[ext_resource type="PackedScene" uid="uid://6pq5ciignur8" path="res://Assets/UTOPIAhotel.glb" id="4_8iuud"]
+[ext_resource type="PackedScene" uid="uid://c27e1p6ff1ul0" path="res://Assets/tree.glb" id="5_fdhc5"]
+
+[sub_resource type="Environment" id="Environment_g4v7s"]
+background_mode = 1
+background_color = Color(0.21273598, 0.43418717, 0.73600304, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.28326172, 0.11365763, 0.49904335, 1)
+ambient_light_energy = 1.4
+reflected_light_source = 1
+tonemap_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55fhj"]
 render_priority = 0
@@ -44,8 +55,21 @@ data = PackedVector3Array(-0.018, 0.17999999, 0.036, -0.018, 0.198, 0.036, 0, 0.
 
 [node name="ArtExperimentingScene" type="Node3D" unique_id=981473470]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=35604291]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 17.79716, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1242973125]
+environment = SubResource("Environment_g4v7s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2043830820]
+transform = Transform3D(0.89118785, -0.006122713, -0.4535932, 0.4536345, 0.012028378, 0.89110667, 0, -0.9999089, 0.013497018, 0, 14.213341, 0)
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_opacity = 0.7
+shadow_blur = 0.0
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.159
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 41.0
+directional_shadow_pancake_size = 0.1
 
 [node name="Player" parent="." unique_id=2134162341 instance=ExtResource("1_16kbs")]
 
@@ -58,10 +82,18 @@ extra_cull_margin = 16384.0
 mesh = SubResource("PlaneMesh_8uaxv")
 
 [node name="ENV1" parent="." unique_id=2124020899 instance=ExtResource("3_fdhc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16281009, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ENV1" unique_id=433591635]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ENV1/StaticBody3D" unique_id=658622656]
 transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_a4rbg")
+
+[node name="UTOPIAhotel" parent="." unique_id=1072567312 instance=ExtResource("4_8iuud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99.525, 7.00735, -1.6077303)
+
+[node name="tree" parent="." unique_id=615082047 instance=ExtResource("5_fdhc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.897411, -5.9853187e-07, 6.4849124)
+
+[node name="tree2" parent="." unique_id=2120588231 instance=ExtResource("5_fdhc5")]
+transform = Transform3D(0.465, 0, 0, 0, 0.465, 0, 0, 0, 0.465, -14.120511, -5.9853187e-07, 1.8096576)
