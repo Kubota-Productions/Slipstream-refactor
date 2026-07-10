@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://41xpw181mqqy"]
+[gd_scene format=3 uid="uid://sa7mavilm3he"]
 
-[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://Player.tscn" id="1_ixk78"]
+[ext_resource type="PackedScene" uid="uid://dhg3j0fuatu6n" path="res://Player.tscn" id="1_3x0nh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mmpmf"]
 
@@ -553,5 +553,5 @@ radius = 195.8584
 height = 4.2864227
 sides = 25
 
-[node name="CharacterBody3D" parent="." unique_id=1610495927 instance=ExtResource("1_ixk78")]
+[node name="CharacterBody3D" parent="." unique_id=1610495927 instance=ExtResource("1_3x0nh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2900006, 28.75236, -0.5224838)

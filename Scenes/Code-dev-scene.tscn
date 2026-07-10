@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Scripts/Main.gd" id="1_4kpch"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="2_grg3l"]
-[ext_resource type="PackedScene" uid="uid://1tre4i1xukka" path="res://Player/Gravrushcustom1.fbx" id="3_frkhe"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="4_1p5hy"]
 [ext_resource type="Texture2D" uid="uid://ccjmfs2fpx3xi" path="res://Assets/checkerboard_pattern.png" id="5_h1m7h"]
 [ext_resource type="Script" uid="uid://bes0wqgvuko4" path="res://Scripts/NPCBrain.gd" id="6_erwvk"]
@@ -27,7 +26,7 @@ shader_parameter/grazing_fresnel_power = 5.0
 shader_parameter/grazing_angle_mask_power = 1.0
 shader_parameter/grazing_angle_modulation_factor = 50.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yy7ei"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c1avj"]
 render_priority = 0
 shader = ExtResource("4_1p5hy")
 shader_parameter/outlineColor = Color(0, 0, 0, 1)
@@ -43,7 +42,7 @@ shader_parameter/grazing_angle_mask_power = 1.0
 shader_parameter/grazing_angle_modulation_factor = 50.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yf5fn"]
-material = SubResource("ShaderMaterial_yy7ei")
+material = SubResource("ShaderMaterial_c1avj")
 flip_faces = true
 orientation = 2
 
@@ -51,12 +50,12 @@ orientation = 2
 vertices = PackedVector3Array(-47.205215, 0.2987647, -46.840977, -47.205215, 0.2987647, 46.159023, 47.044785, 0.2987647, 46.159023, 47.044785, 0.2987647, -46.840977)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ep5k"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpexl"]
 albedo_texture = ExtResource("5_h1m7h")
 uv1_scale = Vector3(7, 7, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_g0bp2"]
-material = SubResource("StandardMaterial3D_4ep5k")
+material = SubResource("StandardMaterial3D_qpexl")
 size = Vector3(95.31154, 1, 103.391754)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0bp2"]
@@ -86,12 +85,6 @@ script = ExtResource("1_4kpch")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 17.79716, 0)
 
 [node name="Player" parent="." unique_id=2134162341 instance=ExtResource("2_grg3l")]
-
-[node name="Gravrushcustom1" parent="." unique_id=575398080 instance=ExtResource("3_frkhe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.940682, -0.03987038, -0.023934126)
-
-[node name="Gravrushcustom2" parent="." unique_id=196543669 instance=ExtResource("3_frkhe")]
-transform = Transform3D(-1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, -1, 2.8523974, -0.03987038, -0.20278256)
 
 [node name="Shader" type="Node3D" parent="." unique_id=1809827013]
 
