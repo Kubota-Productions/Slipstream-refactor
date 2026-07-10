@@ -57,7 +57,7 @@ uv1_scale = Vector3(7, 7, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_g0bp2"]
 material = SubResource("StandardMaterial3D_4ep5k")
-size = Vector3(95.31154, 1, 93.9466)
+size = Vector3(95.31154, 1, 103.391754)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g0bp2"]
 size = Vector3(95.33087, 0.99560547, 94.0313)
@@ -107,7 +107,7 @@ navigation_mesh = SubResource("NavigationMesh_g4v7s")
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" unique_id=290965200]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D" unique_id=965560353]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0072402954, -0.7012353, -0.3386116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0072402954, -0.7012353, 4.3839645)
 mesh = SubResource("BoxMesh_g0bp2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" unique_id=201248708]
