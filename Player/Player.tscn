@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
 [ext_resource type="PackedScene" uid="uid://elxth2roi3jg" path="res://Assets/character_mixamo.fbx" id="2_ddoul"]
-[ext_resource type="Script" uid="uid://pq1470qbmebu" path="res://Player/Camera_Controller.gd" id="3_8g4oa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
 
@@ -36,20 +35,3 @@ tree_root = SubResource("AnimationNodeBlendTree_a22an")
 anim_player = NodePath("../CharacterModel/character_mixamo/AnimationPlayer")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
-
-[node name="CameraRoot" type="Node3D" parent="." unique_id=249995267]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.711, 0)
-script = ExtResource("3_8g4oa")
-
-[node name="CamYaw" type="Node3D" parent="CameraRoot" unique_id=265267378]
-
-[node name="CamPitch" type="Node3D" parent="CameraRoot/CamYaw" unique_id=165200873]
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraRoot/CamYaw/CamPitch" unique_id=1054947790]
-spring_length = 5.0
-
-[node name="Camera3D" type="Camera3D" parent="CameraRoot/CamYaw/CamPitch/SpringArm3D" unique_id=1985421369]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-current = true
-
-[connection signal="set_cam_rotation" from="CameraRoot" to="CameraRoot" method="_on_set_cam_rotation"]
