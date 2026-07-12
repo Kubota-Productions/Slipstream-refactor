@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cnjnt0686nra"]
+
+[ext_resource type="Texture2D" uid="uid://dx5u0vtioevnm" path="res://Assets/tree_MasterTexture.png" id="1_h6rlr"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_h6rlr")
+roughness = 0.0

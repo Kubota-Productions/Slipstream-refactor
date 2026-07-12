@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bb55mdo1orhwx"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+metallic_specular = 0.0
+roughness = 0.0
+stencil_flags = 2

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
 [ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
-[ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
+[ext_resource type="Script" uid="uid://cmxlrtx4ft2i4" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
 
