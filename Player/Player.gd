@@ -94,7 +94,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			spring_arm.camera_moved = true
 
 func _physics_process(delta):
-
+	
+	# Gravity
+	velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * delta
 	# Input
 	movement_direction.x = Input.get_axis("left", "right")
 	movement_direction.z = Input.get_axis("forward", "backwards")
