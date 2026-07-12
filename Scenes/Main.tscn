@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://u4mgagog16rs"]
+
+[ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Scripts/Main.gd" id="1_rgh2o"]
+[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_pbw6q"]
+[ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="4_jw32o"]
+[ext_resource type="Texture2D" path="res://Materials/checkerboard_pattern.png" id="4_rgh2o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
+render_priority = 0
+shader = ExtResource("2_pbw6q")
+shader_parameter/outlineColor = Color(0, 0, 0, 0.78)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 0.666000031635
+shader_parameter/normal_smoothing = 0.3850000182875
+shader_parameter/max_thickness = 1.590000075525
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 75.0
+shader_parameter/min_distance = 2.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c1avj"]
+render_priority = 0
+shader = ExtResource("2_pbw6q")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 1.5
+shader_parameter/normal_smoothing = 1.0
+shader_parameter/max_thickness = 2.594000123215
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 75.0
+shader_parameter/min_distance = 2.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yf5fn"]
+material = SubResource("ShaderMaterial_c1avj")
+flip_faces = true
+orientation = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_g0bp2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tok1r"]
+albedo_texture = ExtResource("4_rgh2o")
+uv1_scale = Vector3(7, 7, 7)
+
+[node name="Main" type="Node3D" unique_id=482443075]
+script = ExtResource("1_rgh2o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=557524958]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 17.79716, 0)
+
+[node name="Shader" type="Node3D" parent="." unique_id=1809827013]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Shader" unique_id=1744256902]
+material_override = SubResource("ShaderMaterial_bl2xt")
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_yf5fn")
+
+[node name="Player" parent="." unique_id=2134162341 instance=ExtResource("4_jw32o")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1696534464]
+transform = Transform3D(35.860424, 0, 0, 0, 0.32084185, 0, 0, 0, 33.61068, -1.9827881, -0.4201355, 0.9024658)
+mesh = SubResource("BoxMesh_g0bp2")
+surface_material_override/0 = SubResource("StandardMaterial3D_tok1r")

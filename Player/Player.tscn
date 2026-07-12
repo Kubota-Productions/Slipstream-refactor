@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ccdc06etdbopk"]
 
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
-[ext_resource type="PackedScene" uid="uid://elxth2roi3jg" path="res://Assets/character_mixamo.fbx" id="2_ddoul"]
+[ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
 [ext_resource type="Script" uid="uid://pq1470qbmebu" path="res://Player/Camera_Controller.gd" id="3_8g4oa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
@@ -24,16 +24,14 @@ script = ExtResource("1_tok1r")
 
 [node name="CharacterModel" type="Node3D" parent="." unique_id=1574064996]
 
-[node name="character_mixamo" parent="CharacterModel" unique_id=1119706169 instance=ExtResource("2_ddoul")]
+[node name="character_mixamo" parent="CharacterModel" unique_id=1987785027 instance=ExtResource("2_tok1r")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
 shape = SubResource("CapsuleShape3D_a22an")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1401353744]
-root_node = NodePath("../CharacterModel/character_mixamo")
 tree_root = SubResource("AnimationNodeBlendTree_a22an")
-anim_player = NodePath("../CharacterModel/character_mixamo/AnimationPlayer")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
