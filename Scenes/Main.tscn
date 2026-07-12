@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Scripts/Main.gd" id="1_rgh2o"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_pbw6q"]
-[ext_resource type="PackedScene" uid="uid://d0abl7hgn6mmk" path="res://Assets/EnvironmentBases/ENV1.fbx" id="3_v1gob"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="4_jw32o"]
+[ext_resource type="Texture2D" uid="uid://byvr51v5b7r8c" path="res://Materials/checkerboard_pattern.png" id="4_rgh2o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
 render_priority = 0
@@ -40,6 +40,20 @@ material = SubResource("ShaderMaterial_c1avj")
 flip_faces = true
 orientation = 2
 
+[sub_resource type="BoxMesh" id="BoxMesh_g0bp2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tok1r"]
+albedo_texture = ExtResource("4_rgh2o")
+uv1_scale = Vector3(7, 7, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rgh2o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbw6q"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
+albedo_color = Color(0.9685872, 5.679429e-06, 7.70092e-07, 1)
+
 [node name="Main" type="Node3D" unique_id=482443075]
 script = ExtResource("1_rgh2o")
 
@@ -54,11 +68,27 @@ cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("PlaneMesh_yf5fn")
 
-[node name="ENV1" parent="." unique_id=1915809586 instance=ExtResource("3_v1gob")]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="ENV1" unique_id=2030537563]
-
 [node name="Player" parent="." unique_id=2134162341 instance=ExtResource("4_jw32o")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+movement_states = null
+rotation_speed = null
 
-[node name="Camera" type="Camera3D" parent="." unique_id=1107177158]
-transform = Transform3D(-1, 0, -8.742278e-08, -4.371139e-08, 0.8660254, 0.5, 7.5710346e-08, 0.5, -0.8660254, 0, 2.1275597, -1.6212378)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1696534464]
+transform = Transform3D(35.860424, 0, 0, 0, 0.32084185, 0, 0, 0, 33.61068, -1.9827881, -0.4201355, 0.9024658)
+mesh = SubResource("BoxMesh_g0bp2")
+surface_material_override/0 = SubResource("StandardMaterial3D_tok1r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1887619106]
+transform = Transform3D(0.8394207, 0, 0, 0, 8.420909, 0, 0, 0, 33.61068, -19.428871, 3.8333845, 0.9024658)
+mesh = SubResource("BoxMesh_rgh2o")
+surface_material_override/0 = SubResource("StandardMaterial3D_pbw6q")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=210806955]
+transform = Transform3D(0.8394207, 0, 0, 0, 8.420909, 0, 0, 0, 33.61068, 15.499832, 3.8333845, 0.9024658)
+mesh = SubResource("BoxMesh_g0bp2")
+surface_material_override/0 = SubResource("StandardMaterial3D_rgh2o")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=360337751]
+transform = Transform3D(0.8394207, 0, 0, 0, 8.420909, 0, 0, 0, 33.61068, 15.499832, 3.8333845, 0.9024658)
+mesh = SubResource("BoxMesh_g0bp2")
+surface_material_override/0 = SubResource("StandardMaterial3D_tok1r")

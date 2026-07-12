@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
+@onready var spring_arm: SpringArm3D = $SpringArm3D
 
 @export var movement_states := {
 	"Idle": {
@@ -73,23 +74,59 @@ var is_jog_jumping = false
 var is_idle_jumping = false
 var previous_jump_case = -1
 
+var movement_ongoing = false
+
 func _ready():
 	#_set_movement_state(movement_states["Idle"])
 	pass
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not event is InputEventMouseMotion:
+		return
+	
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
+	
+	if not movement_ongoing and not spring_arm.camera_moved:
+		var yaw_delta: float = -event.relative.x * spring_arm.mouse_sensitivity
+	
+		if abs(yaw_delta) > 0.01:
+			spring_arm.camera_moved = true
+
 func _physics_process(delta):
 
 	# Input
-	movement_direction.x = -Input.get_axis("left", "right")
-	movement_direction.z = -Input.get_axis("forward", "backwards")
+	movement_direction.x = Input.get_axis("left", "right")
+	movement_direction.z = Input.get_axis("forward", "backwards")
 
 	# ------ UPDATE IDLE/JOG/RUN
-	var movement_ongoing = is_movement_ongoing()
+	movement_ongoing = is_movement_ongoing()
 	var run_pressed = Input.is_action_pressed("Run")
 	var jump_pressed = Input.is_action_just_pressed("Jump")
 	var threshold = run_timer >= RUN_THRESHOLD
 
 	#print("movement_ongoing = ", movement_ongoing, " // run_timer = ", run_timer, " // jump_timer = ", jump_timer)
+	
+	if movement_ongoing:
+		if spring_arm.camera_moved:
+			# store the spring arm's global rotation
+			var target_yaw = spring_arm.global_rotation.y
+			
+			# set the player's y rotation to the spring arm
+			var player_rotation = global_rotation
+			player_rotation.y = target_yaw
+			global_rotation = player_rotation
+			
+			# clear the spring arm's local rotation
+			spring_arm.rotation.y = 0.0
+			spring_arm.camera_moved = false
+
+		else:
+			# moving camera
+			rotate_y(spring_arm.yaw_input)
+	else:
+		# rotate the spring arm
+		spring_arm.rotate_y(spring_arm.yaw_input)
 
 	# --- CASE 1: NOT JUMPING
 	#idle state
@@ -149,7 +186,7 @@ func _physics_process(delta):
 				run_timer = 0.0
 
 			if is_running and run_pressed and jump_pressed and threshold:
-				print("run - case 1")
+				#print("run - case 1")
 
 				#case 1: player running, run pressed, jump just pressed, threshold met
 				#default case to start run_jump anim
@@ -159,7 +196,7 @@ func _physics_process(delta):
 				is_run_jumping = true
 				is_jumping = true
 			elif is_running and run_pressed and jump_pressed and not threshold:
-				print("run - case 02")
+				#print("run - case 02")
 
 				#case 2: player running, run pressed, jump just pressed, threshold not met
 				#bug state: player can't be running if threshold isn't met
@@ -181,7 +218,7 @@ func _physics_process(delta):
 				#default state for run loop, nothing to do here - pass
 				pass
 			elif is_running and run_pressed and not jump_pressed and not threshold:
-				print("run - case 04")
+				#print("run - case 04")
 				#case 4: player running, run pressed, jump not just pressed, threshold not met
 				#default state to cancel run loop - running but threshold not met
 
@@ -192,7 +229,7 @@ func _physics_process(delta):
 				run_timer = 0.0
 				pass
 			elif is_running and not run_pressed and jump_pressed and threshold:
-				print("run - case 05")
+				#print("run - case 05")
 				#case 5: player running, run not pressed, jump just pressed and threshold met
 				#could be the state right before the player releases the run command
 				#we want this to be a run_jump because the player is technically still running
@@ -211,7 +248,7 @@ func _physics_process(delta):
 				is_run_jumping = true
 				is_jumping = true
 			elif is_running and not run_pressed and jump_pressed and not threshold:
-				print("run - case 06")
+				#print("run - case 06")
 				#case 6: player running, run not pressed, jump just pressed and threshold not met
 				#this may be an empty state but we'll make it into a run jump as the previous state
 
@@ -227,7 +264,7 @@ func _physics_process(delta):
 				is_run_jumping = true
 				is_jumping = true
 			elif is_running and not run_pressed and not jump_pressed and threshold:
-				print("run - case 07")
+				#print("run - case 07")
 				#case 7: player running, run not pressed, jump not just pressed, threshold met
 				#cancel run state -> run not pressed
 
@@ -237,7 +274,7 @@ func _physics_process(delta):
 				#set the run_timer back to zero because the player is running
 				run_timer = 0.0
 			elif is_running and not run_pressed and not jump_pressed and not threshold:
-				print("run - case 08")
+				#print("run - case 08")
 				#case 8: player running, run not pressed, jump not just pressed, threshold not met
 				#cancel run state -> run not pressed and threshold not met
 
@@ -253,7 +290,7 @@ func _physics_process(delta):
 				is_run_jumping = false
 				is_jumping = true
 			elif not is_running and run_pressed and jump_pressed and threshold:
-				print("run - case 09")
+				#print("run - case 09")
 				#case 9: player not running, run pressed, jum just pressed and threshold met
 				#this may be an empty state but we'll make it into a jog_jump since there's movement
 
@@ -269,7 +306,7 @@ func _physics_process(delta):
 				is_run_jumping = false
 				is_jumping = true
 			elif not is_running and run_pressed and jump_pressed and not threshold:
-				print("run - case 10")
+				#print("run - case 10")
 				#case 10: player not running, run pressed, jump just pressed and threshold not met
 				#this may be an empty state but we'll make it into a jog_jump since there's movement
 
@@ -285,19 +322,19 @@ func _physics_process(delta):
 				is_run_jumping = false
 				is_jumping = true
 			elif not is_running and run_pressed and not jump_pressed and threshold:
-				print("run - case 11")
+				#print("run - case 11")
 				#case 11: player not running, run pressed, jump not just pressed, threshold met
 				#default state to start run cycle
 
 				#start run cycle
 				is_running = true
 			elif not is_running and run_pressed and not jump_pressed and not threshold:
-				print("run - case 12")
+				#print("run - case 12")
 				#case 12: player not running, run pressed, jump not just pressed, threshold not met
 				#default state to load run cycle - pass
 				pass
 			elif not is_running and not run_pressed and jump_pressed and threshold:
-				print("run - case 13")
+				#print("run - case 13")
 				#case 13: player not running, run not pressed, jump just pressed, threshold met
 				#this may be an empty state but we'll make it into a jog_jump since there's movement
 
@@ -313,7 +350,7 @@ func _physics_process(delta):
 				is_run_jumping = false
 				is_jumping = true
 			elif not is_running and not run_pressed and jump_pressed and not threshold:
-				print("run - case 14")
+				#print("run - case 14")
 				#case 14: player not running, run not pressed, jump just pressed, threshold not met
 				#default state for jog jump
 
@@ -329,7 +366,7 @@ func _physics_process(delta):
 				is_run_jumping = false
 				is_jumping = true
 			elif not is_running and not run_pressed and not jump_pressed and threshold:
-				print("run - case 15")
+				#print("run - case 15")
 				#case 15: player not running, run not pressed, jump not just pressed, threshold met
 				#bug state: need to zero timer
 
@@ -339,7 +376,7 @@ func _physics_process(delta):
 				#set the run_timer back to zero because the player is running
 				run_timer = 0.0
 			elif not is_running and not run_pressed and not jump_pressed and not threshold:
-				print("run - case 16")
+				#print("run - case 16")
 				#case 16: player not running, run not pressed, jump not just pressed, not over threshold
 				#default state for jog cycle
 
@@ -392,7 +429,7 @@ func _physics_process(delta):
 				jump_timer += delta
 
 			if is_running and run_pressed and jump_pressed and threshold:
-				print("jump - case 01")
+				#print("jump - case 01")
 				#case 1 TTTT
 
 				#case 1: player is running, run is pressed, jump just pressed, threshold met
@@ -400,11 +437,11 @@ func _physics_process(delta):
 				# -> don't do anything unless you want a double jump
 				pass
 			elif is_running and run_pressed and jump_pressed and not threshold:
-				print("jump - case 02")
+				#print("jump - case 02")
 				#case 2 TTTF
 				pass
 			elif is_running and run_pressed and not jump_pressed and threshold:
-				print("jump - case 03")
+				#print("jump - case 03")
 				#case 3 TTFT
 
 
@@ -412,20 +449,19 @@ func _physics_process(delta):
 				# -> this is the main case for the run jump animation - pass
 				pass
 			elif is_running and run_pressed and not jump_pressed and not threshold:
-				print("jump - case 04")
+				#print("jump - case 04")
 				#case 4 TTFF
 				pass
 			elif is_running and not run_pressed and jump_pressed and threshold:
-				print("jump - case 05")
+				#print("jump - case 05")
 				#case 5 TFTT
 				pass
 			elif is_running and not run_pressed and jump_pressed and not threshold:
-				print("jump - case 06")
+				#print("jump - case 06")
 				#case 6 TFTF
 				pass
 			elif is_running and not run_pressed and not jump_pressed and threshold:
-
-				print("jump - case 07")
+				#print("jump - case 07")
 
 				# -- CASE 7: player is running, run not pressed, jump not just pressed, over threshold T/F/F/T
 				#bug state: can't run if run action not pressed
@@ -440,31 +476,31 @@ func _physics_process(delta):
 				# set previous_jump_case to 7 -- anim gets handled by 14 and 16
 				previous_jump_case = 7
 			elif is_running and not run_pressed and not jump_pressed and not threshold:
-				print("jump - case 8")
+				#print("jump - case 8")
 				#case 8 TFFF
 				pass
 			elif not is_running and run_pressed and jump_pressed and threshold:
-				print("jump - case 9")
+				#print("jump - case 9")
 				#case 9 FTTT
 				pass
 			elif not is_running and run_pressed and jump_pressed and not threshold:
-				print("jump - case 10")
+				#print("jump - case 10")
 				#case 10 FTTF
 				pass
 			elif not is_running and run_pressed and not jump_pressed and threshold:
-				print("jump - case 11")
+				#print("jump - case 11")
 				#case 11 FTFT
 				pass
 			elif not is_running and run_pressed and not jump_pressed and not threshold:
-				print("jump - case 12")
+				#print("jump - case 12")
 				#case 12 FTFF
 				pass
 			elif not is_running and not run_pressed and jump_pressed and threshold:
-				print("jump - case 13")
+				#print("jump - case 13")
 				#case 13 FFTT
 				pass
 			elif not is_running and not run_pressed and jump_pressed and not threshold:
-				print("jump - case 14")
+				#print("jump - case 14")
 				#case 14 FFTF
 
 				# -- CASE 14: player not running, run not pressed, jump just pressed and not over threshold
@@ -493,11 +529,11 @@ func _physics_process(delta):
 						#reset jump case
 						previous_jump_case = -1
 			elif not is_running and not run_pressed and jump_pressed and not threshold:
-				print("jump - case 15")
+				#print("jump - case 15")
 				#case 15 FFTF
 				pass
 			elif not is_running and not run_pressed and not jump_pressed and not threshold:
-				print("jump - case 16")
+				#print("jump - case 16")
 
 				# -- CASE 16: player not running, run not pressed, jump not pressed and not over threshold
 				#seems like the default state for jog_jump
@@ -585,19 +621,22 @@ func _physics_process(delta):
 
 	# Movement loop
 	if is_movement_ongoing():
-		move_direction = movement_direction.rotated(Vector3.UP, cam_rotation)
+		var input_direction := movement_direction.normalized()
 
-		var target_velocity := move_direction.normalized() * speed
+		move_direction = global_transform.basis * input_direction
+		move_direction.y = 0
+		move_direction = move_direction.normalized()
+
+		var target_velocity := move_direction * speed
 
 		velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
 		velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
 
-		# Character rotation
-		var target_rotation := atan2(move_direction.x, move_direction.z) - rotation.y
+		var target_rotation := atan2(move_direction.x, move_direction.z)
 
 		character_model.rotation.y = lerp_angle(
 			character_model.rotation.y,
-			target_rotation,
+			target_rotation - rotation.y,
 			rotation_speed * delta
 		)
 
