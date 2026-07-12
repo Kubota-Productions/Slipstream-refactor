@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
 [ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
-[ext_resource type="Script" uid="uid://pq1470qbmebu" path="res://Player/Camera_Controller.gd" id="3_8g4oa"]
+[ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
 
@@ -11,7 +11,7 @@
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_1ju47"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_a22an"]
-graph_offset = Vector2(-88.46356, -82.74234)
+graph_offset = Vector2(0, -214)
 nodes/output/position = Vector2(400, 160)
 nodes/movement_anim_speed/node = SubResource("AnimationNodeTimeScale_1ju47")
 nodes/movement_anim_speed/position = Vector2(100, 140)
@@ -23,8 +23,9 @@ node_connections = [&"output", 0, &"movement_anim_speed", &"movement_anim_speed"
 script = ExtResource("1_tok1r")
 
 [node name="CharacterModel" type="Node3D" parent="." unique_id=1574064996]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="character_mixamo" parent="CharacterModel" unique_id=1987785027 instance=ExtResource("2_tok1r")]
+[node name="character_mixamo" parent="CharacterModel" unique_id=872877505 instance=ExtResource("2_tok1r")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
@@ -35,19 +36,10 @@ tree_root = SubResource("AnimationNodeBlendTree_a22an")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
-[node name="CameraRoot" type="Node3D" parent="." unique_id=249995267]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.711, 0)
-script = ExtResource("3_8g4oa")
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1184963165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7270203, 0)
+spring_length = 2.2
+script = ExtResource("3_tok1r")
 
-[node name="CamYaw" type="Node3D" parent="CameraRoot" unique_id=265267378]
-
-[node name="CamPitch" type="Node3D" parent="CameraRoot/CamYaw" unique_id=165200873]
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraRoot/CamYaw/CamPitch" unique_id=1054947790]
-spring_length = 5.0
-
-[node name="Camera3D" type="Camera3D" parent="CameraRoot/CamYaw/CamPitch/SpringArm3D" unique_id=1985421369]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=261954532]
 current = true
-
-[connection signal="set_cam_rotation" from="CameraRoot" to="CameraRoot" method="_on_set_cam_rotation"]
