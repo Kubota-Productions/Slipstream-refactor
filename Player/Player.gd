@@ -75,6 +75,7 @@ var is_idle_jumping = false
 var previous_jump_case = -1
 
 var movement_ongoing = false
+var elapsed_time = 0.0
 
 func _ready():
 	#_set_movement_state(movement_states["Idle"])
@@ -94,6 +95,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			spring_arm.camera_moved = true
 
 func _physics_process(delta):
+	
+	elapsed_time += delta
+	
+	#gravity
+	if elapsed_time > 5.0:
+		velocity.y -= 1.1*ProjectSettings.get_setting("physics/3d/default_gravity") * delta
 
 	# Input
 	movement_direction.x = Input.get_axis("left", "right")

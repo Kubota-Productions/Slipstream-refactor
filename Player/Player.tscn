@@ -4,8 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://elxth2roi3jg" path="res://Assets/character_mixamo.fbx" id="2_ddoul"]
 [ext_resource type="Script" uid="uid://cmxlrtx4ft2i4" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
-
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_oo13o"]
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_1ju47"]
@@ -19,6 +17,8 @@ nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_oo13o")
 nodes/BlendSpace1D/position = Vector2(-120, 140)
 node_connections = [&"output", 0, &"movement_anim_speed", &"movement_anim_speed", 0, &"BlendSpace1D"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
+
 [node name="Player" type="CharacterBody3D" unique_id=2134162341]
 script = ExtResource("1_tok1r")
 
@@ -26,10 +26,6 @@ script = ExtResource("1_tok1r")
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="character_mixamo" parent="CharacterModel" unique_id=1119706169 instance=ExtResource("2_ddoul")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
-shape = SubResource("CapsuleShape3D_a22an")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1401353744]
 root_node = NodePath("../CharacterModel/character_mixamo")
@@ -45,3 +41,7 @@ script = ExtResource("3_tok1r")
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=261954532]
 current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
+shape = SubResource("CapsuleShape3D_a22an")
