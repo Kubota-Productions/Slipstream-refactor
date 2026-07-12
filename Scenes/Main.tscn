@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Scripts/Main.gd" id="1_rgh2o"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="4_jw32o"]
-[ext_resource type="Texture2D" path="res://Materials/checkerboard_pattern.png" id="4_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://ccjmfs2fpx3xi" path="res://Assets/checkerboard_pattern.png" id="4_rgh2o"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
 render_priority = 0
