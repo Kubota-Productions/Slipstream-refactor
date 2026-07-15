@@ -3,7 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="1_16kbs"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_8iuud"]
 [ext_resource type="PackedScene" uid="uid://d0abl7hgn6mmk" path="res://Assets/EnvironmentBases/ENV1.fbx" id="3_fdhc5"]
-[ext_resource type="PackedScene" uid="uid://c27e1p6ff1ul0" path="res://Assets/tree.glb" id="5_fdhc5"]
+[ext_resource type="PackedScene" uid="uid://c4p6j5v4uukwh" path="res://Assets/tree.fbx" id="5_55fhj"]
+[ext_resource type="PackedScene" uid="uid://dit6iidqnhy81" path="res://Assets/bush.fbx" id="5_fdhc5"]
+[ext_resource type="PackedScene" uid="uid://c3y33ou57a5w8" path="res://Prefabs/bush.tscn" id="6_55fhj"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -95,11 +97,20 @@ mesh = SubResource("PlaneMesh_8uaxv")
 transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_fdhc5")
 
-[node name="tree" parent="." unique_id=615082047 instance=ExtResource("5_fdhc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8091507, -5.9853187e-07, 1.877728)
+[node name="tree4" parent="." unique_id=652938495 instance=ExtResource("5_55fhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7678375, -1.9073486e-06, -7.0013103)
 
-[node name="tree2" parent="." unique_id=2120588231 instance=ExtResource("5_fdhc5")]
-transform = Transform3D(0.465, 0, 0, 0, 0.465, 0, 0, 0, 0.465, -11.265495, -5.9853187e-07, -2.4766984)
+[node name="tree5" parent="." unique_id=664558775 instance=ExtResource("5_55fhj")]
+transform = Transform3D(0.585, 0, 0, 0, 0.585, 0, 0, 0, 0.585, 25.52129, -1.5168171, -7.0013103)
 
-[node name="tree3" parent="." unique_id=1518917154 instance=ExtResource("5_fdhc5")]
-transform = Transform3D(0.465, 0, 0, 0, 0.465, 0, 0, 0, 0.465, 5.178465, 1.3882078, -13.96442)
+[node name="tree6" parent="." unique_id=489082713 instance=ExtResource("5_55fhj")]
+transform = Transform3D(0.355, 0, 0, 0, 0.355, 0, 0, 0, 0.355, 25.811974, -1.5168161, -3.7774224)
+
+[node name="bush" parent="." unique_id=1041709236 instance=ExtResource("5_fdhc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.479784, 0.05059585, -8.104125)
+
+[node name="bush2" parent="." unique_id=932448292 instance=ExtResource("6_55fhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.271763, 0.05059555, -9.130627)
+
+[node name="tree" parent="." unique_id=1435580038 instance=ExtResource("5_55fhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.817633, -0.0023989677, -8.558123)

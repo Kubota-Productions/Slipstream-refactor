@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://do1f15utarc2x"]
+
+[ext_resource type="Shader" uid="uid://c211f7lugvpxr" path="res://Shaders/Wind.gdshader" id="1_nl32g"]
+[ext_resource type="Texture2D" uid="uid://c7bli2yq06eir" path="res://Assets/leaftexture1.png" id="2_iwif5"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_nl32g")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_iwif5")
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/albedo_texture_size = Vector2i(1000, 1000)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_amount = 1.0
+shader_parameter/sway_scale = 7.43600035321
+shader_parameter/sway_duration = 5.26400024934148
+shader_parameter/sway_direction = Vector3(50, 16.49, 0)
+shader_parameter/sway_falloff = 3.3450001556276203
