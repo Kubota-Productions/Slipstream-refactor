@@ -1,10 +1,11 @@
 [gd_scene format=4 uid="uid://by24r100orn7w"]
 
 [ext_resource type="Script" uid="uid://bppitph62t808" path="res://Scripts/NPCInstance.gd" id="1_x7e41"]
-[ext_resource type="Texture2D" uid="uid://ddigekyxt4l0e" path="res://Materials/cherub_cherubbase_Base_color.png" id="2_iaqgu"]
-[ext_resource type="Texture2D" uid="uid://c5selm5ammn52" path="res://Materials/cherub_cherubbase_Metallic.png" id="3_ekyay"]
-[ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Materials/cherub_cherubbase_Normal.png" id="4_slk48"]
+[ext_resource type="Texture2D" uid="uid://ddigekyxt4l0e" path="res://Assets/textures/cherub_cherubbase_Base_color.png" id="2_iaqgu"]
+[ext_resource type="Texture2D" uid="uid://c5selm5ammn52" path="res://Assets/textures/cherub_cherubbase_Metallic.png" id="3_ekyay"]
+[ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Assets/textures/cherub_cherubbase_Normal.png" id="4_slk48"]
 [ext_resource type="PackedScene" uid="uid://dkqdcmtmpay18" path="res://Assets/enemy.glb" id="5_klm5g"]
+
 
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yglu3"]

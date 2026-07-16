@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c3y33ou57a5w8" path="res://Prefabs/bush.tscn" id="6_55fhj"]
 [ext_resource type="PackedScene" uid="uid://b8mjajaj2wpil" path="res://Player/attempt1.fbx" id="7_8uaxv"]
 [ext_resource type="PackedScene" uid="uid://clrlc3jquwf1q" path="res://Assets/traintop.glb" id="7_a4rbg"]
+[ext_resource type="PackedScene" uid="uid://by1ahc5h02u8q" path="res://Assets/EnvironmentBases/rocks.fbx" id="9_2gc6p"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -71,7 +72,7 @@ shadow_bias = 0.0
 shadow_normal_bias = 4.235
 shadow_reverse_cull_face = true
 shadow_blur = 0.0
-directional_shadow_split_1 = 0.018
+directional_shadow_split_1 = 0.027
 directional_shadow_split_2 = 0.171
 directional_shadow_split_3 = 0.387
 directional_shadow_blend_splits = true
@@ -87,7 +88,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.0234995)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Shader" unique_id=1262834100]
 material_override = SubResource("ShaderMaterial_55fhj")
-cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("PlaneMesh_8uaxv")
 
@@ -125,3 +125,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.450321, -2.2376697, -20.96
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ENV1/StaticBody3D" unique_id=1432957953]
 transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_a4rbg")
+
+[node name="rocks" parent="." unique_id=894656824 instance=ExtResource("9_2gc6p")]
+transform = Transform3D(0.99489504, 2.2126901e-08, 0.10091558, 0.10091569, -3.769729e-08, -0.994895, -1.8209699e-08, 1.0000001, -3.9737802e-08, 5.4072742, 0.36484158, 1.0505002)
+
+[node name="rocks2" parent="." unique_id=1940805957 instance=ExtResource("9_2gc6p")]
+transform = Transform3D(-0.6054946, 2.261837e-07, 5.96937, -3.7018765e-07, 6, -2.6489374e-07, -5.96937, -3.9502976e-07, -0.6054946, -39.98954, -1.6204742, 1.0505002)

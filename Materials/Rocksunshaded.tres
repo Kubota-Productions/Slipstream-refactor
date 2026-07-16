@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dymjk26xi53gl"]
+
+[ext_resource type="Texture2D" uid="uid://jwdisqiajjp7" path="res://Assets/textures/rock_Base_color.png" id="1_avbqg"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_avbqg")
+metallic_specular = 0.0
+roughness = 0.0
+stencil_flags = 2
