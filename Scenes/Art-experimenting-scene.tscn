@@ -113,7 +113,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.988722, -0.0023989677, 6.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -122.203186, 71.17867, -13.591305)
 
 [node name="attempt1" parent="." unique_id=1141783430 instance=ExtResource("7_8uaxv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.874229, -1.4305115e-06, -2.1586623)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 2.874229, -1.4305115e-06, -2.1586623)
 
 [node name="traintop" parent="." unique_id=475318477 instance=ExtResource("7_a4rbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.450321, -2.2376697, -20.960154)
