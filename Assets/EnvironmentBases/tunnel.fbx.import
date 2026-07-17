@@ -43,8 +43,13 @@ _subresources={
 "materials": {
 "Material": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Materials/tunnelmat.tres",
-"use_external/path": "uid://cx7b5hbx2lfvr"
+"use_external/fallback_path": "res://Materials/UnshadedMatcolour.tres",
+"use_external/path": "uid://cnjnt0686nra"
+},
+"Material.001": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Materials/UnshadedMatcolour.tres",
+"use_external/path": "uid://cnjnt0686nra"
 }
 }
 }

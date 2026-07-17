@@ -14,7 +14,7 @@ extends CharacterBody3D
 	},
 	"Jog": {
 		"id": 1,
-		"movement_speed": 2.5,
+		"movement_speed": 20,
 		"acceleration": 8.0,
 		"camera_fov": 70.0,
 		"animation_speed": 1.0,
