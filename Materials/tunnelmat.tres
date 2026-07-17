@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cx7b5hbx2lfvr"]
+
+[ext_resource type="Texture2D" uid="uid://b1ps4awvsdfj1" path="res://Assets/textures/tunnel_Base_color.png" id="1_gnurb"]
+
+[resource]
+albedo_texture = ExtResource("1_gnurb")
+metallic_specular = 0.0
+roughness = 0.0
+ao_light_affect = 1.0
+stencil_flags = 2
