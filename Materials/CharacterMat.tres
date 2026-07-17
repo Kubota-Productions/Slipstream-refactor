@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bw5ds5ewyj5co"]
+
+[ext_resource type="Texture2D" uid="uid://dx5u0vtioevnm" path="res://Assets/tree_MasterTexture.png" id="1_0gs1o"]
+
+[resource]
+specular_mode = 1
+albedo_texture = ExtResource("1_0gs1o")
+roughness = 0.0
