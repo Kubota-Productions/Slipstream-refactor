@@ -43,13 +43,13 @@ _subresources={
 "materials": {
 "Beta_HighLimbsGeoSG3": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Materials/UnshadedMat.tres",
-"use_external/path": "uid://bb55mdo1orhwx"
+"use_external/fallback_path": "res://Materials/CharacterMat.tres",
+"use_external/path": "uid://bw5ds5ewyj5co"
 },
 "Beta_Joints_MAT1": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Materials/UnshadedMat.tres",
-"use_external/path": "uid://bb55mdo1orhwx"
+"use_external/fallback_path": "res://Materials/CharacterMat.tres",
+"use_external/path": "uid://bw5ds5ewyj5co"
 }
 }
 }

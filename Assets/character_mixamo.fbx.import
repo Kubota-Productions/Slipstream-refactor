@@ -51,6 +51,14 @@ _subresources={
 "use_external/fallback_path": "res://Materials/CharacterMat.tres",
 "use_external/path": "uid://bw5ds5ewyj5co"
 }
+},
+"nodes": {
+"PATH:Armature/Skeleton3D/Beta_Joints": {
+"mesh_instance/layers": 2
+},
+"PATH:Armature/Skeleton3D/Beta_Surface": {
+"mesh_instance/layers": 2
+}
 }
 }
 fbx/importer=0

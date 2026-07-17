@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dx5u0vtioevnm" path="res://Assets/tree_MasterTexture.png" id="1_0gs1o"]
 
 [resource]
-specular_mode = 1
+render_priority = 1
+transparency = 4
 albedo_texture = ExtResource("1_0gs1o")
 roughness = 0.0

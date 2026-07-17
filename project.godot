@@ -88,6 +88,7 @@ Jump={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method.mobile="forward_plus"
 lights_and_shadows/directional_shadow/size=16384
 lights_and_shadows/directional_shadow/size.mobile=4096
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0

@@ -46,6 +46,11 @@ _subresources={
 "use_external/fallback_path": "res://Materials/CharacterMat.tres",
 "use_external/path": "uid://bw5ds5ewyj5co"
 }
+},
+"nodes": {
+"PATH:body_002": {
+"mesh_instance/layers": 2
+}
 }
 }
 fbx/importer=0
