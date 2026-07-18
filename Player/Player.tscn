@@ -45,3 +45,6 @@ current = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
 shape = SubResource("CapsuleShape3D_a22an")
+
+[node name="GroundRayOrigin" type="Marker3D" parent="." unique_id=612679108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15026212, 0)

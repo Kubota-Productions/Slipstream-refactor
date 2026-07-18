@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="2_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="4_jw32o"]
 [ext_resource type="Texture2D" uid="uid://byvr51v5b7r8c" path="res://Materials/checkerboard_pattern.png" id="4_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://bktp17w2vboy8" path="res://Assets/pipe.glb" id="5_pbw6q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
 render_priority = 0
@@ -150,6 +151,42 @@ mesh = SubResource("BoxMesh_djf0p")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D5/StaticBody3D" unique_id=1707613562]
 shape = SubResource("ConcavePolygonShape3D_bmxlf")
 
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="." unique_id=1328079406]
+transform = Transform3D(5.6509194, 0, 0, 0, 0.760746, 0.5194959, 0, -0.4625125, 0.8544729, -1.2262325, -0.9953668, -63.331398)
+mesh = SubResource("BoxMesh_djf0p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D12" unique_id=199958971]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D12/StaticBody3D" unique_id=1178893418]
+shape = SubResource("ConcavePolygonShape3D_bmxlf")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="." unique_id=1607484837]
+transform = Transform3D(5.6509194, 0, 0, 0, 0.760746, 0.5194959, 0, -0.4625125, 0.8544729, -10.619297, -2.532146, -65.90462)
+mesh = SubResource("BoxMesh_djf0p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D13" unique_id=1036762111]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D13/StaticBody3D" unique_id=297695025]
+shape = SubResource("ConcavePolygonShape3D_bmxlf")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="." unique_id=1713863709]
+transform = Transform3D(5.6509194, 0, 0, 0, 0.760746, 0.5194959, 0, -0.4625125, 0.8544729, -19.614, -3.433013, -67.36853)
+mesh = SubResource("BoxMesh_djf0p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D14" unique_id=1248344447]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D14/StaticBody3D" unique_id=1067506406]
+shape = SubResource("ConcavePolygonShape3D_bmxlf")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="." unique_id=625765914]
+transform = Transform3D(5.6509194, 0, 0, 0, 0.760746, 0.5194959, 0, -0.4625125, 0.8544729, 8.714436, 0.54457617, -60.80995)
+mesh = SubResource("BoxMesh_djf0p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D11" unique_id=110611922]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D11/StaticBody3D" unique_id=521317113]
+shape = SubResource("ConcavePolygonShape3D_bmxlf")
+
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="." unique_id=356458856]
 transform = Transform3D(-2.4700952e-07, -0.46251246, 0.8544728, 0, 0.760746, 0.5194959, -5.6509194, -2.454934e-09, -5.2832377e-08, 11.422518, 3.6974149, -51.82815)
 mesh = SubResource("BoxMesh_djf0p")
@@ -169,7 +206,7 @@ mesh = SubResource("BoxMesh_djf0p")
 shape = SubResource("ConcavePolygonShape3D_pbw6q")
 
 [node name="MeshInstance3D9" type="MeshInstance3D" parent="." unique_id=1755856723]
-transform = Transform3D(18.217718, 0, 0, 0, -1.0290804e-06, -0.4099251, 0, 23.542616, -1.7918394e-08, 1.1574249, 0.06785154, -21.2141)
+transform = Transform3D(167.74626, 0, 0, 0, -1.0290804e-06, -0.4099251, 0, 23.542616, -1.7918394e-08, 1.1574249, 0.06785154, -21.2141)
 mesh = SubResource("BoxMesh_djf0p")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D9" unique_id=2049140086]
@@ -194,3 +231,6 @@ mesh = SubResource("BoxMesh_djf0p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D8/StaticBody3D" unique_id=77077958]
 shape = SubResource("ConcavePolygonShape3D_jw32o")
+
+[node name="pipe" parent="." unique_id=2095449139 instance=ExtResource("5_pbw6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.99842, -0.25940228, -97.92877)

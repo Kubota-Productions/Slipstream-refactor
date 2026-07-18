@@ -3,6 +3,12 @@ extends CharacterBody3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
 @onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var ground_ray_origin: Marker3D = $GroundRayOrigin
+
+# by default, ray-tracing will query all collision layers
+# setting to 1 for now, but when we add more collision layers
+# will need to revisit ray-tracing logic
+@export_flags_3d_physics var ground_collision_mask: int = 1
 
 @export var movement_states := {
 	"Idle": {
@@ -21,10 +27,10 @@ extends CharacterBody3D
 	},
 	"Run": {
 		"id": 2,
-		"movement_speed": 5.0,
+		"movement_speed": 15.0,
 		"acceleration": 10.0,
 		"camera_fov": 75.0,
-		"animation_speed": 1.0,
+		"animation_speed": 3.0,
 	},
 	"Idle_Jump": {
 		"id": 3,
@@ -75,7 +81,15 @@ var is_idle_jumping = false
 var previous_jump_case = -1
 
 var movement_ongoing = false
-var elapsed_time = 0.0
+var time_elapsed = 0.0
+
+const FALL_HEIGHT: float = 3.50
+const GROUND_RAY_LENGTH: float = 100.0
+
+var is_falling = false
+var is_landing = false
+
+var landing_timer = 0.0
 
 func _ready():
 	#_set_movement_state(movement_states["Idle"])
@@ -96,11 +110,101 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta):
 	
-	elapsed_time += delta
+	time_elapsed += delta
 	
 	#gravity
-	if elapsed_time > 5.0:
+	if time_elapsed > 5.0:
 		velocity.y -= 1.1*ProjectSettings.get_setting("physics/3d/default_gravity") * delta
+
+	# OLD FALLING LOGIC
+	#engine detects whether player is airborne
+	#is_falling = !is_on_floor()
+
+	# ------------------
+	#
+	# RAY CASTING FALLING LOGIC
+	#
+	#
+	# if the player is not jumping
+	# we need to cast a ray in the direction of the 
+	# player's local y-axis 
+	
+	# the position of the initial ray
+	var ray_start: Vector3 = ground_ray_origin.global_position
+	
+	# the player's normalized y-axis vector
+	var local_down: Vector3 = -global_transform.basis.y.normalized()
+	
+	# the vector starting at the player's global 3d position
+	# and pointing downwards in the y-axis' direction
+	var ray_end: Vector3 = ray_start + local_down * GROUND_RAY_LENGTH
+	
+	# ray-casting 
+	var query := PhysicsRayQueryParameters3D.create(
+		ray_start, # the global coordinates of the start of the ray
+		ray_end, # the global coordinates of the end of the ray
+		ground_collision_mask, # all collision layers are detected by default
+		[get_rid()] # excludes the player id so the ray doesn't hit its own collider
+	)
+	
+	# cast the ray
+	var result: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	
+	# note: the result is a dictionary
+	# if they ray doesn't hit anything the dictionary will be empty
+	# if it did hit something it will contain collision infromation
+	# example:
+	#result = 
+	#	{ 
+	#		"position": (7.497855, -1.657826, -70.11678), 
+	#		"normal": (0.0, 1.0, 0.0), 
+	#		"face_index": -1, 
+	#		"collider_id": 38856033880, 
+	#		"collider": StaticBody3D:<StaticBody3D#38856033880>, 
+	#		"shape": 0, 
+	#		"rid": RID(5171140624385) 
+	#	}
+	
+	var distance_to_floor: float = 0.0
+	
+	if result.is_empty():
+		print("result = ", result)
+		pass
+	else:
+		distance_to_floor = ray_start.distance_to(result["position"])
+		if distance_to_floor > FALL_HEIGHT:
+			print("distance to floor = ", distance_to_floor)
+			pass
+	
+	if not is_on_floor():
+		if distance_to_floor > FALL_HEIGHT and not is_falling:
+			print("a")
+			is_falling = true
+		elif distance_to_floor < FALL_HEIGHT and is_falling:
+			if distance_to_floor < FALL_HEIGHT/6: # add landing envelope
+				is_falling = false
+			else:
+				is_falling = true
+			pass
+		elif distance_to_floor < FALL_HEIGHT and not is_falling:
+			#IGNORE, DEFAULT NON-FALL STATE DOES NOT MEET THRESHOLD
+			pass
+		elif distance_to_floor > FALL_HEIGHT and is_falling:
+			#IGNORE, DEFAULT FALL STATE
+			pass
+	else:
+		is_falling = false
+
+	
+	if is_falling:
+		if is_jumping:
+			# if the player is jumping we bypass the loop
+			# at this point -- once the jump animation is
+			# done running we revert to the fall animation
+			
+			pass
+		else:
+			pass
 
 	# Input
 	movement_direction.x = Input.get_axis("left", "right")
@@ -601,13 +705,18 @@ func _physics_process(delta):
 			#print("I am not jumping!")
 			pass
 
-
-	if !movement_ongoing and not is_jumping:
+	if not movement_ongoing and not is_jumping:
 		_set_movement_state(movement_states["Idle"])
-		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|idle")
+		if not is_falling:
+			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|idle")
+		else:
+			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|falling_1")
 	elif movement_ongoing and not is_running and not is_jumping:
 		_set_movement_state(movement_states["Jog"])
-		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jog")
+		if not is_falling:
+			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jog")
+		else:
+			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|falling_1")
 	elif movement_ongoing and is_running and not is_jumping:
 		_set_movement_state(movement_states["Run"])
 		$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run")
