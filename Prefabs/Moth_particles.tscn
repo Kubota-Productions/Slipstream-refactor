@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://dn2hjk8g02j3t"]
 
-[ext_resource type="Script" path="res://scripts/fish_particles.gd" id="1_6bnye"]
 [ext_resource type="Texture2D" uid="uid://x4vwsxfr7m27" path="res://Assets/moth particle.png" id="1_e7ttb"]
 
 [sub_resource type="Curve" id="Curve_aoj67"]
-max_value = 3.0
+_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.195652, 1.08791), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
@@ -47,12 +46,9 @@ particles_anim_loop = true
 material = SubResource("StandardMaterial3D_y2rcf")
 size = Vector2(0.2, 0.2)
 
-[node name="MothParticles" type="GPUParticles3D"]
+[node name="MothParticles" type="GPUParticles3D" unique_id=555892361]
 amount = 10
 lifetime = 10.0
 preprocess = 1.0
 process_material = SubResource("ParticleProcessMaterial_u00ao")
 draw_pass_1 = SubResource("QuadMesh_sumvb")
-script = ExtResource("1_6bnye")
-speed = 0.0
-wander_angle = 0.2
