@@ -5,7 +5,7 @@
 
 [node name="lightpost" unique_id=744110130 instance=ExtResource("1_iulbg")]
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="BézierCircle_001" parent_id_path=PackedInt32Array(10820676) index="0" unique_id=1207713174]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="BézierCircle_001" parent_id_path=PackedInt32Array(920453505) index="0" unique_id=1207713174]
 transform = Transform3D(7.817e-08, 0, 0.655738, -0.655738, 7.817e-08, 7.817e-08, -7.817e-08, -0.655738, 9.31859e-15, 0, -2.6328e-07, 2.20855)
 visible = false
 use_collision = true
@@ -27,7 +27,6 @@ spot_angle = 44.0625
 
 [node name="MothParticles" parent="." index="3" unique_id=988075066 instance=ExtResource("2_2iuxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.90119, 1.50204)
-script = null
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." index="4" unique_id=66128688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.912, 1.52956)
