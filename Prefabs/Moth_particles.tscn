@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dn2hjk8g02j3t"]
+
+[ext_resource type="Script" path="res://scripts/fish_particles.gd" id="1_6bnye"]
+[ext_resource type="Texture2D" uid="uid://x4vwsxfr7m27" path="res://Assets/moth particle.png" id="1_e7ttb"]
+
+[sub_resource type="Curve" id="Curve_aoj67"]
+max_value = 3.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.195652, 1.08791), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gacqi"]
+curve = SubResource("Curve_aoj67")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u00ao"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector3(0.5, 0.5, 0.5)
+spread = 0.0
+initial_velocity_min = 2.0
+initial_velocity_max = 3.5
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 12.64
+scale_min = 0.5
+scale_max = 1.5
+scale_over_velocity_curve = SubResource("CurveTexture_gacqi")
+anim_speed_min = 30.0
+anim_speed_max = 70.0
+turbulence_enabled = true
+turbulence_noise_strength = 11.8
+turbulence_noise_scale = 0.1
+turbulence_noise_speed_random = 1.94
+turbulence_influence_min = 0.524
+turbulence_influence_max = 0.754
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2rcf"]
+transparency = 1
+albedo_texture = ExtResource("1_e7ttb")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_sumvb"]
+material = SubResource("StandardMaterial3D_y2rcf")
+size = Vector2(0.2, 0.2)
+
+[node name="MothParticles" type="GPUParticles3D"]
+amount = 10
+lifetime = 10.0
+preprocess = 1.0
+process_material = SubResource("ParticleProcessMaterial_u00ao")
+draw_pass_1 = SubResource("QuadMesh_sumvb")
+script = ExtResource("1_6bnye")
+speed = 0.0
+wander_angle = 0.2
