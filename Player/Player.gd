@@ -113,7 +113,7 @@ func _physics_process(delta):
 	
 	#landing state supersedes every other state
 	if is_landing:
-		if landing_timer < 0.65:
+		if landing_timer < 0.575:
 			landing_timer += delta
 			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|landing_1", 0.035)
 			print("PLAYING LANDING ANIMATION, time remaining = ", max(0.75 - landing_timer, 0))
@@ -204,7 +204,7 @@ func _physics_process(delta):
 			if distance_to_floor > FALL_HEIGHT and not is_falling:
 				print("a")
 				is_falling = true
-			elif distance_to_floor < FALL_HEIGHT and is_falling: 
+			elif distance_to_floor <= FALL_HEIGHT and is_falling: 
 				if distance_to_floor < FALL_HEIGHT/6: # add landing envelope 
 					is_falling = false
 					is_landing = true
