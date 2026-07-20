@@ -43,3 +43,5 @@ script = ExtResource("3_tok1r")
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=261954532]
 current = true
+fov = 90.0
+far = 50000.0

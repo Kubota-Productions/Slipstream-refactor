@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://eadnee0p0yji"]
+
+[ext_resource type="Texture2D" uid="uid://ce72ibr7885j" path="res://Assets/textures/4_bark texture-seamless.jpg" id="1_nm6o5"]
+
+[resource]
+albedo_color = Color(0.49839866, 0.42469332, 0.29238456, 1)
+albedo_texture = ExtResource("1_nm6o5")
+metallic_specular = 1.0
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true

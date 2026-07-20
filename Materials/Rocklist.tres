@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://8wp3awvt3fct"]
+
+[ext_resource type="Texture2D" uid="uid://cvpadjwcyvkt6" path="res://Assets/EnvironmentBases/textures/rocklist_Base_color.png" id="1_8sqcd"]
+
+[resource]
+albedo_texture = ExtResource("1_8sqcd")
+roughness = 0.0
+emission_enabled = true
+stencil_flags = 2

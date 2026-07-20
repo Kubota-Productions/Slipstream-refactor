@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c4p55epfwcdlg"]
+
+[ext_resource type="Shader" uid="uid://cp7l4navumhx8" path="res://Shaders/terrain.gdshader" id="1_8cvih"]
+[ext_resource type="Texture2D" uid="uid://c6c0volxd64o8" path="res://Assets/textures/grass.jpg" id="2_f6rwa"]
+[ext_resource type="Texture2D" uid="uid://ce72ibr7885j" path="res://Assets/textures/4_bark texture-seamless.jpg" id="3_74ncs"]
+[ext_resource type="Texture2D" uid="uid://bpm4gspbcc2ut" path="res://Assets/textures/rockwallseamless_Base_color.png" id="4_ovpee"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8cvih")
+shader_parameter/sand_texture = ExtResource("4_ovpee")
+shader_parameter/grass_texture = ExtResource("2_f6rwa")
+shader_parameter/rock_texture = ExtResource("3_74ncs")
+shader_parameter/snow_texture = ExtResource("3_74ncs")
+shader_parameter/sand_max_height = 5.406005006784994
+shader_parameter/grass_min_height = 0.4050047692374932
+shader_parameter/grass_max_height = 40.0
+shader_parameter/rock_min_height = 24.5950059182625
+shader_parameter/rock_max_height = 100.0
+shader_parameter/snow_min_height = 62.97300774121749
+shader_parameter/uv_scale = 0.10000000475000001
+shader_parameter/triplanar_sharpness = 1.0

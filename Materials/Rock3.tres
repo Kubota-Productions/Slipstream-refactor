@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dymjk26xi53gl"]
+
+[ext_resource type="Texture2D" uid="uid://jwdisqiajjp7" path="res://Assets/textures/rock_Base_color.png" id="1_avbqg"]
+
+[resource]
+albedo_texture = ExtResource("1_avbqg")
+roughness = 0.0
+emission_enabled = true
+stencil_flags = 2

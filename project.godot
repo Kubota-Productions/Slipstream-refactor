@@ -11,16 +11,12 @@ config_version=5
 [application]
 
 config/name="Slipstream"
-run/main_scene="uid://bvjpv4qus0xr0"
+run/main_scene="uid://b53le0xlo2r07"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [display]
 
-window/size/viewport_width=1200
-window/size/viewport_height=760
 window/size/mode=3
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [input]
 
@@ -95,10 +91,25 @@ lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/directional_shadow/16_bits=false
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/atlas_16_bits=false
+anti_aliasing/quality/msaa_2d=2
+anti_aliasing/quality/msaa_3d=2
 lights_and_shadows/tighter_shadow_caster_culling=false
+anti_aliasing/quality/screen_space_aa=2
+anti_aliasing/quality/use_taa=true
 lights_and_shadows/positional_shadow/atlas_size=16384
 lights_and_shadows/positional_shadow/atlas_size.mobile=4096
 lights_and_shadows/positional_shadow/atlas_quadrant_0_subdiv=3
 lights_and_shadows/positional_shadow/atlas_quadrant_1_subdiv=4
 lights_and_shadows/positional_shadow/atlas_quadrant_2_subdiv=5
 lights_and_shadows/positional_shadow/atlas_quadrant_3_subdiv=6
+
+[shader_globals]
+
+wind_direction_angle={
+"type": "float",
+"value": 0.0
+}
+wind_force={
+"type": "float",
+"value": 0.0
+}

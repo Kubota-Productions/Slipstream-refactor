@@ -6,7 +6,7 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_krj5c")
-shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo = Color(0.32172796, 0.32172796, 0.32172796, 1)
 shader_parameter/texture_albedo = ExtResource("2_uxpbi")
 shader_parameter/alpha_scissor_threshold = 0.5
 shader_parameter/albedo_texture_size = Vector2i(1000, 1000)
