@@ -1,774 +1,193 @@
 extends CharacterBody3D
 
+@onready var animation_player: AnimationPlayer = $CharacterModel/character_mixamo/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
 @onready var spring_arm: SpringArm3D = $SpringArm3D
-@onready var ground_ray_origin: Marker3D = $GroundRayOrigin
 
-# by default, ray-tracing will query all collision layers
-# setting to 1 for now, but when we add more collision layers
-# will need to revisit ray-tracing logic
-@export_flags_3d_physics var ground_collision_mask: int = 1
-
-@export var movement_states := {
-	"Idle": {
-		"id": 0,
-		"movement_speed": 0.0,
-		"acceleration": 8.0,
-		"camera_fov": 70.0,
-		"animation_speed": 1.0,
-	},
-	"Jog": {
-		"id": 1,
-		"movement_speed": 2.5,
-		"acceleration": 8.0,
-		"camera_fov": 70.0,
-		"animation_speed": 1.0,
-	},
-	"Run": {
-		"id": 2,
-		"movement_speed": 5.0,
-		"acceleration": 10.0,
-		"camera_fov": 75.0,
-		"animation_speed": 3.0,
-	},
-	"Idle_Jump": {
-		"id": 3,
-		"movement_speed": 0.0,
-		"acceleration": 0.0,
-		"camera_fov": 75.0,
-		"animation_speed": 3.5,
-	},
-	"Jog_Jump": {
-		"id": 4,
-		"movement_speed": 2.5,
-		"acceleration": 8.0,
-		"camera_fov": 75.0,
-		"animation_speed": 1.0,
-	},
-	"Run_Jump": {
-		"id": 5,
-		"movement_speed": 5.0,
-		"acceleration": 10.0,
-		"camera_fov": 75.0,
-		"animation_speed": 1.0,
-	}
-}
-
+#MOVEMENT SETTINGS
+@export var walk_speed: float = 2.5
+@export var run_speed: float = 5.0
+@export var acceleration: float = 10.0
 @export var rotation_speed: float = 8.0
-@export var jump_velocity := 7.5
 
-var movement_direction: Vector3 = Vector3.ZERO
+@export var jump_velocity: float = 10.0
+@export var gravity_multiplier: float = 1.0
+
+@export var coyote_time: float = 0.15
+@export var jump_buffer: float = 0.15
+
+const RUN_THRESHOLD := 0.40
+
+#STATE
+var move_input: Vector2 = Vector2.ZERO
 var move_direction: Vector3 = Vector3.ZERO
 
-var speed: float = 0.0
-var acceleration: float = 0.0
-var cam_rotation: float = 0.0
+var current_speed: float = 0.0
 
-# Sprint timer
-var is_running = false
-var run_timer: float = 0.0
-const RUN_THRESHOLD: float = 0.4
+var is_running := false
+var run_timer := 0.0
 
-# Jump timer
-var is_jumping = false
-var jump_timer: float = 0.0
-const IDLE_JUMP_THRESHOLD: float = 1.77 #change this to your animation run idle jump timer
-const RUN_JUMP_THRESHOLD: float = 0.92 #change this to your animation's run jump timer
+var coyote_timer := 0.0
+var jump_buffer_timer := 0.0
 
-var is_run_jumping = false
-var is_jog_jumping = false
-var is_idle_jumping = false
-var previous_jump_case = -1
+enum AnimState {
+	IDLE,
+	JOG,
+	RUN,
+	JUMP,
+	FALL,
+	LAND
+}
 
-var movement_ongoing = false
-var time_elapsed = 0.0
+var current_anim_state := AnimState.IDLE
 
-const FALL_HEIGHT: float = 3.50
-const GROUND_RAY_LENGTH: float = 100.0
+var was_on_floor := true
+var landing_timer := 0.0
 
-var is_falling = false
-var is_landing = false
+const LANDING_TIME := 0.25
 
-var landing_timer = 0.0
+# READY
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_play_animation("Armature|idle")
 
-func _ready():
-	$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|idle")
-	#_set_movement_state(movement_states["Idle"])
-	pass
-
+#INPUT
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventMouseMotion:
-		return
-	
-	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
-		return
-	
-	if not movement_ongoing and not spring_arm.camera_moved:
-		var yaw_delta: float = -event.relative.x * spring_arm.mouse_sensitivity
-	
-		if abs(yaw_delta) > 0.01:
-			spring_arm.camera_moved = true
 
-func _physics_process(delta):
-	
-	#landing state supersedes every other state
-	if is_landing:
-		if landing_timer < 0.575:
-			landing_timer += delta
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|landing_1", 0.035)
-			print("PLAYING LANDING ANIMATION, time remaining = ", max(0.75 - landing_timer, 0))
-		else:
-			landing_timer = 0.0
-			is_landing = false
-			is_falling = false
+	if event is InputEventMouseMotion:
 
-	time_elapsed += delta
-	
-	# initial gravity setup
-	if time_elapsed > 0.1:
-		velocity.y -= 1.1*ProjectSettings.get_setting("physics/3d/default_gravity") * delta
+		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			return
+
+		if move_input == Vector2.ZERO and !spring_arm.camera_moved:
+
+			var yaw_delta: float = -event.relative.x * spring_arm.mouse_sensitivity
+
+			if abs(yaw_delta) > 0.01:
+				spring_arm.camera_moved = true
+
+#PHYSICS
+func _physics_process(delta: float) -> void:
+
+	_read_input(delta)
+	_apply_gravity(delta)
+	_handle_jump(delta)
+	_handle_rotation()
+	_handle_movement(delta)
+
+	move_and_slide()
+
+	_update_animation(delta)
+
+#INPUT HANDLING
+func _read_input(delta: float) -> void:
+
+	move_input.x = Input.get_axis("left", "right")
+	move_input.y = Input.get_axis("forward", "backwards")
+
+	if Input.is_action_pressed("Run"):
+		run_timer += delta
+
+		if run_timer >= RUN_THRESHOLD:
+			is_running = true
 	else:
-		movement_direction.x = 0.0
-		movement_direction.z = 0.0
-		return
-		
-	# Input
-	movement_direction.x = Input.get_axis("left", "right") if not is_landing else 0.0
-	movement_direction.z = Input.get_axis("forward", "backwards") if not is_landing else 0.0
+		run_timer = 0.0
+		is_running = false
 
-	# ------ UPDATE IDLE/JOG/RUN
-	movement_ongoing = is_movement_ongoing() if not is_landing else false
-	
-	if not is_landing:
-		# OLD FALLING LOGIC
-		#engine detects whether player is airborne
-		#is_falling = !is_on_floor()
+	if Input.is_action_just_pressed("Jump"):
+		jump_buffer_timer = jump_buffer
 
-		# ------------------
-		#
-		# RAY CASTING FALLING LOGIC
-		#
-		#
-		# if the player is not jumping
-		# we need to cast a ray in the direction of the 
-		# player's local y-axis 
-		
-		# the position of the initial ray
-		var ray_start: Vector3 = ground_ray_origin.global_position
-		
-		# the player's normalized y-axis vector
-		var local_down: Vector3 = -global_transform.basis.y.normalized()
-		
-		# the vector starting at the player's global 3d position
-		# and pointing downwards in the y-axis' direction
-		var ray_end: Vector3 = ray_start + local_down * GROUND_RAY_LENGTH
-		
-		# ray-casting 
-		var query := PhysicsRayQueryParameters3D.create(
-			ray_start, # the global coordinates of the start of the ray
-			ray_end, # the global coordinates of the end of the ray
-			ground_collision_mask, # all collision layers are detected by default
-			[get_rid()] # excludes the player id so the ray doesn't hit its own collider
-		)
-		
-		# cast the ray
-		var result: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
-		
-		# note: the result is a dictionary
-		# if they ray doesn't hit anything the dictionary will be empty
-		# if it did hit something it will contain collision infromation
-		# example:
-		#result = 
-		#	{ 
-		#		"position": (7.497855, -1.657826, -70.11678), 
-		#		"normal": (0.0, 1.0, 0.0), 
-		#		"face_index": -1, 
-		#		"collider_id": 38856033880, 
-		#		"collider": StaticBody3D:<StaticBody3D#38856033880>, 
-		#		"shape": 0, 
-		#		"rid": RID(5171140624385) 
-		#	}
-		
-		var distance_to_floor: float = 0.0
-		
-		if result.is_empty():
-			print("result = ", result)
-			pass
+	if jump_buffer_timer > 0.0:
+		jump_buffer_timer -= delta
+
+#GRAVITY
+func _apply_gravity(delta: float) -> void:
+
+	if is_on_floor():
+		coyote_timer = coyote_time
+	else:
+		coyote_timer -= delta
+		velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier * delta
+
+#JUMP
+func _handle_jump(delta: float) -> void:
+
+	# Jump if we're on the floor (or within coyote time)
+	# and the player pressed jump recently.
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
+
+		velocity.y = jump_velocity
+
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
+
+	# Variable jump height.
+	# Releasing Jump while moving upward cuts the jump short.
+	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
+		velocity.y *= 0.5
+
+#ROTATION
+func _handle_rotation() -> void:
+
+	if move_input.length_squared() > 0.0:
+
+		if spring_arm.camera_moved:
+
+			var target_yaw := spring_arm.global_rotation.y
+
+			var player_rotation := global_rotation
+			player_rotation.y = target_yaw
+			global_rotation = player_rotation
+
+			spring_arm.rotation.y = 0.0
+			spring_arm.camera_moved = false
+
 		else:
-			distance_to_floor = ray_start.distance_to(result["position"])
-			if distance_to_floor > FALL_HEIGHT:
-				print("distance to floor = ", distance_to_floor)
-				pass
-		
-		if not is_on_floor():
-			if distance_to_floor > FALL_HEIGHT and not is_falling:
-				print("a")
-				is_falling = true
-			elif distance_to_floor <= FALL_HEIGHT and is_falling: 
-				if distance_to_floor < FALL_HEIGHT/6: # add landing envelope 
-					is_falling = false
-					is_landing = true
-				else:
-					is_falling = true
-					pass
-			elif distance_to_floor > FALL_HEIGHT and is_falling:
-				#IGNORE, DEFAULT FALL STATE
-				pass
-		else:
-			is_falling = false
 
-		
-		if is_falling:
-			if is_jumping:
-				# if the player is jumping we bypass the loop
-				# at this point -- once the jump animation is
-				# done running we revert to the fall animation
-				
-				pass
-			else:
-				pass
+			rotate_y(spring_arm.yaw_input)
 
-		var run_pressed = Input.is_action_pressed("Run")
-		var jump_pressed = Input.is_action_just_pressed("Jump")
+	else:
 
-		if jump_pressed and is_on_floor():
-			velocity.y = jump_velocity
-		var threshold = run_timer >= RUN_THRESHOLD
+		spring_arm.rotate_y(spring_arm.yaw_input)
 
-		#print("movement_ongoing = ", movement_ongoing, " // run_timer = ", run_timer, " // jump_timer = ", jump_timer)
-		
-		if movement_ongoing:
-			if spring_arm.camera_moved:
-				# store the spring arm's global rotation
-				var target_yaw = spring_arm.global_rotation.y
-				
-				# set the player's y rotation to the spring arm
-				var player_rotation = global_rotation
-				player_rotation.y = target_yaw
-				global_rotation = player_rotation
-				
-				# clear the spring arm's local rotation
-				spring_arm.rotation.y = 0.0
-				spring_arm.camera_moved = false
+#MOVEMENT
+func _handle_movement(delta: float) -> void:
 
-			else:
-				# moving camera
-				rotate_y(spring_arm.yaw_input)
-		else:
-			# rotate the spring arm
-			spring_arm.rotate_y(spring_arm.yaw_input)
+	if move_input.length_squared() > 0.0:
 
-		# --- CASE 1: NOT JUMPING
-		#idle state
-		if not movement_ongoing:
-			if is_running:
-				#set run to false
-				is_running = false
-
-				#set run_timer to zero
-				run_timer = 0.0
-			else:
-				# no movement, check for idle jump state
-				if jump_pressed:
-					print("idle jump")
-					is_idle_jumping = true
-					is_jog_jumping = false
-					is_run_jumping = false
-					is_jumping = true
-
-			if is_jumping:
-				if is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD:
-
-					#iterate the timer
-					jump_timer += delta
-				elif is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD:
-
-					#iterate the timer
-					jump_timer += delta
-				elif is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD:
-
-					#iterate the timer
-					jump_timer += delta
-				else:
-					#set jump to false
-					is_jumping = false
-
-					#set jump states to false
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = false
-
-					#set jump timer to zero
-					jump_timer = 0.0
-			else:
-				pass
-
-			#set run timer to zero
-			run_timer = 0.0
-
-		#non-idle states
-		if movement_ongoing:
-			if not is_jumping:
-				#sanity check - increment run_timer if run pressed
-				if run_pressed:
-					run_timer += delta
-				else:
-					run_timer = 0.0
-
-				if is_running and run_pressed and jump_pressed and threshold:
-					#print("run - case 1")
-
-					#case 1: player running, run pressed, jump just pressed, threshold met
-					#default case to start run_jump anim
-
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = true
-					is_jumping = true
-				elif is_running and run_pressed and jump_pressed and not threshold:
-					#print("run - case 02")
-
-					#case 2: player running, run pressed, jump just pressed, threshold not met
-					#bug state: player can't be running if threshold isn't met
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif is_running and run_pressed and not jump_pressed and threshold:
-					#print("run - case 3")
-					#case 3: player running, run pressed, jump not just pressed, threshold met
-					#default state for run loop, nothing to do here - pass
-					pass
-				elif is_running and run_pressed and not jump_pressed and not threshold:
-					#print("run - case 04")
-					#case 4: player running, run pressed, jump not just pressed, threshold not met
-					#default state to cancel run loop - running but threshold not met
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-					pass
-				elif is_running and not run_pressed and jump_pressed and threshold:
-					#print("run - case 05")
-					#case 5: player running, run not pressed, jump just pressed and threshold met
-					#could be the state right before the player releases the run command
-					#we want this to be a run_jump because the player is technically still running
-					#and the threshold is also met
-					#but we need to set the speed to jog unfortunately
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player run_jumps
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = true
-					is_jumping = true
-				elif is_running and not run_pressed and jump_pressed and not threshold:
-					#print("run - case 06")
-					#case 6: player running, run not pressed, jump just pressed and threshold not met
-					#this may be an empty state but we'll make it into a run jump as the previous state
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player run_jumps
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = true
-					is_jumping = true
-				elif is_running and not run_pressed and not jump_pressed and threshold:
-					#print("run - case 07")
-					#case 7: player running, run not pressed, jump not just pressed, threshold met
-					#cancel run state -> run not pressed
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-				elif is_running and not run_pressed and not jump_pressed and not threshold:
-					#print("run - case 08")
-					#case 8: player running, run not pressed, jump not just pressed, threshold not met
-					#cancel run state -> run not pressed and threshold not met
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif not is_running and run_pressed and jump_pressed and threshold:
-					#print("run - case 09")
-					#case 9: player not running, run pressed, jum just pressed and threshold met
-					#this may be an empty state but we'll make it into a jog_jump since there's movement
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif not is_running and run_pressed and jump_pressed and not threshold:
-					#print("run - case 10")
-					#case 10: player not running, run pressed, jump just pressed and threshold not met
-					#this may be an empty state but we'll make it into a jog_jump since there's movement
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif not is_running and run_pressed and not jump_pressed and threshold:
-					#print("run - case 11")
-					#case 11: player not running, run pressed, jump not just pressed, threshold met
-					#default state to start run cycle
-
-					#start run cycle
-					is_running = true
-				elif not is_running and run_pressed and not jump_pressed and not threshold:
-					#print("run - case 12")
-					#case 12: player not running, run pressed, jump not just pressed, threshold not met
-					#default state to load run cycle - pass
-					pass
-				elif not is_running and not run_pressed and jump_pressed and threshold:
-					#print("run - case 13")
-					#case 13: player not running, run not pressed, jump just pressed, threshold met
-					#this may be an empty state but we'll make it into a jog_jump since there's movement
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif not is_running and not run_pressed and jump_pressed and not threshold:
-					#print("run - case 14")
-					#case 14: player not running, run not pressed, jump just pressed, threshold not met
-					#default state for jog jump
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-
-					#now set the jump states so the player jog_jumps
-					is_idle_jumping = false
-					is_jog_jumping = true
-					is_run_jumping = false
-					is_jumping = true
-				elif not is_running and not run_pressed and not jump_pressed and threshold:
-					#print("run - case 15")
-					#case 15: player not running, run not pressed, jump not just pressed, threshold met
-					#bug state: need to zero timer
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the run_timer back to zero because the player is running
-					run_timer = 0.0
-				elif not is_running and not run_pressed and not jump_pressed and not threshold:
-					#print("run - case 16")
-					#case 16: player not running, run not pressed, jump not just pressed, not over threshold
-					#default state for jog cycle
-
-					#if you are running, stop and zero the timer
-					if is_running:
-						is_running = false
-						run_timer = 0.0
-
-		# --- CASE 2: JUMPING
-		#idle states
-		if not movement_ongoing:
-			if is_jumping:
-				#sanity check -- set jump_timer back to zero if we're done jumping
-				is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
-
-				#print("is_run_jumping = ", is_run_jumping, " // is_jog_jumping = ", is_jog_jumping, " // is_idle_jumping = ", is_idle_jumping)
-				#print("is_jumping = ", is_jumping)
-				#check if we're still jumping
-				if !is_jumping:
-					#set timer to zero
-					jump_timer = 0.0
-
-					#reset run states
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = false
-				#otherwise continue
-				else:
-					pass
-		else:
-			#insert logic for idle jump state (such as air movement)
-			pass
-		#non-idle states
-		if movement_ongoing:
-			if is_jumping:
-				#sanity check -- set jump_timer back to zero if we're done jumping
-				is_jumping = (is_run_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_jog_jumping and jump_timer < RUN_JUMP_THRESHOLD) or (is_idle_jumping and jump_timer < IDLE_JUMP_THRESHOLD)
-
-				#check if we're still jumping
-				if !is_jumping:
-					#set timer to zero
-					jump_timer = 0.0
-
-					#reset run states
-					is_idle_jumping = false
-					is_jog_jumping = false
-					is_run_jumping = false
-				#otherwise continue
-				else:
-					jump_timer += delta
-
-				if is_running and run_pressed and jump_pressed and threshold:
-					#print("jump - case 01")
-					#case 1 TTTT
-
-					#case 1: player is running, run is pressed, jump just pressed, threshold met
-					# -> this is the starting case for the jump animation - pass
-					# -> don't do anything unless you want a double jump
-					pass
-				elif is_running and run_pressed and jump_pressed and not threshold:
-					#print("jump - case 02")
-					#case 2 TTTF
-					pass
-				elif is_running and run_pressed and not jump_pressed and threshold:
-					#print("jump - case 03")
-					#case 3 TTFT
-
-
-					#case 3: player is running, run is pressed, jump not pressed and over threshold
-					# -> this is the main case for the run jump animation - pass
-					pass
-				elif is_running and run_pressed and not jump_pressed and not threshold:
-					#print("jump - case 04")
-					#case 4 TTFF
-					pass
-				elif is_running and not run_pressed and jump_pressed and threshold:
-					#print("jump - case 05")
-					#case 5 TFTT
-					pass
-				elif is_running and not run_pressed and jump_pressed and not threshold:
-					#print("jump - case 06")
-					#case 6 TFTF
-					pass
-				elif is_running and not run_pressed and not jump_pressed and threshold:
-					#print("jump - case 07")
-
-					# -- CASE 7: player is running, run not pressed, jump not just pressed, over threshold T/F/F/T
-					#bug state: can't run if run action not pressed
-
-					#revert speed back to jog
-					is_running = false
-
-					#set the sprint_timer back to zero because the player is running
-					run_timer = 0.0
-
-					# note: this case T/F/F/T will trigger either case 14 F/F/T/F or case 16 F/F/F/F
-					# set previous_jump_case to 7 -- anim gets handled by 14 and 16
-					previous_jump_case = 7
-				elif is_running and not run_pressed and not jump_pressed and not threshold:
-					#print("jump - case 8")
-					#case 8 TFFF
-					pass
-				elif not is_running and run_pressed and jump_pressed and threshold:
-					#print("jump - case 9")
-					#case 9 FTTT
-					pass
-				elif not is_running and run_pressed and jump_pressed and not threshold:
-					#print("jump - case 10")
-					#case 10 FTTF
-					pass
-				elif not is_running and run_pressed and not jump_pressed and threshold:
-					#print("jump - case 11")
-					#case 11 FTFT
-					pass
-				elif not is_running and run_pressed and not jump_pressed and not threshold:
-					#print("jump - case 12")
-					#case 12 FTFF
-					pass
-				elif not is_running and not run_pressed and jump_pressed and threshold:
-					#print("jump - case 13")
-					#case 13 FFTT
-					pass
-				elif not is_running and not run_pressed and jump_pressed and not threshold:
-					#print("jump - case 14")
-					#case 14 FFTF
-
-					# -- CASE 14: player not running, run not pressed, jump just pressed and not over threshold
-					#seems like generally, this is the default state for jog_jump when the jump is pressed
-					#-> don't do anything extra unless you want double jumps
-
-					# ERROR HANDLING -
-					# this case can be triggered by the following run states:
-					#
-					# 7:   is_running, !run_pressed, !jump_pressed,  threshold
-					# ->  !is_running, !run_pressed,  jump_pressed, !threshold
-					#
-					#above cases - the player had run turned on, but because threshold is no longer valid
-					#              but because they either let go of the run button or the threshold was
-					#              no longer valid now they need to finish their run_jump animation at a slower speed
-					if previous_jump_case == 7:
-						if is_run_jumping and not is_jog_jumping:
-							#don't do anything if run_jump is still running
-							pass
-						else:
-							#otherwise reset run states (this will stop is_jumping on the next frame)
-							is_idle_jumping = false
-							is_jog_jumping = false
-							is_run_jumping = false
-
-							#reset jump case
-							previous_jump_case = -1
-				elif not is_running and not run_pressed and jump_pressed and not threshold:
-					#print("jump - case 15")
-					#case 15 FFTF
-					pass
-				elif not is_running and not run_pressed and not jump_pressed and not threshold:
-					#print("jump - case 16")
-
-					# -- CASE 16: player not running, run not pressed, jump not pressed and not over threshold
-					#seems like the default state for jog_jump
-					#-> don't do anything extra unless you want double jumps
-
-					# ERROR HANDLING -
-					# this case can be triggered by the following run states:
-					#
-					# 7:   is_running, !run_pressed, !jump_pressed,  threshold
-					# ->  !is_running, !run_pressed, !jump_pressed, !threshold
-					#
-					if previous_jump_case == 7:
-						if is_run_jumping:
-							#don't do anything if run_jump is still running
-							pass
-						else:
-							#otherwise reset run states (this will stop is_jumping on the next frame)
-							is_idle_jumping = false
-							is_jog_jumping = false
-							is_run_jumping = false
-
-							#and reset jump case
-							previous_jump_case = -1
-					# this case can also be triggered by the following jog states:
-					#
-					# 13:  !is_running, !run_pressed,  jump_pressed,  threshold
-					# ->   !is_running, !run_pressed, !jump_pressed, !threshold
-					#
-					# 15:  !is_running, !run_pressed, !jump_pressed,  threshold
-					#  ->  !is_running, !run_pressed, !jump_pressed, !threshold
-					#
-					#cases 13, 15 - the player had run turned off and their threshold states is not really valid
-					#               so we make sure that they complete their animations and reset anim states at
-					#               the end
-					if is_run_jumping and not is_jog_jumping and not is_idle_jumping:
-						print("run jumping, jump_timer = ", jump_timer)
-						pass
-					elif is_jog_jumping and not is_run_jumping and not is_idle_jumping:
-						print("jog jumping, jump_timer = ", jump_timer)
-						pass
-					elif is_idle_jumping and not is_run_jumping and not is_jog_jumping:
-						print("idle jumping, jump_timer = ", jump_timer)
-						pass
-					else:
-						#otherwise reset run states
-						is_idle_jumping = false
-						is_jog_jumping = false
-						is_run_jumping = false
-
-						#and reset jump case
-						previous_jump_case = -1
-
-						print("jump_timer = ", jump_timer)
-
-				#see which case your jump falls under
-				#get_tree().paused = true
-			else:
-				#print("I am not jumping!")
-				pass
-
-		if not movement_ongoing and not is_jumping:
-			_set_movement_state(movement_states["Idle"])
-			if not is_falling:
-				$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|idle")
-			else:
-				$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|falling_1")
-		elif movement_ongoing and not is_running and not is_jumping:
-			_set_movement_state(movement_states["Jog"])
-			if not is_falling:
-				$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jog")
-			else:
-				$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|falling_1")
-		elif movement_ongoing and is_running and not is_jumping:
-			_set_movement_state(movement_states["Run"])
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run")
-		elif movement_ongoing and is_run_jumping and not is_jog_jumping and not is_idle_jumping:
-			_set_movement_state(movement_states["Run_Jump"])
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run_jump")
-		elif movement_ongoing and is_jog_jumping and not is_run_jumping and not is_idle_jumping:
-			_set_movement_state(movement_states["Jog_Jump"])
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|run_jump")
-		#idle jump no movement
-		elif !movement_ongoing and is_idle_jumping and not is_jog_jumping and not is_run_jumping:
-			_set_movement_state(movement_states["Idle_Jump"])
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jump")
-		#idle jump movement
-		elif movement_ongoing and is_idle_jumping and not is_jog_jumping and not is_run_jumping:
-			_set_movement_state(movement_states["Jog_Jump"])
-			$CharacterModel/character_mixamo/AnimationPlayer.play("Armature|jump")
-
-	# Movement loop
-	if is_movement_ongoing():
-		var input_direction := movement_direction.normalized()
+		var input_direction := Vector3(
+			move_input.x,
+			0.0,
+			move_input.y
+		).normalized()
 
 		move_direction = global_transform.basis * input_direction
-		move_direction.y = 0
+		move_direction.y = 0.0
 		move_direction = move_direction.normalized()
 
-		var target_velocity := move_direction * speed
+		current_speed = run_speed if is_running else walk_speed
 
-		velocity.x = lerp(velocity.x, target_velocity.x, acceleration * delta)
-		velocity.z = lerp(velocity.z, target_velocity.z, acceleration * delta)
+		var target_velocity := move_direction * current_speed
 
-		var target_rotation := atan2(move_direction.x, move_direction.z)
+		var air_control := 0.45 if !is_on_floor() else 1.0
+
+		velocity.x = lerp(
+			velocity.x,
+			target_velocity.x,
+			acceleration * air_control * delta
+		)
+
+		velocity.z = lerp(
+			velocity.z,
+			target_velocity.z,
+			acceleration * air_control * delta
+		)
+
+		var target_rotation := atan2(
+			move_direction.x,
+			move_direction.z
+		)
 
 		character_model.rotation.y = lerp_angle(
 			character_model.rotation.y,
@@ -776,24 +195,143 @@ func _physics_process(delta):
 			rotation_speed * delta
 		)
 
-		#idle jump fix - stops the player from moving unless they're in a certain time interval
-		#                so the player doesn't slide
-		if is_idle_jumping and (jump_timer > 1.25 or jump_timer < 0.45):
-			velocity.x = 0
-			velocity.z = 0
 	else:
-		velocity.x = 0
-		velocity.z = 0
 
-	move_and_slide()
+		velocity.x = move_toward(
+			velocity.x,
+			0.0,
+			acceleration * delta
+		)
 
-func _set_movement_state(state: Dictionary):
-	speed = state["movement_speed"]
-	acceleration = state["acceleration"]
+		velocity.z = move_toward(
+			velocity.z,
+			0.0,
+			acceleration * delta
+		)
 
-	#direct assignment (no Tween, no path resolution)
-	animation_tree.set("parameters/movement_blend/blend_position", state["id"])
-	animation_tree.set("parameters/movement_anim_speed/scale", state["animation_speed"])
+#ANIMATION
+func _update_animation(delta: float) -> void:
 
-func is_movement_ongoing() -> bool:
-	return movement_direction.length_squared() > 0.0025
+	# Detect landing
+	if !was_on_floor and is_on_floor():
+		current_anim_state = AnimState.LAND
+		landing_timer = LANDING_TIME
+		_play_animation("Armature|landing_1")
+
+	was_on_floor = is_on_floor()
+
+	# Let the landing animation finish
+	if landing_timer > 0.0:
+		landing_timer -= delta
+		return
+
+	# Airborne
+	if !is_on_floor():
+
+		if velocity.y > 0.0:
+
+			if current_anim_state != AnimState.JUMP:
+				current_anim_state = AnimState.JUMP
+
+				if move_input.length_squared() > 0.0:
+					_play_animation("Armature|run_jump")
+				else:
+					_play_animation("Armature|jump")
+
+		else:
+
+			if current_anim_state != AnimState.FALL:
+				current_anim_state = AnimState.FALL
+				_play_animation("Armature|falling_1")
+
+		return
+
+	# Grounded
+
+	if move_input.length_squared() == 0.0:
+
+		if current_anim_state != AnimState.IDLE:
+			current_anim_state = AnimState.IDLE
+			_play_animation("Armature|idle")
+
+	elif is_running:
+
+		if current_anim_state != AnimState.RUN:
+			current_anim_state = AnimState.RUN
+			_play_animation("Armature|run")
+
+	else:
+
+		if current_anim_state != AnimState.JOG:
+			current_anim_state = AnimState.JOG
+			_play_animation("Armature|jog")
+
+#PLAY ANIMATION
+func _play_animation(anim_name: String) -> void:
+
+	if animation_player.current_animation == anim_name \
+	and animation_player.is_playing():
+		return
+
+	animation_player.play(anim_name)
+
+#HELPERS
+func is_moving() -> bool:
+	return move_input.length_squared() > 0.001
+
+#OPTIONAL CAMERA IMPROVEMENTS
+func _process(_delta: float) -> void:
+
+	# Keep the camera's local pitch within a sensible range.
+	# (Yaw is already handled by your SpringArm script.)
+	spring_arm.rotation.x = clamp(
+		spring_arm.rotation.x,
+		deg_to_rad(-80.0),
+		deg_to_rad(70.0)
+	)
+
+#OPTIONAL HELPERS
+func force_idle() -> void:
+
+	velocity = Vector3.ZERO
+	move_input = Vector2.ZERO
+	run_timer = 0.0
+	is_running = false
+
+	current_anim_state = AnimState.IDLE
+	_play_animation("Armature|idle")
+
+
+func stop_horizontal_velocity() -> void:
+
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+
+func launch(direction: Vector3, force: float) -> void:
+
+	velocity += direction.normalized() * force
+
+
+func set_running(enabled: bool) -> void:
+
+	is_running = enabled
+
+	if !enabled:
+		run_timer = 0.0
+
+#DEBUG
+@export var debug_print_state := false
+
+func _physics_process_debug() -> void:
+
+	if !debug_print_state:
+		return
+
+	print(
+		"Floor:", is_on_floor(),
+		" | Run:", is_running,
+		" | Speed:", current_speed,
+		" | Y:", snapped(velocity.y, 0.01),
+		" | State:", current_anim_state
+	)
