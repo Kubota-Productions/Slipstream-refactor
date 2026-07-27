@@ -42,12 +42,14 @@ parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1184963165]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27138573, 1.7270203, 0)
-spring_length = 0.5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.727, 0)
+spring_length = 0.2
 script = ExtResource("3_tok1r")
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=261954532]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.30072963)
+[node name="Cameraoffset" type="Node3D" parent="SpringArm3D" unique_id=486145548]
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D/Cameraoffset" unique_id=261954532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46, 0, 0.301)
 current = true
 fov = 90.0
 far = 50000.0

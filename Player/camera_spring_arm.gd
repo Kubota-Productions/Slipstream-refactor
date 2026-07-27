@@ -17,7 +17,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 
 func _physics_process(delta: float) -> void:
-	#rotate_y(yaw_input)
 
 	rotation.x += pitch_input
 	rotation.x = clamp(rotation.x, deg_to_rad(-80), deg_to_rad(60))
