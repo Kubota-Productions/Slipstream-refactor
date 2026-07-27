@@ -27,7 +27,7 @@ extends CharacterBody3D
 	},
 	"Run": {
 		"id": 2,
-		"movement_speed": 15.0,
+		"movement_speed": 5.0,
 		"acceleration": 10.0,
 		"camera_fov": 75.0,
 		"animation_speed": 3.0,
@@ -56,6 +56,7 @@ extends CharacterBody3D
 }
 
 @export var rotation_speed: float = 8.0
+@export var jump_velocity := 7.5
 
 var movement_direction: Vector3 = Vector3.ZERO
 var move_direction: Vector3 = Vector3.ZERO
@@ -125,7 +126,7 @@ func _physics_process(delta):
 	time_elapsed += delta
 	
 	# initial gravity setup
-	if time_elapsed > 5.0:
+	if time_elapsed > 0.1:
 		velocity.y -= 1.1*ProjectSettings.get_setting("physics/3d/default_gravity") * delta
 	else:
 		movement_direction.x = 0.0
@@ -230,6 +231,9 @@ func _physics_process(delta):
 
 		var run_pressed = Input.is_action_pressed("Run")
 		var jump_pressed = Input.is_action_just_pressed("Jump")
+
+		if jump_pressed and is_on_floor():
+			velocity.y = jump_velocity
 		var threshold = run_timer >= RUN_THRESHOLD
 
 		#print("movement_ongoing = ", movement_ongoing, " // run_timer = ", run_timer, " // jump_timer = ", jump_timer)

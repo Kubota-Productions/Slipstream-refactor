@@ -249,6 +249,12 @@ transform = Transform3D(2.12, 0, 0, 0, -9.266814e-08, 2.12, 0, -2.12, -9.266814e
 [node name="rock6" parent="ENV" unique_id=177246286 instance=ExtResource("7_xwm54")]
 transform = Transform3D(3.99, 0, 0, 0, -1.7440844e-07, 3.99, 0, -3.99, -1.7440844e-07, -1.583261, -48.9128, 160.50911)
 
+[node name="rock17" parent="ENV" unique_id=2068096393 instance=ExtResource("7_xwm54")]
+transform = Transform3D(2.3253837, -2.8526542, 1.5411209, -0.20543447, 1.7630597, 3.5734472, -3.2358136, -2.1619627, 0.88064075, -13.161932, -45.75099, 160.50911)
+
+[node name="rock18" parent="ENV" unique_id=1663339470 instance=ExtResource("7_xwm54")]
+transform = Transform3D(3.8385673, -0.8726076, 0.651201, -0.20543441, 1.7630601, 3.5734477, -1.0692542, -3.4713511, 1.6512176, -24.822493, -39.07334, 151.27994)
+
 [node name="rock8" parent="ENV" unique_id=156878457 instance=ExtResource("7_xwm54")]
 transform = Transform3D(2.685, 0, 0, 0, 2.685, 9.562942e-15, 0, -9.562942e-15, 2.685, -15.1176815, -43.23412, 132.4391)
 
