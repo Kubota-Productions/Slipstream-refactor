@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://1tre4i1xukka"
-path="res://.godot/imported/Gravrushcustom1.fbx-9de73ae4fedfcacd4491314b398c877f.scn"
+uid="uid://bvuemmct1dv8l"
+path="res://.godot/imported/Gravrushcustom.fbx-09fbff41bbd8423bfd9ce26cb43865bf.scn"
 
 [deps]
 
-source_file="res://Player/Gravrushcustom1.fbx"
-dest_files=["res://.godot/imported/Gravrushcustom1.fbx-9de73ae4fedfcacd4491314b398c877f.scn"]
+source_file="res://Player/Gravrushcustom.fbx"
+dest_files=["res://.godot/imported/Gravrushcustom.fbx-09fbff41bbd8423bfd9ce26cb43865bf.scn"]
 
 [params]
 
@@ -41,10 +41,15 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"clothing": {
+"colourtest": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Player/clothing.tres",
-"use_external/path": "uid://ys3i1qniyqr3"
+"use_external/fallback_path": "res://Materials/CharacterMat.tres",
+"use_external/path": "uid://bw5ds5ewyj5co"
+},
+"glasses": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Materials/CharacterMat.tres",
+"use_external/path": "uid://bw5ds5ewyj5co"
 }
 }
 }

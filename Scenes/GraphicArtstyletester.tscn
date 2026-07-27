@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://csfgyv2n0t8td" path="res://Prefabs/rock28.tscn" id="25_l2w7v"]
 [ext_resource type="PackedScene" uid="uid://dgn7ljruokyg5" path="res://Prefabs/rock29.tscn" id="26_dtlt1"]
 [ext_resource type="PackedScene" uid="uid://dhlw255c6bpxu" path="res://Prefabs/rock30.tscn" id="27_geruc"]
+[ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="31_2vi60"]
 
 [sub_resource type="Environment" id="Environment_jfn6g"]
 background_mode = 1
@@ -406,5 +407,8 @@ transform = Transform3D(3.0463462, 1.7375596, 0, -4.02414, 1.3153639, 0, 0, 0, 4
 
 [node name="Cube_058" parent="." unique_id=1889855570 instance=ExtResource("27_geruc")]
 transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, -7.24769, -46.336327, 84.11181)
+
+[node name="Gravrushcustom" parent="." unique_id=322886740 instance=ExtResource("31_2vi60")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5774734, -42.528465, 157.87622)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]

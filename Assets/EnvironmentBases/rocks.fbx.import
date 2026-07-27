@@ -43,7 +43,7 @@ _subresources={
 "materials": {
 "rock": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Materials/Rocksunshaded.tres",
+"use_external/fallback_path": "res://Materials/Rock3.tres",
 "use_external/path": "uid://dymjk26xi53gl"
 }
 }
