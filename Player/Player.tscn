@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ccdc06etdbopk"]
 
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
+[ext_resource type="Script" uid="uid://ed7hjggblkes" path="res://Player/GravityController.gd" id="2_8g4oa"]
 [ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
 [ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="3_ddoul"]
 [ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
@@ -23,14 +24,17 @@ node_connections = [&"output", 0, &"movement_anim_speed", &"movement_anim_speed"
 [node name="Player" type="CharacterBody3D" unique_id=2134162341]
 script = ExtResource("1_tok1r")
 
+[node name="GravityController" type="Node" parent="." unique_id=1621988856]
+script = ExtResource("2_8g4oa")
+
 [node name="CharacterModel" type="Node3D" parent="." unique_id=1574064996]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="character_mixamo" parent="CharacterModel" unique_id=547239779 instance=ExtResource("2_tok1r")]
+visible = false
 
 [node name="Gravrushcustom" parent="." unique_id=262543774 instance=ExtResource("3_ddoul")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1700991861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)

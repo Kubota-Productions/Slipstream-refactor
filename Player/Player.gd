@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+@onready var gravity_controller: GravityController = $GravityController
 @onready var animation_player: AnimationPlayer = $CharacterModel/character_mixamo/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
@@ -50,10 +51,22 @@ const LANDING_TIME := 0.25
 # READY
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+	gravity_controller.setup(
+		self,
+		$SpringArm3D/Cameraoffset/Camera3D
+	)
+
 	_play_animation("Armature|idle")
 
 #INPUT
 func _unhandled_input(event: InputEvent) -> void:
+
+	if event.is_action_pressed("GravityShift"):
+		gravity_controller.enter_levitating()
+
+	if event.is_action_released("GravityShift"):
+		gravity_controller.begin_shift()
 
 	if event is InputEventMouseMotion:
 
@@ -74,9 +87,12 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_jump(delta)
 	_handle_rotation()
-	_handle_movement(delta)
+	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
+		gravity_controller.update_shift(delta)
 
 	move_and_slide()
+
+	gravity_controller.detect_wall()
 
 	_update_animation(delta)
 
@@ -102,13 +118,14 @@ func _read_input(delta: float) -> void:
 		jump_buffer_timer -= delta
 
 #GRAVITY
-func _apply_gravity(delta: float) -> void:
+func _apply_gravity(delta):
 
 	if is_on_floor():
 		coyote_timer = coyote_time
 	else:
 		coyote_timer -= delta
-		velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * gravity_multiplier * delta
+
+	gravity_controller.apply_gravity(delta)
 
 #JUMP
 func _handle_jump(delta: float) -> void:
@@ -117,7 +134,7 @@ func _handle_jump(delta: float) -> void:
 	# and the player pressed jump recently.
 	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 
-		velocity.y = jump_velocity
+		velocity -= gravity_controller.gravity_direction * jump_velocity
 
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
@@ -216,7 +233,7 @@ func _update_animation(delta: float) -> void:
 	if !was_on_floor and is_on_floor():
 		current_anim_state = AnimState.LAND
 		landing_timer = LANDING_TIME
-		_play_animation("Armature|landing_1")
+		_play_animation("Armature|gravity_to_idle")
 
 	was_on_floor = is_on_floor()
 
