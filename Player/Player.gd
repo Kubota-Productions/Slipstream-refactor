@@ -1,10 +1,11 @@
 extends CharacterBody3D
 
+@onready var visual_root: Node3D = $VisualRoot
 @onready var gravity_controller: GravityController = $GravityController
-@onready var animation_player: AnimationPlayer = $CharacterModel/character_mixamo/AnimationPlayer
-@onready var animation_tree: AnimationTree = $AnimationTree
-@onready var character_model: Node3D = $CharacterModel
-@onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var animation_player: AnimationPlayer = $VisualRoot/CharacterModel/character_mixamo/AnimationPlayer
+@onready var animation_tree: AnimationTree = $VisualRoot/AnimationTree
+@onready var character_model: Node3D = $VisualRoot/CharacterModel
+@onready var spring_arm: SpringArm3D = $VisualRoot/SpringArm3D
 
 #MOVEMENT SETTINGS
 @export var walk_speed: float = 2.5
@@ -13,7 +14,6 @@ extends CharacterBody3D
 @export var rotation_speed: float = 8.0
 
 @export var jump_velocity: float = 10.0
-@export var gravity_multiplier: float = 1.0
 
 @export var coyote_time: float = 0.15
 @export var jump_buffer: float = 0.15
@@ -54,8 +54,10 @@ func _ready() -> void:
 
 	gravity_controller.setup(
 		self,
-		$SpringArm3D/Cameraoffset/Camera3D
+		$VisualRoot/SpringArm3D/Cameraoffset/Camera3D
 	)
+
+	gravity_controller.gravity_changed.connect(_on_gravity_changed)
 
 	_play_animation("Armature|idle")
 
@@ -66,7 +68,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		gravity_controller.enter_levitating()
 
 	if event.is_action_released("GravityShift"):
-		gravity_controller.begin_shift()
+		gravity_controller.perform_shift()
 
 	if event is InputEventMouseMotion:
 
@@ -85,14 +87,14 @@ func _physics_process(delta: float) -> void:
 
 	_read_input(delta)
 	_apply_gravity(delta)
+	_handle_movement(delta)
 	_handle_jump(delta)
 	_handle_rotation()
-	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
-		gravity_controller.update_shift(delta)
-
+	gravity_controller.update_shift(delta)
+	
 	move_and_slide()
 
-	gravity_controller.detect_wall()
+	gravity_controller.check_wall()
 
 	_update_animation(delta)
 
@@ -117,6 +119,32 @@ func _read_input(delta: float) -> void:
 	if jump_buffer_timer > 0.0:
 		jump_buffer_timer -= delta
 
+func _on_gravity_changed(direction: Vector3) -> void:
+
+	up_direction = -direction
+
+	var current_forward = -visual_root.global_basis.z
+	var projected_forward = current_forward.slide(up_direction).normalized()
+
+	if projected_forward.length() < 0.01:
+		projected_forward = visual_root.global_basis.x
+
+	var target_basis = Basis.looking_at(
+		projected_forward,
+		up_direction
+	)
+
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+
+	tween.tween_property(
+		visual_root,
+		"basis",
+		target_basis,
+		0.35
+	)
+	
 #GRAVITY
 func _apply_gravity(delta):
 
@@ -125,13 +153,17 @@ func _apply_gravity(delta):
 	else:
 		coyote_timer -= delta
 
-	gravity_controller.apply_gravity(delta)
+	if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED \
+	or gravity_controller.gravity_state == GravityController.GravityState.WALL:
+
+		var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+		velocity += gravity_controller.gravity_direction * gravity * delta
 
 #JUMP
-func _handle_jump(delta: float) -> void:
+func _handle_jump(_delta: float) -> void:
 
-	# Jump if we're on the floor (or within coyote time)
-	# and the player pressed jump recently.
+	# Jump
 	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 
 		velocity -= gravity_controller.gravity_direction * jump_velocity
@@ -139,10 +171,11 @@ func _handle_jump(delta: float) -> void:
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
 
-	# Variable jump height.
-	# Releasing Jump while moving upward cuts the jump short.
-	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
-		velocity.y *= 0.5
+	# Variable jump height
+	var vertical_speed = velocity.dot(-gravity_controller.gravity_direction)
+
+	if Input.is_action_just_released("Jump") and vertical_speed > 0.0:
+		velocity += gravity_controller.gravity_direction * (vertical_speed * 0.5)
 
 #ROTATION
 func _handle_rotation() -> void:
@@ -162,11 +195,11 @@ func _handle_rotation() -> void:
 
 		else:
 
-			rotate_y(spring_arm.yaw_input)
+			rotate_object_local(up_direction, spring_arm.yaw_input)
 
 	else:
 
-		spring_arm.rotate_y(spring_arm.yaw_input)
+		spring_arm.rotate_object_local(up_direction, spring_arm.yaw_input)
 
 #MOVEMENT
 func _handle_movement(delta: float) -> void:
@@ -179,27 +212,33 @@ func _handle_movement(delta: float) -> void:
 			move_input.y
 		).normalized()
 
-		move_direction = global_transform.basis * input_direction
-		move_direction.y = 0.0
+		var cam_basis = spring_arm.global_basis
+
+		var forward = cam_basis.z.slide(up_direction).normalized()
+		var right = cam_basis.x.slide(up_direction).normalized()
+
+		move_direction = forward * move_input.y + right * move_input.x
+
 		move_direction = move_direction.normalized()
 
 		current_speed = run_speed if is_running else walk_speed
 
-		var target_velocity := move_direction * current_speed
+		var desired_velocity := move_direction * current_speed
 
 		var air_control := 0.45 if !is_on_floor() else 1.0
 
-		velocity.x = lerp(
-			velocity.x,
-			target_velocity.x,
+		# Split velocity into vertical and horizontal components
+		var vertical_velocity := up_direction * velocity.dot(up_direction)
+		var horizontal_velocity := velocity - vertical_velocity
+
+		# Smoothly move toward the desired horizontal velocity
+		horizontal_velocity = horizontal_velocity.lerp(
+			desired_velocity,
 			acceleration * air_control * delta
 		)
 
-		velocity.z = lerp(
-			velocity.z,
-			target_velocity.z,
-			acceleration * air_control * delta
-		)
+		# Recombine them
+		velocity = horizontal_velocity + vertical_velocity
 
 		var target_rotation := atan2(
 			move_direction.x,
