@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://ccdc06etdbopk"]
 
+[ext_resource type="Script" uid="uid://3ndckspc1ev0" path="res://Player/Hud.gd" id="1_s1rgi"]
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
 [ext_resource type="Script" uid="uid://ed7hjggblkes" path="res://Player/GravityController.gd" id="2_8g4oa"]
+[ext_resource type="Texture2D" uid="uid://dahlfjhvsky0q" path="res://Player/MouseCrosshair.png" id="2_j23h2"]
 [ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
+[ext_resource type="Texture2D" uid="uid://cewgsvqrrkeoe" path="res://Player/Crosshair.png" id="3_0j2ni"]
 [ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="3_ddoul"]
 [ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
 
@@ -24,6 +27,7 @@ node_connections = [&"output", 0, &"movement_anim_speed", &"movement_anim_speed"
 [node name="Head" type="Node3D" unique_id=559073357]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=2134162341]
+slide_on_ceiling = false
 script = ExtResource("1_tok1r")
 
 [node name="GravityController" type="Node" parent="Player" unique_id=1621988856]
@@ -47,11 +51,12 @@ tree_root = SubResource("AnimationNodeBlendTree_a22an")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Player" unique_id=1184963165 node_paths=PackedStringArray("aim_pivot")]
+[node name="SpringArm3D" type="SpringArm3D" parent="Player" unique_id=1184963165 node_paths=PackedStringArray("aim_pivot", "mouse_aim")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2797928, 0)
 spring_length = 3.0
 script = ExtResource("3_tok1r")
 aim_pivot = NodePath("../../AimPivot")
+mouse_aim = NodePath("../../AimPivot")
 
 [node name="Cameraoffset" type="Node3D" parent="Player/SpringArm3D" unique_id=486145548]
 
@@ -61,6 +66,52 @@ fov = 90.0
 far = 50000.0
 
 [node name="GroundRayOrigin" type="Marker3D" parent="Player" unique_id=1519260741]
+
+[node name="Hud" type="Control" parent="." unique_id=58564902 node_paths=PackedStringArray("Cam_controller", "player_cam", "boresight", "mouse_pos")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_s1rgi")
+Cam_controller = NodePath("../Player/SpringArm3D")
+player_cam = NodePath("../Player/SpringArm3D/Cameraoffset/Camera3D")
+boresight = NodePath("Boresight")
+mouse_pos = NodePath("Mouseaim")
+
+[node name="Boresight" type="TextureRect" parent="Hud" unique_id=1105593360]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_j23h2")
+
+[node name="Mouseaim" type="TextureRect" parent="Hud" unique_id=1201903106]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_0j2ni")
 
 [node name="AimPivot" type="Node3D" parent="." unique_id=459254644]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
