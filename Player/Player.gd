@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
 @onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var camera_3d: Camera3D = $SpringArm3D/Cameraoffset/Camera3D
+
 
 #MOVEMENT SETTINGS
 @export var walk_speed: float = 2.5
@@ -85,11 +87,12 @@ func _physics_process(delta: float) -> void:
 
 	_read_input(delta)
 	_apply_gravity(delta)
+	_handle_movement(delta)
 	_handle_jump(delta)
 	_handle_rotation()
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
-
+	_update_orientation(delta)
 	move_and_slide()
 
 	gravity_controller.detect_wall()
@@ -168,6 +171,32 @@ func _handle_rotation() -> void:
 
 		spring_arm.rotate_y(spring_arm.yaw_input)
 
+func _update_orientation(delta: float) -> void:
+
+	var up := -gravity_controller.gravity_direction
+
+	var forward := -global_basis.z
+
+	# Remove the component pointing into gravity
+	forward = forward.slide(up)
+
+	if forward.length_squared() < 0.001:
+		return
+
+	forward = forward.normalized()
+
+	var target_basis := Basis.looking_at(
+		forward,
+		up
+	)
+
+	global_basis = Basis(
+		global_basis.get_rotation_quaternion().slerp(
+			target_basis.get_rotation_quaternion(),
+			delta * 6.0
+		)
+	)
+
 #MOVEMENT
 func _handle_movement(delta: float) -> void:
 
@@ -180,9 +209,16 @@ func _handle_movement(delta: float) -> void:
 		).normalized()
 
 		move_direction = global_transform.basis * input_direction
-		move_direction.y = 0.0
 		move_direction = move_direction.normalized()
 
+		var forward = camera_3d.global_basis.z
+		forward = forward.slide(gravity_controller.gravity_direction).normalized()
+
+		var right = camera_3d.global_basis.x
+		right = right.slide(gravity_controller.gravity_direction).normalized()
+
+		move_direction = forward * move_input.y + right * move_input.x
+	
 		current_speed = run_speed if is_running else walk_speed
 
 		var target_velocity := move_direction * current_speed

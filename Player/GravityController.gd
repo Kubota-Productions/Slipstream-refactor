@@ -11,7 +11,7 @@ enum GravityState {
 @export var gravity_strength := 9.8
 
 @export var shift_start_speed := 8.0
-@export var shift_acceleration := 30.0
+@export var shift_acceleration := 15.0
 @export var max_shift_speed := 35.0
 
 var gravity_state := GravityState.GROUNDED
