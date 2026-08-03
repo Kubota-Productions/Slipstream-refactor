@@ -339,7 +339,7 @@ func _update_animation(delta: float) -> void:
 				if move_input.length_squared() > 0.0:
 					_play_animation("Armature|run_jump")
 				else:
-					_play_animation("Armature|jump")
+					_play_animation("Armature|falling_1")
 
 		else:
 

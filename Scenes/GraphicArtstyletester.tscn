@@ -62,7 +62,7 @@ shader_parameter/outlineColor = Color(0, 0, 0, 1)
 shader_parameter/depth_threshold = 0.001
 shader_parameter/normal_threshold = 0.3210000152475
 shader_parameter/normal_smoothing = 0.0
-shader_parameter/max_thickness = 0.9010000427975
+shader_parameter/max_thickness = 0.7030000333925
 shader_parameter/min_thickness = 0.2
 shader_parameter/max_distance = 300.0
 shader_parameter/min_distance = 20.0
@@ -157,7 +157,6 @@ sky_mode = 1
 
 [node name="Player" parent="." unique_id=2134162341 instance=ExtResource("2_1u0bq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.934006, 158.97862)
-slide_on_ceiling = false
 
 [node name="Locomotive" parent="." unique_id=1546860108 instance=ExtResource("6_28qwq")]
 transform = Transform3D(1.11, 0, 0, 0, 1.11, 0, 0, 0, 1.11, -16.504253, -46.32932, 120.90554)
@@ -321,6 +320,24 @@ transform = Transform3D(0, -1.0000001, 0, 1.0000001, 0, 0, 0, 0, 1, -64.26641, -
 material_override = ExtResource("9_kb1ij")
 use_collision = true
 size = Vector3(61.330612, 2.225586, 21.871567)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="ENV" unique_id=583854758]
+transform = Transform3D(-0.86602557, -0.5, 0, 0.5, -0.86602557, 0, 0, 0, 1, 87.04232, 48.91995, 82.68015)
+material_override = ExtResource("9_kb1ij")
+use_collision = true
+size = Vector3(61.330612, 2.225586, 21.871567)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="ENV" unique_id=677859961]
+transform = Transform3D(-0.96592593, 0.25881913, 0, -0.25881913, -0.96592593, 0, 0, 0, 1, -22.284481, 150.39665, 82.07439)
+material_override = ExtResource("9_kb1ij")
+use_collision = true
+size = Vector3(132.34451, 2.225586, 20.66003)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="ENV" unique_id=1885066207]
+transform = Transform3D(0.48296303, -0.12940958, 0.8660254, -0.25881913, -0.96592593, 0, 0.8365164, -0.22414394, -0.50000006, 114.715515, 309.7805, 82.07439)
+material_override = ExtResource("9_kb1ij")
+use_collision = true
+size = Vector3(132.34451, 2.225586, 20.66003)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="ENV" unique_id=1111221457]
 transform = Transform3D(0, -1.0000001, 0, 1.0000001, 0, 0, 0, 0, 1, -45.48911, -8.08572, 53.583443)
