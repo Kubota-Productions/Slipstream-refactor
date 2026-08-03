@@ -157,6 +157,7 @@ sky_mode = 1
 
 [node name="Player" parent="." unique_id=2134162341 instance=ExtResource("2_1u0bq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.934006, 158.97862)
+slide_on_ceiling = false
 
 [node name="Locomotive" parent="." unique_id=1546860108 instance=ExtResource("6_28qwq")]
 transform = Transform3D(1.11, 0, 0, 0, 1.11, 0, 0, 0, 1.11, -16.504253, -46.32932, 120.90554)

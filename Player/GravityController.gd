@@ -8,7 +8,8 @@ enum GravityState {
 	WALL
 }
 
-@export var gravity_strength := 9.8
+var ground_ray_origin: Marker3D
+@export var gravity_strength := 20
 
 @export var shift_start_speed := 8.0
 @export var shift_acceleration := 15.0
@@ -29,6 +30,24 @@ func setup(owner: CharacterBody3D, cam: Camera3D):
 
 	player = owner
 	camera = cam
+	ground_ray_origin = player.get_node("GroundRayOrigin")
+	
+func check_shift_surface():
+
+	var origin = ground_ray_origin.global_position
+
+	var target = origin + gravity_direction * 2.0
+
+	var query = PhysicsRayQueryParameters3D.create(
+		origin,
+		target
+	)
+
+	query.exclude = [player]
+
+	var hit = player.get_world_3d().direct_space_state.intersect_ray(query)
+
+	return hit
 	
 func apply_gravity(delta):
 
@@ -92,19 +111,15 @@ func detect_wall():
 	if gravity_state != GravityState.SHIFTING:
 		return
 
-	for i in player.get_slide_collision_count():
+	var hit = check_shift_surface()
 
-		var collision = player.get_slide_collision(i)
+	if hit:
 
-		if collision.get_normal().dot(-gravity_direction) > 0.8:
-
-			attach_to_wall(collision)
-
-			return
+		attach_to_surface(hit)
 			
-func attach_to_wall(collision):
+func attach_to_surface(hit):
 
-	var normal = collision.get_normal()
+	var normal: Vector3 = hit.normal
 
 	gravity_direction = -normal
 
@@ -112,5 +127,9 @@ func attach_to_wall(collision):
 
 	player.velocity = Vector3.ZERO
 
+	player.global_position = hit.position
+
 	gravity_state = GravityState.WALL
+	
+
 	
