@@ -89,7 +89,10 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
-	_handle_rotation()
+	if gravity_controller.gravity_state != GravityController.GravityState.SHIFTING:
+		_handle_rotation()
+		if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
+			_handle_rotation()
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
 	_update_orientation(delta)
@@ -150,23 +153,32 @@ func _handle_jump(delta: float) -> void:
 #ROTATION
 func _handle_rotation() -> void:
 
-	if move_input.length_squared() > 0.0:
+	# Normal ground behaviour
+	if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
 
-		if spring_arm.camera_moved:
+		if move_input.length_squared() > 0.0:
 
-			var target_yaw := spring_arm.global_rotation.y
+			if spring_arm.camera_moved:
 
-			var player_rotation := global_rotation
-			player_rotation.y = target_yaw
-			global_rotation = player_rotation
+				var target_yaw := spring_arm.global_rotation.y
 
-			spring_arm.rotation.y = 0.0
-			spring_arm.camera_moved = false
+				var player_rotation := global_rotation
+				player_rotation.y = target_yaw
+				global_rotation = player_rotation
+
+				spring_arm.rotation.y = 0.0
+				spring_arm.camera_moved = false
+
+			else:
+
+				rotate_y(spring_arm.yaw_input)
 
 		else:
 
-			rotate_y(spring_arm.yaw_input)
+			spring_arm.rotate_y(spring_arm.yaw_input)
 
+
+	# Gravity Rush states
 	else:
 
 		spring_arm.rotate_y(spring_arm.yaw_input)
@@ -211,13 +223,29 @@ func _handle_movement(delta: float) -> void:
 		move_direction = global_transform.basis * input_direction
 		move_direction = move_direction.normalized()
 
-		var forward = camera_3d.global_basis.z
-		forward = forward.slide(gravity_controller.gravity_direction).normalized()
+		var gravity_up := -gravity_controller.gravity_direction
 
-		var right = camera_3d.global_basis.x
-		right = right.slide(gravity_controller.gravity_direction).normalized()
 
-		move_direction = forward * move_input.y + right * move_input.x
+		var camera_forward := camera_3d.global_basis.z
+		camera_forward = camera_forward.slide(gravity_up)
+
+
+		if camera_forward.length_squared() > 0.001:
+			camera_forward = camera_forward.normalized()
+
+
+		var camera_right := camera_3d.global_basis.x
+		camera_right = camera_right.slide(gravity_up)
+
+
+		if camera_right.length_squared() > 0.001:
+			camera_right = camera_right.normalized()
+
+
+		move_direction = (
+			camera_forward * move_input.y +
+			camera_right * move_input.x
+		).normalized()
 	
 		current_speed = run_speed if is_running else walk_speed
 
@@ -225,28 +253,51 @@ func _handle_movement(delta: float) -> void:
 
 		var air_control := 0.45 if !is_on_floor() else 1.0
 
-		velocity.x = lerp(
-			velocity.x,
-			target_velocity.x,
+		var current_planar_velocity = velocity.slide(
+			gravity_controller.gravity_direction
+		)
+
+		var target_planar_velocity = target_velocity.slide(
+			gravity_controller.gravity_direction
+		)
+
+
+		current_planar_velocity = current_planar_velocity.lerp(
+			target_planar_velocity,
 			acceleration * air_control * delta
 		)
 
-		velocity.z = lerp(
-			velocity.z,
-			target_velocity.z,
-			acceleration * air_control * delta
+
+		velocity = current_planar_velocity + (
+			velocity.project(gravity_controller.gravity_direction)
 		)
 
-		var target_rotation := atan2(
-			move_direction.x,
-			move_direction.z
-		)
+		var up := -gravity_controller.gravity_direction
 
-		character_model.rotation.y = lerp_angle(
-			character_model.rotation.y,
-			target_rotation - rotation.y,
-			rotation_speed * delta
-		)
+
+		var forward := -character_model.global_basis.z
+
+		forward = forward.slide(up).normalized()
+
+
+		var target_forward := move_direction.slide(up).normalized()
+
+
+		if target_forward.length_squared() > 0.001:
+
+			var target_basis := Basis.looking_at(
+				target_forward,
+				up
+			)
+
+			character_model.global_basis = Basis(
+				character_model.global_basis
+				.get_rotation_quaternion()
+				.slerp(
+					target_basis.get_rotation_quaternion(),
+					rotation_speed * delta
+				)
+			)
 
 	else:
 

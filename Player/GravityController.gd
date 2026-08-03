@@ -8,6 +8,7 @@ enum GravityState {
 	WALL
 }
 
+var spring_arm: SpringArm3D
 var ground_ray_origin: Marker3D
 @export var gravity_strength := 20
 
@@ -31,6 +32,7 @@ func setup(owner: CharacterBody3D, cam: Camera3D):
 	player = owner
 	camera = cam
 	ground_ray_origin = player.get_node("GroundRayOrigin")
+	spring_arm = player.get_node("SpringArm3D")
 	
 func check_shift_surface():
 
@@ -128,6 +130,9 @@ func attach_to_surface(hit):
 	player.velocity = Vector3.ZERO
 
 	player.global_position = hit.position
+
+	if spring_arm:
+		spring_arm.rotation.y = 0.0
 
 	gravity_state = GravityState.WALL
 	
