@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var character_model: Node3D = $CharacterModel
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera_3d: Camera3D = $SpringArm3D/Cameraoffset/Camera3D
-
+@onready var aim_pivot: Node3D = $"../AimPivot"
 
 #MOVEMENT SETTINGS
 @export var walk_speed: float = 2.5
@@ -89,13 +89,13 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
-	if gravity_controller.gravity_state != GravityController.GravityState.SHIFTING:
-		_handle_rotation()
-		if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
-			_handle_rotation()
+	#if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
+		#_handle_rotation()
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
-	_update_orientation(delta)
+
+	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
+		_update_orientation(delta)
 	move_and_slide()
 
 	gravity_controller.detect_wall()
@@ -153,59 +153,58 @@ func _handle_jump(delta: float) -> void:
 #ROTATION
 func _handle_rotation() -> void:
 
-	# Normal ground behaviour
-	if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
-
-		if move_input.length_squared() > 0.0:
-
-			if spring_arm.camera_moved:
-
-				var target_yaw := spring_arm.global_rotation.y
-
-				var player_rotation := global_rotation
-				player_rotation.y = target_yaw
-				global_rotation = player_rotation
-
-				spring_arm.rotation.y = 0.0
-				spring_arm.camera_moved = false
-
-			else:
-
-				rotate_y(spring_arm.yaw_input)
-
-		else:
-
-			spring_arm.rotate_y(spring_arm.yaw_input)
-
-
-	# Gravity Rush states
-	else:
-
+	# Camera always rotates
+	if spring_arm.yaw_input != 0.0:
 		spring_arm.rotate_y(spring_arm.yaw_input)
+
+
+	# During gravity states, do not rotate the player
+	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
+		return
+
+
+	# Normal ground behaviour
+	if move_input.length_squared() > 0.0:
+
+		if spring_arm.camera_moved:
+
+			var target_yaw := spring_arm.global_rotation.y
+
+			var player_rotation := global_rotation
+			player_rotation.y = target_yaw
+			global_rotation = player_rotation
+
+			spring_arm.rotation.y = 0.0
+			spring_arm.camera_moved = false
+
 
 func _update_orientation(delta: float) -> void:
 
 	var up := -gravity_controller.gravity_direction
 
-	var forward := -global_basis.z
 
-	# Remove the component pointing into gravity
+	var forward: Vector3 = -aim_pivot.global_basis.z
+
 	forward = forward.slide(up)
+
 
 	if forward.length_squared() < 0.001:
 		return
 
+
 	forward = forward.normalized()
+
 
 	var target_basis := Basis.looking_at(
 		forward,
 		up
 	)
 
+
 	global_basis = Basis(
 		global_basis.get_rotation_quaternion().slerp(
 			target_basis.get_rotation_quaternion(),
-			delta * 6.0
+			delta * 5.0
 		)
 	)
 
@@ -226,7 +225,7 @@ func _handle_movement(delta: float) -> void:
 		var gravity_up := -gravity_controller.gravity_direction
 
 
-		var camera_forward := camera_3d.global_basis.z
+		var camera_forward: Vector3 = aim_pivot.global_basis.z
 		camera_forward = camera_forward.slide(gravity_up)
 
 
@@ -234,7 +233,7 @@ func _handle_movement(delta: float) -> void:
 			camera_forward = camera_forward.normalized()
 
 
-		var camera_right := camera_3d.global_basis.x
+		var camera_right: Vector3 = aim_pivot.global_basis.x
 		camera_right = camera_right.slide(gravity_up)
 
 
@@ -386,6 +385,7 @@ func is_moving() -> bool:
 #OPTIONAL CAMERA IMPROVEMENTS
 func _process(_delta: float) -> void:
 
+	aim_pivot.global_position = global_position
 	# Keep the camera's local pitch within a sensible range.
 	# (Yaw is already handled by your SpringArm script.)
 	spring_arm.rotation.x = clamp(
