@@ -62,7 +62,7 @@ shader_parameter/outlineColor = Color(0, 0, 0, 1)
 shader_parameter/depth_threshold = 0.001
 shader_parameter/normal_threshold = 0.3210000152475
 shader_parameter/normal_smoothing = 0.0
-shader_parameter/max_thickness = 0.7030000333925
+shader_parameter/max_thickness = 0.50000002375
 shader_parameter/min_thickness = 0.2
 shader_parameter/max_distance = 300.0
 shader_parameter/min_distance = 20.0
@@ -174,6 +174,7 @@ transform = Transform3D(-0.94447047, -0.0035709727, 0.32847193, 0, 0.99981314, 0
 multimesh = SubResource("MultiMesh_daa1v")
 
 [node name="Shader" type="Node3D" parent="." unique_id=796064467]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Shader" unique_id=620987253]
 material_override = SubResource("ShaderMaterial_gkd4w")

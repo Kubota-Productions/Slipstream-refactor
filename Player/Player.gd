@@ -59,7 +59,7 @@ func _ready() -> void:
 		$SpringArm3D/Cameraoffset/Camera3D
 	)
 
-	_play_animation("Armature|idle")
+	_play_animation("idle")
 
 #INPUT
 func _unhandled_input(event: InputEvent) -> void:
@@ -319,7 +319,7 @@ func _update_animation(delta: float) -> void:
 	if !was_on_floor and is_on_floor():
 		current_anim_state = AnimState.LAND
 		landing_timer = LANDING_TIME
-		_play_animation("Armature|gravity_to_idle")
+		_play_animation("gravity_to_idle")
 
 	was_on_floor = is_on_floor()
 
@@ -337,15 +337,15 @@ func _update_animation(delta: float) -> void:
 				current_anim_state = AnimState.JUMP
 
 				if move_input.length_squared() > 0.0:
-					_play_animation("Armature|run_jump")
+					_play_animation("run_jump")
 				else:
-					_play_animation("Armature|falling_1")
+					_play_animation("falling_1")
 
 		else:
 
 			if current_anim_state != AnimState.FALL:
 				current_anim_state = AnimState.FALL
-				_play_animation("Armature|falling_1")
+				_play_animation("falling_1")
 
 		return
 
@@ -355,19 +355,19 @@ func _update_animation(delta: float) -> void:
 
 		if current_anim_state != AnimState.IDLE:
 			current_anim_state = AnimState.IDLE
-			_play_animation("Armature|idle")
+			_play_animation("idle")
 
 	elif is_running:
 
 		if current_anim_state != AnimState.RUN:
 			current_anim_state = AnimState.RUN
-			_play_animation("Armature|run")
+			_play_animation("run")
 
 	else:
 
 		if current_anim_state != AnimState.JOG:
 			current_anim_state = AnimState.JOG
-			_play_animation("Armature|jog")
+			_play_animation("jog")
 
 #PLAY ANIMATION
 func _play_animation(anim_name: String) -> void:
@@ -403,7 +403,7 @@ func force_idle() -> void:
 	is_running = false
 
 	current_anim_state = AnimState.IDLE
-	_play_animation("Armature|idle")
+	_play_animation("idle")
 
 
 func stop_horizontal_velocity() -> void:

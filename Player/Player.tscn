@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Player/Player.gd" id="1_tok1r"]
 [ext_resource type="Script" uid="uid://ed7hjggblkes" path="res://Player/GravityController.gd" id="2_8g4oa"]
 [ext_resource type="Texture2D" uid="uid://dahlfjhvsky0q" path="res://Player/MouseCrosshair.png" id="2_j23h2"]
-[ext_resource type="PackedScene" uid="uid://dy5q7kftjjb8t" path="res://Assets/chm_updated_anims.fbx" id="2_tok1r"]
 [ext_resource type="Texture2D" uid="uid://cewgsvqrrkeoe" path="res://Player/Crosshair.png" id="3_0j2ni"]
 [ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="3_ddoul"]
 [ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Player/camera_spring_arm.gd" id="3_tok1r"]
+[ext_resource type="PackedScene" uid="uid://bhlaju4rf2b1c" path="res://Player/gravanimpullover.fbx" id="3_v0k0e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
 
@@ -35,12 +35,12 @@ script = ExtResource("2_8g4oa")
 
 [node name="CharacterModel" type="Node3D" parent="Player" unique_id=1574064996]
 
-[node name="character_mixamo" parent="Player/CharacterModel" unique_id=547239779 instance=ExtResource("2_tok1r")]
+[node name="character_mixamo" parent="Player/CharacterModel" unique_id=1722540129 instance=ExtResource("3_v0k0e")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-visible = false
 
 [node name="Gravrushcustom" parent="Player" unique_id=262543774 instance=ExtResource("3_ddoul")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1700991861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96825254, 0)
