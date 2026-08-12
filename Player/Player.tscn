@@ -35,7 +35,7 @@ script = ExtResource("2_8g4oa")
 
 [node name="CharacterModel" type="Node3D" parent="Player" unique_id=1574064996]
 
-[node name="character_mixamo" parent="Player/CharacterModel" unique_id=1722540129 instance=ExtResource("3_v0k0e")]
+[node name="gravanimpullover" parent="Player/CharacterModel" unique_id=306314866 instance=ExtResource("3_v0k0e")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Gravrushcustom" parent="Player" unique_id=262543774 instance=ExtResource("3_ddoul")]

@@ -7,6 +7,8 @@ extends SpringArm3D
 @export var min_pitch_deg: float = -80.0
 @export var max_pitch_deg: float = 60.0
 @export var cam: Camera3D = null
+@export var up_smoothing_time: float = 1.0  # seconds for camera "up" to settle after a gravity shift
+var smoothed_up: Vector3 = Vector3.UP
 
 var frozen_direction: Vector3 = Vector3.FORWARD
 var player: CharacterBody3D
@@ -16,8 +18,9 @@ var is_mouse_aim_frozen: bool = false
 var yaw_input: float = 0.0
 var pitch_input: float = 0.0
 var camera_moved: bool = false
+var look_forward: Vector3 = Vector3.FORWARD
+var pitch_angle: float = 0.0
 
-var look_quat: Quaternion = Quaternion.IDENTITY
 var last_up: Vector3 = Vector3.UP
 
 func _ready() -> void:
@@ -26,14 +29,10 @@ func _ready() -> void:
 	player = get_parent()
 	gravity_controller = player.get_node("GravityController")
 
-	look_quat = global_basis.get_rotation_quaternion()
+	look_forward = -global_basis.z
+	pitch_angle = 0.0
 	last_up = Vector3.UP
-
-func _physics_process(delta: float) -> void:
-
-	print("player physics running")
-
-	update_look(delta)
+	smoothed_up = Vector3.UP
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -42,7 +41,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func get_boresight_pos() -> Vector3:
 	if player:
-		return (-player.global_transform.basis.z * aim_distance) + player.global_position
+		var fall_dir: Vector3
+		if player.velocity.length_squared() > 0.01:
+			fall_dir = player.velocity.normalized()
+		else:
+			fall_dir = -player.global_transform.basis.z
+		return (fall_dir * aim_distance) + player.global_position
 	return (-global_transform.basis.z * aim_distance) + global_position
 
 func get_mouse_aim_pos() -> Vector3:
@@ -61,39 +65,45 @@ func get_mouse_aim_pos() -> Vector3:
 
 # Called explicitly by the player, early in its _physics_process,
 # so aim_pivot is guaranteed fresh before movement/orientation read it.
-func update_look(_delta: float) -> void:
-	var up: Vector3 = Vector3.UP
+func update_look(delta: float) -> void:
+	var target_up: Vector3 = Vector3.UP
 	if gravity_controller:
-		up = -gravity_controller.gravity_direction
-		print("Yaw/Pitch:", yaw_input, pitch_input)
-		print("Forward:", -global_basis.z)
+		target_up = -gravity_controller.gravity_direction
 
-	# Gravity direction changed since last frame: re-anchor the stored
-	# orientation with a minimal "swing" rotation instead of rebuilding
-	# it from scratch. This is what removes the shift jitter — yaw/pitch
-	# carry over smoothly instead of snapping to a new reference frame.
-	if up.dot(last_up) < 0.9999:
-		var align_rot: Quaternion = _shortest_arc(last_up, up)
-		look_quat = (align_rot * look_quat).normalized()
-	last_up = up
+	if smoothed_up.dot(target_up) < 0.99999:
+		var weight: float = 1.0 - exp(-delta / max(up_smoothing_time, 0.001))
+		var full_align: Quaternion = _shortest_arc(smoothed_up, target_up)
+		var step_align: Quaternion = Quaternion.IDENTITY.slerp(full_align, weight)
+		smoothed_up = (step_align * smoothed_up).normalized()
+	else:
+		smoothed_up = target_up
+
+	var up: Vector3 = smoothed_up
+
+	# Keep look_forward pinned to the plane perpendicular to "up" every
+	# frame -- this is what guarantees zero roll no matter how "up" moves.
+	var flat_forward: Vector3 = look_forward.slide(up)
+	if flat_forward.length_squared() < 0.0001:
+		flat_forward = (-global_basis.x).slide(up)  # forward went parallel to up; fall back to old right
+	flat_forward = flat_forward.normalized()
 
 	if yaw_input != 0.0:
-		var yaw_rot := Quaternion(up, yaw_input)
-		look_quat = (yaw_rot * look_quat).normalized()
+		flat_forward = flat_forward.rotated(up, yaw_input).normalized()
+
+	look_forward = flat_forward
+	last_up = up
 
 	if pitch_input != 0.0:
-		var right: Vector3 = look_quat * Vector3.RIGHT
-		var pitch_rot := Quaternion(right, pitch_input)
-		var candidate := (pitch_rot * look_quat).normalized()
+		pitch_angle = clamp(
+			pitch_angle + pitch_input,
+			deg_to_rad(min_pitch_deg),
+			deg_to_rad(max_pitch_deg)
+		)
 
-		var forward: Vector3 = candidate * Vector3.FORWARD
-		var new_pitch: float = asin(clamp(forward.dot(up), -1.0, 1.0))
+	var right: Vector3 = flat_forward.cross(up).normalized()
+	var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
 
-		if new_pitch <= deg_to_rad(max_pitch_deg) and new_pitch >= deg_to_rad(min_pitch_deg):
-			look_quat = candidate
-		# else: outside clamp range, just drop this frame's pitch delta
-
-	global_basis = Basis(look_quat)
+	global_basis = Basis.looking_at(final_forward, up)
 
 	if aim_pivot:
 		aim_pivot.global_basis = global_basis

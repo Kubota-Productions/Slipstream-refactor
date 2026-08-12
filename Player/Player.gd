@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @onready var gravity_controller: GravityController = $GravityController
-@onready var animation_player: AnimationPlayer = $CharacterModel/character_mixamo/AnimationPlayer
+@onready var animation_player: AnimationPlayer = $CharacterModel/gravanimpullover/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var character_model: Node3D = $CharacterModel
 @onready var spring_arm: SpringArm3D = $SpringArm3D
@@ -85,12 +85,13 @@ func _unhandled_input(event: InputEvent) -> void:
 #PHYSICS
 func _physics_process(delta: float) -> void:
 
+	aim_pivot.global_position = global_position
+	spring_arm.update_look(delta)
+
 	_read_input(delta)
 	_apply_gravity(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
-	#if gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
-		#_handle_rotation()
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
 
@@ -299,18 +300,10 @@ func _handle_movement(delta: float) -> void:
 			)
 
 	else:
+		var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
+		planar_velocity = planar_velocity.move_toward(Vector3.ZERO, acceleration * delta)
 
-		velocity.x = move_toward(
-			velocity.x,
-			0.0,
-			acceleration * delta
-		)
-
-		velocity.z = move_toward(
-			velocity.z,
-			0.0,
-			acceleration * delta
-		)
+		velocity = planar_velocity + velocity.project(gravity_controller.gravity_direction)
 
 #ANIMATION
 func _update_animation(delta: float) -> void:
@@ -381,19 +374,7 @@ func _play_animation(anim_name: String) -> void:
 #HELPERS
 func is_moving() -> bool:
 	return move_input.length_squared() > 0.001
-
-#OPTIONAL CAMERA IMPROVEMENTS
-func _process(_delta: float) -> void:
-
-	aim_pivot.global_position = global_position
-	# Keep the camera's local pitch within a sensible range.
-	# (Yaw is already handled by your SpringArm script.)
-	spring_arm.rotation.x = clamp(
-		spring_arm.rotation.x,
-		deg_to_rad(-80.0),
-		deg_to_rad(70.0)
-	)
-
+	
 #OPTIONAL HELPERS
 func force_idle() -> void:
 

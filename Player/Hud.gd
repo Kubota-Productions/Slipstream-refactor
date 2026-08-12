@@ -9,8 +9,7 @@ func _process(_delta: float) -> void:
 	update_graphics()
 	if Cam_controller == null or player_cam == null:
 		return
-
-
+		
 func update_graphics() -> void:
 	if Cam_controller == null or player_cam == null:
 		return
@@ -26,3 +25,5 @@ func update_graphics() -> void:
 		var mouse_aim_world_pos: Vector3 = Cam_controller.get_mouse_aim_pos()
 		var mouse_pos_screen_pos: Vector2 = player_cam.unproject_position(mouse_aim_world_pos)
 		mouse_pos.position = mouse_pos_screen_pos - mouse_pos.size / 2
+		
+		
