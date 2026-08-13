@@ -19,6 +19,8 @@ extends CharacterBody3D
 
 @export var coyote_time: float = 0.15
 @export var jump_buffer: float = 0.15
+@export var max_jumps: int = 2
+var jumps_used: int = 0
 
 const RUN_THRESHOLD := 0.40
 
@@ -70,6 +72,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("GravityShift"):
 		gravity_controller.begin_shift()
 
+	if event.is_action_pressed("CancelShift"):
+		if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
+			gravity_controller.return_to_ground()
+
 	if event is InputEventMouseMotion:
 
 		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -90,6 +96,7 @@ func _physics_process(delta: float) -> void:
 
 	_read_input(delta)
 	_apply_gravity(delta)
+	gravity_controller.update_shift_power(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
@@ -129,6 +136,7 @@ func _apply_gravity(delta):
 
 	if is_on_floor():
 		coyote_timer = coyote_time
+		jumps_used = 0
 	else:
 		coyote_timer -= delta
 
@@ -137,14 +145,26 @@ func _apply_gravity(delta):
 #JUMP
 func _handle_jump(delta: float) -> void:
 
-	# Jump if we're on the floor (or within coyote time)
-	# and the player pressed jump recently.
-	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
+	if jump_buffer_timer > 0.0:
 
-		velocity -= gravity_controller.gravity_direction * jump_velocity
+		if coyote_timer > 0.0:
+			# Ground / coyote-time jump.
+			velocity -= gravity_controller.gravity_direction * jump_velocity
+			jump_buffer_timer = 0.0
+			coyote_timer = 0.0
+			jumps_used = 1
 
-		jump_buffer_timer = 0.0
-		coyote_timer = 0.0
+		elif jumps_used < max_jumps:
+			# Airborne jump — cancel existing fall speed along "up" first.
+			var up: Vector3 = -gravity_controller.gravity_direction
+			velocity -= velocity.project(up)
+			velocity += up * jump_velocity
+
+			jump_buffer_timer = 0.0
+			jumps_used += 1
+
+	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
+		velocity.y *= 0.5
 
 	# Variable jump height.
 	# Releasing Jump while moving upward cuts the jump short.

@@ -9,6 +9,10 @@ extends SpringArm3D
 @export var cam: Camera3D = null
 @export var up_smoothing_time: float = 1.0  # seconds for camera "up" to settle after a gravity shift
 var smoothed_up: Vector3 = Vector3.UP
+@export var boresight_lag_time: float = 0.05
+@export var boresight_jitter_smoothing_time: float = 0.12
+var smoothed_boresight_dir: Vector3 = Vector3.FORWARD
+var smoothed_boresight_dir_stage2: Vector3 = Vector3.FORWARD
 
 var frozen_direction: Vector3 = Vector3.FORWARD
 var player: CharacterBody3D
@@ -41,12 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func get_boresight_pos() -> Vector3:
 	if player:
-		var fall_dir: Vector3
-		if player.velocity.length_squared() > 0.01:
-			fall_dir = player.velocity.normalized()
-		else:
-			fall_dir = -player.global_transform.basis.z
-		return (fall_dir * aim_distance) + player.global_position
+		return (smoothed_boresight_dir_stage2 * aim_distance) + player.global_position
 	return (-global_transform.basis.z * aim_distance) + global_position
 
 func get_mouse_aim_pos() -> Vector3:
@@ -110,6 +109,30 @@ func update_look(delta: float) -> void:
 
 	yaw_input = 0.0
 	pitch_input = 0.0
+	
+	_update_boresight_dir(delta)
+
+func _update_boresight_dir(delta: float) -> void:
+	var target_dir: Vector3
+	var snap_instant := false
+
+	if gravity_controller \
+	and gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
+	and player and player.velocity.length_squared() > 0.01:
+		target_dir = player.velocity.normalized()
+		snap_instant = true
+	else:
+		target_dir = -global_basis.z
+
+	if snap_instant:
+		smoothed_boresight_dir = target_dir
+		smoothed_boresight_dir_stage2 = target_dir
+	else:
+		var weight1: float = 1.0 - exp(-delta / max(boresight_lag_time, 0.001))
+		smoothed_boresight_dir = smoothed_boresight_dir.slerp(target_dir, weight1).normalized()
+
+		var weight2: float = 1.0 - exp(-delta / max(boresight_jitter_smoothing_time, 0.001))
+		smoothed_boresight_dir_stage2 = smoothed_boresight_dir_stage2.slerp(smoothed_boresight_dir, weight2).normalized()
 
 func _shortest_arc(from_dir: Vector3, to_dir: Vector3) -> Quaternion:
 	from_dir = from_dir.normalized()

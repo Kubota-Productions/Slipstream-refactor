@@ -15,6 +15,14 @@ var ground_ray_origin: Marker3D
 @export var shift_start_speed := 8.0
 @export var shift_acceleration := 15.0
 @export var max_shift_speed := 35.0
+@export var max_shift_power: float = 100.0
+@export var shift_drain_rate: float = 40.0   # power per second while levitating/shifting/wall
+@export var shift_regen_rate: float = 25.0   # power per second while grounded
+var shift_power: float = 100.0
+@export var shift_regen_delay_after_empty: float = 3.0
+var regen_delay_timer: float = 0.0
+
+signal shift_power_changed(current: float, max: float)
 
 var gravity_state := GravityState.GROUNDED
 
@@ -28,11 +36,11 @@ func _ready():
 	print(camera)
 
 func setup(owner: CharacterBody3D, cam: Camera3D):
-
 	player = owner
 	camera = cam
 	ground_ray_origin = player.get_node("GroundRayOrigin")
 	spring_arm = player.get_node("SpringArm3D")
+	shift_power = max_shift_power
 	
 func check_shift_surface():
 
@@ -59,18 +67,24 @@ func apply_gravity(delta):
 	player.velocity += gravity_direction * gravity_strength * delta
 
 func enter_levitating():
-
+	if shift_power <= 0.0:
+		return
 	player.velocity = Vector3.ZERO
-
 	gravity_state = GravityState.LEVITATING
 
 func return_to_ground():
-
 	gravity_direction = Vector3.DOWN
-
 	player.up_direction = Vector3.UP
-
 	gravity_state = GravityState.GROUNDED
+
+	var forward: Vector3 = -player.global_basis.z
+	forward = forward.slide(Vector3.UP)
+
+	if forward.length_squared() > 0.001:
+		forward = forward.normalized()
+		player.global_basis = Basis.looking_at(forward, Vector3.UP)
+	else:
+		player.global_basis = Basis.IDENTITY
 
 func calculate_shift_direction() -> Vector3:
 
@@ -107,7 +121,25 @@ func update_shift(delta):
 	)
 
 	player.velocity = gravity_direction * shift_speed
-	
+
+func update_shift_power(delta: float) -> void:
+	var draining := gravity_state == GravityState.LEVITATING \
+		or gravity_state == GravityState.SHIFTING \
+		or gravity_state == GravityState.WALL
+
+	if draining:
+		shift_power = max(shift_power - shift_drain_rate * delta, 0.0)
+		if shift_power <= 0.0:
+			regen_delay_timer = shift_regen_delay_after_empty
+			return_to_ground()
+	elif gravity_state == GravityState.GROUNDED:
+		if regen_delay_timer > 0.0:
+			regen_delay_timer -= delta
+		else:
+			shift_power = min(shift_power + shift_regen_rate * delta, max_shift_power)
+
+	shift_power_changed.emit(shift_power, max_shift_power)
+
 func detect_wall():
 
 	if gravity_state != GravityState.SHIFTING:
