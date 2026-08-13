@@ -27,6 +27,17 @@ var pitch_angle: float = 0.0
 
 var last_up: Vector3 = Vector3.UP
 
+@export var camera_3D: Node3D
+@export var grounded_spring_length: float = 1.2
+@export var shifting_spring_length: float = 3.0
+@export var spring_length_smoothing_time: float = 0.25
+
+@export var grounded_shoulder_offset: Vector3 = Vector3(0.4, 0.0, 0.0)
+@export var shifting_shoulder_offset: Vector3 = Vector3.ZERO
+@export var shoulder_offset_smoothing_time: float = 0.25
+@export var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
+@export var running_camera_pullback: float = 0.8
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -37,6 +48,7 @@ func _ready() -> void:
 	pitch_angle = 0.0
 	last_up = Vector3.UP
 	smoothed_up = Vector3.UP
+	spring_length = shifting_spring_length
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -111,6 +123,7 @@ func update_look(delta: float) -> void:
 	pitch_input = 0.0
 	
 	_update_boresight_dir(delta)
+	_update_camera_distance(delta)
 
 func _update_boresight_dir(delta: float) -> void:
 	var target_dir: Vector3
@@ -150,3 +163,23 @@ func _shortest_arc(from_dir: Vector3, to_dir: Vector3) -> Quaternion:
 	var axis2 := from_dir.cross(to_dir).normalized()
 	var angle := acos(clamp(dot_val, -1.0, 1.0))
 	return Quaternion(axis2, angle)
+	
+func _update_camera_distance(delta: float) -> void:
+	var target_length: float = shifting_spring_length
+	var target_offset: Vector3 = shifting_shoulder_offset
+
+	if gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
+		target_length = grounded_spring_length
+		target_offset = grounded_shoulder_offset
+
+	if player and player.is_running:
+		target_offset.z += running_camera_pullback
+
+	var length_weight: float = 1.0 - exp(-delta / max(spring_length_smoothing_time, 0.001))
+	spring_length = lerp(spring_length, target_length, length_weight)
+
+	var offset_weight: float = 1.0 - exp(-delta / max(shoulder_offset_smoothing_time, 0.001))
+	smoothed_shoulder_offset = smoothed_shoulder_offset.lerp(target_offset, offset_weight)
+
+	if camera_3D:
+		camera_3D.position = smoothed_shoulder_offset

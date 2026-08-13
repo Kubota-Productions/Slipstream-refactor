@@ -32,6 +32,8 @@ var shift_speed := 0.0
 var player : CharacterBody3D
 var camera: Camera3D
 
+@export var floor_normal_buffer_deg: float = 5.0
+
 func _ready():
 	print(camera)
 
@@ -152,20 +154,22 @@ func detect_wall():
 		attach_to_surface(hit)
 			
 func attach_to_surface(hit):
-
 	var normal: Vector3 = hit.normal
 
+	if normal.angle_to(Vector3.UP) <= deg_to_rad(floor_normal_buffer_deg):
+		return_to_ground()
+		player.velocity = Vector3.ZERO
+		player.global_position = hit.position
+		if spring_arm:
+			spring_arm.rotation.y = 0.0
+		return
+
 	gravity_direction = -normal
-
 	player.up_direction = normal
-
 	player.velocity = Vector3.ZERO
-
 	player.global_position = hit.position
-
 	if spring_arm:
 		spring_arm.rotation.y = 0.0
-
 	gravity_state = GravityState.WALL
 	
 
