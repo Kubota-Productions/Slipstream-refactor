@@ -73,7 +73,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		gravity_controller.begin_shift()
 
 	if event.is_action_pressed("CancelShift"):
-		if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
+		if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
+		or gravity_controller.gravity_state == GravityController.GravityState.WALL:
 			gravity_controller.return_to_ground()
 
 	if event is InputEventMouseMotion:
