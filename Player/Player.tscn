@@ -61,8 +61,9 @@ aim_pivot = NodePath("../../AimPivot")
 mouse_aim = NodePath("Cameraoffset/Camera3D")
 cam = NodePath("Cameraoffset/Camera3D")
 camera_3D = NodePath("Cameraoffset/Camera3D")
-grounded_shoulder_offset = Vector3(0.265, 0.605, -0.91)
-shifting_shoulder_offset = Vector3(0, 0.795, -1.355)
+grounded_shoulder_offset = Vector3(0.225, 0.42, -0.785)
+shifting_shoulder_offset = Vector3(0, 0, -1.355)
+shifting_fov = 120.0
 
 [node name="Cameraoffset" type="Node3D" parent="Player/SpringArm3D" unique_id=486145548]
 

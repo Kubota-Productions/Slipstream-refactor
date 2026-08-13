@@ -38,6 +38,10 @@ var last_up: Vector3 = Vector3.UP
 @export var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 @export var running_camera_pullback: float = 0.8
 
+@export var grounded_fov: float = 75.0
+@export var shifting_fov: float = 90.0
+@export var fov_smoothing_time: float = 0.3
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -58,6 +62,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_boresight_pos() -> Vector3:
 	if player:
 		return (smoothed_boresight_dir_stage2 * aim_distance) + player.global_position
+	if camera_3D:
+		return (-camera_3D.global_transform.basis.z * aim_distance) + camera_3D.global_position
 	return (-global_transform.basis.z * aim_distance) + global_position
 
 func get_mouse_aim_pos() -> Vector3:
@@ -65,11 +71,15 @@ func get_mouse_aim_pos() -> Vector3:
 	if is_mouse_aim_frozen:
 		if mouse_aim:
 			x = mouse_aim.global_position + (frozen_direction * aim_distance)
+		elif camera_3D:
+			x = camera_3D.global_position + (-camera_3D.global_transform.basis.z * aim_distance)
 		else:
 			x = global_position + (-global_transform.basis.z * aim_distance)
 	else:
 		if mouse_aim:
 			x = mouse_aim.global_position + (-mouse_aim.global_transform.basis.z * aim_distance)
+		elif camera_3D:
+			x = camera_3D.global_position + (-camera_3D.global_transform.basis.z * aim_distance)
 		else:
 			x = global_position + (-global_transform.basis.z * aim_distance)
 	return x
@@ -91,11 +101,9 @@ func update_look(delta: float) -> void:
 
 	var up: Vector3 = smoothed_up
 
-	# Keep look_forward pinned to the plane perpendicular to "up" every
-	# frame -- this is what guarantees zero roll no matter how "up" moves.
 	var flat_forward: Vector3 = look_forward.slide(up)
 	if flat_forward.length_squared() < 0.0001:
-		flat_forward = (-global_basis.x).slide(up)  # forward went parallel to up; fall back to old right
+		flat_forward = (-global_basis.x).slide(up)
 	flat_forward = flat_forward.normalized()
 
 	if yaw_input != 0.0:
@@ -111,10 +119,23 @@ func update_look(delta: float) -> void:
 			deg_to_rad(max_pitch_deg)
 		)
 
-	var right: Vector3 = flat_forward.cross(up).normalized()
-	var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
+	var use_arm_pitch: bool = gravity_controller \
+		and gravity_controller.gravity_state != GravityController.GravityState.GROUNDED
 
-	global_basis = Basis.looking_at(final_forward, up)
+	if use_arm_pitch:
+		# Shifting / levitating / wall -- whole arm tilts, old behavior.
+		var right: Vector3 = flat_forward.cross(up).normalized()
+		var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
+		global_basis = Basis.looking_at(final_forward, up)
+
+		if camera_3D:
+			camera_3D.rotation = Vector3.ZERO
+	else:
+		# Grounded -- arm yaws only, camera carries the pitch.
+		global_basis = Basis.looking_at(flat_forward, up)
+
+		if camera_3D:
+			camera_3D.rotation = Vector3(pitch_angle, 0.0, 0.0)
 
 	if aim_pivot:
 		aim_pivot.global_basis = global_basis
@@ -134,6 +155,8 @@ func _update_boresight_dir(delta: float) -> void:
 	and player and player.velocity.length_squared() > 0.01:
 		target_dir = player.velocity.normalized()
 		snap_instant = true
+	elif camera_3D:
+		target_dir = -camera_3D.global_transform.basis.z
 	else:
 		target_dir = -global_basis.z
 
@@ -167,10 +190,12 @@ func _shortest_arc(from_dir: Vector3, to_dir: Vector3) -> Quaternion:
 func _update_camera_distance(delta: float) -> void:
 	var target_length: float = shifting_spring_length
 	var target_offset: Vector3 = shifting_shoulder_offset
+	var target_fov: float = shifting_fov
 
 	if gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
 		target_length = grounded_spring_length
 		target_offset = grounded_shoulder_offset
+		target_fov = grounded_fov
 
 	if player and player.is_running:
 		target_offset.z += running_camera_pullback
@@ -183,3 +208,6 @@ func _update_camera_distance(delta: float) -> void:
 
 	if camera_3D:
 		camera_3D.position = smoothed_shoulder_offset
+
+		var fov_weight: float = 1.0 - exp(-delta / max(fov_smoothing_time, 0.001))
+		camera_3D.fov = lerp(camera_3D.fov, target_fov, fov_weight)
