@@ -275,7 +275,13 @@ transform = Transform3D(3.99, 0, 0, 0, -1.7440844e-07, 3.99, 0, -3.99, -1.744084
 transform = Transform3D(2.3253837, -2.8526542, 1.5411209, -0.20543447, 1.7630597, 3.5734472, -3.2358136, -2.1619627, 0.88064075, -13.161932, -45.75099, 160.50911)
 
 [node name="rock18" parent="ENV" unique_id=1663339470 instance=ExtResource("7_xwm54")]
-transform = Transform3D(3.8385673, -0.8726076, 0.651201, -0.20543441, 1.7630601, 3.5734477, -1.0692542, -3.4713511, 1.6512176, -24.822493, -39.07334, 151.27994)
+transform = Transform3D(3.8385673, -0.8726075, 0.65120095, -0.20543441, 1.7630601, 3.5734477, -1.0692542, -3.4713511, 1.6512175, -24.822493, -39.07334, 151.27994)
+
+[node name="rock19" parent="ENV" unique_id=1314643261 instance=ExtResource("7_xwm54")]
+transform = Transform3D(2.325384, -2.8526545, 1.5411211, -2.7160447, -2.749611, -0.9913863, 1.7708187, -0.47127867, -3.5443206, 10.037455, 8.92527, 38.24465)
+
+[node name="rock20" parent="ENV" unique_id=261592768 instance=ExtResource("7_xwm54")]
+transform = Transform3D(3.8385673, -0.87260735, 0.6512009, -0.8298272, -3.8895705, -0.32051885, 0.70490706, 0.17291832, -3.9234314, -1.623106, -14.842077, 36.971657)
 
 [node name="rock8" parent="ENV" unique_id=156878457 instance=ExtResource("7_xwm54")]
 transform = Transform3D(2.685, 0, 0, 0, 2.685, 9.562942e-15, 0, -9.562942e-15, 2.685, -15.1176815, -43.23412, 132.4391)
@@ -476,7 +482,10 @@ transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, -14.89202
 transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, 8.416787, -43.84345, 150.27826)
 
 [node name="Cube_068" parent="." unique_id=836503410 instance=ExtResource("20_p35ly")]
-transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, 61.789898, -45.044518, 125.37887)
+transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, 64.51683, -45.044518, 78.98884)
+
+[node name="Cube_073" parent="." unique_id=1966227743 instance=ExtResource("20_p35ly")]
+transform = Transform3D(13.9869995, 0, 0, 0, 5.698965, 3.7816284, 0, -1.9917718, 10.820198, 61.789898, 38.262486, 125.37887)
 
 [node name="Cube_069" parent="." unique_id=1891653059 instance=ExtResource("20_p35ly")]
 transform = Transform3D(9.657, 0, 0, 0, 4.168, 0, 0, 0, 7.92, 71.82593, -45.61118, 161.58362)
@@ -502,6 +511,15 @@ transform = Transform3D(-7.482001, -2.8185104e-07, 0, 6.540973e-07, -3.2240005, 
 [node name="Cube_052" parent="." unique_id=61616158 instance=ExtResource("22_2s0s8")]
 transform = Transform3D(-9.562, -6.2300865e-07, 0, 1.4438219e-06, -4.126, 0, 0, 0, 7.84, 40.678036, -37.528, 110.80453)
 
+[node name="Cube_074" parent="." unique_id=117232097 instance=ExtResource("22_2s0s8")]
+transform = Transform3D(-9.562, -6.2300865e-07, 0, 1.4438219e-06, -4.126, 0, 0, 0, 7.84, 64.13256, -37.528, 120.83563)
+
+[node name="Cube_075" parent="." unique_id=937030852 instance=ExtResource("22_2s0s8")]
+transform = Transform3D(-9.314, -0.9336013, 0, 2.16362, -4.018988, 0, 0, 0, 7.84, 67.40925, -12.528, 120.3317)
+
+[node name="Cube_076" parent="." unique_id=560625229 instance=ExtResource("22_2s0s8")]
+transform = Transform3D(-8.856201, 1.5557675, 0, -3.605489, -3.8214474, 0, 0, 0, 7.84, 65.06802, 13.107292, 120.3317)
+
 [node name="Cube_053" parent="." unique_id=1820900604 instance=ExtResource("23_do5vm")]
 transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, 1.8276978, -44.893173, 107.52748)
 
@@ -519,6 +537,9 @@ transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, -36.81552
 
 [node name="Cube_056" parent="." unique_id=1118279536 instance=ExtResource("25_l2w7v")]
 transform = Transform3D(5.04717, 0, 0, 0, 1.7278646, -2.5218909, 0, 1.3280737, 3.2810571, -14.231413, -41.632893, 77.27683)
+
+[node name="Cube_077" parent="." unique_id=705401249 instance=ExtResource("25_l2w7v")]
+transform = Transform3D(8.657, 0, 0, 0, 3.6523495, 1.5017908, 0, -0.79089487, 6.935261, -4.704008, -38.799103, 39.971985)
 
 [node name="Cube_057" parent="." unique_id=912724378 instance=ExtResource("26_dtlt1")]
 transform = Transform3D(3.0463462, 1.7375596, 0, -4.02414, 1.3153639, 0, 0, 0, 4.138269, -8.295194, -44.133396, 81.38797)

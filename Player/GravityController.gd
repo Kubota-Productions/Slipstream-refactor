@@ -34,6 +34,11 @@ var camera: Camera3D
 
 @export var floor_normal_buffer_deg: float = 5.0
 
+@export var min_transition_interval: float = 0.12
+var last_transition_time: float = 0.0
+var last_levitate_time: float = 0.0
+var last_shift_time: float = 0.0
+
 func _ready():
 	print(camera)
 
@@ -43,7 +48,14 @@ func setup(owner: CharacterBody3D, cam: Camera3D):
 	ground_ray_origin = player.get_node("GroundRayOrigin")
 	spring_arm = player.get_node("SpringArm3D")
 	shift_power = max_shift_power
-	
+
+func _try_transition() -> bool:
+	var now: float = Time.get_ticks_msec() / 1000.0
+	if now - last_transition_time < min_transition_interval:
+		return false
+	last_transition_time = now
+	return true
+
 func check_shift_surface():
 
 	var origin = ground_ray_origin.global_position
@@ -68,11 +80,29 @@ func apply_gravity(delta):
 
 	player.velocity += gravity_direction * gravity_strength * delta
 
+func _try_levitate_transition() -> bool:
+	var now: float = Time.get_ticks_msec() / 1000.0
+	if now - last_levitate_time < min_transition_interval:
+		return false
+	last_levitate_time = now
+	return true
+	
+func _try_shift_transition() -> bool:
+	var now: float = Time.get_ticks_msec() / 1000.0
+	if now - last_shift_time < min_transition_interval:
+		return false
+	last_shift_time = now
+	return true
+	
 func enter_levitating():
 	if shift_power <= 0.0:
 		return
+	if not _try_levitate_transition():
+		return
 	player.velocity = Vector3.ZERO
 	gravity_state = GravityState.LEVITATING
+
+
 
 func return_to_ground():
 	gravity_direction = Vector3.DOWN
@@ -106,11 +136,10 @@ func calculate_shift_direction() -> Vector3:
 	return (to - player.global_position).normalized()
 	
 func begin_shift():
-
+	if not _try_shift_transition():
+		return
 	gravity_direction = calculate_shift_direction()
-
 	shift_speed = shift_start_speed
-
 	gravity_state = GravityState.SHIFTING
 	
 func update_shift(delta):
