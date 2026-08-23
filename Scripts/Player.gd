@@ -102,12 +102,16 @@ func _physics_process(delta: float) -> void:
 	_handle_jump(delta)
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
+	elif gravity_controller.gravity_state == GravityController.GravityState.LEVITATING:
+		gravity_controller.update_levitating(delta)
 
 	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
 		_update_orientation(delta)
 	move_and_slide()
 
 	gravity_controller.detect_wall()
+
+	spring_arm.update_pivot_position(delta)
 
 	_update_animation(delta)
 

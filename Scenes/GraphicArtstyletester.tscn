@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b53le0xlo2r07"]
 
+[ext_resource type="Texture2D" uid="uid://dqgfpuyes7tf4" path="res://Assets/skybox-space.png" id="1_2cc4s"]
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="1_fec2m"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="2_1u0bq"]
 [ext_resource type="Shader" uid="uid://dekqua2bb7q82" path="res://Shaders/Water.gdshader" id="3_xwm54"]
@@ -31,15 +32,28 @@
 [ext_resource type="PackedScene" uid="uid://dgn7ljruokyg5" path="res://Prefabs/rock29.tscn" id="26_dtlt1"]
 [ext_resource type="PackedScene" uid="uid://dhlw255c6bpxu" path="res://Prefabs/rock30.tscn" id="27_geruc"]
 [ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="31_2vi60"]
+[ext_resource type="PackedScene" uid="uid://cnrt1s17f4okj" path="res://Assets/Buildings/bl2.tscn" id="32_hce4q"]
+[ext_resource type="PackedScene" uid="uid://11e4o77xmagq" path="res://Assets/Buildings/bl4.tscn" id="33_p35ly"]
+[ext_resource type="PackedScene" uid="uid://bj7xtvgc6sgy" path="res://Assets/Buildings/bl3.tscn" id="34_2cc4s"]
+[ext_resource type="PackedScene" uid="uid://1q43nw14r3n0" path="res://Prefabs/megabot.tscn" id="35_p35ly"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2cc4s"]
+panorama = ExtResource("1_2cc4s")
+energy_multiplier = 0.5
+
+[sub_resource type="Sky" id="Sky_p35ly"]
+sky_material = SubResource("PanoramaSkyMaterial_2cc4s")
 
 [sub_resource type="Environment" id="Environment_jfn6g"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.16936523, 0.19127974, 0.29058373, 1)
-ambient_light_source = 2
+sky = SubResource("Sky_p35ly")
+ambient_light_source = 3
 ambient_light_color = Color(0.38424936, 0.49556875, 0.6599676, 1)
 ambient_light_energy = 1.1
-reflected_light_source = 1
-tonemap_mode = 2
+tonemap_mode = 1
+tonemap_exposure = 1.24
+ssr_enabled = true
 
 [sub_resource type="Curve3D" id="Curve3D_r6vcu"]
 closed = true
@@ -549,5 +563,26 @@ transform = Transform3D(5.04717, 0, 0, 0, 2.179288, 0, 0, 0, 4.138269, -7.24769,
 
 [node name="Gravrushcustom" parent="." unique_id=322886740 instance=ExtResource("31_2vi60")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5774734, -42.528465, 157.87622)
+
+[node name="Fantasy_building_04" parent="." unique_id=90365218 instance=ExtResource("32_hce4q")]
+transform = Transform3D(200, 0, 0, 0, -8.742278e-06, 200, 0, -200, -8.742278e-06, 114.733444, -50.485638, 7.3570976)
+
+[node name="Fantasy_building_05" parent="." unique_id=202131658 instance=ExtResource("32_hce4q")]
+transform = Transform3D(200, 0, 0, 0, -8.742278e-06, 200, 0, -200, -8.742278e-06, 73.899254, -91.205635, 17.44662)
+
+[node name="Fantasy_building_element_05__001" parent="." unique_id=83745954 instance=ExtResource("33_p35ly")]
+transform = Transform3D(200, 0, 0, 0, -8.742278e-06, 237.046, 0, -200, -1.036161e-05, 186.26959, -51.98981, 1.0257072)
+
+[node name="Fantasy_building_element_05__002" parent="." unique_id=2116351122 instance=ExtResource("33_p35ly")]
+transform = Transform3D(0.7291691, 199.99866, 1.036154e-05, 0, -8.742277e-06, 237.046, 199.99866, -0.7291691, -3.777851e-08, -62.107986, -51.98981, 312.8258)
+
+[node name="Fantasy_building_element_05__003" parent="." unique_id=1448915459 instance=ExtResource("33_p35ly")]
+transform = Transform3D(0.7291691, 199.99866, 1.036154e-05, 0, -8.742277e-06, 237.046, 199.99866, -0.7291691, -3.777851e-08, -31.874603, -51.98981, -66.58093)
+
+[node name="Fantasy_building_08" parent="." unique_id=1708746777 instance=ExtResource("34_2cc4s")]
+transform = Transform3D(200, 0, 0, 0, -8.742278e-06, 200, 0, -200, -8.742278e-06, 98.4786, -57.612034, 36.084435)
+
+[node name="megabot" parent="." unique_id=746831397 instance=ExtResource("35_p35ly")]
+transform = Transform3D(-1.3113415e-06, 0, 29.999998, 0, 29.999998, 0, -29.999998, 0, -1.3113415e-06, 20.303009, -51.940334, -211.4626)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]

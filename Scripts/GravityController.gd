@@ -12,6 +12,9 @@ var spring_arm: SpringArm3D
 var ground_ray_origin: Marker3D
 @export var gravity_strength := 20
 
+@export var shift_momentum_acceleration: float = 40.0  # units/sec^2, how fast velocity turns toward the shift direction
+@export var levitate_deceleration: float = 15.0  # units/sec^2
+var levitate_start_velocity: Vector3 = Vector3.ZERO
 @export var shift_start_speed := 8.0
 @export var shift_acceleration := 15.0
 @export var max_shift_speed := 35.0
@@ -99,10 +102,7 @@ func enter_levitating():
 		return
 	if not _try_levitate_transition():
 		return
-	player.velocity = Vector3.ZERO
 	gravity_state = GravityState.LEVITATING
-
-
 
 func return_to_ground():
 	gravity_direction = Vector3.DOWN
@@ -151,7 +151,12 @@ func update_shift(delta):
 		max_shift_speed
 	)
 
-	player.velocity = gravity_direction * shift_speed
+	var target_velocity: Vector3 = gravity_direction * shift_speed
+
+	player.velocity = player.velocity.move_toward(target_velocity, shift_momentum_acceleration * delta)
+	
+func update_levitating(delta: float) -> void:
+	player.velocity = player.velocity.move_toward(Vector3.ZERO, levitate_deceleration * delta)
 
 func update_shift_power(delta: float) -> void:
 	var draining := gravity_state == GravityState.LEVITATING \

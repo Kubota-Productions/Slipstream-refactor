@@ -1,5 +1,16 @@
 extends SpringArm3D
 
+var skeleton: Skeleton3D
+var head_bone_name: String = "mixamorig_Head"
+var root_bone_name: String = "mixamorig_Hips"
+var root_bone_idx: int = -1
+@export var head_bone_offset: Vector3 = Vector3(0.0, 0.1, 0.0)
+@export var pivot_position_smoothing_time: float = 0.03
+
+var head_bone_idx: int = -1
+var default_local_position: Vector3 = Vector3.ZERO
+var smoothed_pivot_position: Vector3 = Vector3.ZERO
+
 @export var mouse_sensitivity: float = 0.005
 @export var aim_pivot: Node3D
 @export var aim_distance: float = 500.0
@@ -27,10 +38,16 @@ var pitch_angle: float = 0.0
 
 var last_up: Vector3 = Vector3.UP
 
+@export var ots_transition_time: float = 0.25
+var ots_blend_weight: float = 0.0  # 0 = fully "chase" framing, 1 = fully OTS framing
+
 @export var camera_3D: Node3D
 @export var grounded_spring_length: float = 1.2
 @export var shifting_spring_length: float = 3.0
 @export var spring_length_smoothing_time: float = 0.25
+@export var wall_spring_length: float = 1.2
+@export var wall_shoulder_offset: Vector3 = Vector3(0.4, 0.0, 0.0)
+@export var wall_fov: float = 75.0
 
 @export var grounded_shoulder_offset: Vector3 = Vector3(0.4, 0.0, 0.0)
 @export var shifting_shoulder_offset: Vector3 = Vector3.ZERO
@@ -53,6 +70,23 @@ func _ready() -> void:
 	last_up = Vector3.UP
 	smoothed_up = Vector3.UP
 	spring_length = shifting_spring_length
+
+	default_local_position = position
+	smoothed_pivot_position = global_position
+
+	skeleton = player.find_child("Skeleton3D", true, false) as Skeleton3D
+	if skeleton:
+		head_bone_idx = skeleton.find_bone(head_bone_name)
+		root_bone_idx = skeleton.find_bone(root_bone_name)
+
+		var n: Node = skeleton
+		while n:
+			if n is Node3D:
+				print(n.name, " scale: ", (n as Node3D).scale)
+			n = n.get_parent()
+		
+	
+	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -84,6 +118,21 @@ func get_mouse_aim_pos() -> Vector3:
 			x = global_position + (-global_transform.basis.z * aim_distance)
 	return x
 
+func update_pivot_position(delta: float) -> void:
+	var target_position: Vector3
+
+	if skeleton and head_bone_idx != -1 and root_bone_idx != -1:
+		var head_pose: Transform3D = skeleton.get_bone_global_pose(head_bone_idx)
+		var root_pose: Transform3D = skeleton.get_bone_global_pose(root_bone_idx)
+		var relative_offset: Vector3 = skeleton.global_transform.basis * (head_pose.origin - root_pose.origin)
+		target_position = player.global_position + relative_offset + head_bone_offset
+	else:
+		target_position = player.global_position
+
+	var weight: float = 1.0 - exp(-delta / max(pivot_position_smoothing_time, 0.001))
+	smoothed_pivot_position = smoothed_pivot_position.lerp(target_position, weight)
+	global_position = smoothed_pivot_position
+	
 # Called explicitly by the player, early in its _physics_process,
 # so aim_pivot is guaranteed fresh before movement/orientation read it.
 func update_look(delta: float) -> void:
@@ -120,10 +169,11 @@ func update_look(delta: float) -> void:
 		)
 
 	var use_arm_pitch: bool = gravity_controller \
-		and gravity_controller.gravity_state != GravityController.GravityState.GROUNDED
+		and (gravity_controller.gravity_state == GravityController.GravityState.LEVITATING \
+			or gravity_controller.gravity_state == GravityController.GravityState.SHIFTING)
 
 	if use_arm_pitch:
-		# Shifting / levitating / wall -- whole arm tilts, old behavior.
+		# Levitating / actively shifting through the air -- whole arm tilts.
 		var right: Vector3 = flat_forward.cross(up).normalized()
 		var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
 		global_basis = Basis.looking_at(final_forward, up)
@@ -131,7 +181,7 @@ func update_look(delta: float) -> void:
 		if camera_3D:
 			camera_3D.rotation = Vector3.ZERO
 	else:
-		# Grounded -- arm yaws only, camera carries the pitch.
+		# Grounded or attached to a wall -- arm yaws only, camera carries pitch.
 		global_basis = Basis.looking_at(flat_forward, up)
 
 		if camera_3D:
@@ -188,26 +238,29 @@ func _shortest_arc(from_dir: Vector3, to_dir: Vector3) -> Quaternion:
 	return Quaternion(axis2, angle)
 	
 func _update_camera_distance(delta: float) -> void:
-	var target_length: float = shifting_spring_length
-	var target_offset: Vector3 = shifting_shoulder_offset
-	var target_fov: float = shifting_fov
+	var is_grounded: bool = gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.GROUNDED
+	var is_wall: bool = gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.WALL
 
-	if gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
-		target_length = grounded_spring_length
-		target_offset = grounded_shoulder_offset
-		target_fov = grounded_fov
+	var target_weight: float = 1.0 if (is_grounded or is_wall) else 0.0
+
+	var blend_speed: float = 1.0 - exp(-delta / max(ots_transition_time, 0.001))
+	ots_blend_weight = move_toward(ots_blend_weight, target_weight, blend_speed)
+
+	# OTS side (grounded or wall) vs Chase side (levitating/shifting)
+	var ots_length: float = wall_spring_length if is_wall else grounded_spring_length
+	var ots_offset: Vector3 = wall_shoulder_offset if is_wall else grounded_shoulder_offset
+	var ots_fov: float = wall_fov if is_wall else grounded_fov
+
+	var target_length: float = lerp(shifting_spring_length, ots_length, ots_blend_weight)
+	var target_offset: Vector3 = shifting_shoulder_offset.lerp(ots_offset, ots_blend_weight)
+	var target_fov: float = lerp(shifting_fov, ots_fov, ots_blend_weight)
 
 	if player and player.is_running:
 		target_offset.z += running_camera_pullback
 
-	var length_weight: float = 1.0 - exp(-delta / max(spring_length_smoothing_time, 0.001))
-	spring_length = lerp(spring_length, target_length, length_weight)
-
-	var offset_weight: float = 1.0 - exp(-delta / max(shoulder_offset_smoothing_time, 0.001))
-	smoothed_shoulder_offset = smoothed_shoulder_offset.lerp(target_offset, offset_weight)
+	spring_length = lerp(spring_length, target_length, blend_speed)
+	smoothed_shoulder_offset = smoothed_shoulder_offset.lerp(target_offset, blend_speed)
 
 	if camera_3D:
 		camera_3D.position = smoothed_shoulder_offset
-
-		var fov_weight: float = 1.0 - exp(-delta / max(fov_smoothing_time, 0.001))
-		camera_3D.fov = lerp(camera_3D.fov, target_fov, fov_weight)
+		camera_3D.fov = lerp(camera_3D.fov, target_fov, blend_speed)
