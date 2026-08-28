@@ -52,28 +52,29 @@ tree_root = SubResource("AnimationNodeBlendTree_a22an")
 parameters/movement_anim_speed/scale = 1.0
 parameters/BlendSpace1D/blend_position = -0.074
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Player" unique_id=1184963165 node_paths=PackedStringArray("aim_pivot", "mouse_aim", "cam", "camera_3D")]
+[node name="SpringArm3D" type="SpringArm3D" parent="Player" unique_id=1184963165 node_paths=PackedStringArray("camera_3D", "aim_pivot", "mouse_aim")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 2
 spring_length = 3.0
 script = ExtResource("3_tok1r")
-head_bone_offset = Vector3(0, 0, 0)
+camera_3D = NodePath("Cameraoffset/Camera3D")
 aim_pivot = NodePath("../../AimPivot")
 mouse_aim = NodePath("Cameraoffset/Camera3D")
-cam = NodePath("Cameraoffset/Camera3D")
-camera_3D = NodePath("Cameraoffset/Camera3D")
-wall_shoulder_offset = Vector3(0.4, 0.81, -0.295)
+head_bone_offset = Vector3(0, 0, 0)
+walk_shoulder_offset = Vector3(0.35, 1.155, 0)
 grounded_shoulder_offset = Vector3(0.48, 1.065, 0.125)
-shifting_shoulder_offset = Vector3(0, 0.535, -1.375)
 grounded_fov = 35.0
+wall_shoulder_offset = Vector3(0, 1.255, 1.57)
+shifting_shoulder_offset = Vector3(0, 0.535, -1.375)
 shifting_fov = 120.0
+pitch_pivot_back_range = -0.455
 
 [node name="Cameraoffset" type="Node3D" parent="Player/SpringArm3D" unique_id=486145548]
 
 [node name="Camera3D" type="Camera3D" parent="Player/SpringArm3D/Cameraoffset" unique_id=261954532]
 current = true
 fov = 90.0
-far = 50000.0
+far = 500000.0
 
 [node name="GroundRayOrigin" type="Marker3D" parent="Player" unique_id=1519260741]
 

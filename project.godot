@@ -8,6 +8,10 @@
 
 config_version=5
 
+[accessibility]
+
+general/hdr_2d=false
+
 [application]
 
 config/name="Slipstream"
@@ -18,6 +22,10 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 
 window/size/mode=3
 window/size/initial_position_type=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SunshineClouds2/plugin.cfg")
 
 [input]
 
@@ -94,6 +102,7 @@ CancelShift={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method.mobile="forward_plus"
 lights_and_shadows/directional_shadow/size=16384
@@ -102,10 +111,9 @@ lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/directional_shadow/16_bits=false
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/atlas_16_bits=false
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/msaa_3d=2
+viewport/hdr_2d=true
 lights_and_shadows/tighter_shadow_caster_culling=false
-anti_aliasing/quality/screen_space_aa=2
+anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_taa=true
 lights_and_shadows/positional_shadow/atlas_size=16384
 lights_and_shadows/positional_shadow/atlas_size.mobile=4096
