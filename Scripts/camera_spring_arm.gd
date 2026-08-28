@@ -111,6 +111,14 @@ var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 @export var pitch_pivot_height_range: float = 0.5   # how far the camera rises (looking down) / falls (looking up)
 @export var pitch_pivot_back_range: float = 0.35    # extra pull-back, more as pitch steepens
 
+# ============================================================
+# PANINI PROJECTION
+# ============================================================
+@export_group("Panini Projection")
+@export var panini_rect: ColorRect
+@export var panini_grounded_amount: float = 0.5
+
+var smoothed_panini_amount: float = 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -244,6 +252,8 @@ func update_look(delta: float) -> void:
 	_update_boresight_dir(delta)
 	_update_camera_distance(delta)
 	_update_pitch_pivot()
+	_update_panini(delta)
+
 
 
 func _update_boresight_dir(delta: float) -> void:
@@ -364,3 +374,14 @@ func _update_pitch_pivot() -> void:
 	var back_offset: float = abs(pitch_ratio) * pitch_pivot_back_range
 
 	camera_3D.position += Vector3(0.0, height_offset, back_offset)
+	
+func _update_panini(delta: float) -> void:
+	if not panini_rect or not camera_3D:
+		return
+
+	var mat: ShaderMaterial = panini_rect.material as ShaderMaterial
+	if not mat:
+		return
+
+	smoothed_panini_amount = panini_grounded_amount * ots_blend_weight
+	mat.set_shader_parameter("panini_amount", smoothed_panini_amount)

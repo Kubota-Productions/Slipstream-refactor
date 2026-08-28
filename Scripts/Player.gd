@@ -1,5 +1,8 @@
 extends CharacterBody3D
 
+# ============================================================
+# REFERENCES
+# ============================================================
 @onready var gravity_controller: GravityController = $GravityController
 @onready var animation_player: AnimationPlayer = $CharacterModel/gravanimpullover/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -8,34 +11,43 @@ extends CharacterBody3D
 @onready var camera_3d: Camera3D = $SpringArm3D/Cameraoffset/Camera3D
 @onready var aim_pivot: Node3D = $"../AimPivot"
 
-#MOVEMENT SETTINGS
+# ============================================================
+# MOVEMENT
+# ============================================================
+@export_group("Movement")
 @export var walk_speed: float = 2.5
 @export var run_speed: float = 5.0
+@export var speed_acceleration: float = 8.0
 @export var acceleration: float = 10.0
 @export var rotation_speed: float = 8.0
-
-@export var jump_velocity: float = 10.0
-@export var gravity_multiplier: float = 1.0
-
-@export var coyote_time: float = 0.15
-@export var jump_buffer: float = 0.15
-@export var max_jumps: int = 2
-var jumps_used: int = 0
+@export var max_landing_speed: float = 8.0
 
 const RUN_THRESHOLD := 0.40
 
-#STATE
 var move_input: Vector2 = Vector2.ZERO
 var move_direction: Vector3 = Vector3.ZERO
-
 var current_speed: float = 0.0
-
 var is_running := false
 var run_timer := 0.0
 
+# ============================================================
+# JUMPING
+# ============================================================
+@export_group("Jumping")
+@export var jump_velocity: float = 10.0
+@export var gravity_multiplier: float = 1.0
+@export var coyote_time: float = 0.15
+@export var jump_buffer: float = 0.15
+@export var max_jumps: int = 2
+
+var jumps_used: int = 0
 var coyote_timer := 0.0
 var jump_buffer_timer := 0.0
+var was_grounded_last_frame := true
 
+# ============================================================
+# ANIMATION
+# ============================================================
 enum AnimState {
 	IDLE,
 	JOG,
@@ -45,14 +57,22 @@ enum AnimState {
 	LAND
 }
 
-var current_anim_state := AnimState.IDLE
+const LANDING_TIME := 0.25
 
+var current_anim_state := AnimState.IDLE
 var was_on_floor := true
 var landing_timer := 0.0
 
-const LANDING_TIME := 0.25
+# ============================================================
+# DEBUG
+# ============================================================
+@export_group("Debug")
+@export var debug_print_state := false
 
-# READY
+
+# ============================================================
+# LIFECYCLE
+# ============================================================
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -63,7 +83,7 @@ func _ready() -> void:
 
 	_play_animation("idle")
 
-#INPUT
+
 func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("GravityShift"):
@@ -89,7 +109,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if abs(yaw_delta) > 0.01:
 				spring_arm.camera_moved = true
 
-#PHYSICS
+
 func _physics_process(delta: float) -> void:
 
 	aim_pivot.global_position = global_position
@@ -100,6 +120,7 @@ func _physics_process(delta: float) -> void:
 	gravity_controller.update_shift_power(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
+
 	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
 		gravity_controller.update_shift(delta)
 	elif gravity_controller.gravity_state == GravityController.GravityState.LEVITATING:
@@ -107,6 +128,7 @@ func _physics_process(delta: float) -> void:
 
 	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
 		_update_orientation(delta)
+
 	move_and_slide()
 
 	gravity_controller.detect_wall()
@@ -115,7 +137,13 @@ func _physics_process(delta: float) -> void:
 
 	_update_animation(delta)
 
-#INPUT HANDLING
+	if debug_print_state:
+		_print_debug_state()
+
+
+# ============================================================
+# INPUT HANDLING
+# ============================================================
 func _read_input(delta: float) -> void:
 
 	move_input.x = Input.get_axis("left", "right")
@@ -136,18 +164,32 @@ func _read_input(delta: float) -> void:
 	if jump_buffer_timer > 0.0:
 		jump_buffer_timer -= delta
 
-#GRAVITY
+
+# ============================================================
+# GRAVITY
+# ============================================================
 func _apply_gravity(delta):
 
 	if is_on_floor():
+		if not was_grounded_last_frame:
+			var up: Vector3 = -gravity_controller.gravity_direction
+			var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
+			if planar_velocity.length() > max_landing_speed:
+				planar_velocity = planar_velocity.normalized() * max_landing_speed
+			velocity = planar_velocity + velocity.project(gravity_controller.gravity_direction)
+
 		coyote_timer = coyote_time
 		jumps_used = 0
 	else:
 		coyote_timer -= delta
 
+	was_grounded_last_frame = is_on_floor()
+
 	gravity_controller.apply_gravity(delta)
 
-#JUMP
+# ============================================================
+# JUMP
+# ============================================================
 func _handle_jump(delta: float) -> void:
 
 	if jump_buffer_timer > 0.0:
@@ -168,64 +210,27 @@ func _handle_jump(delta: float) -> void:
 			jump_buffer_timer = 0.0
 			jumps_used += 1
 
+	# Variable jump height — releasing Jump while moving upward cuts it short.
 	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
 		velocity.y *= 0.5
 
-	# Variable jump height.
-	# Releasing Jump while moving upward cuts the jump short.
-	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
-		velocity.y *= 0.5
 
-#ROTATION
-func _handle_rotation() -> void:
-
-	# Camera always rotates
-	if spring_arm.yaw_input != 0.0:
-		spring_arm.rotate_y(spring_arm.yaw_input)
-
-
-	# During gravity states, do not rotate the player
-	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
-		return
-
-
-	# Normal ground behaviour
-	if move_input.length_squared() > 0.0:
-
-		if spring_arm.camera_moved:
-
-			var target_yaw := spring_arm.global_rotation.y
-
-			var player_rotation := global_rotation
-			player_rotation.y = target_yaw
-			global_rotation = player_rotation
-
-			spring_arm.rotation.y = 0.0
-			spring_arm.camera_moved = false
-
-
+# ============================================================
+# ORIENTATION
+# ============================================================
 func _update_orientation(delta: float) -> void:
 
 	var up := -gravity_controller.gravity_direction
 
-
 	var forward: Vector3 = -aim_pivot.global_basis.z
-
 	forward = forward.slide(up)
-
 
 	if forward.length_squared() < 0.001:
 		return
 
-
 	forward = forward.normalized()
 
-
-	var target_basis := Basis.looking_at(
-		forward,
-		up
-	)
-
+	var target_basis := Basis.looking_at(forward, up)
 
 	global_basis = Basis(
 		global_basis.get_rotation_quaternion().slerp(
@@ -234,7 +239,10 @@ func _update_orientation(delta: float) -> void:
 		)
 	)
 
-#MOVEMENT
+
+# ============================================================
+# MOVEMENT
+# ============================================================
 func _handle_movement(delta: float) -> void:
 
 	if move_input.length_squared() > 0.0:
@@ -250,48 +258,36 @@ func _handle_movement(delta: float) -> void:
 
 		var gravity_up := -gravity_controller.gravity_direction
 
-
 		var camera_forward: Vector3 = aim_pivot.global_basis.z
 		camera_forward = camera_forward.slide(gravity_up)
-
 
 		if camera_forward.length_squared() > 0.001:
 			camera_forward = camera_forward.normalized()
 
-
 		var camera_right: Vector3 = aim_pivot.global_basis.x
 		camera_right = camera_right.slide(gravity_up)
 
-
 		if camera_right.length_squared() > 0.001:
 			camera_right = camera_right.normalized()
-
 
 		move_direction = (
 			camera_forward * move_input.y +
 			camera_right * move_input.x
 		).normalized()
-	
+
 		current_speed = run_speed if is_running else walk_speed
 
 		var target_velocity := move_direction * current_speed
 
 		var air_control := 0.45 if !is_on_floor() else 1.0
 
-		var current_planar_velocity = velocity.slide(
-			gravity_controller.gravity_direction
-		)
-
-		var target_planar_velocity = target_velocity.slide(
-			gravity_controller.gravity_direction
-		)
-
+		var current_planar_velocity = velocity.slide(gravity_controller.gravity_direction)
+		var target_planar_velocity = target_velocity.slide(gravity_controller.gravity_direction)
 
 		current_planar_velocity = current_planar_velocity.lerp(
 			target_planar_velocity,
 			acceleration * air_control * delta
 		)
-
 
 		velocity = current_planar_velocity + (
 			velocity.project(gravity_controller.gravity_direction)
@@ -299,21 +295,14 @@ func _handle_movement(delta: float) -> void:
 
 		var up := -gravity_controller.gravity_direction
 
-
 		var forward := -character_model.global_basis.z
-
 		forward = forward.slide(up).normalized()
-
 
 		var target_forward := move_direction.slide(up).normalized()
 
-
 		if target_forward.length_squared() > 0.001:
 
-			var target_basis := Basis.looking_at(
-				target_forward,
-				up
-			)
+			var target_basis := Basis.looking_at(target_forward, up)
 
 			character_model.global_basis = Basis(
 				character_model.global_basis
@@ -330,7 +319,10 @@ func _handle_movement(delta: float) -> void:
 
 		velocity = planar_velocity + velocity.project(gravity_controller.gravity_direction)
 
-#ANIMATION
+
+# ============================================================
+# ANIMATION
+# ============================================================
 func _update_animation(delta: float) -> void:
 
 	# Detect landing
@@ -368,7 +360,6 @@ func _update_animation(delta: float) -> void:
 		return
 
 	# Grounded
-
 	if move_input.length_squared() == 0.0:
 
 		if current_anim_state != AnimState.IDLE:
@@ -387,7 +378,7 @@ func _update_animation(delta: float) -> void:
 			current_anim_state = AnimState.JOG
 			_play_animation("jog")
 
-#PLAY ANIMATION
+
 func _play_animation(anim_name: String) -> void:
 
 	if animation_player.current_animation == anim_name \
@@ -396,13 +387,15 @@ func _play_animation(anim_name: String) -> void:
 
 	animation_player.play(anim_name)
 
-#HELPERS
+
+# ============================================================
+# HELPERS
+# ============================================================
 func is_moving() -> bool:
 	return move_input.length_squared() > 0.001
-	
-#OPTIONAL HELPERS
-func force_idle() -> void:
 
+
+func force_idle() -> void:
 	velocity = Vector3.ZERO
 	move_input = Vector2.ZERO
 	run_timer = 0.0
@@ -413,31 +406,25 @@ func force_idle() -> void:
 
 
 func stop_horizontal_velocity() -> void:
-
 	velocity.x = 0.0
 	velocity.z = 0.0
 
 
 func launch(direction: Vector3, force: float) -> void:
-
 	velocity += direction.normalized() * force
 
 
 func set_running(enabled: bool) -> void:
-
 	is_running = enabled
 
 	if !enabled:
 		run_timer = 0.0
 
-#DEBUG
-@export var debug_print_state := false
 
-func _physics_process_debug() -> void:
-
-	if !debug_print_state:
-		return
-
+# ============================================================
+# DEBUG
+# ============================================================
+func _print_debug_state() -> void:
 	print(
 		"Floor:", is_on_floor(),
 		" | Run:", is_running,
