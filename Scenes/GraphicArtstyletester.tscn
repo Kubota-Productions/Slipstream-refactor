@@ -2,7 +2,6 @@
 
 [ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="1_fec2m"]
 [ext_resource type="RDShaderFile" uid="uid://dx1y5cye1m1hu" path="res://addons/SunshineClouds2/SunshineCloudsCompute.glsl" id="1_ms3qw"]
-[ext_resource type="Texture2D" uid="uid://dqgfpuyes7tf4" path="res://Assets/skybox-space.png" id="1_somiq"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="2_1u0bq"]
 [ext_resource type="CompressedTexture3D" uid="uid://dei12lsgrjpyu" path="res://addons/SunshineClouds2/NoiseTextures/curl_noise_varied.tga" id="2_somiq"]
 [ext_resource type="CompressedTexture3D" uid="uid://b3uyfsp4in821" path="res://addons/SunshineClouds2/NoiseTextures/bluenoise_Dither.png" id="3_huk1a"]
@@ -49,11 +48,10 @@
 [ext_resource type="PackedScene" uid="uid://bj7xtvgc6sgy" path="res://Assets/Buildings/bl3.tscn" id="34_2cc4s"]
 [ext_resource type="PackedScene" uid="uid://bdm4ifmovhg37" path="res://Prefabs/Grassfab.tscn" id="49_huk1a"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_va1o7"]
-panorama = ExtResource("1_somiq")
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vxbgf"]
 
 [sub_resource type="Sky" id="Sky_huk1a"]
-sky_material = SubResource("PanoramaSkyMaterial_va1o7")
+sky_material = SubResource("ProceduralSkyMaterial_vxbgf")
 
 [sub_resource type="Environment" id="Environment_o0ome"]
 background_mode = 2
@@ -147,7 +145,7 @@ needs_motion_vectors = true
 needs_normal_roughness = true
 script = ExtResource("10_53xc7")
 clouds_coverage = 0.702
-clouds_density = 1.9609999999999999
+clouds_density = 1.961
 atmospheric_density = 0.876
 lighting_density = 0.11
 fog_effect_ground = 0.0
@@ -293,7 +291,7 @@ compositor = SubResource("Compositor_mt8kd")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1499216494]
 transform = Transform3D(0.7697952, 0.31850815, -0.55314374, -0.29563516, 0.9459593, 0.13326956, 0.5656989, 0.060938433, 0.82235724, -8, 2, -2)
 light_color = Color(1, 0.9161538, 0.81346005, 1)
-light_energy = 0.78
+light_energy = 2.107
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
 light_specular = 0.0

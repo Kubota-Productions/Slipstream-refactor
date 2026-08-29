@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="3_ddoul"]
 [ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Scripts/camera_spring_arm.gd" id="3_tok1r"]
 [ext_resource type="PackedScene" uid="uid://bhlaju4rf2b1c" path="res://Player/gravanimpullover.fbx" id="3_v0k0e"]
+[ext_resource type="PackedScene" uid="uid://orp1i4cq8a74" path="res://Player/gravrushjester.glb" id="4_0j2ni"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yf5fn"]
 shader = ExtResource("1_j23h2")
@@ -51,6 +52,7 @@ grow_vertical = 2
 [node name="Player" type="CharacterBody3D" parent="." unique_id=2134162341]
 slide_on_ceiling = false
 script = ExtResource("1_tok1r")
+walk_speed = 1.5
 
 [node name="GravityController" type="Node" parent="Player" unique_id=1621988856]
 script = ExtResource("2_8g4oa")
@@ -58,8 +60,12 @@ shift_drain_rate = 5.0
 
 [node name="CharacterModel" type="Node3D" parent="Player" unique_id=1574064996]
 
+[node name="gravrushjester" parent="Player/CharacterModel" unique_id=990004481 instance=ExtResource("4_0j2ni")]
+transform = Transform3D(-0.9848077, 0, -0.17364822, 0, 1, 0, 0.17364822, 0, -0.9848077, 0, 0, 0)
+
 [node name="gravanimpullover" parent="Player/CharacterModel" unique_id=306314866 instance=ExtResource("3_v0k0e")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+visible = false
 
 [node name="Gravrushcustom" parent="Player" unique_id=262543774 instance=ExtResource("3_ddoul")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -83,6 +89,8 @@ camera_3D = NodePath("Cameraoffset/Camera3D")
 aim_pivot = NodePath("../../AimPivot")
 mouse_aim = NodePath("Cameraoffset/Camera3D")
 head_bone_offset = Vector3(0, 0, 0)
+frame_anchor_height_offset = 0.5
+walk_lag_distance = -0.2
 walk_shoulder_offset = Vector3(0.23, 1.155, 0)
 walk_fov = 50.0
 grounded_shoulder_offset = Vector3(0.48, 1.065, 0.125)

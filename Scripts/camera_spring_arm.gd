@@ -55,7 +55,10 @@ var smoothed_up: Vector3 = Vector3.UP
 @export var root_bone_name: String = "mixamorig_Hips"
 @export var head_bone_offset: Vector3 = Vector3(0.0, 0.1, 0.0)
 @export var pivot_position_smoothing_time: float = 0.03
-@export var frame_anchor_height_offset: float = 1.3  # fallback height if skeleton/bones aren't found
+@export var frame_anchor_height_offset: float = 1.3 
+@export var walk_lag_distance: float = 0.0  # positive = lags behind movement direction, negative = leads ahead
+@export var walk_lag_smoothing_time: float = 0.2  # how quickly the lag offset fades in/out with movement
+var smoothed_lag_offset: Vector3 = Vector3.ZERO
 
 var skeleton: Skeleton3D
 var head_bone_idx: int = -1
@@ -89,7 +92,7 @@ var speed_blend_weight: float = 0.0  # 0 = walk (close), 1 = run (mid)
 
 @export_subgroup("Camera Profiles/Run (Grounded)")
 @export var grounded_spring_length: float = 1.2
-@export var grounded_shoulder_offset: Vector3 = Vector3(0.4, 0.0, 0.0)
+@export var grounded_shoulder_offset: Vector3 = Vector3(0.0, 0.0, 0.0)
 @export var grounded_fov: float = 75.0
 
 @export_subgroup("Camera Profiles/Wall")
@@ -108,8 +111,9 @@ var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 # PITCH PIVOT (keeps head/shoulders framed while looking up/down)
 # ============================================================
 @export_group("Pitch Pivot")
-@export var pitch_pivot_height_range: float = 0.5   # how far the camera rises (looking down) / falls (looking up)
-@export var pitch_pivot_back_range: float = 0.35    # extra pull-back, more as pitch steepens
+@export var pitch_pivot_height_range: float = 0.5
+@export var pitch_pivot_back_range: float = 0.35
+@export var pitch_pivot_run_multiplier: float = 1.3 
 
 # ============================================================
 # PANINI PROJECTION
@@ -184,13 +188,24 @@ func update_pivot_position(delta: float) -> void:
 	else:
 		target_position = player.global_position
 
+	var target_lag: Vector3 = Vector3.ZERO
+	if player:
+		var planar_velocity: Vector3 = player.velocity
+		if gravity_controller:
+			planar_velocity = planar_velocity.slide(gravity_controller.gravity_direction)
+
+		if planar_velocity.length_squared() > 0.01:
+			target_lag = -planar_velocity.normalized() * walk_lag_distance
+
+	var lag_weight: float = 1.0 - exp(-delta / max(walk_lag_smoothing_time, 0.001))
+	smoothed_lag_offset = smoothed_lag_offset.lerp(target_lag, lag_weight)
+
+	target_position += smoothed_lag_offset
+
 	var weight: float = 1.0 - exp(-delta / max(pivot_position_smoothing_time, 0.001))
 	smoothed_pivot_position = smoothed_pivot_position.lerp(target_position, weight)
 	global_position = smoothed_pivot_position
-
-
-# Called explicitly by the player, early in its _physics_process,
-# so aim_pivot is guaranteed fresh before movement/orientation read it.
+	
 func update_look(delta: float) -> void:
 	var target_up: Vector3 = Vector3.UP
 	if gravity_controller:
@@ -356,8 +371,6 @@ func _update_pitch_pivot() -> void:
 	if not camera_3D:
 		return
 
-	# Normalize pitch into -1 (full down) .. +1 (full up), independently
-	# per direction since min/max pitch ranges may differ.
 	var pitch_ratio: float = 0.0
 	if pitch_angle >= 0.0:
 		pitch_ratio = pitch_angle / max(deg_to_rad(max_pitch_deg), 0.0001)
@@ -365,13 +378,12 @@ func _update_pitch_pivot() -> void:
 		pitch_ratio = pitch_angle / max(deg_to_rad(abs(min_pitch_deg)), 0.0001)
 	pitch_ratio = clamp(pitch_ratio, -1.0, 1.0)
 
-	# Looking up (positive ratio) -> camera moves DOWN.
-	# Looking down (negative ratio) -> camera moves UP.
-	var height_offset: float = -pitch_ratio * pitch_pivot_height_range
+	# Directly tunable scale: 1.0 at walk, pitch_pivot_run_multiplier at
+	# full run, blended by the same speed_blend_weight driving distance/offset.
+	var distance_scale: float = lerp(1.0, pitch_pivot_run_multiplier, speed_blend_weight)
 
-	# Pull back a bit more the further you pitch in either direction --
-	# keeps head and shoulders in frame as the view angle steepens.
-	var back_offset: float = abs(pitch_ratio) * pitch_pivot_back_range
+	var height_offset: float = -pitch_ratio * pitch_pivot_height_range * distance_scale
+	var back_offset: float = abs(pitch_ratio) * pitch_pivot_back_range * distance_scale
 
 	camera_3D.position += Vector3(0.0, height_offset, back_offset)
 	
