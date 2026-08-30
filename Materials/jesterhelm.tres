@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bdqhmovhiuxl5"]
+
+[ext_resource type="Texture2D" uid="uid://c6baebsa0mfk" path="res://Player/gravrushjester_Material_Base_color.png" id="1_kq3ox"]
+[ext_resource type="Texture2D" uid="uid://dpgl24oa6galw" path="res://Assets/textures/Material_Mixed_AO.png" id="2_pr244"]
+[ext_resource type="Texture2D" uid="uid://cvivbqu5bgauc" path="res://Assets/textures/Material_Metallic.png" id="3_5vw4l"]
+[ext_resource type="Texture2D" uid="uid://cbcvifx1tywo7" path="res://Player/gravrushjester_Material_Normal_OpenGL.png" id="4_l7e24"]
+[ext_resource type="Texture2D" uid="uid://ckr802yehv7ny" path="res://Assets/textures/Material_Roughness.png" id="5_flc87"]
+
+[resource]
+albedo_texture = ExtResource("1_kq3ox")
+metallic = 1.0
+metallic_texture = ExtResource("3_5vw4l")
+roughness_texture = ExtResource("5_flc87")
+normal_enabled = true
+normal_scale = 1.8
+normal_texture = ExtResource("4_l7e24")
+bent_normal_enabled = true
+ao_enabled = true
+ao_texture = ExtResource("2_pr244")

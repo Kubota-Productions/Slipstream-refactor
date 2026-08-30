@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c7tdhu4qa53bt"]
+
+[ext_resource type="Texture2D" uid="uid://cuk1of2vhbx12" path="res://Assets/textures/lace.png" id="1_vxdn5"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_vxdn5")
