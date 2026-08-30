@@ -12377,6 +12377,38 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 }
+},
+"materials": {
+"body": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/skin.tres",
+"use_external/path": "uid://bach08rirabfq"
+},
+"eyecap": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/eyecap.tres",
+"use_external/path": "uid://10vdiyvolccl"
+},
+"eyewhite": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/eyewhite.tres",
+"use_external/path": "uid://dyvivka8udoaj"
+},
+"iris": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/iris.tres",
+"use_external/path": "uid://ct31qpyb2ejmt"
+},
+"outfit": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Player/outfit.tres",
+"use_external/path": "uid://ys3i1qniyqr3"
+}
+},
+"nodes": {
+"PATH:rig/Skeleton3D": {
+"retarget/bone_map": null
+}
 }
 }
 fbx/importer=0
