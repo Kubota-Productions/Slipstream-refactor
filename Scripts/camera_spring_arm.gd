@@ -43,7 +43,7 @@ var smoothed_boresight_dir_stage2: Vector3 = Vector3.FORWARD
 # UP-VECTOR SMOOTHING (gravity shift transitions)
 # ============================================================
 @export_group("Up Vector Smoothing")
-@export var up_smoothing_time: float = 1.0  # seconds for camera "up" to settle after a gravity shift
+@export var up_smoothing_time: float = 0.15  # was 1.0
 
 var smoothed_up: Vector3 = Vector3.UP
 
@@ -108,12 +108,24 @@ var speed_blend_weight: float = 0.0  # 0 = walk (close), 1 = run (mid)
 var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 
 # ============================================================
-# PITCH PIVOT (keeps head/shoulders framed while looking up/down)
+# PITCH PIVOT
 # ============================================================
-@export_group("Pitch Pivot")
-@export var pitch_pivot_height_range: float = 0.5
-@export var pitch_pivot_back_range: float = 0.35
-@export var pitch_pivot_run_multiplier: float = 1.3 
+@export_subgroup("Pitch Pivot/Grounded")
+@export var grounded_pitch_height_range: float = 0.5
+@export var grounded_pitch_back_range: float = 0.35
+@export var grounded_pitch_run_multiplier: float = 1.3
+
+@export_subgroup("Pitch Pivot/Wall")
+@export var wall_pitch_height_range: float = 0.5
+@export var wall_pitch_back_range: float = 0.35
+
+@export_subgroup("Pitch Pivot/Shifting")
+@export var shifting_pitch_height_range: float = 0.0
+@export var shifting_pitch_back_range: float = 0.0
+
+@export_subgroup("Pitch Pivot/Levitating")
+@export var levitating_pitch_height_range: float = 0.0
+@export var levitating_pitch_back_range: float = 0.0
 
 # ============================================================
 # PANINI PROJECTION
@@ -371,6 +383,31 @@ func _update_pitch_pivot() -> void:
 	if not camera_3D:
 		return
 
+	var height_range: float
+	var back_range: float
+	var run_multiplier: float = 1.0
+
+	var state = gravity_controller.gravity_state if gravity_controller else GravityController.GravityState.GROUNDED
+
+	match state:
+		GravityController.GravityState.GROUNDED:
+			height_range = grounded_pitch_height_range
+			back_range = grounded_pitch_back_range
+			run_multiplier = grounded_pitch_run_multiplier
+		GravityController.GravityState.WALL:
+			height_range = wall_pitch_height_range
+			back_range = wall_pitch_back_range
+		GravityController.GravityState.SHIFTING:
+			height_range = shifting_pitch_height_range
+			back_range = shifting_pitch_back_range
+		GravityController.GravityState.LEVITATING:
+			height_range = levitating_pitch_height_range
+			back_range = levitating_pitch_back_range
+		_:
+			height_range = grounded_pitch_height_range
+			back_range = grounded_pitch_back_range
+			run_multiplier = grounded_pitch_run_multiplier
+
 	var pitch_ratio: float = 0.0
 	if pitch_angle >= 0.0:
 		pitch_ratio = pitch_angle / max(deg_to_rad(max_pitch_deg), 0.0001)
@@ -378,12 +415,10 @@ func _update_pitch_pivot() -> void:
 		pitch_ratio = pitch_angle / max(deg_to_rad(abs(min_pitch_deg)), 0.0001)
 	pitch_ratio = clamp(pitch_ratio, -1.0, 1.0)
 
-	# Directly tunable scale: 1.0 at walk, pitch_pivot_run_multiplier at
-	# full run, blended by the same speed_blend_weight driving distance/offset.
-	var distance_scale: float = lerp(1.0, pitch_pivot_run_multiplier, speed_blend_weight)
+	var distance_scale: float = lerp(1.0, run_multiplier, speed_blend_weight)
 
-	var height_offset: float = -pitch_ratio * pitch_pivot_height_range * distance_scale
-	var back_offset: float = abs(pitch_ratio) * pitch_pivot_back_range * distance_scale
+	var height_offset: float = -pitch_ratio * height_range * distance_scale
+	var back_offset: float = abs(pitch_ratio) * back_range * distance_scale
 
 	camera_3D.position += Vector3(0.0, height_offset, back_offset)
 	
