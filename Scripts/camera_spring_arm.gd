@@ -128,6 +128,17 @@ var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 @export var levitating_pitch_back_range: float = 0.0
 
 # ============================================================
+# SHIFTING CAMERA FOCUS
+# CenterCameraFocus has exactly one job: while shifting/levitating,
+# it's the point the spring arm's pivot targets, so free yaw/pitch
+# naturally orbits around the character's center instead of around
+# the head bone. It does NOT constrain look direction in any way --
+# that's handled entirely by the normal free-look below.
+# ============================================================
+@export_group("Shifting Camera Focus")
+@export var center_camera_focus: Node3D
+
+# ============================================================
 # PANINI PROJECTION
 # ============================================================
 @export_group("Panini Projection")
@@ -189,10 +200,21 @@ func get_mouse_aim_pos() -> Vector3:
 	return x
 
 
+func _is_shifting_or_levitating() -> bool:
+	return gravity_controller \
+		and (gravity_controller.gravity_state == GravityController.GravityState.LEVITATING \
+			or gravity_controller.gravity_state == GravityController.GravityState.SHIFTING)
+
+
 func update_pivot_position(delta: float) -> void:
 	var target_position: Vector3
+	var use_focus_pivot: bool = _is_shifting_or_levitating() and center_camera_focus != null
 
-	if skeleton and head_bone_idx != -1 and root_bone_idx != -1:
+	if use_focus_pivot:
+		# Pivot on the character's center so free yaw/pitch orbits around
+		# it, instead of the usual head-bone tracking used on the ground.
+		target_position = center_camera_focus.global_position
+	elif skeleton and head_bone_idx != -1 and root_bone_idx != -1:
 		var head_pose: Transform3D = skeleton.get_bone_global_pose(head_bone_idx)
 		var root_pose: Transform3D = skeleton.get_bone_global_pose(root_bone_idx)
 		var relative_offset: Vector3 = skeleton.global_transform.basis * (head_pose.origin - root_pose.origin)
@@ -201,7 +223,7 @@ func update_pivot_position(delta: float) -> void:
 		target_position = player.global_position
 
 	var target_lag: Vector3 = Vector3.ZERO
-	if player:
+	if player and not use_focus_pivot:
 		var planar_velocity: Vector3 = player.velocity
 		if gravity_controller:
 			planar_velocity = planar_velocity.slide(gravity_controller.gravity_direction)
@@ -233,6 +255,8 @@ func update_look(delta: float) -> void:
 
 	var up: Vector3 = smoothed_up
 
+	# Free yaw -- always accumulates directly from mouse input, no
+	# clamp, no dead zone, no reference point to fight against.
 	var flat_forward: Vector3 = look_forward.slide(up)
 	if flat_forward.length_squared() < 0.0001:
 		flat_forward = (-global_basis.x).slide(up)
@@ -244,6 +268,8 @@ func update_look(delta: float) -> void:
 	look_forward = flat_forward
 	last_up = up
 
+	# Free pitch -- clamped only to stop the camera flipping past
+	# straight up/down, same limits used on the ground.
 	if pitch_input != 0.0:
 		pitch_angle = clamp(
 			pitch_angle + pitch_input,
@@ -251,12 +277,12 @@ func update_look(delta: float) -> void:
 			deg_to_rad(max_pitch_deg)
 		)
 
-	var use_arm_pitch: bool = gravity_controller \
-		and (gravity_controller.gravity_state == GravityController.GravityState.LEVITATING \
-			or gravity_controller.gravity_state == GravityController.GravityState.SHIFTING)
+	var use_arm_pitch: bool = _is_shifting_or_levitating()
 
 	if use_arm_pitch:
 		# Levitating / actively shifting through the air -- whole arm tilts.
+		# Combined with update_pivot_position() targeting CenterCameraFocus,
+		# this orbits the camera freely around the character's center.
 		var right: Vector3 = flat_forward.cross(up).normalized()
 		var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
 		global_basis = Basis.looking_at(final_forward, up)
@@ -282,8 +308,12 @@ func update_look(delta: float) -> void:
 	_update_panini(delta)
 
 
-
 func _update_boresight_dir(delta: float) -> void:
+	# This is the "reticle" -- it's what should feel weighty and lag
+	# slightly behind the camera, NOT the camera itself. Small flicks
+	# of the mouse move the camera instantly but barely nudge this;
+	# sustained input drags it along. That's the whole "wiggle room"
+	# feel, without ever constraining how freely the camera can turn.
 	var target_dir: Vector3
 	var snap_instant := false
 
@@ -369,6 +399,8 @@ func _update_camera_distance(delta: float) -> void:
 
 
 func _get_subject_world_pos() -> Vector3:
+	if _is_shifting_or_levitating() and center_camera_focus:
+		return center_camera_focus.global_position
 	if skeleton and head_bone_idx != -1 and root_bone_idx != -1 and player:
 		var head_pose: Transform3D = skeleton.get_bone_global_pose(head_bone_idx)
 		var root_pose: Transform3D = skeleton.get_bone_global_pose(root_bone_idx)
