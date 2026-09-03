@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 # ============================================================
@@ -46,6 +47,17 @@ var jump_buffer_timer := 0.0
 var was_grounded_last_frame := true
 
 # ============================================================
+# OTS EXPLORE MODE
+# A separate, orthogonal camera/input mode toggled by right click.
+# It does NOT replace or plug into GravityController's state machine
+# -- traversal (running/jumping/shifting) keeps using that as before.
+# This mode only exists to let the player stop, walk slowly, and
+# freely look around in a dedicated over-the-shoulder framing.
+# ============================================================
+@export_group("OTS Explore Mode")
+var is_ots_mode: bool = false
+
+# ============================================================
 # TRAJECTORY PREDICTION  (consumed by the animation controller)
 # ============================================================
 @export_group("Trajectory Prediction")
@@ -78,16 +90,25 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 
-	if event.is_action_pressed("GravityShift"):
-		gravity_controller.enter_levitating()
+	if event.is_action_pressed("ToggleOTS"):
+		if is_ots_mode:
+			is_ots_mode = false
+		elif gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
+			is_ots_mode = true
 
-	if event.is_action_released("GravityShift"):
-		gravity_controller.begin_shift()
+	# Jumping and gravity-shifting are entirely off-limits while
+	# exploring -- gate them here so there's no path to trigger them.
+	if not is_ots_mode:
+		if event.is_action_pressed("GravityShift"):
+			gravity_controller.enter_levitating()
 
-	if event.is_action_pressed("CancelShift"):
-		if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
-		or gravity_controller.gravity_state == GravityController.GravityState.WALL:
-			gravity_controller.return_to_ground()
+		if event.is_action_released("GravityShift"):
+			gravity_controller.begin_shift()
+
+		if event.is_action_pressed("CancelShift"):
+			if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
+			or gravity_controller.gravity_state == GravityController.GravityState.WALL:
+				gravity_controller.return_to_ground()
 
 	if event is InputEventMouseMotion:
 
@@ -109,6 +130,14 @@ func _physics_process(delta: float) -> void:
 
 	_read_input(delta)
 	_apply_gravity(delta)
+
+	# OTS mode is grounded-only -- if the player walks off a ledge or
+	# otherwise leaves the floor, drop straight back to the normal
+	# traversal camera instead of leaving the player stuck mid-air
+	# in a walk-only, no-jump, no-shift state.
+	if is_ots_mode and not is_on_floor():
+		is_ots_mode = false
+
 	gravity_controller.update_shift_power(delta)
 	_handle_movement(delta)
 	_handle_jump(delta)
@@ -144,6 +173,13 @@ func _read_input(delta: float) -> void:
 
 	move_input.x = Input.get_axis("left", "right")
 	move_input.y = Input.get_axis("forward", "backwards")
+
+	if is_ots_mode:
+		# Walk-only while exploring -- no running, no buffered jumps.
+		run_timer = 0.0
+		is_running = false
+		jump_buffer_timer = 0.0
+		return
 
 	if Input.is_action_pressed("Run"):
 		run_timer += delta
@@ -389,7 +425,6 @@ func set_running(enabled: bool) -> void:
 	if !enabled:
 		run_timer = 0.0
 
-
 # ============================================================
 # DEBUG
 # ============================================================
@@ -397,6 +432,7 @@ func _print_debug_state() -> void:
 	print(
 		"Floor:", is_on_floor(),
 		" | Run:", is_running,
+		" | OTS:", is_ots_mode,
 		" | Speed:", current_speed,
 		" | Y:", snapped(velocity.y, 0.01),
 		" | Turn:", snapped(turn_rate, 0.01),

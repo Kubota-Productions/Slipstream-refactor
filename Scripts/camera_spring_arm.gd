@@ -23,8 +23,19 @@ var last_up: Vector3 = Vector3.UP
 @export var aim_pivot: Node3D
 @export var mouse_aim: Node3D = null
 
-var player: CharacterBody3D
+var player: Player
 var gravity_controller: GravityController
+
+# ============================================================
+# SHIFTING CAMERA FOCUS
+# The one and only mechanism for gravity-shift/levitate framing:
+# the pivot targets this point (instead of the player), and free
+# yaw/pitch (via the arm-tilt path below) orbits around it. There is
+# no separate "chase" reconstruction anymore -- SHIFTING and
+# LEVITATING both go through this single path.
+# ============================================================
+@export_group("Shifting Camera Focus")
+@export var center_camera_focus: Node3D
 
 # ============================================================
 # AIMING (boresight / mouse-aim HUD)
@@ -43,53 +54,37 @@ var smoothed_boresight_dir_stage2: Vector3 = Vector3.FORWARD
 # UP-VECTOR SMOOTHING (gravity shift transitions)
 # ============================================================
 @export_group("Up Vector Smoothing")
-@export var up_smoothing_time: float = 0.15  # was 1.0
+@export var up_smoothing_time: float = 0.15
 
 var smoothed_up: Vector3 = Vector3.UP
 
 # ============================================================
-# HEAD BONE TRACKING
+# ROOT OFFSET
 # ============================================================
-@export_group("Head Bone Tracking")
-@export var head_bone_name: String = "mixamorig_Head"
-@export var root_bone_name: String = "mixamorig_Hips"
-@export var head_bone_offset: Vector3 = Vector3(0.0, 0.1, 0.0)
+@export_group("Root Offset")
+@export var frame_anchor_height_offset: float = 1.3
 @export var pivot_position_smoothing_time: float = 0.03
-@export var frame_anchor_height_offset: float = 1.3 
 @export var walk_lag_distance: float = 0.0  # positive = lags behind movement direction, negative = leads ahead
 @export var walk_lag_smoothing_time: float = 0.2  # how quickly the lag offset fades in/out with movement
-var smoothed_lag_offset: Vector3 = Vector3.ZERO
 
-var skeleton: Skeleton3D
-var head_bone_idx: int = -1
-var root_bone_idx: int = -1
+var smoothed_lag_offset: Vector3 = Vector3.ZERO
 var smoothed_pivot_position: Vector3 = Vector3.ZERO
 
 # ============================================================
-# OTS <-> CHASE BLEND (grounded/wall vs shifting/levitating)
-# ============================================================
-@export_group("OTS / Chase Blend")
-@export var ots_transition_time: float = 0.25
-
-var ots_blend_weight: float = 0.0  # 0 = fully chase framing, 1 = fully OTS framing
-
-# ============================================================
-# WALK <-> RUN BLEND (within grounded OTS)
+# WALK <-> RUN BLEND
+# Only drives the run pullback offset and the grounded pitch-pivot's
+# run scaling now -- camera distance/offset/FOV no longer blend
+# between a separate walk and run profile (see Camera Profiles below).
 # ============================================================
 @export_group("Walk / Run Blend")
-@export var speed_blend_smoothing_time: float = 0.6  # deliberately slow/lazy
+@export var speed_blend_smoothing_time: float = 0.6
 @export var running_camera_pullback: float = 0.8
 
-var speed_blend_weight: float = 0.0  # 0 = walk (close), 1 = run (mid)
+var speed_blend_weight: float = 0.0  # 0 = walk pace, 1 = run pace
 
 # ============================================================
 # CAMERA PROFILES
 # ============================================================
-@export_subgroup("Camera Profiles/Walk")
-@export var walk_spring_length: float = 0.6
-@export var walk_shoulder_offset: Vector3 = Vector3(0.35, 0.0, 0.0)
-@export var walk_fov: float = 70.0
-
 @export_subgroup("Camera Profiles/Run (Grounded)")
 @export var grounded_spring_length: float = 1.2
 @export var grounded_shoulder_offset: Vector3 = Vector3(0.0, 0.0, 0.0)
@@ -111,32 +106,51 @@ var smoothed_shoulder_offset: Vector3 = Vector3.ZERO
 # PITCH PIVOT
 # ============================================================
 @export_subgroup("Pitch Pivot/Grounded")
-@export var grounded_pitch_height_range: float = 0.5
-@export var grounded_pitch_back_range: float = 0.35
+@export var grounded_look_down_height_range: float = 0.65
+@export var grounded_look_down_back_range: float = 0.45
+@export var grounded_look_up_height_range: float = 0.26
+@export var grounded_look_up_back_range: float = 0.2
 @export var grounded_pitch_run_multiplier: float = 1.3
 
 @export_subgroup("Pitch Pivot/Wall")
-@export var wall_pitch_height_range: float = 0.5
-@export var wall_pitch_back_range: float = 0.35
+@export var wall_look_down_height_range: float = 0.5
+@export var wall_look_down_back_range: float = 0.35
+@export var wall_look_up_height_range: float = 0.2
+@export var wall_look_up_back_range: float = 0.15
 
 @export_subgroup("Pitch Pivot/Shifting")
-@export var shifting_pitch_height_range: float = 0.0
-@export var shifting_pitch_back_range: float = 0.0
-
-@export_subgroup("Pitch Pivot/Levitating")
-@export var levitating_pitch_height_range: float = 0.0
-@export var levitating_pitch_back_range: float = 0.0
+## Used for both SHIFTING and LEVITATING -- one shared profile.
+@export var shifting_look_down_height_range: float = 0.0
+@export var shifting_look_down_back_range: float = 0.0
+@export var shifting_look_up_height_range: float = 0.0
+@export var shifting_look_up_back_range: float = 0.0
 
 # ============================================================
-# SHIFTING CAMERA FOCUS
-# CenterCameraFocus has exactly one job: while shifting/levitating,
-# it's the point the spring arm's pivot targets, so free yaw/pitch
-# naturally orbits around the character's center instead of around
-# the head bone. It does NOT constrain look direction in any way --
-# that's handled entirely by the normal free-look below.
+# OTS CAMERA
+# One group covering both blend layers:
+# - Grounded/Wall <-> Shifting framing (ots_blend_weight)
+# - Explore Mode, toggled on top via player.is_ots_mode
+# Both share ots_transition_time for their fade in/out.
 # ============================================================
-@export_group("Shifting Camera Focus")
-@export var center_camera_focus: Node3D
+@export_group("OTS Camera")
+@export var ots_transition_time: float = 0.25
+
+var ots_blend_weight: float = 0.0  # 0 = fully shifting framing, 1 = fully grounded/wall framing
+
+@export_subgroup("Explore Mode")
+@export var ots_explore_spring_length: float = 1.0
+@export var ots_explore_shoulder_offset: Vector3 = Vector3(0.4, 0.1, 0.0)
+@export var ots_explore_fov: float = 65.0
+@export var ots_explore_mouse_sensitivity_multiplier: float = 0.5  ## Slower, more deliberate look while exploring.
+
+@export_subgroup("Explore Mode/Pitch Pivot")
+## Same values walk used to use -- Explore is walk-only, so no run scaling.
+@export var ots_look_down_height_range: float = 0.5
+@export var ots_look_down_back_range: float = 0.35
+@export var ots_look_up_height_range: float = 0.2
+@export var ots_look_up_back_range: float = 0.15
+
+var ots_explore_blend_weight: float = 0.0
 
 # ============================================================
 # PANINI PROJECTION
@@ -161,16 +175,15 @@ func _ready() -> void:
 
 	smoothed_pivot_position = global_position
 
-	skeleton = player.find_child("Skeleton3D", true, false) as Skeleton3D
-	if skeleton:
-		head_bone_idx = skeleton.find_bone(head_bone_name)
-		root_bone_idx = skeleton.find_bone(root_bone_name)
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		yaw_input -= event.relative.x * mouse_sensitivity
-		pitch_input -= event.relative.y * mouse_sensitivity
+		var sensitivity: float = mouse_sensitivity
+		if player and player.is_ots_mode:
+			sensitivity *= ots_explore_mouse_sensitivity_multiplier
+
+		yaw_input -= event.relative.x * sensitivity
+		pitch_input -= event.relative.y * sensitivity
 
 
 func get_boresight_pos() -> Vector3:
@@ -207,20 +220,15 @@ func _is_shifting_or_levitating() -> bool:
 
 
 func update_pivot_position(delta: float) -> void:
-	var target_position: Vector3
 	var use_focus_pivot: bool = _is_shifting_or_levitating() and center_camera_focus != null
+	var target_position: Vector3
 
 	if use_focus_pivot:
-		# Pivot on the character's center so free yaw/pitch orbits around
-		# it, instead of the usual head-bone tracking used on the ground.
+		# The single shared mechanism for shift/levitate framing --
+		# pivot on the focus point so free look orbits around it.
 		target_position = center_camera_focus.global_position
-	elif skeleton and head_bone_idx != -1 and root_bone_idx != -1:
-		var head_pose: Transform3D = skeleton.get_bone_global_pose(head_bone_idx)
-		var root_pose: Transform3D = skeleton.get_bone_global_pose(root_bone_idx)
-		var relative_offset: Vector3 = skeleton.global_transform.basis * (head_pose.origin - root_pose.origin)
-		target_position = player.global_position + relative_offset + head_bone_offset
 	else:
-		target_position = player.global_position
+		target_position = player.global_position + player.up_direction * frame_anchor_height_offset
 
 	var target_lag: Vector3 = Vector3.ZERO
 	if player and not use_focus_pivot:
@@ -268,8 +276,6 @@ func update_look(delta: float) -> void:
 	look_forward = flat_forward
 	last_up = up
 
-	# Free pitch -- clamped only to stop the camera flipping past
-	# straight up/down, same limits used on the ground.
 	if pitch_input != 0.0:
 		pitch_angle = clamp(
 			pitch_angle + pitch_input,
@@ -277,11 +283,9 @@ func update_look(delta: float) -> void:
 			deg_to_rad(max_pitch_deg)
 		)
 
-	var use_arm_pitch: bool = _is_shifting_or_levitating()
-
-	if use_arm_pitch:
-		# Levitating / actively shifting through the air -- whole arm tilts.
-		# Combined with update_pivot_position() targeting CenterCameraFocus,
+	if _is_shifting_or_levitating():
+		# Levitating / actively shifting -- whole arm tilts. Combined
+		# with update_pivot_position() targeting CenterCameraFocus,
 		# this orbits the camera freely around the character's center.
 		var right: Vector3 = flat_forward.cross(up).normalized()
 		var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
@@ -290,7 +294,8 @@ func update_look(delta: float) -> void:
 		if camera_3D:
 			camera_3D.rotation = Vector3.ZERO
 	else:
-		# Grounded or attached to a wall -- arm yaws only, camera carries pitch.
+		# Grounded or attached to a wall (including OTS Explore Mode,
+		# which is always grounded) -- arm yaws only, camera carries pitch.
 		global_basis = Basis.looking_at(flat_forward, up)
 
 		if camera_3D:
@@ -309,11 +314,6 @@ func update_look(delta: float) -> void:
 
 
 func _update_boresight_dir(delta: float) -> void:
-	# This is the "reticle" -- it's what should feel weighty and lag
-	# slightly behind the camera, NOT the camera itself. Small flicks
-	# of the mouse move the camera instantly but barely nudge this;
-	# sustained input drags it along. That's the whole "wiggle room"
-	# feel, without ever constraining how freely the camera can turn.
 	var target_dir: Vector3
 	var snap_instant := false
 
@@ -362,7 +362,9 @@ func _update_camera_distance(delta: float) -> void:
 		and player and player.is_on_floor()
 	var is_wall: bool = gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.WALL
 
-	# --- Speed-based blend, only meaningful while actually grounded ---
+	# --- Speed blend: no longer drives camera distance (walk profile
+	# removed), only the grounded pitch-pivot's run scaling and the
+	# run pullback offset below. ---
 	if is_grounded and player:
 		var planar_speed: float = player.velocity.slide(gravity_controller.gravity_direction).length()
 		var speed_target: float = clamp(planar_speed / max(player.run_speed, 0.001), 0.0, 1.0)
@@ -370,11 +372,12 @@ func _update_camera_distance(delta: float) -> void:
 		var speed_weight: float = 1.0 - exp(-delta / max(speed_blend_smoothing_time, 0.001))
 		speed_blend_weight = move_toward(speed_blend_weight, speed_target, speed_weight)
 
-	var grounded_length: float = lerp(walk_spring_length, grounded_spring_length, speed_blend_weight)
-	var grounded_offset: Vector3 = walk_shoulder_offset.lerp(grounded_shoulder_offset, speed_blend_weight)
-	var grounded_fov_value: float = lerp(walk_fov, grounded_fov, speed_blend_weight)
+	# Grounded now has exactly one profile, whether walking or running.
+	var grounded_length: float = grounded_spring_length
+	var grounded_offset: Vector3 = grounded_shoulder_offset
+	var grounded_fov_value: float = grounded_fov
 
-	# --- OTS (grounded/wall) vs Chase (falling/levitating/shifting) blend ---
+	# --- Grounded/Wall <-> Shifting blend ---
 	var target_weight: float = 1.0 if (is_grounded or is_wall) else 0.0
 	var blend_speed: float = 1.0 - exp(-delta / max(ots_transition_time, 0.001))
 	ots_blend_weight = move_toward(ots_blend_weight, target_weight, blend_speed)
@@ -390,6 +393,14 @@ func _update_camera_distance(delta: float) -> void:
 	if player and player.is_running:
 		target_offset.z += running_camera_pullback
 
+	# --- OTS Explore Mode layers on top, same transition time as above ---
+	var explore_target_weight: float = 1.0 if (player and player.is_ots_mode) else 0.0
+	ots_explore_blend_weight = move_toward(ots_explore_blend_weight, explore_target_weight, blend_speed)
+
+	target_length = lerp(target_length, ots_explore_spring_length, ots_explore_blend_weight)
+	target_offset = target_offset.lerp(ots_explore_shoulder_offset, ots_explore_blend_weight)
+	target_fov = lerp(target_fov, ots_explore_fov, ots_explore_blend_weight)
+
 	spring_length = lerp(spring_length, target_length, blend_speed)
 	smoothed_shoulder_offset = smoothed_shoulder_offset.lerp(target_offset, blend_speed)
 
@@ -401,12 +412,7 @@ func _update_camera_distance(delta: float) -> void:
 func _get_subject_world_pos() -> Vector3:
 	if _is_shifting_or_levitating() and center_camera_focus:
 		return center_camera_focus.global_position
-	if skeleton and head_bone_idx != -1 and root_bone_idx != -1 and player:
-		var head_pose: Transform3D = skeleton.get_bone_global_pose(head_bone_idx)
-		var root_pose: Transform3D = skeleton.get_bone_global_pose(root_bone_idx)
-		var relative_offset: Vector3 = skeleton.global_transform.basis * (head_pose.origin - root_pose.origin)
-		return player.global_position + relative_offset
-	elif player:
+	if player:
 		return player.global_position + player.up_direction * frame_anchor_height_offset
 	return global_position
 
@@ -415,30 +421,33 @@ func _update_pitch_pivot() -> void:
 	if not camera_3D:
 		return
 
-	var height_range: float
-	var back_range: float
+	var down_height_range: float
+	var down_back_range: float
+	var up_height_range: float
+	var up_back_range: float
 	var run_multiplier: float = 1.0
 
-	var state = gravity_controller.gravity_state if gravity_controller else GravityController.GravityState.GROUNDED
-
-	match state:
-		GravityController.GravityState.GROUNDED:
-			height_range = grounded_pitch_height_range
-			back_range = grounded_pitch_back_range
-			run_multiplier = grounded_pitch_run_multiplier
-		GravityController.GravityState.WALL:
-			height_range = wall_pitch_height_range
-			back_range = wall_pitch_back_range
-		GravityController.GravityState.SHIFTING:
-			height_range = shifting_pitch_height_range
-			back_range = shifting_pitch_back_range
-		GravityController.GravityState.LEVITATING:
-			height_range = levitating_pitch_height_range
-			back_range = levitating_pitch_back_range
-		_:
-			height_range = grounded_pitch_height_range
-			back_range = grounded_pitch_back_range
-			run_multiplier = grounded_pitch_run_multiplier
+	if player and player.is_ots_mode:
+		down_height_range = ots_look_down_height_range
+		down_back_range = ots_look_down_back_range
+		up_height_range = ots_look_up_height_range
+		up_back_range = ots_look_up_back_range
+	elif _is_shifting_or_levitating():
+		down_height_range = shifting_look_down_height_range
+		down_back_range = shifting_look_down_back_range
+		up_height_range = shifting_look_up_height_range
+		up_back_range = shifting_look_up_back_range
+	elif gravity_controller and gravity_controller.gravity_state == GravityController.GravityState.WALL:
+		down_height_range = wall_look_down_height_range
+		down_back_range = wall_look_down_back_range
+		up_height_range = wall_look_up_height_range
+		up_back_range = wall_look_up_back_range
+	else:
+		down_height_range = grounded_look_down_height_range
+		down_back_range = grounded_look_down_back_range
+		up_height_range = grounded_look_up_height_range
+		up_back_range = grounded_look_up_back_range
+		run_multiplier = grounded_pitch_run_multiplier
 
 	var pitch_ratio: float = 0.0
 	if pitch_angle >= 0.0:
@@ -449,8 +458,17 @@ func _update_pitch_pivot() -> void:
 
 	var distance_scale: float = lerp(1.0, run_multiplier, speed_blend_weight)
 
-	var height_offset: float = -pitch_ratio * height_range * distance_scale
-	var back_offset: float = abs(pitch_ratio) * back_range * distance_scale
+	var height_offset: float
+	var back_offset: float
+
+	if pitch_ratio < 0.0:
+		# Looking down.
+		height_offset = -pitch_ratio * down_height_range * distance_scale
+		back_offset = -pitch_ratio * down_back_range * distance_scale
+	else:
+		# Looking up.
+		height_offset = -pitch_ratio * up_height_range * distance_scale
+		back_offset = pitch_ratio * up_back_range * distance_scale
 
 	camera_3D.position += Vector3(0.0, height_offset, back_offset)
 	
