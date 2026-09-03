@@ -37,6 +37,8 @@ enum AnimState {
 	JOG,
 	RUN,
 	JUMP,
+	DOUBLE_JUMP,
+	TRIPLE_JUMP,
 	FALL,
 	LAND
 }
@@ -119,7 +121,12 @@ func update(delta: float) -> void:
 
 	if !on_floor:
 		if player.velocity.y > 0.0:
-			if current_anim_state != AnimState.JUMP:
+			# Don't stomp DOUBLE_JUMP/TRIPLE_JUMP back to JUMP -- all three
+			# have velocity.y > 0 and are only distinguished by the explicit
+			# play_double_jump()/play_triple_jump() calls.
+			if current_anim_state != AnimState.JUMP \
+			and current_anim_state != AnimState.DOUBLE_JUMP \
+			and current_anim_state != AnimState.TRIPLE_JUMP:
 				current_anim_state = AnimState.JUMP
 				anim_playback.travel("rig|Jump")
 		else:
@@ -146,6 +153,23 @@ func update(delta: float) -> void:
 	# IK runs last, after the base pose for this frame is fully set --
 	# it corrects foot placement on top of whatever the BlendSpace1D produced.
 	_update_foot_ik(delta)
+
+
+## Call this from Player.gd at the exact frame the double jump is executed
+## (i.e. when the air-jump is actually consumed, not just on jump input).
+func play_double_jump() -> void:
+	if not animation_tree or not anim_playback:
+		return
+	current_anim_state = AnimState.DOUBLE_JUMP
+	anim_playback.travel("rig|Doublejump")
+
+
+## Call this from Player.gd at the exact frame the triple jump is executed.
+func play_triple_jump() -> void:
+	if not animation_tree or not anim_playback:
+		return
+	current_anim_state = AnimState.TRIPLE_JUMP
+	anim_playback.travel("rig|Triplejump")
 
 
 func _update_foot_ik(delta: float) -> void:

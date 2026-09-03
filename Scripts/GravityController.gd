@@ -176,6 +176,16 @@ func update_shift_power(delta: float) -> void:
 
 	shift_power_changed.emit(shift_power, max_shift_power)
 
+func refill_shift_power(amount: float = -1.0) -> void:
+	# amount < 0 means "fill completely"; otherwise add a partial amount.
+	if amount < 0.0:
+		shift_power = max_shift_power
+	else:
+		shift_power = min(shift_power + amount, max_shift_power)
+
+	regen_delay_timer = 0.0  # a pickup should clear any regen delay too
+	shift_power_changed.emit(shift_power, max_shift_power)
+
 func detect_wall():
 
 	if gravity_state != GravityState.SHIFTING:

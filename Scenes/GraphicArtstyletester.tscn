@@ -46,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://cnrt1s17f4okj" path="res://Assets/Buildings/bl2.tscn" id="32_hce4q"]
 [ext_resource type="PackedScene" uid="uid://11e4o77xmagq" path="res://Assets/Buildings/bl4.tscn" id="33_p35ly"]
 [ext_resource type="PackedScene" uid="uid://bj7xtvgc6sgy" path="res://Assets/Buildings/bl3.tscn" id="34_2cc4s"]
+[ext_resource type="PackedScene" uid="uid://fke3elxona2a" path="res://Prefabs/Gravitypickup.tscn" id="48_somiq"]
 [ext_resource type="PackedScene" uid="uid://bdm4ifmovhg37" path="res://Prefabs/Grassfab.tscn" id="49_huk1a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vxbgf"]
@@ -3065,5 +3066,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.42835, -47.078026, 134.203
 
 [node name="Node3D768" parent="GRASS" unique_id=1504737138 instance=ExtResource("49_huk1a")]
 transform = Transform3D(0.645, 0, 0, 0, 0.645, 0, 0, 0, 0.645, 56.282505, -47.078026, 133.66724)
+
+[node name="Gravitypickup" parent="." unique_id=332084249 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7587185, -46.50555, 17.687279)
+
+[node name="Gravitypickup2" parent="." unique_id=693918765 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7587185, -46.50555, 20.687279)
+
+[node name="Gravitypickup3" parent="." unique_id=1175165975 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7587185, -46.50555, 23.687279)
+
+[node name="Gravitypickup4" parent="." unique_id=562673476 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.97631, -22.451118, 53.38446)
+
+[node name="Gravitypickup5" parent="." unique_id=445801954 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.97632, 13.48222, 54.648926)
+
+[node name="Gravitypickup6" parent="." unique_id=140846880 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.578114, 143.0318, 79.44426)
+
+[node name="Gravitypickup7" parent="." unique_id=2050037696 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.45381, 160.18912, 81.73658)
+
+[node name="Gravitypickup8" parent="." unique_id=1535731076 instance=ExtResource("48_somiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102.66048, 316.01044, 54.86782)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]

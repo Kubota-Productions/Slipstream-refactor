@@ -36,6 +36,15 @@ var gravity_controller: GravityController
 # ============================================================
 @export_group("Shifting Camera Focus")
 @export var center_camera_focus: Node3D
+## How long the pivot takes to crossfade between CenterCameraFocus and
+## the normal player anchor when entering/leaving a shift. This is
+## deliberately separate from pivot_position_smoothing_time (Root
+## Offset) so the crossfade itself is a controlled, visible transition
+## rather than an instant target-swap that the position lerp has to
+## chase and can overshoot.
+@export var focus_pivot_transition_time: float = 0.2
+
+var focus_pivot_blend_weight: float = 0.0
 
 # ============================================================
 # AIMING (boresight / mouse-aim HUD)
@@ -54,7 +63,10 @@ var smoothed_boresight_dir_stage2: Vector3 = Vector3.FORWARD
 # UP-VECTOR SMOOTHING (gravity shift transitions)
 # ============================================================
 @export_group("Up Vector Smoothing")
-@export var up_smoothing_time: float = 0.15
+## How long the camera's "up" takes to catch up to a new gravity
+## direction. Higher = a more visible moment of rotation when a
+## shift lands; lower = camera snaps to the new orientation quickly.
+@export var up_smoothing_time: float = 0.6
 
 var smoothed_up: Vector3 = Vector3.UP
 
@@ -69,6 +81,16 @@ var smoothed_up: Vector3 = Vector3.UP
 
 var smoothed_lag_offset: Vector3 = Vector3.ZERO
 var smoothed_pivot_position: Vector3 = Vector3.ZERO
+
+# ============================================================
+# GROUND CONFIRMATION
+# ============================================================
+@export_group("Ground Confirmation")
+@export var ground_state_confirm_time: float = 0.06
+
+var grounded_confirm_timer: float = 0.0
+var airborne_confirm_timer: float = 0.0
+var confirmed_grounded: bool = true
 
 # ============================================================
 # WALK <-> RUN BLEND
@@ -220,24 +242,31 @@ func _is_shifting_or_levitating() -> bool:
 
 
 func update_pivot_position(delta: float) -> void:
-	var use_focus_pivot: bool = _is_shifting_or_levitating() and center_camera_focus != null
-	var target_position: Vector3
+	# Crossfade the pivot's anchor point instead of hard-switching it.
+	# This is what actually fixes "loses focus for a second" on cancel:
+	# previously the target jumped instantly and only the position lerp
+	# (fast, 0.03s by default) chased it, which could overshoot if the
+	# two anchors were far apart. Now the anchor itself blends smoothly.
+	var focus_target_weight: float = 1.0 if (_is_shifting_or_levitating() and center_camera_focus != null) else 0.0
+	var focus_blend_speed: float = 1.0 - exp(-delta / max(focus_pivot_transition_time, 0.001))
+	focus_pivot_blend_weight = move_toward(focus_pivot_blend_weight, focus_target_weight, focus_blend_speed)
 
-	if use_focus_pivot:
-		# The single shared mechanism for shift/levitate framing --
-		# pivot on the focus point so free look orbits around it.
-		target_position = center_camera_focus.global_position
-	else:
-		target_position = player.global_position + player.up_direction * frame_anchor_height_offset
+	var player_anchor: Vector3 = player.global_position + player.up_direction * frame_anchor_height_offset
 
+	var target_position: Vector3 = player_anchor
+	if center_camera_focus:
+		target_position = player_anchor.lerp(center_camera_focus.global_position, focus_pivot_blend_weight)
+
+	# Walk lag fades out as the focus pivot fades in, instead of
+	# freezing at a stale value while a shift is active.
 	var target_lag: Vector3 = Vector3.ZERO
-	if player and not use_focus_pivot:
+	if player:
 		var planar_velocity: Vector3 = player.velocity
 		if gravity_controller:
 			planar_velocity = planar_velocity.slide(gravity_controller.gravity_direction)
 
 		if planar_velocity.length_squared() > 0.01:
-			target_lag = -planar_velocity.normalized() * walk_lag_distance
+			target_lag = -planar_velocity.normalized() * walk_lag_distance * (1.0 - focus_pivot_blend_weight)
 
 	var lag_weight: float = 1.0 - exp(-delta / max(walk_lag_smoothing_time, 0.001))
 	smoothed_lag_offset = smoothed_lag_offset.lerp(target_lag, lag_weight)

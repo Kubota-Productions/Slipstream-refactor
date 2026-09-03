@@ -238,11 +238,15 @@ func _handle_jump(delta: float) -> void:
 			velocity += up * jump_velocity
 
 			jump_buffer_timer = 0.0
+
+			if animation_controller:
+				match jumps_used:
+					1:
+						animation_controller.play_double_jump()
+					2:
+						animation_controller.play_triple_jump()
+
 			jumps_used += 1
-
-	if Input.is_action_just_released("Jump") and velocity.y > 0.0:
-		velocity.y *= 0.5
-
 
 # ============================================================
 # ORIENTATION
