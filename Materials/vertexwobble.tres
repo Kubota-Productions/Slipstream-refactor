@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bvt22mhivhuty"]
+
+[ext_resource type="Shader" uid="uid://5avs1aj2xuab" path="res://Shaders/vertexwobble.gdshader" id="1_ick48"]
+[ext_resource type="Texture2D" uid="uid://bnrta8g3hyulb" path="res://Player/accessories.png" id="2_ha23y"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ick48")
+shader_parameter/target_resolution = Vector2(320, 240)
+shader_parameter/wobble_strength = 0.4770000226575
+shader_parameter/texture_albedo = ExtResource("2_ha23y")
+shader_parameter/albedo_color = Color(1, 1, 1, 1)
+shader_parameter/roughness_scale = 1.0
+shader_parameter/metallic_scale = 0.0

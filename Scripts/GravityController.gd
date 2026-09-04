@@ -19,8 +19,9 @@ var levitate_start_velocity: Vector3 = Vector3.ZERO
 @export var shift_acceleration := 15.0
 @export var max_shift_speed := 35.0
 @export var max_shift_power: float = 100.0
-@export var shift_drain_rate: float = 40.0   # power per second while levitating/shifting/wall
-@export var shift_regen_rate: float = 25.0   # power per second while grounded
+@export var shift_drain_rate: float = 40.0   
+@export var shift_regen_rate: float = 25.0  
+@export var wall_drain_rate: float = 15.0
 var shift_power: float = 100.0
 @export var shift_regen_delay_after_empty: float = 3.0
 var regen_delay_timer: float = 0.0
@@ -164,7 +165,8 @@ func update_shift_power(delta: float) -> void:
 		or gravity_state == GravityState.WALL
 
 	if draining:
-		shift_power = max(shift_power - shift_drain_rate * delta, 0.0)
+		var rate: float = wall_drain_rate if gravity_state == GravityState.WALL else shift_drain_rate
+		shift_power = max(shift_power - rate * delta, 0.0)
 		if shift_power <= 0.0:
 			regen_delay_timer = shift_regen_delay_after_empty
 			return_to_ground()

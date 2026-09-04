@@ -15,17 +15,25 @@ general/hdr_2d=false
 [application]
 
 config/name="Slipstream"
-run/main_scene="uid://b53le0xlo2r07"
+run/main_scene="uid://bvjpv4qus0xr0"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/mode=3
 window/size/initial_position_type=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SunshineClouds2/plugin.cfg")
+enabled=PackedStringArray()
+
+[importer_defaults]
+
+texture={
+&"detect_3d/compress_to": 0
+}
 
 [input]
 

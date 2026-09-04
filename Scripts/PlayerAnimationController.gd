@@ -12,6 +12,11 @@ var animation_player: AnimationPlayer
 var anim_playback: AnimationNodeStateMachinePlayback
 
 # ============================================================
+# CHARACTER MESHES (shader params get pushed to all of these)
+# ============================================================
+var mesh_instances: Array[MeshInstance3D] = []
+
+# ============================================================
 # FOOT IK
 # ============================================================
 @export_group("Foot IK")
@@ -74,6 +79,11 @@ func _ready() -> void:
 	if not anim_playback:
 		push_error("PlayerAnimationController: 'parameters/playback' came back null -- Tree Root probably isn't an AnimationNodeStateMachine")
 
+	mesh_instances.clear()
+	_find_all_of_type(character_model, "MeshInstance3D", mesh_instances)
+	if mesh_instances.is_empty():
+		push_error("PlayerAnimationController: no MeshInstance3D found under %s -- lean/squash shader params won't apply" % character_model.name)
+
 	if skeleton:
 		left_bone_idx = skeleton.find_bone(left_foot_bone)
 		right_bone_idx = skeleton.find_bone(right_foot_bone)
@@ -93,6 +103,13 @@ func _find_first_of_type(root: Node, type_name: String) -> Node:
 		if found:
 			return found
 	return null
+
+
+func _find_all_of_type(root: Node, type_name: String, out_list: Array) -> void:
+	for child in root.get_children():
+		if child.is_class(type_name):
+			out_list.append(child)
+		_find_all_of_type(child, type_name, out_list)
 
 
 func _debug_print_tree(root: Node, indent: String = "") -> void:
@@ -120,10 +137,15 @@ func update(delta: float) -> void:
 		return
 
 	if !on_floor:
-		if player.velocity.y > 0.0:
-			# Don't stomp DOUBLE_JUMP/TRIPLE_JUMP back to JUMP -- all three
-			# have velocity.y > 0 and are only distinguished by the explicit
-			# play_double_jump()/play_triple_jump() calls.
+		var gravity_state: GravityController.GravityState = player.gravity_controller.gravity_state
+		var is_shifting_airborne := gravity_state == GravityController.GravityState.LEVITATING \
+			or gravity_state == GravityController.GravityState.SHIFTING
+
+		if is_shifting_airborne:
+			if current_anim_state != AnimState.FALL:
+				current_anim_state = AnimState.FALL
+				anim_playback.travel("rig|Fall")
+		elif player.velocity.y > 0.0:
 			if current_anim_state != AnimState.JUMP \
 			and current_anim_state != AnimState.DOUBLE_JUMP \
 			and current_anim_state != AnimState.TRIPLE_JUMP:
@@ -150,13 +172,9 @@ func update(delta: float) -> void:
 
 	animation_tree.set(LOCOMOTION_BLEND_PARAM, player.predicted_speed)
 
-	# IK runs last, after the base pose for this frame is fully set --
-	# it corrects foot placement on top of whatever the BlendSpace1D produced.
 	_update_foot_ik(delta)
 
-
-## Call this from Player.gd at the exact frame the double jump is executed
-## (i.e. when the air-jump is actually consumed, not just on jump input).
+## Call this from Player.gd at the exact frame the double jump is executed.
 func play_double_jump() -> void:
 	if not animation_tree or not anim_playback:
 		return
@@ -177,7 +195,6 @@ func _update_foot_ik(delta: float) -> void:
 		return
 
 	if not player.is_on_floor():
-		# Airborne -- fade IK out, let the base animation drive the legs freely.
 		left_weight = move_toward(left_weight, 0.0, ik_blend_speed * delta)
 		right_weight = move_toward(right_weight, 0.0, ik_blend_speed * delta)
 		return

@@ -1,18 +1,18 @@
-[gd_scene format=3 uid="uid://dbexv8taaxxyx"]
+[gd_scene format=3 uid="uid://c5mpt4ywygksu"]
 
-[ext_resource type="Shader" uid="uid://kmgourft2cd0" path="res://Shaders/Paniniprojection.gdshader" id="1_qbmvc"]
-[ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Scripts/Player.gd" id="2_438ru"]
-[ext_resource type="Script" uid="uid://bkl6kiloruli6" path="res://Scripts/PlayerAnimationController.gd" id="3_dywd4"]
-[ext_resource type="Script" uid="uid://ed7hjggblkes" path="res://Scripts/GravityController.gd" id="4_1ldg3"]
-[ext_resource type="PackedScene" uid="uid://cacp5hkqnnevx" path="res://Player/Madness1.fbx" id="5_qbmvc"]
-[ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="6_cwyiw"]
-[ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Scripts/camera_spring_arm.gd" id="7_d14qq"]
-[ext_resource type="Script" uid="uid://3ndckspc1ev0" path="res://Scripts/Hud.gd" id="8_cyepj"]
-[ext_resource type="Texture2D" uid="uid://dahlfjhvsky0q" path="res://Player/MouseCrosshair.png" id="9_laofy"]
-[ext_resource type="Texture2D" uid="uid://cewgsvqrrkeoe" path="res://Player/Crosshair.png" id="10_rflj7"]
+[ext_resource type="Shader" uid="uid://kmgourft2cd0" path="res://Shaders/Paniniprojection.gdshader" id="1_3ol1y"]
+[ext_resource type="Script" uid="uid://cq063qldfaf1n" path="res://Scripts/Player.gd" id="2_vwiky"]
+[ext_resource type="Script" uid="uid://bkl6kiloruli6" path="res://Scripts/PlayerAnimationController.gd" id="3_hkcx0"]
+[ext_resource type="Script" uid="uid://ed7hjggblkes" path="res://Scripts/GravityController.gd" id="4_cyp3t"]
+[ext_resource type="PackedScene" uid="uid://cacp5hkqnnevx" path="res://Player/Madness1.fbx" id="5_8ks28"]
+[ext_resource type="PackedScene" uid="uid://bvuemmct1dv8l" path="res://Player/Gravrushcustom.fbx" id="6_htuk1"]
+[ext_resource type="Script" uid="uid://crba2plgivawf" path="res://Scripts/camera_spring_arm.gd" id="7_lueyi"]
+[ext_resource type="Script" uid="uid://3ndckspc1ev0" path="res://Scripts/Hud.gd" id="8_vv1h7"]
+[ext_resource type="Texture2D" uid="uid://dahlfjhvsky0q" path="res://Player/MouseCrosshair.png" id="9_hl4tn"]
+[ext_resource type="Texture2D" uid="uid://cewgsvqrrkeoe" path="res://Player/Crosshair.png" id="10_etg10"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yf5fn"]
-shader = ExtResource("1_qbmvc")
+shader = ExtResource("1_3ol1y")
 shader_parameter/panini_amount = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a22an"]
@@ -125,13 +125,13 @@ grow_vertical = 2
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=2134162341 node_paths=PackedStringArray("animation_controller")]
 slide_on_ceiling = false
-script = ExtResource("2_438ru")
+script = ExtResource("2_vwiky")
 animation_controller = NodePath("AnimationController")
 walk_speed = 1.5
 max_jumps = 3
 
 [node name="AnimationController" type="Node" parent="Player" unique_id=996343939 node_paths=PackedStringArray("player", "character_model", "skeleton", "left_target", "right_target")]
-script = ExtResource("3_dywd4")
+script = ExtResource("3_hkcx0")
 player = NodePath("..")
 character_model = NodePath("../CharacterModel/Madness1")
 skeleton = NodePath("../CharacterModel/Madness1/rig/Skeleton3D")
@@ -141,15 +141,16 @@ left_target = NodePath("../CharacterModel/Madness1/rig/Skeleton3D/Lmarker")
 right_target = NodePath("../CharacterModel/Madness1/rig/Skeleton3D/Rmarker")
 
 [node name="GravityController" type="Node" parent="Player" unique_id=1621988856]
-script = ExtResource("4_1ldg3")
+script = ExtResource("4_cyp3t")
 shift_drain_rate = 15.0
+wall_drain_rate = 5.0
 
 [node name="CharacterModel" type="Node3D" parent="Player" unique_id=1574064996]
 
-[node name="Madness1" parent="Player/CharacterModel" unique_id=2121757499 instance=ExtResource("5_qbmvc")]
+[node name="Madness1" parent="Player/CharacterModel" unique_id=2121757499 instance=ExtResource("5_8ks28")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Player/CharacterModel/Madness1/rig" parent_id_path=PackedInt32Array(2121757499, 1045853087) index="1" unique_id=806678799]
+[node name="Skeleton3D" parent="Player/CharacterModel/Madness1/rig" parent_id_path=PackedInt32Array(2121757499, 844450647) index="7" unique_id=1138129190]
 bones/1/position = Vector3(4.639032e-20, -0.00060860574, 0.0096853)
 bones/1/rotation = Quaternion(0.7773121, 7.499639e-08, 9.266282e-08, 0.6291152)
 bones/1/scale = Vector3(1, 1, 1)
@@ -292,7 +293,6 @@ bones/54/rotation = Quaternion(4.1534323e-09, 4.9512602e-11, 1.829633e-10, 1)
 bones/54/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
 bones/55/position = Vector3(-2.6135936e-12, 0.0009282575, -6.0208644e-11)
 bones/55/rotation = Quaternion(-3.8617475e-07, 8.131231e-10, -1.6919484e-09, 1)
-bones/55/scale = Vector3(1, 0.99999994, 1)
 bones/56/position = Vector3(-1.8893342e-12, 0.00092826, 3.9879827e-10)
 bones/56/rotation = Quaternion(-1.5779311e-07, -4.048733e-11, 5.150861e-10, 1)
 bones/56/scale = Vector3(1, 0.99999994, 0.99999994)
@@ -638,7 +638,7 @@ transform = Transform3D(-0.010000005, 2.1316292e-16, 8.7422847e-10, 8.7422836e-1
 [node name="CenterCameraFocus" type="Node3D" parent="Player" unique_id=2016571143]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Gravrushcustom" parent="Player" unique_id=262543774 instance=ExtResource("6_cwyiw")]
+[node name="Gravrushcustom" parent="Player" unique_id=262543774 instance=ExtResource("6_htuk1")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 visible = false
 
@@ -656,7 +656,7 @@ parameters/BlendSpace1D/blend_position = -0.125
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 2
 spring_length = 3.0
-script = ExtResource("7_d14qq")
+script = ExtResource("7_lueyi")
 camera_3D = NodePath("Cameraoffset/Camera3D")
 aim_pivot = NodePath("../../AimPivot")
 mouse_aim = NodePath("Cameraoffset/Camera3D")
@@ -689,7 +689,7 @@ anchors_preset = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
-script = ExtResource("8_cyepj")
+script = ExtResource("8_vv1h7")
 Cam_controller = NodePath("../Player/SpringArm3D")
 player_cam = NodePath("../Player/SpringArm3D/Cameraoffset/Camera3D")
 boresight = NodePath("TextureProgressBar")
@@ -703,7 +703,7 @@ visible = false
 layout_mode = 1
 offset_right = 64.0
 offset_bottom = 64.0
-texture = ExtResource("9_laofy")
+texture = ExtResource("9_hl4tn")
 metadata/_edit_use_anchors_ = true
 
 [node name="Mouseaim" type="TextureRect" parent="Hud" unique_id=1201903106]
@@ -714,7 +714,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_rflj7")
+texture = ExtResource("10_etg10")
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Hud" unique_id=1012235475]
@@ -722,7 +722,7 @@ layout_mode = 1
 offset_right = 64.0
 offset_bottom = 64.0
 fill_mode = 4
-texture_progress = ExtResource("9_laofy")
+texture_progress = ExtResource("9_hl4tn")
 
 [node name="AimPivot" type="Node3D" parent="." unique_id=459254644]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

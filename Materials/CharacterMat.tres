@@ -2,7 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://dx5u0vtioevnm" path="res://Assets/tree_MasterTexture.png" id="1_0gs1o"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gs1o"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
 [resource]
+next_pass = SubResource("StandardMaterial3D_0gs1o")
 transparency = 4
 blend_mode = 1
 albedo_texture = ExtResource("1_0gs1o")

@@ -12377,6 +12377,13 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 }
+},
+"materials": {
+"yellow": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Materials/vertexwobble.tres",
+"use_external/path": "uid://bvt22mhivhuty"
+}
 }
 }
 fbx/importer=0

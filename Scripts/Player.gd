@@ -162,9 +162,6 @@ func _physics_process(delta: float) -> void:
 	if animation_controller:
 		animation_controller.update(delta)
 
-	if debug_print_state:
-		_print_debug_state()
-
 
 # ============================================================
 # INPUT HANDLING
@@ -374,21 +371,20 @@ func _predict_trajectory(delta: float) -> void:
 	var sim_forward: Vector3 = (-character_model.global_basis.z).slide(gravity_up).normalized()
 	var start_forward := sim_forward
 
-	var t := 0.0
-	while t < prediction_horizon:
-		var step: float = min(prediction_substep, prediction_horizon - t)
+	var safe_substep: float = max(prediction_substep, 0.005)   # never 0, never near-0
+	var steps: int = int(ceil(prediction_horizon / safe_substep))
+	var actual_step: float = prediction_horizon / float(steps)
 
-		sim_velocity = sim_velocity.lerp(target_velocity, acceleration * air_control * step)
+	for i in steps:
+		sim_velocity = sim_velocity.lerp(target_velocity, acceleration * air_control * actual_step)
 
 		if target_forward.length_squared() > 0.001 and sim_forward.length_squared() > 0.001:
 			var current_basis := Basis.looking_at(sim_forward, gravity_up)
 			var target_basis := Basis.looking_at(target_forward, gravity_up)
 			var stepped_quat := current_basis.get_rotation_quaternion().slerp(
-				target_basis.get_rotation_quaternion(), rotation_speed * step
+				target_basis.get_rotation_quaternion(), rotation_speed * actual_step
 			)
 			sim_forward = -(Basis(stepped_quat).z)
-
-		t += step
 
 	predicted_speed = sim_velocity.length()
 
@@ -428,18 +424,3 @@ func set_running(enabled: bool) -> void:
 	is_running = enabled
 	if !enabled:
 		run_timer = 0.0
-
-# ============================================================
-# DEBUG
-# ============================================================
-func _print_debug_state() -> void:
-	print(
-		"Floor:", is_on_floor(),
-		" | Run:", is_running,
-		" | OTS:", is_ots_mode,
-		" | Speed:", current_speed,
-		" | Y:", snapped(velocity.y, 0.01),
-		" | Turn:", snapped(turn_rate, 0.01),
-		" | PredSpeed:", snapped(predicted_speed, 0.01),
-		" | PredTurn:", snapped(predicted_turn_rate, 0.01)
-	)
