@@ -150,7 +150,7 @@ wall_drain_rate = 5.0
 [node name="Madness1" parent="Player/CharacterModel" unique_id=2121757499 instance=ExtResource("5_8ks28")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Player/CharacterModel/Madness1/rig" parent_id_path=PackedInt32Array(2121757499, 844450647) index="7" unique_id=1138129190]
+[node name="Skeleton3D" parent="Player/CharacterModel/Madness1/rig" parent_id_path=PackedInt32Array(2121757499, 1402800545) index="7" unique_id=1989411323]
 bones/1/position = Vector3(4.639032e-20, -0.00060860574, 0.0096853)
 bones/1/rotation = Quaternion(0.7773121, 7.499639e-08, 9.266282e-08, 0.6291152)
 bones/1/scale = Vector3(1, 1, 1)
@@ -617,7 +617,7 @@ secondary_limit_angle = 0.87266463
 secondary_damp_threshold = 1.0
 
 [node name="LookAtTarget" type="Marker3D" parent="Player/CharacterModel/Madness1/rig/Skeleton3D" index="3" unique_id=2064661711]
-transform = Transform3D(1.0000005, -2.1316282e-14, 0, -1.4210855e-14, 1.0000007, -2.842171e-14, 1.8634725e-20, 2.842171e-14, 1.0000007, -0.0031645217, 0.00020886972, 0.013858362)
+transform = Transform3D(1.0000005, -2.1316282e-14, 0, -1.4210855e-14, 1.0000007, -2.842171e-14, 1.9481758e-20, 2.842171e-14, 1.0000007, -0.005948728, -0.00474745, 0.013858363)
 
 [node name="TwoBoneIK3D" type="TwoBoneIK3D" parent="Player/CharacterModel/Madness1/rig/Skeleton3D" index="4" unique_id=1819844558]
 transform = Transform3D(-0.010000002, 1.5409227e-23, 8.74228e-10, 8.742281e-10, -1.1920935e-09, 0.010000004, 1.0421611e-16, 0.010000004, 1.1920935e-09, 8.742279e-12, 0.00010000003, 1.1920933e-11)
