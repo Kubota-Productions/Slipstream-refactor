@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://byw2p176by18w" path="res://Assets/textures/181_old wall stone texture-seamless.jpg" id="5_b6aiy"]
 
 [resource]
+diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_b6aiy")
 metallic = 1.0
@@ -14,14 +15,14 @@ metallic_specular = 1.0
 metallic_texture = ExtResource("4_m3ejw")
 roughness_texture = ExtResource("5_b6aiy")
 normal_enabled = true
-normal_scale = 0.42
+normal_scale = -2.73
 normal_texture = ExtResource("2_d7ham")
 bent_normal_enabled = true
 bent_normal_texture = ExtResource("2_d7ham")
 ao_light_affect = 1.0
 heightmap_enabled = true
 heightmap_texture = ExtResource("3_vrnu5")
-uv1_scale = Vector3(0.065, 0.065, 0.065)
+uv1_scale = Vector3(0.01, 0.01, 0.01)
 uv1_triplanar = true
 uv1_triplanar_sharpness = 81.57188
 stencil_flags = 2
