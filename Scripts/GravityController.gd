@@ -22,9 +22,18 @@ var levitate_start_velocity: Vector3 = Vector3.ZERO
 @export var shift_drain_rate: float = 40.0   
 @export var shift_regen_rate: float = 25.0  
 @export var wall_drain_rate: float = 15.0
+@export var power_sprint_drain_rate: float = 30.0
 var shift_power: float = 100.0
 @export var shift_regen_delay_after_empty: float = 3.0
 var regen_delay_timer: float = 0.0
+@export_group("Wall Walking")
+@export var wall_follow_ray_length: float = 3.0
+@export var wall_follow_smoothing_time: float = 0.15
+@export var wall_follow_lose_surface_time: float = 0.15
+@export var wall_attach_clearance: float = 0.05  
+
+
+var wall_lose_surface_timer: float = 0.0
 
 signal shift_power_changed(current: float, max: float)
 
@@ -61,20 +70,12 @@ func _try_transition() -> bool:
 	return true
 
 func check_shift_surface():
-
 	var origin = ground_ray_origin.global_position
-
 	var target = origin + gravity_direction * 2.0
 
-	var query = PhysicsRayQueryParameters3D.create(
-		origin,
-		target
-	)
-
+	var query = PhysicsRayQueryParameters3D.create(origin, target)
 	query.exclude = [player]
-
 	var hit = player.get_world_3d().direct_space_state.intersect_ray(query)
-
 	return hit
 	
 func apply_gravity(delta):
@@ -159,7 +160,7 @@ func update_shift(delta):
 func update_levitating(delta: float) -> void:
 	player.velocity = player.velocity.move_toward(Vector3.ZERO, levitate_deceleration * delta)
 
-func update_shift_power(delta: float) -> void:
+func update_shift_power(delta: float, is_power_sprinting: bool = false) -> void:
 	var draining := gravity_state == GravityState.LEVITATING \
 		or gravity_state == GravityState.SHIFTING \
 		or gravity_state == GravityState.WALL
@@ -170,6 +171,10 @@ func update_shift_power(delta: float) -> void:
 		if shift_power <= 0.0:
 			regen_delay_timer = shift_regen_delay_after_empty
 			return_to_ground()
+	elif gravity_state == GravityState.GROUNDED and is_power_sprinting:
+		shift_power = max(shift_power - power_sprint_drain_rate * delta, 0.0)
+		if shift_power <= 0.0:
+			regen_delay_timer = shift_regen_delay_after_empty
 	elif gravity_state == GravityState.GROUNDED:
 		if regen_delay_timer > 0.0:
 			regen_delay_timer -= delta
@@ -177,6 +182,39 @@ func update_shift_power(delta: float) -> void:
 			shift_power = min(shift_power + shift_regen_rate * delta, max_shift_power)
 
 	shift_power_changed.emit(shift_power, max_shift_power)
+
+func update_wall_follow(delta: float) -> void:
+	if gravity_state != GravityState.WALL:
+		return
+
+	var origin: Vector3 = ground_ray_origin.global_position
+	var target: Vector3 = origin + gravity_direction * wall_follow_ray_length
+
+	var query := PhysicsRayQueryParameters3D.create(origin, target)
+	query.exclude = [player]
+	query.hit_from_inside = true
+	var hit = player.get_world_3d().direct_space_state.intersect_ray(query)
+
+	if not hit or hit.normal.length_squared() < 0.0001:
+		return  # no usable surface data this frame -- keep last known gravity_direction
+
+	var new_normal: Vector3 = hit.normal
+
+	if new_normal.angle_to(Vector3.UP) <= deg_to_rad(floor_normal_buffer_deg):
+		return_to_ground()
+		player.global_position = hit.position
+		return
+
+	var new_gravity_dir: Vector3 = -new_normal
+
+	if new_gravity_dir.dot(gravity_direction) < 0.9999:
+		var weight: float = 1.0 - exp(-delta / max(wall_follow_smoothing_time, 0.001))
+		var full_rotation := Quaternion(gravity_direction, new_gravity_dir)
+		var step_rotation := Quaternion.IDENTITY.slerp(full_rotation, weight)
+
+		gravity_direction = (step_rotation * gravity_direction).normalized()
+		player.up_direction = -gravity_direction
+		player.velocity = step_rotation * player.velocity
 
 func refill_shift_power(amount: float = -1.0) -> void:
 	# amount < 0 means "fill completely"; otherwise add a partial amount.
@@ -202,6 +240,9 @@ func detect_wall():
 func attach_to_surface(hit):
 	var normal: Vector3 = hit.normal
 
+	if normal.length_squared() < 0.0001:
+		return  # degenerate normal (e.g. hit_from_inside on concave geometry) -- ignore, don't attach
+
 	if normal.angle_to(Vector3.UP) <= deg_to_rad(floor_normal_buffer_deg):
 		return_to_ground()
 		player.velocity = Vector3.ZERO
@@ -213,7 +254,15 @@ func attach_to_surface(hit):
 	gravity_direction = -normal
 	player.up_direction = normal
 	player.velocity = Vector3.ZERO
-	player.global_position = hit.position
+	player.global_position = hit.position + normal * wall_attach_clearance
+
+	var forward: Vector3 = -player.global_basis.z
+	forward = forward.slide(normal)
+	if forward.length_squared() < 0.001:
+		forward = player.global_basis.x.slide(normal)
+	forward = forward.normalized()
+	player.global_basis = Basis.looking_at(forward, normal)
+
 	if spring_arm:
 		spring_arm.rotation.y = 0.0
 	gravity_state = GravityState.WALL

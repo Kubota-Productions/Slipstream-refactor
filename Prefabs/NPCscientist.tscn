@@ -1,10 +1,10 @@
-[gd_scene format=4 uid="uid://by24r100orn7w"]
+[gd_scene format=4 uid="uid://cdw0yqx2r8huu"]
 
-[ext_resource type="Script" uid="uid://bppitph62t808" path="res://Scripts/NPCInstance.gd" id="1_x7e41"]
-[ext_resource type="Texture2D" uid="uid://ddigekyxt4l0e" path="res://Assets/textures/cherub_cherubbase_Base_color.png" id="2_iaqgu"]
-[ext_resource type="Texture2D" uid="uid://c5selm5ammn52" path="res://Assets/textures/cherub_cherubbase_Metallic.png" id="3_ekyay"]
-[ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Assets/textures/cherub_cherubbase_Normal.png" id="4_slk48"]
-[ext_resource type="PackedScene" uid="uid://dkqdcmtmpay18" path="res://Assets/enemy.glb" id="5_klm5g"]
+[ext_resource type="Script" uid="uid://bppitph62t808" path="res://Scripts/NPCInstance.gd" id="1_hnvt8"]
+[ext_resource type="Texture2D" uid="uid://ddigekyxt4l0e" path="res://Assets/textures/cherub_cherubbase_Base_color.png" id="2_rrvfn"]
+[ext_resource type="Texture2D" uid="uid://c5selm5ammn52" path="res://Assets/textures/cherub_cherubbase_Metallic.png" id="3_klhdo"]
+[ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Assets/textures/cherub_cherubbase_Normal.png" id="4_xlyr1"]
+[ext_resource type="ArrayMesh" uid="uid://x3st0n2mhbk2" path="res://Prefabs/klener.obj" id="5_hnvt8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yglu3"]
 radius = 0.20654297
@@ -13,14 +13,14 @@ height = 1.9392438
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwjpn"]
 resource_name = "Material.001"
 cull_mode = 2
-albedo_texture = ExtResource("2_iaqgu")
+albedo_texture = ExtResource("2_rrvfn")
 metallic = 1.0
-metallic_texture = ExtResource("3_ekyay")
+metallic_texture = ExtResource("3_klhdo")
 metallic_texture_channel = 2
-roughness_texture = ExtResource("3_ekyay")
+roughness_texture = ExtResource("3_klhdo")
 roughness_texture_channel = 1
 normal_enabled = true
-normal_texture = ExtResource("4_slk48")
+normal_texture = ExtResource("4_xlyr1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibmi3"]
 resource_name = "Material.002"
@@ -916,7 +916,7 @@ _data = {
 }
 
 [node name="Cherub" type="CharacterBody3D" unique_id=1253847387]
-script = ExtResource("1_x7e41")
+script = ExtResource("1_hnvt8")
 animation_player_path = NodePath("CollisionShape3D/AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1558508970]
@@ -1286,5 +1286,6 @@ use_3d_avoidance = true
 
 [node name="Timer" type="Timer" parent="." unique_id=282916182]
 
-[node name="enemy" parent="." unique_id=899298816 instance=ExtResource("5_klm5g")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+[node name="Klener" type="MeshInstance3D" parent="." unique_id=978880622]
+transform = Transform3D(-0.027999999, 0, 2.4478377e-09, 0, 0.027999999, 0, -2.4478377e-09, 0, -0.027999999, 0, 0, 0)
+mesh = ExtResource("5_hnvt8")

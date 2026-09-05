@@ -22,15 +22,28 @@ extends CharacterBody3D
 @export var acceleration: float = 10.0
 @export var rotation_speed: float = 8.0
 @export var max_landing_speed: float = 8.0
-
-const RUN_THRESHOLD := 0.40
+@export var run_ramp_time: float = 0.35
+@export var power_sprint_speed: float = 9.0
+@export var power_sprint_ramp_time: float = 0.25
 
 var move_input: Vector2 = Vector2.ZERO
 var move_direction: Vector3 = Vector3.ZERO
 var current_speed: float = 0.0
 var is_running := false
+var is_power_sprinting := false
 var run_timer := 0.0
+var run_blend: float = 0.0
+var power_blend: float = 0.0
 
+const RUN_THRESHOLD := 0.40
+
+@export_group("Lean")
+@export var lean_max_angle_deg: float = 20.0
+@export var lean_smoothing_speed: float = 6.0
+@export var lean_turn_rate_reference: float = 3.0  # turn_rate (rad/s) that maps to full lean
+
+var model_yaw_basis: Basis = Basis.IDENTITY
+var current_lean: float = 0.0
 # ============================================================
 # JUMPING
 # ============================================================
@@ -70,17 +83,12 @@ var predicted_turn_rate: float = 0.0
 var prev_model_forward: Vector3 = Vector3.FORWARD
 
 # ============================================================
-# DEBUG
-# ============================================================
-@export_group("Debug")
-@export var debug_print_state := false
-
-
-# ============================================================
 # LIFECYCLE
 # ============================================================
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+	model_yaw_basis = character_model.global_basis
 
 	gravity_controller.setup(
 		self,
@@ -138,7 +146,7 @@ func _physics_process(delta: float) -> void:
 	if is_ots_mode and not is_on_floor():
 		is_ots_mode = false
 
-	gravity_controller.update_shift_power(delta)
+	gravity_controller.update_shift_power(delta, is_power_sprinting)
 	_handle_movement(delta)
 	_handle_jump(delta)
 
@@ -146,6 +154,8 @@ func _physics_process(delta: float) -> void:
 		gravity_controller.update_shift(delta)
 	elif gravity_controller.gravity_state == GravityController.GravityState.LEVITATING:
 		gravity_controller.update_levitating(delta)
+	elif gravity_controller.gravity_state == GravityController.GravityState.WALL:
+		gravity_controller.update_wall_follow(delta)
 
 	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
 		_update_orientation(delta)
@@ -157,7 +167,7 @@ func _physics_process(delta: float) -> void:
 	spring_arm.update_pivot_position(delta)
 
 	_predict_trajectory(delta)
-
+	
 	# Animation reads fully-updated physics state for this frame.
 	if animation_controller:
 		animation_controller.update(delta)
@@ -172,13 +182,13 @@ func _read_input(delta: float) -> void:
 	move_input.y = Input.get_axis("forward", "backwards")
 
 	if is_ots_mode:
-		# Walk-only while exploring -- no running, no buffered jumps.
 		run_timer = 0.0
 		is_running = false
+		is_power_sprinting = false
 		jump_buffer_timer = 0.0
 		return
 
-	if Input.is_action_pressed("Run"):
+	if Input.is_action_pressed("Run") and move_input.length_squared() > 0.0:
 		run_timer += delta
 
 		if run_timer >= RUN_THRESHOLD:
@@ -186,6 +196,11 @@ func _read_input(delta: float) -> void:
 	else:
 		run_timer = 0.0
 		is_running = false
+
+	is_power_sprinting = is_running \
+		and Input.is_action_pressed("PowerSprint") \
+		and gravity_controller.gravity_state == GravityController.GravityState.GROUNDED \
+		and gravity_controller.shift_power > 0.0
 
 	if Input.is_action_just_pressed("Jump"):
 		jump_buffer_timer = jump_buffer
@@ -201,7 +216,6 @@ func _apply_gravity(delta):
 
 	if is_on_floor():
 		if not was_grounded_last_frame:
-			var up: Vector3 = -gravity_controller.gravity_direction
 			var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
 			if planar_velocity.length() > max_landing_speed:
 				planar_velocity = planar_velocity.normalized() * max_landing_speed
@@ -219,7 +233,7 @@ func _apply_gravity(delta):
 # ============================================================
 # JUMP
 # ============================================================
-func _handle_jump(delta: float) -> void:
+func _handle_jump(_delta: float) -> void:
 
 	if jump_buffer_timer > 0.0:
 
@@ -246,7 +260,7 @@ func _handle_jump(delta: float) -> void:
 			jumps_used += 1
 
 # ============================================================
-# ORIENTATION
+# ORIENTATION  (physics body -- drives movement-direction math)
 # ============================================================
 func _update_orientation(delta: float) -> void:
 
@@ -266,6 +280,41 @@ func _update_orientation(delta: float) -> void:
 		global_basis.get_rotation_quaternion().slerp(
 			target_basis.get_rotation_quaternion(),
 			delta * 5.0
+		)
+	)
+
+
+func _update_model_orientation(delta: float) -> void:
+	# Keeps model_yaw_basis's up-axis tracking the current gravity
+	# direction every frame, independent of movement input.
+	#
+	# character_model's global_basis is set directly by _apply_lean()
+	# below (not inherited from the player root's transform), which is
+	# what lets the mesh's turning stay smoothly interpolated even when
+	# the physics body snaps instantly (e.g. wall attach). The cost is
+	# that nothing keeps model_yaw_basis in sync with gravity changes
+	# on its own -- previously, with no move input, model_yaw_basis
+	# (and therefore the visible mesh) would just sit at whatever
+	# orientation it last had before a shift/levitate started, i.e.
+	# "stays upright" instead of tumbling to match the new gravity.
+	# This re-aligns its up-axis every frame (preserving its current
+	# facing, projected onto the new up-plane), smoothed the same way
+	# movement-driven turning already is.
+	var up := -gravity_controller.gravity_direction
+
+	var current_forward: Vector3 = -model_yaw_basis.z
+	var realigned_forward: Vector3 = current_forward.slide(up)
+	if realigned_forward.length_squared() < 0.0001:
+		realigned_forward = model_yaw_basis.x.slide(up)
+	if realigned_forward.length_squared() < 0.0001:
+		return
+	realigned_forward = realigned_forward.normalized()
+
+	var realigned_basis := Basis.looking_at(realigned_forward, up)
+	model_yaw_basis = Basis(
+		model_yaw_basis.get_rotation_quaternion().slerp(
+			realigned_basis.get_rotation_quaternion(),
+			rotation_speed * delta
 		)
 	)
 
@@ -293,7 +342,7 @@ func _get_target_motion() -> Dictionary:
 		camera_right = camera_right.normalized()
 
 	var dir := (camera_forward * move_input.y + camera_right * move_input.x).normalized()
-	var spd := run_speed if is_running else walk_speed
+	var spd := lerpf(lerpf(walk_speed, run_speed, run_blend), power_sprint_speed, power_blend)
 
 	return {
 		"target_velocity": dir * spd,
@@ -307,48 +356,57 @@ func _get_target_motion() -> Dictionary:
 func _handle_movement(delta: float) -> void:
 
 	if move_input.length_squared() > 0.0:
+		var run_target: float = 1.0 if is_running else 0.0
+		var run_blend_speed: float = 1.0 - exp(-delta / max(run_ramp_time, 0.001))
+		run_blend = move_toward(run_blend, run_target, run_blend_speed)
 
-		var target := _get_target_motion()
-		var target_velocity: Vector3 = target["target_velocity"]
+		var power_target: float = 1.0 if is_power_sprinting else 0.0
+		var power_blend_speed: float = 1.0 - exp(-delta / max(power_sprint_ramp_time, 0.001))
+		power_blend = move_toward(power_blend, power_target, power_blend_speed)
+	else:
+		run_blend = 0.0
+		power_blend = 0.0
+
+	var target := _get_target_motion()
+	var target_velocity: Vector3 = target["target_velocity"]
+
+	var air_control := 0.45 if !is_on_floor() else 1.0
+
+	var current_planar_velocity = velocity.slide(gravity_controller.gravity_direction)
+	var target_planar_velocity = target_velocity.slide(gravity_controller.gravity_direction)
+
+	current_planar_velocity = current_planar_velocity.lerp(
+		target_planar_velocity,
+		acceleration * air_control * delta
+	)
+
+	velocity = current_planar_velocity + velocity.project(gravity_controller.gravity_direction)
+
+	# Runs every frame, regardless of move_input -- this is the fix.
+	_update_model_orientation(delta)
+
+	if move_input.length_squared() > 0.0:
 		move_direction = target["target_forward"]
-		current_speed = run_speed if is_running else walk_speed
-
-		var air_control := 0.45 if !is_on_floor() else 1.0
-
-		var current_planar_velocity = velocity.slide(gravity_controller.gravity_direction)
-		var target_planar_velocity = target_velocity.slide(gravity_controller.gravity_direction)
-
-		current_planar_velocity = current_planar_velocity.lerp(
-			target_planar_velocity,
-			acceleration * air_control * delta
-		)
-
-		velocity = current_planar_velocity + (
-			velocity.project(gravity_controller.gravity_direction)
-		)
+		current_speed = lerpf(lerpf(walk_speed, run_speed, run_blend), power_sprint_speed, power_blend)
 
 		var up := -gravity_controller.gravity_direction
 		var target_forward := move_direction.slide(up).normalized()
 
 		if target_forward.length_squared() > 0.001:
 			var target_basis := Basis.looking_at(target_forward, up)
-			character_model.global_basis = Basis(
-				character_model.global_basis
+			model_yaw_basis = Basis(
+				model_yaw_basis
 				.get_rotation_quaternion()
 				.slerp(target_basis.get_rotation_quaternion(), rotation_speed * delta)
 			)
 
-	else:
-		var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
-		planar_velocity = planar_velocity.move_toward(Vector3.ZERO, acceleration * delta)
-		velocity = planar_velocity + velocity.project(gravity_controller.gravity_direction)
-
 	_update_turn_rate(delta)
+	_apply_lean(delta)
 
 
 func _update_turn_rate(delta: float) -> void:
 	var up := -gravity_controller.gravity_direction
-	var forward := (-character_model.global_basis.z).slide(up).normalized()
+	var forward := (-model_yaw_basis.z).slide(up).normalized()
 
 	if prev_model_forward.length_squared() > 0.0001 and forward.length_squared() > 0.0001:
 		var cross := prev_model_forward.cross(forward)
@@ -358,8 +416,21 @@ func _update_turn_rate(delta: float) -> void:
 
 	prev_model_forward = forward
 
+func _apply_lean(delta: float) -> void:
+	var target_lean := 0.0
 
-func _predict_trajectory(delta: float) -> void:
+	if is_on_floor():
+		var planar_speed := velocity.slide(gravity_controller.gravity_direction).length()
+		var speed_fraction := clampf(planar_speed / max(run_speed, 0.001), 0.0, 1.0)
+		var normalized_turn := clampf(turn_rate / lean_turn_rate_reference, -1.0, 1.0)
+		target_lean = normalized_turn * deg_to_rad(lean_max_angle_deg) * speed_fraction
+
+	var max_step := deg_to_rad(lean_max_angle_deg) * lean_smoothing_speed * delta
+	current_lean = move_toward(current_lean, target_lean, max_step)
+
+	character_model.global_basis = model_yaw_basis.rotated(model_yaw_basis.z, current_lean)
+
+func _predict_trajectory(_delta: float) -> void:
 	var target := _get_target_motion()
 	var target_velocity: Vector3 = target["target_velocity"]
 	var target_forward: Vector3 = target["target_forward"]
