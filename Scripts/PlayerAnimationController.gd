@@ -127,7 +127,7 @@ func update(delta: float) -> void:
 	if !was_on_floor and on_floor:
 		current_anim_state = AnimState.LAND
 		landing_timer = LANDING_TIME
-		anim_playback.travel("rig|Land")
+		anim_playback.travel("Land")
 
 	was_on_floor = on_floor
 
@@ -144,17 +144,17 @@ func update(delta: float) -> void:
 		if is_shifting_airborne:
 			if current_anim_state != AnimState.FALL:
 				current_anim_state = AnimState.FALL
-				anim_playback.travel("rig|Fall")
+				anim_playback.travel("Fall")
 		elif player.velocity.y > 0.0:
 			if current_anim_state != AnimState.JUMP \
 			and current_anim_state != AnimState.DOUBLE_JUMP \
 			and current_anim_state != AnimState.TRIPLE_JUMP:
 				current_anim_state = AnimState.JUMP
-				anim_playback.travel("rig|Jump")
+				anim_playback.travel("Jump")
 		else:
 			if current_anim_state != AnimState.FALL:
 				current_anim_state = AnimState.FALL
-				anim_playback.travel("rig|Fall")
+				anim_playback.travel("Fall")
 		_update_foot_ik(delta)
 		return
 
@@ -179,7 +179,7 @@ func play_double_jump() -> void:
 	if not animation_tree or not anim_playback:
 		return
 	current_anim_state = AnimState.DOUBLE_JUMP
-	anim_playback.travel("rig|Doublejump")
+	anim_playback.travel("Doublejump")
 
 
 ## Call this from Player.gd at the exact frame the triple jump is executed.
@@ -187,7 +187,7 @@ func play_triple_jump() -> void:
 	if not animation_tree or not anim_playback:
 		return
 	current_anim_state = AnimState.TRIPLE_JUMP
-	anim_playback.travel("rig|Triplejump")
+	anim_playback.travel("Triplejump")
 
 
 func _update_foot_ik(delta: float) -> void:

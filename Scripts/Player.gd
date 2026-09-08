@@ -9,6 +9,7 @@ extends CharacterBody3D
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera_3d: Camera3D = $SpringArm3D/Cameraoffset/Camera3D
 @onready var aim_pivot: Node3D = $"../AimPivot"
+@onready var telekinesis_controller: TelekinesisController = $TelekinesisController
 
 @export var animation_controller: Node  # assign the AnimationController node in the editor
 
@@ -95,6 +96,8 @@ func _ready() -> void:
 		$SpringArm3D/Cameraoffset/Camera3D
 	)
 
+	telekinesis_controller.setup(self, camera_3d)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -103,6 +106,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			is_ots_mode = false
 		elif gravity_controller.gravity_state == GravityController.GravityState.GROUNDED:
 			is_ots_mode = true
+
+	telekinesis_controller.handle_input(event)
 
 	# Jumping and gravity-shifting are entirely off-limits while
 	# exploring -- gate them here so there's no path to trigger them.
@@ -165,6 +170,8 @@ func _physics_process(delta: float) -> void:
 	gravity_controller.detect_wall()
 
 	spring_arm.update_pivot_position(delta)
+
+	telekinesis_controller.update(delta)
 
 	_predict_trajectory(delta)
 	

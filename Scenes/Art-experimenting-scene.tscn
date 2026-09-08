@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bvjpv4qus0xr0"]
 
 [ext_resource type="Shader" uid="uid://dekqua2bb7q82" path="res://Shaders/Water.gdshader" id="4_xm3oa"]
-[ext_resource type="PackedScene" uid="uid://c4p6j5v4uukwh" path="res://Assets/tree.fbx" id="5_55fhj"]
 [ext_resource type="PackedScene" uid="uid://bxltke1psn7x0" path="res://Prefabs/rock10.tscn" id="9_cmavu"]
 [ext_resource type="Material" uid="uid://cx7b5hbx2lfvr" path="res://Materials/rockwall.tres" id="9_xm3oa"]
 [ext_resource type="PackedScene" uid="uid://c5mpt4ywygksu" path="res://Player/playerprefab.tscn" id="10_bxphl"]
@@ -9,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dikafxh78je0l" path="res://Prefabs/rock12.tscn" id="11_du7os"]
 [ext_resource type="PackedScene" uid="uid://1bvltuny5cys" path="res://Prefabs/rock17.tscn" id="12_lsmg2"]
 [ext_resource type="PackedScene" uid="uid://nlro7xis7cnl" path="res://Prefabs/rock22.tscn" id="13_hpjud"]
+[ext_resource type="PackedScene" uid="uid://biw5qohsrkxdd" path="res://Prefabs/tree.tscn" id="13_s03iu"]
 [ext_resource type="PackedScene" uid="uid://bl7dirro0r7gv" path="res://Prefabs/rock24.tscn" id="14_s03iu"]
 [ext_resource type="PackedScene" uid="uid://drdsfsiw3dwf4" path="res://Prefabs/rocklarge.tscn" id="15_75a1x"]
 [ext_resource type="PackedScene" uid="uid://cdw0yqx2r8huu" path="res://Prefabs/NPCscientist.tscn" id="15_cmavu"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" uid="uid://x2rhqsbxf7fe" path="res://Scripts/tracktiling.gd" id="16_lsmg2"]
 [ext_resource type="ArrayMesh" uid="uid://dy5indenclqou" path="res://Assets/traintracksingle.res" id="17_hpjud"]
 [ext_resource type="Script" uid="uid://bes0wqgvuko4" path="res://Scripts/NPCBrain.gd" id="17_lsmg2"]
+[ext_resource type="MeshLibrary" uid="uid://dgfob5p4d433m" path="res://Prefabs/new_mesh_library.tres" id="18_lsmg2"]
+[ext_resource type="PackedScene" uid="uid://cnrp0d7xcbjwc" path="res://Prefabs/throwable.tscn" id="19_hpjud"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -121,20 +123,6 @@ navigation_mesh = SubResource("NavigationMesh_s03iu")
 [node name="ENV" type="Node3D" parent="NavigationRegion3D/StaticBody3D" unique_id=343542554]
 transform = Transform3D(0.585, 0, 0, 0, 0.585, 0, 0, 0, 0.585, 25.520954, -1.518548, 13.207142)
 
-[node name="tree4" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=652938495 instance=ExtResource("5_55fhj")]
-transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -37.18539, 2.5928464, -34.547016)
-
-[node name="tree5" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=664558775 instance=ExtResource("5_55fhj")]
-
-[node name="tree6" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=489082713 instance=ExtResource("5_55fhj")]
-transform = Transform3D(0.6068376, 0, 0, 0, 0.6068376, 0, 0, 0, 0.6068376, 0.49689484, 1.66893e-06, 5.5109215)
-
-[node name="tree" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1435580038 instance=ExtResource("5_55fhj")]
-transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -81.2137, 2.588749, -11.632234)
-
-[node name="tree2" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1686873203 instance=ExtResource("5_55fhj")]
-transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -194.95145, 4.8058176, -83.974144)
-
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1079588508]
 transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -43.626137, 0.883448, -22.578964)
 material_override = ExtResource("9_xm3oa")
@@ -227,12 +215,30 @@ radius = 12.993253
 radial_segments = 45
 rings = 30
 
+[node name="tree3" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=462834792 instance=ExtResource("13_s03iu")]
+transform = Transform3D(1.8751508, 0, 0.8743972, 0, 2.069, 0, -0.8743972, 0, 1.8751508, -39.576843, 5.502396, -54.14083)
+
+[node name="tree6" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1874696596 instance=ExtResource("13_s03iu")]
+transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -101.1471, 5.5023956, -47.830936)
+
+[node name="tree7" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1768124447 instance=ExtResource("13_s03iu")]
+transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -89.97343, 5.5023956, -29.263767)
+
+[node name="tree8" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=949333775 instance=ExtResource("13_s03iu")]
+transform = Transform3D(3.274, 0, 0, 0, 3.274, 0, 0, 0, 3.274, -128.67583, 5.5023956, 47.314102)
+
+[node name="tree4" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1728499284 instance=ExtResource("13_s03iu")]
+transform = Transform3D(-1.4036739, 0.10366897, 0.970055, 0, 1.699723, -0.18164799, -0.9755788, -0.1491601, -1.3957262, -43.127, -1.453, -75.22)
+
+[node name="tree5" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1127262779 instance=ExtResource("13_s03iu")]
+transform = Transform3D(1.5069948, 0.15632302, 1.3720295, 0, 2.030861, -0.23138736, -1.3809062, 0.17059666, 1.4973077, 56.187782, 5.5023956, -46.576767)
+
 [node name="NPCbrain" type="Node3D" parent="." unique_id=885115013 node_paths=PackedStringArray("nav_region", "player")]
 script = ExtResource("17_lsmg2")
 nav_region = NodePath("../NavigationRegion3D")
 player = NodePath("../Playerprefab")
 npc_scene = ExtResource("15_cmavu")
-num_npcs = 100
+num_npcs = 20
 
 [node name="Locomotive" parent="." unique_id=1546860108 instance=ExtResource("15_du7os")]
 transform = Transform3D(1.11, 0, 0, 0, 1.11, 0, 0, 0, 1.11, 0, 0, 0)
@@ -248,5 +254,37 @@ transform = Transform3D(-0.87447923, -0.006172333, 0.4849364, -6.984725e-10, 0.9
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Path3D" unique_id=319033002]
 multimesh = SubResource("MultiMesh_75a1x")
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1591389471]
+mesh_library = ExtResource("18_lsmg2")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65505, 4, 1310724, 65505, 13, 1048577, 65487, 4, 1310724, 65478, 4, 655361, 65478, 10, 1441793, 65478, 16, 1441793, 65478, 22, 1441793, 65478, 28, 1441793, 65490, 31, 1, 65484, 4, 655361, 65478, 34, 1441793, 65484, 31, 1, 65502, 31, 1, 65508, 31, 1, 65505, 25, 1048577, 65505, 19, 1048577, 65505, 7, 1048577, 65505, 1, 1048577, 65499, 4, 655361, 65496, 31, 1, 65490, 4, 655361, 65496, 4, 1441793, 65505, 22, 131076, 65496, 22, 131076, 65487, 22, 131076, 65505, 31, 131076, 65487, 31, 1179652, 65478, 31, 1179652, 589790, 7, 1179651, 589790, 10, 1179651, 589790, 13, 1179651, 589790, 16, 1179651, 589787, 7, 1179651, 589790, 19, 1179651, 589790, 22, 1179651, 589790, 25, 1179651, 589790, 28, 1179651, 589790, 31, 1179651, 589787, 31, 1179651, 589787, 28, 1179651, 589787, 25, 1179651, 589787, 22, 1179651, 589787, 19, 1179651, 589787, 16, 1179651, 589787, 13, 1179651, 589787, 10, 1179651, 589784, 7, 1179651, 589781, 7, 1179651, 589784, 10, 1179651, 589781, 10, 1179651, 589784, 13, 1179651, 589781, 13, 1179651, 589784, 16, 1179651, 589781, 16, 1179651, 589784, 19, 1179651, 589781, 19, 1179651, 589784, 22, 1179651, 589781, 22, 1179651, 589784, 25, 1179651, 589781, 25, 1179651, 589784, 28, 1179651, 589781, 28, 1179651, 589784, 31, 1179651, 589781, 31, 1179651, 589778, 31, 1179651, 589775, 31, 1179651, 589772, 31, 1179651, 589769, 31, 1179651, 589766, 31, 1179651, 589766, 28, 1179651, 589769, 28, 1179651, 589772, 28, 1179651, 589775, 28, 1179651, 589778, 28, 1179651, 589778, 25, 1179651, 589775, 25, 1179651, 589772, 25, 1179651, 589769, 25, 1179651, 589766, 25, 1179651, 589778, 22, 1179651, 589775, 22, 1179651, 589772, 22, 1179651, 589769, 22, 1179651, 589766, 22, 1179651, 589778, 19, 1179651, 589775, 19, 1179651, 589772, 19, 1179651, 589769, 19, 1179651, 589766, 19, 1179651, 589778, 16, 1179651, 589775, 16, 1179651, 589772, 16, 1179651, 589769, 16, 1179651, 589766, 16, 1179651, 589778, 13, 1179651, 589775, 13, 1179651, 589772, 13, 1179651, 589769, 13, 1179651, 589766, 13, 1179651, 589778, 10, 1179651, 589775, 10, 1179651, 589772, 10, 1179651, 589769, 10, 1179651, 589766, 10, 1179651, 589778, 7, 1179651, 589775, 7, 1179651, 589772, 7, 1179651, 589769, 7, 1179651, 589766, 7, 1179651, 131016, 4, 1441792, 65496, 1, 1441795, 65496, 65534, 1441793, 65496, 65531, 1441795, 65496, 65528, 1441795, 65499, 65534, 1048577, 65499, 65528, 1048577, 65499, 1, 1048579, 589787, 4, 1048579, 589787, 1, 1048579, 589787, 65534, 1048579, 589787, 65531, 1048579, 65496, 13, 131076)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="throwable" parent="." unique_id=1141163935 instance=ExtResource("19_hpjud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.781816, 1.511498, -7.488039)
+
+[node name="throwable2" parent="." unique_id=1130228868 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.7901313, 1.511498, -7.488039)
+
+[node name="throwable4" parent="." unique_id=123968906 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32280168, -2.1244702, 1.5114981, -8.440296)
+
+[node name="throwable3" parent="." unique_id=1557635758 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.193564, 2.3509574, -7.8352714)
+
+[node name="throwable5" parent="." unique_id=1497524596 instance=ExtResource("19_hpjud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4189525, 1.511498, -21.326168)
+
+[node name="throwable6" parent="." unique_id=199265904 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -3.4272678, 1.511498, -21.326168)
+
+[node name="throwable7" parent="." unique_id=106204711 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32280168, -2.7616067, 1.5114981, -22.278427)
+
+[node name="throwable8" parent="." unique_id=1045258727 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.8307004, 2.3509574, -21.6734)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]

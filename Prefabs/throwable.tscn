@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cnrp0d7xcbjwc"]
+
+[ext_resource type="PackedScene" uid="uid://cl1kpxaiha1rh" path="res://Assets/InteractiveObjects/throwable.glb" id="1_47uws"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="RigidBody3D" type="RigidBody3D" unique_id=1130228868 groups=["tktarget"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1587996304]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="throwable" parent="CollisionShape3D" unique_id=1141163935 instance=ExtResource("1_47uws")]
