@@ -7,10 +7,16 @@ class_name TelekinesisController
 var player: CharacterBody3D
 var camera: Camera3D
 
-## Where held objects hover -- a Marker3D near the player's head/shoulder.
-## Parent it to character_model (or a head bone via BoneAttachment3D) if
-## you want held objects to orbit naturally as the character turns.
-@export var hold_point: Node3D
+## Offset from the camera, in camera-local space (x = right, y = up,
+## z = forward-distance). This is what pins the held object to a fixed
+## spot on screen -- e.g. top-right -- instead of it swinging around
+## as the character's body rotates. Deliberately NOT a scene node: a
+## Marker3D parented under the character model would move with the
+## character's rotation instead of the camera's, which is exactly the
+## bug this replaces (object drifting in front of the camera / seeming
+## to orbit the player when they turn).
+@export_group("Hold Position")
+@export var hold_offset: Vector3 = Vector3(0.6, 0.35, 1.4)
 
 # ============================================================
 # TARGETING
@@ -18,7 +24,7 @@ var camera: Camera3D
 @export_group("Targeting")
 @export var reach: float = 8.0
 ## RigidBody3D nodes must be in this group to be grabbable.
-@export var pickup_group: String = "tktarget"
+@export var pickup_group: String = "telekinesis_target"
 
 # ============================================================
 # HOLD BEHAVIOR
@@ -89,9 +95,7 @@ func handle_input(event: InputEvent) -> void:
 			_launch_held_object()
 		else:
 			_try_grab()
-	elif event.is_action_released("Telekinesis"):
-		if held_object:
-			_launch_held_object()
+
 
 
 func _try_grab() -> void:
@@ -127,13 +131,19 @@ func update(delta: float) -> void:
 	if not held_object:
 		return
 
-	if not is_instance_valid(held_object) or not hold_point:
+	if not is_instance_valid(held_object) or not camera:
 		held_object = null
 		return
 
 	held_elapsed += delta
 
-	var true_target: Vector3 = hold_point.global_position
+	var true_target: Vector3 = (
+		camera.global_position
+		+ camera.global_transform.basis.x * hold_offset.x
+		+ camera.global_transform.basis.y * hold_offset.y
+		- camera.global_transform.basis.z * hold_offset.z
+	)
+
 	var true_distance: float = (true_target - held_object.global_position).length()
 
 	if is_pulling_in and true_distance < 0.15:

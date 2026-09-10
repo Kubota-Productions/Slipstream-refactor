@@ -264,16 +264,16 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="throwable" parent="." unique_id=1141163935 instance=ExtResource("19_hpjud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.781816, 1.511498, -7.488039)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1935334, 1.511498, -7.488039)
 
 [node name="throwable2" parent="." unique_id=1130228868 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.7901313, 1.511498, -7.488039)
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -3.201849, 1.511498, -7.488039)
 
 [node name="throwable4" parent="." unique_id=123968906 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32280168, -2.1244702, 1.5114981, -8.440296)
+transform = Transform3D(0.3228017, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.3228017, -2.5361876, 1.5114981, -8.440296)
 
 [node name="throwable3" parent="." unique_id=1557635758 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.193564, 2.3509574, -7.8352714)
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.6052814, 2.3509574, -7.8352714)
 
 [node name="throwable5" parent="." unique_id=1497524596 instance=ExtResource("19_hpjud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4189525, 1.511498, -21.326168)
