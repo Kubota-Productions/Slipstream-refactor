@@ -26,6 +26,14 @@ var levitate_start_velocity: Vector3 = Vector3.ZERO
 var shift_power: float = 100.0
 @export var shift_regen_delay_after_empty: float = 3.0
 var regen_delay_timer: float = 0.0
+
+## Power locked away by external systems (e.g. currently-held
+## telekinesis objects). shift_power itself is already reduced by
+## this amount at the moment it's reserved -- this value only exists
+## to cap how high regen (and refill_shift_power) can climb back to,
+## so reserved chunks stay drained until explicitly released.
+var reserved_power: float = 0.0
+
 @export_group("Wall Walking")
 @export var wall_follow_ray_length: float = 3.0
 @export var wall_follow_smoothing_time: float = 0.15
@@ -179,7 +187,11 @@ func update_shift_power(delta: float, is_power_sprinting: bool = false) -> void:
 		if regen_delay_timer > 0.0:
 			regen_delay_timer -= delta
 		else:
-			shift_power = min(shift_power + shift_regen_rate * delta, max_shift_power)
+			# Regen is capped below max_shift_power by whatever is
+			# currently reserved (e.g. held telekinesis objects), so
+			# those chunks stay drained until explicitly released.
+			var regen_ceiling: float = max_shift_power - reserved_power
+			shift_power = min(shift_power + shift_regen_rate * delta, regen_ceiling)
 
 	shift_power_changed.emit(shift_power, max_shift_power)
 
@@ -216,12 +228,35 @@ func update_wall_follow(delta: float) -> void:
 		player.up_direction = -gravity_direction
 		player.velocity = step_rotation * player.velocity
 
+## Deducts `amount` from shift_power immediately and marks it as
+## reserved, so update_shift_power()'s regen can't climb back past
+## (max_shift_power - reserved_power) until release_reserved_power()
+## is called with a matching amount. Returns false (and does nothing)
+## if there isn't enough currently-available power to cover it.
+func reserve_power(amount: float) -> bool:
+	if amount > shift_power:
+		return false
+
+	shift_power -= amount
+	reserved_power += amount
+	shift_power_changed.emit(shift_power, max_shift_power)
+	return true
+
+## Lifts the regen ceiling back up by `amount` -- does NOT instantly
+## refund shift_power, regen just gradually reclaims the freed headroom.
+func release_reserved_power(amount: float) -> void:
+	reserved_power = max(reserved_power - amount, 0.0)
+
 func refill_shift_power(amount: float = -1.0) -> void:
 	# amount < 0 means "fill completely"; otherwise add a partial amount.
+	# Capped by reserved_power same as regen, for the same reason --
+	# a refill pickup shouldn't be able to bypass a telekinesis lock.
+	var ceiling: float = max_shift_power - reserved_power
+
 	if amount < 0.0:
-		shift_power = max_shift_power
+		shift_power = ceiling
 	else:
-		shift_power = min(shift_power + amount, max_shift_power)
+		shift_power = min(shift_power + amount, ceiling)
 
 	regen_delay_timer = 0.0  # a pickup should clear any regen delay too
 	shift_power_changed.emit(shift_power, max_shift_power)
@@ -266,6 +301,3 @@ func attach_to_surface(hit):
 	if spring_arm:
 		spring_arm.rotation.y = 0.0
 	gravity_state = GravityState.WALL
-	
-
-	

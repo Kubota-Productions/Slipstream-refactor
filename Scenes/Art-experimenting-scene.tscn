@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://bes0wqgvuko4" path="res://Scripts/NPCBrain.gd" id="17_lsmg2"]
 [ext_resource type="MeshLibrary" uid="uid://dgfob5p4d433m" path="res://Prefabs/new_mesh_library.tres" id="18_lsmg2"]
 [ext_resource type="PackedScene" uid="uid://cnrp0d7xcbjwc" path="res://Prefabs/throwable.tscn" id="19_hpjud"]
+[ext_resource type="PackedScene" uid="uid://cfahswakqqjl0" path="res://Prefabs/Spoon.tscn" id="20_s03iu"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -286,5 +287,26 @@ transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32
 
 [node name="throwable8" parent="." unique_id=1045258727 instance=ExtResource("19_hpjud")]
 transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, -2.8307004, 2.3509574, -21.6734)
+
+[node name="Spoon" parent="." unique_id=587874787 instance=ExtResource("20_s03iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.543549, 3.5261128, -14.226298)
+
+[node name="Spoon2" parent="." unique_id=488316100 instance=ExtResource("20_s03iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.607514, 3.4851391, -14.026901)
+
+[node name="Spoon3" parent="." unique_id=1716423721 instance=ExtResource("20_s03iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.316722, 3.5428898, -14.498047)
+
+[node name="Spoon4" parent="." unique_id=251638505 instance=ExtResource("20_s03iu")]
+transform = Transform3D(-0.52020234, 0, -0.85404307, 0, 1, 0, 0.85404307, 0, -0.52020234, -12.170262, 3.501287, -14.140356)
+
+[node name="Spoon5" parent="." unique_id=315040437 instance=ExtResource("20_s03iu")]
+transform = Transform3D(0.66401947, 0, -0.7477153, 0, 1, 0, 0.7477153, 0, 0.66401947, -13.011279, 3.5464964, -14.286701)
+
+[node name="Spoon6" parent="." unique_id=442026923 instance=ExtResource("20_s03iu")]
+transform = Transform3D(0.66401947, 0, -0.7477153, 0, 1, 0, 0.7477153, 0, 0.66401947, -12.637544, 3.5102465, -14.485146)
+
+[node name="Spoon7" parent="." unique_id=219192091 instance=ExtResource("20_s03iu")]
+transform = Transform3D(-0.046560418, 0, -0.9989155, 0, 1, 0, 0.9989155, 0, -0.046560418, -11.930127, 3.4844139, -14.395793)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]
