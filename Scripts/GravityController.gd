@@ -247,6 +247,23 @@ func reserve_power(amount: float) -> bool:
 func release_reserved_power(amount: float) -> void:
 	reserved_power = max(reserved_power - amount, 0.0)
 
+## One-shot spend: deducts `amount` from shift_power if (and only if)
+## there's enough available, same "can't afford it" semantics as
+## reserve_power but with no lock/release bookkeeping -- for costs
+## that are paid once and don't need to be given back later (e.g. an
+## air jump), unlike a telekinesis hold which reserves power for as
+## long as the object stays held. Returns false (and does nothing) if
+## unaffordable, so callers can gate the action on the return value.
+func drain_power(amount: float) -> bool:
+	if amount > shift_power:
+		return false
+
+	shift_power -= amount
+	if shift_power <= 0.0:
+		regen_delay_timer = shift_regen_delay_after_empty
+	shift_power_changed.emit(shift_power, max_shift_power)
+	return true
+
 func refill_shift_power(amount: float = -1.0) -> void:
 	# amount < 0 means "fill completely"; otherwise add a partial amount.
 	# Capped by reserved_power same as regen, for the same reason --

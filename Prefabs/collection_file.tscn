@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cvkb4m71xkyvn"]
+
+[ext_resource type="PackedScene" uid="uid://cx7bvo6p13i0y" path="res://Assets/Collection Assets/Collection File.glb" id="1_qmgif"]
+
+[node name="Collection File" unique_id=332967823 instance=ExtResource("1_qmgif")]

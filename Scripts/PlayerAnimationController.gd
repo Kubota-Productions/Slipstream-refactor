@@ -35,6 +35,34 @@ var left_weight: float = 0.0
 var right_weight: float = 0.0
 
 # ============================================================
+# LANDING ANTICIPATION
+# Predicts touchdown before it happens (raycast + kinematic
+# time-to-impact) and starts the Land animation early enough that it
+# FINISHES right around actual impact, instead of starting at impact
+# and leaving the legs planted in a landing pose for land_anim_duration
+# while the body keeps moving. Falls back to the old reactive trigger
+# for falls too short to have given enough warning.
+# ============================================================
+@export_group("Landing Anticipation")
+## How long the Land animation takes to play. Also the anticipation
+## lead time -- landing is predicted this far ahead of actual impact.
+@export var land_anim_duration: float = 0.25
+## Max distance to check for ground when predicting a landing.
+@export var landing_predict_ray_length: float = 50.0
+## Distance from player.global_position down to where the feet
+## actually touch the ground, along gravity_direction. The raycast
+## measures from the character's origin (often a capsule's center),
+## not its feet, so without this the predicted distance -- and
+## therefore the predicted time-to-land -- is too large, firing the
+## animation too early. If landing anticipates too early, increase
+## this (roughly toward your collision shape's half-height); if it's
+## now firing too late/not enough warning, decrease it.
+@export var ground_contact_offset: float = 0.0
+
+var land_anim_active: bool = false
+var landing_timer: float = 0.0
+
+# ============================================================
 # STATE
 # ============================================================
 enum AnimState {
@@ -48,12 +76,10 @@ enum AnimState {
 	LAND
 }
 
-const LANDING_TIME := 0.25
 const LOCOMOTION_BLEND_PARAM := "parameters/BlendSpace1D/blend_position"
 
 var current_anim_state := AnimState.IDLE
 var was_on_floor := true
-var landing_timer := 0.0
 
 
 func _ready() -> void:
@@ -118,23 +144,88 @@ func _debug_print_tree(root: Node, indent: String = "") -> void:
 		_debug_print_tree(child, indent + "  ")
 
 
+## Casts a ray toward the ground (along current gravity_direction) and
+## returns true if, based on current fall speed and gravity's
+## acceleration, we're on track to touch down within `lead_time`
+## seconds. Re-evaluated every frame while airborne, so the estimate
+## keeps self-correcting as the player gets closer to the ground.
+func _predict_landing_within(lead_time: float) -> bool:
+	if not player or not player.gravity_controller:
+		return false
+
+	var gc: GravityController = player.gravity_controller
+	var gravity_dir: Vector3 = gc.gravity_direction
+
+	var fall_speed: float = player.velocity.dot(gravity_dir)
+	if fall_speed <= 0.0:
+		return false  # ascending or stationary along gravity's axis -- not falling toward it yet
+
+	var origin: Vector3 = player.global_position
+	var target: Vector3 = origin + gravity_dir * landing_predict_ray_length
+
+	var query := PhysicsRayQueryParameters3D.create(origin, target)
+	query.exclude = [player]
+	var hit := player.get_world_3d().direct_space_state.intersect_ray(query)
+
+	if not hit:
+		return false
+
+	var raw_distance: float = (hit.position - origin).length()
+	var distance: float = raw_distance - ground_contact_offset
+
+	if distance <= 0.0:
+		return true  # already within contact range -- land now
+
+	# Kinematic time-to-impact: distance = v*t + 0.5*a*t^2, solved for
+	# t via the quadratic formula. Uses gravity_strength as the
+	# acceleration -- an approximation during an active gravity shift
+	# (which layers its own acceleration on top of this), but since
+	# this re-predicts every physics frame the estimate keeps
+	# correcting itself as the player closes in.
+	var a: float = max(float(gc.gravity_strength), 0.001)
+	var discriminant: float = fall_speed * fall_speed + 2.0 * a * distance
+	if discriminant < 0.0:
+		return false
+
+	var time_to_land: float = (-fall_speed + sqrt(discriminant)) / a
+
+	return time_to_land <= lead_time
+
+
 func update(delta: float) -> void:
 	if not animation_tree or not anim_playback:
 		return
 
 	var on_floor := player.is_on_floor()
 
-	if !was_on_floor and on_floor:
+	# Preemptive trigger -- start the Land animation before actual
+	# touchdown if we're on track to land within its own duration.
+	if not on_floor and not land_anim_active:
+		if _predict_landing_within(land_anim_duration):
+			land_anim_active = true
+			current_anim_state = AnimState.LAND
+			landing_timer = land_anim_duration
+			anim_playback.travel("Land")
+
+	if !was_on_floor and on_floor and not land_anim_active:
+		# Touched down without enough warning to have anticipated it
+		# (e.g. a very short drop off a low ledge) -- fall back to the
+		# old reactive trigger so there's still some landing animation.
+		land_anim_active = true
 		current_anim_state = AnimState.LAND
-		landing_timer = LANDING_TIME
+		landing_timer = land_anim_duration
 		anim_playback.travel("Land")
 
 	was_on_floor = on_floor
 
 	if landing_timer > 0.0:
 		landing_timer -= delta
+		if landing_timer <= 0.0:
+			land_anim_active = false
 		_update_foot_ik(delta)
 		return
+
+	land_anim_active = false
 
 	if !on_floor:
 		var gravity_state: GravityController.GravityState = player.gravity_controller.gravity_state

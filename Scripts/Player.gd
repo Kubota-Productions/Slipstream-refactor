@@ -54,6 +54,11 @@ var current_lean: float = 0.0
 @export var coyote_time: float = 0.15
 @export var jump_buffer: float = 0.15
 @export var max_jumps: int = 2
+## Gravity meter cost for each jump PAST the first (double jump, triple
+## jump, etc). The initial ground/coyote jump is always free -- only
+## the extra air jumps draw from shift_power, and if there isn't
+## enough available, the extra jump simply doesn't happen.
+@export var air_jump_power_cost: float = 15.0
 
 var jumps_used: int = 0
 var coyote_timer := 0.0
@@ -250,7 +255,7 @@ func _handle_jump(_delta: float) -> void:
 			coyote_timer = 0.0
 			jumps_used = 1
 
-		elif jumps_used < max_jumps:
+		elif jumps_used < max_jumps and gravity_controller.drain_power(air_jump_power_cost):
 			var up: Vector3 = -gravity_controller.gravity_direction
 			velocity -= velocity.project(up)
 			velocity += up * jump_velocity
