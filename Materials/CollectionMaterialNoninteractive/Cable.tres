@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://d2np5wp4sxuxt"]
 
+[ext_resource type="Texture2D" uid="uid://bqbnofrg0bh6f" path="res://Assets/textures/Collection Textures/T_Cable_01_ORM.PNG" id="1_tnrh3"]
+
 [resource]
+albedo_texture = ExtResource("1_tnrh3")

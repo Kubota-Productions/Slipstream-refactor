@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://cd58av5bmxqq6"]
 
+[ext_resource type="Texture2D" uid="uid://cq2uco36pnpad" path="res://Assets/textures/Collection Textures/T_Locker01_D.PNG" id="1_0l2g6"]
+
 [resource]
+albedo_texture = ExtResource("1_0l2g6")

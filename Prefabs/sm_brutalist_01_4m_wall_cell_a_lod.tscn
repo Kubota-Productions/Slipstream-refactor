@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://brai2kgljwdrd"]
+
+[ext_resource type="PackedScene" uid="uid://b24jfp8lybda2" path="res://Assets/Collection Assets/SM_Brutalist_01_4M_Wall_Cell_A_LOD0.glb" id="1_6nlid"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r2bh5"]
+points = PackedVector3Array(2, 4, 0.3999607, 2, 0, 0.3999607, 2, 4, -2.6425252e-07, -2, 4, 0.39999983, -1.5520751, 3.9479249, 0.39999983, 2, 0, -2.6425252e-07, -1.5520751, 0.05129209, 0.39999983, -2, 0, 0.39999983, -2, 4, -2.6425252e-07, -2, 0, -2.6425252e-07)
+
+[node name="SM_Brutalist_01_4M_Wall_Cell_A_LOD02" unique_id=1090792268 instance=ExtResource("1_6nlid")]
+
+[node name="SM_Brutalist_01_4M_Wall_Cell_A_LOD0" parent="." index="0" unique_id=1189637658]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_4M_Wall_Cell_A_LOD0" index="0" unique_id=1953772268]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_4M_Wall_Cell_A_LOD0/StaticBody3D" index="0" unique_id=386253160]
+shape = SubResource("ConvexPolygonShape3D_r2bh5")

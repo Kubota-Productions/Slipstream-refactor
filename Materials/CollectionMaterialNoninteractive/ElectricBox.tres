@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://61nwxy4y2v60"]
 
+[ext_resource type="Texture2D" uid="uid://dtfodhhqos7dy" path="res://Assets/textures/Collection Textures/T_Electricbox_01_D.PNG" id="1_axhs0"]
+
 [resource]
+albedo_texture = ExtResource("1_axhs0")

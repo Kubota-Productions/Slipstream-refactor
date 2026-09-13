@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dxq6jn6xuwevq"]
+
+[ext_resource type="PackedScene" uid="uid://cvlso4ym6ypv4" path="res://Assets/Collection Assets/SM_Brutalist_01_Ductwork_Exhaust_02_LOD0.glb" id="1_md2bc"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l8kih"]
+points = PackedVector3Array(0.7211304, -0.79543287, -0.3700213, 0.69516736, 0.9056106, 0.11506396, 0.6965842, 0.906959, -0.0980219, -1.2579722, -0.7337901, -0.7008912, -1.2579722, -0.7337901, 0.71826905, -1.2579722, 0.717069, -0.73259, -1.2230924, 0.69254994, 0.69375, 0.6345955, -0.13424501, 0.93925, 0.6345955, 0.18092152, -0.92187214, 0.6345955, -0.9230722, 0.18193944, 0.6880128, 0.5663916, 0.71852857, 0.6345955, -0.3867426, -0.85865664, 0.7197623, -0.5522605, 0.68919593, 0.71833336, 0.68716604, -0.5502344, 0.6345955, 0.9380499, 0.118906125, 0.6345955, -0.8598567, -0.3855425, 0.6345955, 0.27547148, 0.90755117, -1.2579722, -0.7020913, -0.73259, 0.6345955, 0.8748344, 0.37122154, 0.6345955, 0.4017203, -0.85865664, 0.6345955, -0.8598567, 0.40292037, 0.7240438, 0.26569426, 0.84438974, 0.72595584, 0.17492242, -0.8590814, 0.6345955, 0.8748344, -0.35402584, 0.68596387, -0.6405552, -0.6393551, 0.6869023, -0.52042526, 0.7478385, 0.6345955, -0.16576166, -0.92187214, 0.6345955, -0.9230722, -0.16474375, 0.7242294, 0.84334916, 0.26676807, 0.6345955, 0.11788822, 0.93925, 0.6345955, 0.9380499, -0.101710446, 0.6860034, 0.7461022, -0.5188921)
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_02_LOD02" unique_id=406312434 instance=ExtResource("1_md2bc")]
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_02_LOD0" parent="." index="0" unique_id=735402103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Ductwork_Exhaust_02_LOD0" index="0" unique_id=1925629198]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Ductwork_Exhaust_02_LOD0/StaticBody3D" index="0" unique_id=1944425926]
+shape = SubResource("ConvexPolygonShape3D_l8kih")

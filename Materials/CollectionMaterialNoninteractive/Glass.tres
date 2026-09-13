@@ -1,3 +1,14 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bdjn6qxwn8gxw"]
 
+[ext_resource type="Texture2D" uid="uid://5hoqdpsi80g4" path="res://Assets/textures/Collection Textures/tdc-dtr-glas-tra.jpg" id="1_s44jd"]
+
 [resource]
+transparency = 3
+alpha_hash_scale = 0.0
+alpha_antialiasing_mode = 0
+blend_mode = 3
+albedo_texture = ExtResource("1_s44jd")
+metallic_specular = 1.0
+clearcoat = 0.0
+clearcoat_roughness = 0.0
+refraction_scale = 1.0

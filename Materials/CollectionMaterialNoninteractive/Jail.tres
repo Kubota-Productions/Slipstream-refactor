@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://d32e7a1wc1kng"]
 
+[ext_resource type="Texture2D" uid="uid://c4exuk5l4wkqp" path="res://Assets/textures/Collection Textures/T_Jail01_D.PNG" id="1_jahl8"]
+
 [resource]
+albedo_texture = ExtResource("1_jahl8")

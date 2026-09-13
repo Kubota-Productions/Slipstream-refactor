@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dvn4luucoq0y0"]
 
+[ext_resource type="Texture2D" uid="uid://b2xf6o1cw11sd" path="res://Assets/textures/Collection Textures/T_Painted_Metal_D.PNG" id="1_qpijp"]
+
 [resource]
+albedo_texture = ExtResource("1_qpijp")

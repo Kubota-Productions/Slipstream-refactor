@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://7h1q6fyvqwl8"]
+
+[ext_resource type="PackedScene" uid="uid://dgew3geeel4li" path="res://Assets/Collection Assets/SM_BorderColumn04_1_LOD0_001.glb" id="1_p7tci"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n3cg5"]
+height = 3.9999995
+radius = 0.28484607
+
+[node name="SM_BorderColumn04_1_LOD0_0012" unique_id=2122596066 instance=ExtResource("1_p7tci")]
+
+[node name="SM_BorderColumn04_1_LOD0_001" parent="." index="0" unique_id=470581807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_BorderColumn04_1_LOD0_001" index="0" unique_id=1684231534]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9802322e-08, -2.3841858e-07, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_BorderColumn04_1_LOD0_001/StaticBody3D" index="0" unique_id=2139289156]
+shape = SubResource("CylinderShape3D_n3cg5")

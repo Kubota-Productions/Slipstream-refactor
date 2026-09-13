@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ds3x0itdjkalf"]
+
+[ext_resource type="PackedScene" uid="uid://b5hshteb5cpxe" path="res://Assets/Collection Assets/SM_Brutalist_01_Ductwork_Exhaust_01_LOD0.glb" id="1_jlbt0"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fvmst"]
+points = PackedVector3Array(-0.9335798, 1.0938008, -0.3511, -0.95938015, -1.6725198, -2.5577545, 1.0932, -1.6610385, -2.5438905, 1.2336009, 1.1065657, -2.434287, 1.0514946, 0.75887394, 0.7427386, -0.9798436, -1.5672154, -0.37759998, -1.0913341, 1.1065657, -2.434287, 1.1221104, -1.5672154, -0.37759998, -0.91448885, 0.91573507, 0.75137365, 1.0347846, 1.0564936, 0.33192292, 1.2336009, -1.704634, -2.434287, -1.0913341, -1.704634, -2.434287, 1.0866859, 0.3789, -2.5331988, -0.9444191, 0.3789, -2.5331988, 1.1359011, 1.1047, -0.60666883, -0.9092256, 0.7588716, 0.74273497, 1.0567555, 0.91573507, 0.75137365, -0.9298, 1.0369923, 0.31433082, 1.1512487, 1.1245413, -2.2887743, -0.99363434, 1.1047, -0.60666883, 1.0758466, 1.0938008, -0.3511)
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_01_LOD02" unique_id=1204854408 instance=ExtResource("1_jlbt0")]
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_01_LOD0" parent="." index="0" unique_id=951000814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Ductwork_Exhaust_01_LOD0" index="0" unique_id=879243628]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Ductwork_Exhaust_01_LOD0/StaticBody3D" index="0" unique_id=487199622]
+shape = SubResource("ConvexPolygonShape3D_fvmst")

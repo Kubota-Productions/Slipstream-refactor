@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cf8v17xs2js70"]
+
+[ext_resource type="PackedScene" uid="uid://c6le5nofeo0pa" path="res://Assets/Collection Assets/SM_Brutalist_01_Lightfixture_F_LOD0.glb" id="1_lsspd"]
+
+[node name="SM_Brutalist_01_Lightfixture_F_LOD02" unique_id=367612818 instance=ExtResource("1_lsspd")]
+
+[node name="SM_Brutalist_01_Lightfixture_F_LOD0" parent="." index="0" unique_id=963022729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Brutalist_01_Lightfixture_F_LOD0" index="0" unique_id=925352452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0007995367, 0.16815779)

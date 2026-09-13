@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bv0j2ovm7lcui"]
+
+[ext_resource type="PackedScene" uid="uid://c3uw33aluy1v8" path="res://Assets/Collection Assets/SM_AtticBeam01_3_LOD0.glb" id="1_651dm"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_40mkx"]
+points = PackedVector3Array(-1.7152739, 1.893426, -1.6200738, -1.7066818, 1.9080071, -1.6111381, -1.5454948, 2.201294, -1.4502947, -1.7018702, 1.893426, -1.6338211, 1.5304623, -2.0547, 1.6256623, 1.7002413, -1.7472485, 1.7957852, -1.4502947, 2.201294, -1.5454948, -1.6338211, 1.893426, -1.7018702, 1.5438659, -2.0547, 1.6119151, 1.6256623, -2.0547, 1.5304623, 1.5393982, -2.0405354, 1.634598, 1.7957852, -1.7472485, 1.7002413, -1.6111381, 1.9080071, -1.7066818, -1.6200738, 1.893426, -1.7152739, 1.6119151, -2.0547, 1.5438659, 1.634598, -2.0405354, 1.5393982)
+
+[node name="SM_AtticBeam01_3_LOD02" unique_id=27161124 instance=ExtResource("1_651dm")]
+
+[node name="SM_AtticBeam01_3_LOD0" parent="." index="0" unique_id=61368589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_AtticBeam01_3_LOD0" index="0" unique_id=265181155]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_AtticBeam01_3_LOD0/StaticBody3D" index="0" unique_id=807336854]
+shape = SubResource("ConvexPolygonShape3D_40mkx")
