@@ -3,11 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ci4e2g34e8xbl"
-valid=false
+path="res://.godot/imported/T_Windows01_D.PNG-2508778fbd6a8ef8f4df114154c9f941.ctex"
+metadata={
+"vram_texture": false
+}
+generator_parameters={}
 
 [deps]
 
 source_file="res://Assets/textures/Collection Textures/T_Windows01_D.PNG"
+dest_files=["res://.godot/imported/T_Windows01_D.PNG-2508778fbd6a8ef8f4df114154c9f941.ctex"]
 
 [params]
 
@@ -19,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

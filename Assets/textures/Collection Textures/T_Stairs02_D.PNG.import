@@ -3,11 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bc5x5h1ncs60n"
-valid=false
+path="res://.godot/imported/T_Stairs02_D.PNG-9ea3e7c2817b26b7ac754d07686a1127.ctex"
+metadata={
+"vram_texture": false
+}
+generator_parameters={}
 
 [deps]
 
 source_file="res://Assets/textures/Collection Textures/T_Stairs02_D.PNG"
+dest_files=["res://.godot/imported/T_Stairs02_D.PNG-9ea3e7c2817b26b7ac754d07686a1127.ctex"]
 
 [params]
 
@@ -19,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

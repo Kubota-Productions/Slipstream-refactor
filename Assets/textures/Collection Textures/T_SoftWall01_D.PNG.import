@@ -3,11 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bukhl2pk7htx4"
-valid=false
+path="res://.godot/imported/T_SoftWall01_D.PNG-debcbff0e4458c0827a74d0673bda27b.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://Assets/textures/Collection Textures/T_SoftWall01_D.PNG"
+dest_files=["res://.godot/imported/T_SoftWall01_D.PNG-debcbff0e4458c0827a74d0673bda27b.ctex"]
 
 [params]
 

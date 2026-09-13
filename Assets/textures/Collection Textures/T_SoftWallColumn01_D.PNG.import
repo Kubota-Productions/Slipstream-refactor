@@ -3,11 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6nb1h4j68i6w"
-valid=false
+path="res://.godot/imported/T_SoftWallColumn01_D.PNG-e27a51cc8f3ce4fdd2a205583d4b00f3.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://Assets/textures/Collection Textures/T_SoftWallColumn01_D.PNG"
+dest_files=["res://.godot/imported/T_SoftWallColumn01_D.PNG-e27a51cc8f3ce4fdd2a205583d4b00f3.ctex"]
 
 [params]
 
