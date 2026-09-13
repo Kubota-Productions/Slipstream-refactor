@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://d2cdfaubedwls"]
 
-[ext_resource type="Material" uid="uid://8wp3awvt3fct" path="res://Materials/Rocklist.tres" id="1_72s71"]
+[ext_resource type="Material" uid="uid://8wp3awvt3fct" path="res://Materials/CollectionMaterialNoninteractive/Rocklist.tres" id="1_72s71"]
+
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2pqxx"]
 _surfaces = [{
