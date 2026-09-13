@@ -1,3 +1,992 @@
 [gd_scene format=3 uid="uid://dg0acp526lltp"]
 
+[ext_resource type="PackedScene" uid="uid://bfslf2bf8vtac" path="res://Prefabs/bl1.tscn" id="1_0vid6"]
+[ext_resource type="PackedScene" uid="uid://ch0ukrsp0rawv" path="res://Prefabs/building.tscn" id="2_mpyoi"]
+[ext_resource type="PackedScene" uid="uid://x81jyxeoaaqp" path="res://Prefabs/building_1.tscn" id="3_3x3q7"]
+[ext_resource type="PackedScene" uid="uid://77c0a1x7ae46" path="res://Prefabs/building_2.tscn" id="4_udm5a"]
+[ext_resource type="PackedScene" uid="uid://ddrg6gbd2sa8a" path="res://Prefabs/building_3.tscn" id="5_5mnyu"]
+[ext_resource type="PackedScene" uid="uid://briy1visu5y5n" path="res://Prefabs/building_4.tscn" id="6_tbcs3"]
+[ext_resource type="PackedScene" uid="uid://du6onvlqwq0hq" path="res://Prefabs/lightpost.tscn" id="7_85b5q"]
+[ext_resource type="PackedScene" uid="uid://dn2hjk8g02j3t" path="res://Prefabs/Moth_particles.tscn" id="8_m757l"]
+[ext_resource type="PackedScene" uid="uid://ca78ifk654cdi" path="res://Prefabs/rampconnector.tscn" id="9_nun68"]
+[ext_resource type="PackedScene" uid="uid://hb4kqbdkhci3" path="res://Prefabs/rock_1.tscn" id="10_dgiyh"]
+[ext_resource type="PackedScene" uid="uid://bnrrhymmlnaes" path="res://Prefabs/rock_2.tscn" id="11_hy8ff"]
+[ext_resource type="PackedScene" uid="uid://dccrurefrg0j4" path="res://Prefabs/rock_3.tscn" id="12_rc0pk"]
+[ext_resource type="PackedScene" uid="uid://nnf0jom8khty" path="res://Prefabs/rock_4.tscn" id="13_pjc68"]
+[ext_resource type="PackedScene" uid="uid://cyuu2edsvnweg" path="res://Prefabs/rock_5.tscn" id="14_em7vu"]
+[ext_resource type="PackedScene" uid="uid://cc20bp8hwr1gj" path="res://Prefabs/rock_6.tscn" id="15_uhaaa"]
+[ext_resource type="PackedScene" uid="uid://dielyvpf2r8p4" path="res://Prefabs/rock_7.tscn" id="16_n51ob"]
+[ext_resource type="PackedScene" uid="uid://chkjerxxcd5wf" path="res://Prefabs/rock_8.tscn" id="17_ybgx1"]
+[ext_resource type="PackedScene" uid="uid://bgkpkidw2tm8b" path="res://Prefabs/rock_9.tscn" id="18_l5b5c"]
+[ext_resource type="PackedScene" uid="uid://dro72gw5lpaf8" path="res://Prefabs/rock_10.tscn" id="19_yc8a7"]
+[ext_resource type="PackedScene" uid="uid://didvq6onsf4rv" path="res://Prefabs/rock_11.tscn" id="20_73shg"]
+[ext_resource type="PackedScene" uid="uid://dqyqh4xmnvdnv" path="res://Prefabs/rock_12.tscn" id="21_2lmvc"]
+[ext_resource type="PackedScene" uid="uid://p65ncn7f8t34" path="res://Prefabs/rock_13.tscn" id="22_ud8yb"]
+[ext_resource type="PackedScene" uid="uid://djhnamapo7nxd" path="res://Prefabs/rock_14.tscn" id="23_hoouc"]
+[ext_resource type="PackedScene" uid="uid://cw6kpwqtwbf7m" path="res://Prefabs/rock_15.tscn" id="24_jpry6"]
+[ext_resource type="PackedScene" uid="uid://bydsibyyorie2" path="res://Prefabs/rock_16.tscn" id="25_wryno"]
+[ext_resource type="PackedScene" uid="uid://bj38x1dfytrxh" path="res://Prefabs/rock_17.tscn" id="26_hvq1a"]
+[ext_resource type="PackedScene" uid="uid://c4rn2qp7ed5yy" path="res://Prefabs/rock_18.tscn" id="27_20g8r"]
+[ext_resource type="PackedScene" uid="uid://ck3d5rlviodx0" path="res://Prefabs/rock_19.tscn" id="28_h6vv4"]
+[ext_resource type="PackedScene" uid="uid://by6r5yebhmsyo" path="res://Prefabs/rock_20.tscn" id="29_jh6pl"]
+[ext_resource type="PackedScene" uid="uid://c7duprujjtfs4" path="res://Prefabs/rock_21.tscn" id="30_x1hm8"]
+[ext_resource type="PackedScene" uid="uid://cf6rxdx7ji3e6" path="res://Prefabs/rock_22.tscn" id="31_1gico"]
+[ext_resource type="PackedScene" uid="uid://b2qiwfjflw2d4" path="res://Prefabs/rock_23.tscn" id="32_ja2g6"]
+[ext_resource type="PackedScene" uid="uid://bfwg88v0u4oj5" path="res://Prefabs/rock_24.tscn" id="33_ekphe"]
+[ext_resource type="PackedScene" uid="uid://crdiap114bm1p" path="res://Prefabs/rock_25.tscn" id="34_c3gv0"]
+[ext_resource type="PackedScene" uid="uid://dgdeoysfx0y70" path="res://Prefabs/rock_26.tscn" id="35_ct1k0"]
+[ext_resource type="PackedScene" uid="uid://cluiv2lt8cn0l" path="res://Prefabs/rock_27.tscn" id="36_7q17b"]
+[ext_resource type="PackedScene" uid="uid://c0egwlbe742aq" path="res://Prefabs/rock_28.tscn" id="37_mkqpw"]
+[ext_resource type="PackedScene" uid="uid://basv1ilbruh4u" path="res://Prefabs/rock_29.tscn" id="38_qtlsa"]
+[ext_resource type="PackedScene" uid="uid://dya1ds5tjq5ku" path="res://Prefabs/rock_30.tscn" id="39_kg1es"]
+[ext_resource type="PackedScene" uid="uid://770efeqg4bxe" path="res://Prefabs/rock_31.tscn" id="40_y8ei7"]
+[ext_resource type="PackedScene" uid="uid://dnhgu8riphyc7" path="res://Prefabs/rock_32.tscn" id="41_6r3j5"]
+[ext_resource type="PackedScene" uid="uid://q3givjrgkd78" path="res://Prefabs/rock_33.tscn" id="42_c0y2r"]
+[ext_resource type="PackedScene" uid="uid://crvsi5t527ggh" path="res://Prefabs/rock_34.tscn" id="43_07bv2"]
+[ext_resource type="PackedScene" uid="uid://dwjqsojfn114f" path="res://Prefabs/sm_attic_beam_01_1_lod_0.tscn" id="44_1ygq8"]
+[ext_resource type="PackedScene" uid="uid://bhnff63gi8c11" path="res://Prefabs/sm_attic_beam_01_2_lod.tscn" id="45_v8vvb"]
+[ext_resource type="PackedScene" uid="uid://bv0j2ovm7lcui" path="res://Prefabs/sm_attic_beam_01_3_lod.tscn" id="46_5aoug"]
+[ext_resource type="PackedScene" uid="uid://drpqmonv5o5k7" path="res://Prefabs/sm_attic_beam_01_4_lod.tscn" id="47_iwarq"]
+[ext_resource type="PackedScene" uid="uid://r5yux6ga2vaw" path="res://Prefabs/sm_attic_beam_01_5_lod.tscn" id="48_eqxrr"]
+[ext_resource type="PackedScene" uid="uid://t4drs3jpw20h" path="res://Prefabs/sm_beam_01_1_lod.tscn" id="49_dr3fi"]
+[ext_resource type="PackedScene" uid="uid://bn60hlpjxbqaj" path="res://Prefabs/sm_beam_01_2_lod.tscn" id="50_chj4k"]
+[ext_resource type="PackedScene" uid="uid://k1hpg3aadi5p" path="res://Prefabs/sm_beam_01_3_lod.tscn" id="51_32jln"]
+[ext_resource type="PackedScene" uid="uid://dh8gt87vrlqua" path="res://Prefabs/sm_beam_01_4_lod.tscn" id="52_2tuo3"]
+[ext_resource type="PackedScene" uid="uid://cjqq36x8s8gf" path="res://Prefabs/sm_beam_01_5_lod.tscn" id="53_nb1hc"]
+[ext_resource type="PackedScene" uid="uid://swn172um51e8" path="res://Prefabs/sm_border_column_04_1_lod.tscn" id="54_i7v38"]
+[ext_resource type="PackedScene" uid="uid://7h1q6fyvqwl8" path="res://Prefabs/sm_border_column_04_1_lod_1.tscn" id="55_ve7jq"]
+[ext_resource type="PackedScene" uid="uid://djet4iyqrrcns" path="res://Prefabs/sm_brick_corner_01_1_lod.tscn" id="56_unbb2"]
+[ext_resource type="PackedScene" uid="uid://b4i3822c5caro" path="res://Prefabs/sm_brutalist_01_4m_archway_a_corner_01.tscn" id="57_d4jfq"]
+[ext_resource type="PackedScene" uid="uid://ct63gpwlx1gub" path="res://Prefabs/sm_brutalist_01_4m_archway_a_lod.tscn" id="58_558xa"]
+[ext_resource type="PackedScene" uid="uid://c68t7ssu660dw" path="res://Prefabs/sm_brutalist_01_4m_archway_b_lod.tscn" id="59_dqbbv"]
+[ext_resource type="PackedScene" uid="uid://qyjoc2vclf7j" path="res://Prefabs/sm_brutalist_01_4m_archway_hole_a_lod.tscn" id="60_1ryku"]
+[ext_resource type="PackedScene" uid="uid://bige1copqsg4i" path="res://Prefabs/sm_brutalist_01_4m_archway_vent_a_lod.tscn" id="61_5ilxx"]
+[ext_resource type="PackedScene" uid="uid://chi6vslnoaui2" path="res://Prefabs/sm_brutalist_01_4m_archway_vent_b_lod.tscn" id="62_wdex1"]
+[ext_resource type="PackedScene" uid="uid://cy12jjg57rumd" path="res://Prefabs/sm_brutalist_01_4m_archway_vent_c_lod.tscn" id="63_mn151"]
+[ext_resource type="PackedScene" uid="uid://b0gfu77yhecct" path="res://Prefabs/sm_brutalist_01_4m_corner_a_lod.tscn" id="64_vi0f7"]
+[ext_resource type="PackedScene" uid="uid://bgi13korlyro4" path="res://Prefabs/sm_brutalist_01_4m_doorway_lod.tscn" id="65_44rdj"]
+[ext_resource type="PackedScene" uid="uid://dlsde0w7oorsk" path="res://Prefabs/sm_brutalist_01_4m_pillar_a_lod.tscn" id="66_rtw0s"]
+[ext_resource type="PackedScene" uid="uid://cn44u3n2ds4ne" path="res://Prefabs/sm_brutalist_01_4m_wall_4m_lod.tscn" id="67_nnkwq"]
+[ext_resource type="PackedScene" uid="uid://di5cgy1ovij76" path="res://Prefabs/sm_brutalist_01_4m_wall_8m_lod.tscn" id="68_xmv1x"]
+[ext_resource type="PackedScene" uid="uid://0y3y1dwsw6tl" path="res://Prefabs/sm_brutalist_01_4m_wall_16m_lod.tscn" id="69_oomkm"]
+[ext_resource type="PackedScene" uid="uid://brai2kgljwdrd" path="res://Prefabs/sm_brutalist_01_4m_wall_cell_a_lod.tscn" id="70_p03hx"]
+[ext_resource type="PackedScene" uid="uid://15krx1y8iy38" path="res://Prefabs/sm_brutalist_01_4m_wall_cell_b_lod.tscn" id="71_r1e73"]
+[ext_resource type="PackedScene" uid="uid://dwkow4uex0e3f" path="res://Prefabs/sm_brutalist_01_4m_wall_cell_corrupted_c_lod.tscn" id="72_1q207"]
+[ext_resource type="PackedScene" uid="uid://c016c4l2jd7xj" path="res://Prefabs/sm_brutalist_01_4m_wall_vent_bottom_a_lod.tscn" id="73_7jw0d"]
+[ext_resource type="PackedScene" uid="uid://66bwdagvdhng" path="res://Prefabs/sm_brutalist_01_4x_4_tunnel_01.tscn" id="74_jyo1n"]
+[ext_resource type="PackedScene" uid="uid://c5lb0ddfoqh6g" path="res://Prefabs/sm_brutalist_01_ceiling_light_a_lod.tscn" id="75_v2lpb"]
+[ext_resource type="PackedScene" uid="uid://cfllrkrj8vnjg" path="res://Prefabs/sm_brutalist_01_ceiling_light_b_lod.tscn" id="76_sa74c"]
+[ext_resource type="PackedScene" uid="uid://c7jwypwe7o2od" path="res://Prefabs/sm_brutalist_01_ceiling_light_c_lod.tscn" id="77_7b262"]
+[ext_resource type="PackedScene" uid="uid://d3cnimnxkwndy" path="res://Prefabs/sm_brutalist_01_ceiling_light_d_lod.tscn" id="78_jrbv6"]
+[ext_resource type="PackedScene" uid="uid://cchaqrehnwvs3" path="res://Prefabs/sm_brutalist_01_ductwork_a_lod.tscn" id="79_8370l"]
+[ext_resource type="PackedScene" uid="uid://1f0xivb4jw4t" path="res://Prefabs/sm_brutalist_01_ductwork_b_lod.tscn" id="80_6oo8d"]
+[ext_resource type="PackedScene" uid="uid://r845expnso70" path="res://Prefabs/sm_brutalist_01_ductwork_c_lod.tscn" id="81_8unhn"]
+[ext_resource type="PackedScene" uid="uid://c8f1fhj00b4fx" path="res://Prefabs/sm_brutalist_01_ductwork_d_lod.tscn" id="82_phe4g"]
+[ext_resource type="PackedScene" uid="uid://ds3x0itdjkalf" path="res://Prefabs/sm_brutalist_01_ductwork_exhaust_01_lod.tscn" id="83_j8hdr"]
+[ext_resource type="PackedScene" uid="uid://dxq6jn6xuwevq" path="res://Prefabs/sm_brutalist_01_ductwork_exhaust_02_lod.tscn" id="84_fibkb"]
+[ext_resource type="PackedScene" uid="uid://cslpfqx6y5uh2" path="res://Prefabs/sm_brutalist_01_ductwork_e_lod.tscn" id="85_81cqp"]
+[ext_resource type="PackedScene" uid="uid://dysdh1qi1mef1" path="res://Prefabs/sm_brutalist_01_ductwork_fan_a_lod.tscn" id="86_1mgkr"]
+[ext_resource type="PackedScene" uid="uid://ds1vd7bljgrhs" path="res://Prefabs/sm_brutalist_01_ductwork_fan_blades_01_lod.tscn" id="87_iqw4g"]
+[ext_resource type="PackedScene" uid="uid://dxvtkopy85myy" path="res://Prefabs/sm_brutalist_01_ductwork_fan_closed_01_lod.tscn" id="88_c03cf"]
+[ext_resource type="PackedScene" uid="uid://ni0kkykhqoax" path="res://Prefabs/sm_brutalist_01_ductwork_fan_c_lod.tscn" id="89_uytft"]
+[ext_resource type="PackedScene" uid="uid://ok78d5j82bpj" path="res://Prefabs/sm_brutalist_01_ductwork_f_lod.tscn" id="90_l2kjm"]
+[ext_resource type="PackedScene" uid="uid://baach4twolrm3" path="res://Prefabs/sm_brutalist_01_ductwork_hatch_a_lod.tscn" id="91_5p7qa"]
+[ext_resource type="PackedScene" uid="uid://oocbgtunpl5c" path="res://Prefabs/sm_brutalist_01_ductwork_pipe_01_lod.tscn" id="92_ru44j"]
+[ext_resource type="PackedScene" uid="uid://brri6jd6wp66p" path="res://Prefabs/sm_brutalist_01_ductwork_pipe_02_lod.tscn" id="93_csux2"]
+[ext_resource type="PackedScene" uid="uid://cophixw1r3p2x" path="res://Prefabs/sm_brutalist_01_ductwork_pipe_03_lod.tscn" id="94_7wkon"]
+[ext_resource type="PackedScene" uid="uid://dtrodkaqi3kb4" path="res://Prefabs/sm_brutalist_01_ductwork_pipe_05_lod.tscn" id="95_mg1cr"]
+[ext_resource type="PackedScene" uid="uid://bir324fumptsl" path="res://Prefabs/sm_brutalist_01_ductwork_pipe_06_lod.tscn" id="96_f0fi3"]
+[ext_resource type="PackedScene" uid="uid://b3xmf1f4guqqb" path="res://Prefabs/sm_brutalist_01_ductwork_support_01_lod.tscn" id="97_p0gq4"]
+[ext_resource type="PackedScene" uid="uid://b5lj067bmihtj" path="res://Prefabs/sm_brutalist_01_ductwork_support_02_lod.tscn" id="98_tmowu"]
+[ext_resource type="PackedScene" uid="uid://p4eg8mq1mvl5" path="res://Prefabs/sm_brutalist_01_ductwork_support_03_lod.tscn" id="99_0j4vo"]
+[ext_resource type="PackedScene" uid="uid://bpwykphm6fjmw" path="res://Prefabs/sm_brutalist_01_ductwork_support_04_lod.tscn" id="100_cvvgw"]
+[ext_resource type="PackedScene" uid="uid://dn0txm3ehi0u8" path="res://Prefabs/sm_brutalist_01_ductwork_support_05_lod.tscn" id="101_2wpsi"]
+[ext_resource type="PackedScene" uid="uid://cnhy43p0ycssk" path="res://Prefabs/sm_brutalist_01_lightfixture_a_lod.tscn" id="102_s3boh"]
+[ext_resource type="PackedScene" uid="uid://cs0fidm6w1f01" path="res://Prefabs/sm_brutalist_01_lightfixture_b_lod.tscn" id="103_b1jed"]
+[ext_resource type="PackedScene" uid="uid://cxtv8k2kjmeu8" path="res://Prefabs/sm_brutalist_01_lightfixture_c_lod.tscn" id="104_agyon"]
+[ext_resource type="PackedScene" uid="uid://cfkoxxl5yge71" path="res://Prefabs/sm_brutalist_01_lightfixture_d_lod.tscn" id="105_76m6s"]
+[ext_resource type="PackedScene" uid="uid://bbfmoq6t13klx" path="res://Prefabs/sm_brutalist_01_lightfixture_e_lod.tscn" id="106_rtqby"]
+[ext_resource type="PackedScene" uid="uid://cf8v17xs2js70" path="res://Prefabs/sm_brutalist_01_lightfixture_f_lod.tscn" id="107_7sr3s"]
+[ext_resource type="PackedScene" uid="uid://dejpvy705x742" path="res://Prefabs/sm_brutalist_01_pillar_c_lod.tscn" id="108_3oydn"]
+[ext_resource type="PackedScene" uid="uid://8kbaqy03r87q" path="res://Prefabs/sm_brutalist_01_pillar_d_lod.tscn" id="109_6k4p7"]
+[ext_resource type="PackedScene" uid="uid://b4tyufgps4lf4" path="res://Prefabs/sm_brutalist_01_stairs_a_lod.tscn" id="110_pqbsr"]
+[ext_resource type="PackedScene" uid="uid://b2ijwxpwbne4r" path="res://Prefabs/sm_brutalist_01_stairs_b_lod.tscn" id="111_kiv6c"]
+[ext_resource type="PackedScene" uid="uid://c4kxltd84gr3s" path="res://Prefabs/sm_brutalist_01_stairs_c_lod.tscn" id="112_imfjg"]
+[ext_resource type="PackedScene" uid="uid://b6s300k60fax5" path="res://Prefabs/sm_brutalist_01_stairs_d_lod.tscn" id="113_ma0qq"]
+[ext_resource type="PackedScene" uid="uid://dgvqc8wlx31cn" path="res://Prefabs/sm_brutalist_01_stairs_e_lod.tscn" id="114_ocg3k"]
+[ext_resource type="PackedScene" uid="uid://5nuf5bj8mf50" path="res://Prefabs/sm_brutalist_01_stairs_f_lod.tscn" id="115_mccya"]
+[ext_resource type="PackedScene" uid="uid://cfayt0sqe2qu7" path="res://Prefabs/sm_brutalist_01_stairs_g_lod.tscn" id="116_2pdcq"]
+[ext_resource type="PackedScene" uid="uid://bnaeyaesnb71w" path="res://Prefabs/sm_brutalist_01_wall_entrance_a_lod_02.tscn" id="117_l6tnw"]
+[ext_resource type="PackedScene" uid="uid://4olputdislnn" path="res://Prefabs/sm_brutalist_01_wall_entrance_b_lod_02.tscn" id="118_yirci"]
+[ext_resource type="PackedScene" uid="uid://dwdl4kplym0cs" path="res://Prefabs/sm_brutalist_01_wall_overhang_a_lod_02.tscn" id="119_6sfsl"]
+[ext_resource type="PackedScene" uid="uid://dwscwten1vfuf" path="res://Prefabs/sm_brutalist_01_wall_overhang_b_lod_02.tscn" id="120_p5w08"]
+[ext_resource type="PackedScene" uid="uid://cc2wqmqmywgyt" path="res://Prefabs/sm_brutalist_01_wall_overhang_c_lod_02.tscn" id="121_5k0ds"]
+[ext_resource type="PackedScene" uid="uid://djowxl3c1e0iv" path="res://Prefabs/sm_brutalist_02_ceiling_light_a_lod_02.tscn" id="122_7jlra"]
+[ext_resource type="PackedScene" uid="uid://boh3a6cis5rgo" path="res://Prefabs/sm_brutalist_02_ceiling_light_b_lod_02.tscn" id="123_8sdv5"]
+[ext_resource type="PackedScene" uid="uid://cp72kyw147qob" path="res://Prefabs/sm_brutalist_02_ceiling_light_c_lod_02.tscn" id="124_82gun"]
+[ext_resource type="PackedScene" uid="uid://cf3hi71fd25fn" path="res://Prefabs/sm_brutalist_02_ceiling_light_d_lod_02.tscn" id="125_weiea"]
+[ext_resource type="PackedScene" uid="uid://dn1b7ea2omkn" path="res://Prefabs/sm_brutalist_02_decorative_wall_arch_a_lod_02.tscn" id="126_14yw4"]
+[ext_resource type="PackedScene" uid="uid://eeij3ih72hfa" path="res://Prefabs/sm_brutalist_02_decorative_wall_a_lod_02.tscn" id="127_3xqw7"]
+[ext_resource type="PackedScene" uid="uid://cwm2u7xkhr4tn" path="res://Prefabs/sm_brutalist_02_decorative_wall_b_lod_02.tscn" id="128_h4fod"]
+[ext_resource type="PackedScene" uid="uid://1rhi48x51bb4" path="res://Prefabs/sm_brutalist_02_decorative_wall_doorway_b_lod_02.tscn" id="129_gwsjm"]
+[ext_resource type="PackedScene" uid="uid://bpidsmgoh00yy" path="res://Prefabs/sm_brutalist_03_16m_corner_lod_02.tscn" id="130_wfilp"]
+[ext_resource type="PackedScene" uid="uid://bw57bnr3xype3" path="res://Prefabs/sm_brutalist_03_16m_doorway_lod_02.tscn" id="131_iaohm"]
+[ext_resource type="PackedScene" uid="uid://dinv56wkxpfj5" path="res://Prefabs/sm_brutalist_corridor_01_a_lod_02.tscn" id="132_vlau7"]
+[ext_resource type="PackedScene" uid="uid://bomx70tx3ai7h" path="res://Prefabs/sm_brutalist_corridor_01_b_lod_02.tscn" id="133_uy201"]
+[ext_resource type="PackedScene" uid="uid://bw5tkk2b5crmt" path="res://Prefabs/sm_brutalist_corridor_01_c_lod_02.tscn" id="134_t78ky"]
+[ext_resource type="PackedScene" uid="uid://b0pejlxkuk56m" path="res://Prefabs/sm_brutalist_corridor_01_d_lod_02.tscn" id="135_6e2rg"]
+[ext_resource type="PackedScene" uid="uid://drra74rt8ffm3" path="res://Prefabs/sm_brutalist_corridor_01_e_lod_02.tscn" id="136_381b1"]
+[ext_resource type="PackedScene" uid="uid://bn8ave7ghld3c" path="res://Prefabs/sm_brutalist_fence_01_a_lod_02.tscn" id="137_mrtof"]
+[ext_resource type="PackedScene" uid="uid://6ayuf07ktr08" path="res://Prefabs/sm_brutalist_fence_01_b_lod_02.tscn" id="138_o0d86"]
+[ext_resource type="PackedScene" uid="uid://qm65heq27hfj" path="res://Prefabs/sm_brutalist_fence_01_c_lod_02.tscn" id="139_06j3u"]
+[ext_resource type="PackedScene" uid="uid://pvlniq8tpsvr" path="res://Prefabs/sm_brutalist_fence_01_d_lod_02.tscn" id="140_0nwu0"]
+[ext_resource type="PackedScene" uid="uid://b4ynwxquffug7" path="res://Prefabs/sm_cable_012.tscn" id="141_wbor1"]
+[ext_resource type="PackedScene" uid="uid://cqgkdha8ky5ia" path="res://Prefabs/sm_cable_022.tscn" id="142_n2bq1"]
+[ext_resource type="PackedScene" uid="uid://bcc6btsnriuru" path="res://Prefabs/sm_cable_032.tscn" id="143_rthw8"]
+[ext_resource type="PackedScene" uid="uid://dwcje0m1fjn6w" path="res://Prefabs/sm_cable_042.tscn" id="144_2xpsx"]
+[ext_resource type="PackedScene" uid="uid://c2np4r6wbhdlj" path="res://Prefabs/sm_cable_052.tscn" id="145_5u8ke"]
+[ext_resource type="PackedScene" uid="uid://ctyvw1dr7fy55" path="res://Prefabs/sm_cable_062.tscn" id="146_b7q38"]
+[ext_resource type="PackedScene" uid="uid://c0ejov3e0pj3b" path="res://Prefabs/sm_cable_spool_01_lod_02.tscn" id="147_uedno"]
+[ext_resource type="PackedScene" uid="uid://lnwkrh7eqdo5" path="res://Prefabs/sm_cable_spool_02_lod_02.tscn" id="148_2lv4y"]
+[ext_resource type="PackedScene" uid="uid://bjwrhfli6apkp" path="res://Prefabs/sm_ceiling_01_5_lod_02.tscn" id="149_q73c0"]
+[ext_resource type="PackedScene" uid="uid://d3nsxbm2vcucv" path="res://Prefabs/sm_door_01_1_lod_02.tscn" id="150_oor5m"]
+[ext_resource type="PackedScene" uid="uid://dqifv71ftw8bm" path="res://Prefabs/sm_door_01_2_lod_02.tscn" id="151_tflix"]
+[ext_resource type="PackedScene" uid="uid://kqwjaf3u86rw" path="res://Prefabs/sm_door_02_1_lod_02.tscn" id="152_yuahx"]
+[ext_resource type="PackedScene" uid="uid://dabs887lldal6" path="res://Prefabs/sm_door_02_2_lod_02.tscn" id="153_tu7ue"]
+[ext_resource type="PackedScene" uid="uid://btm2mla2p8p3y" path="res://Prefabs/sm_door_03_1_lod_02.tscn" id="154_uvsmf"]
+[ext_resource type="PackedScene" uid="uid://dmrskqf0nmll2" path="res://Prefabs/sm_door_03_2_lod_02.tscn" id="155_jnv1n"]
+[ext_resource type="PackedScene" uid="uid://cs11g0uhxkv3t" path="res://Prefabs/sm_door_04_1_lod_02.tscn" id="156_xllo8"]
+[ext_resource type="PackedScene" uid="uid://vw4d8tb4nyvc" path="res://Prefabs/sm_door_04_2_lod_02.tscn" id="157_a2tad"]
+[ext_resource type="PackedScene" uid="uid://detphhbgo3dhg" path="res://Prefabs/sm_door_05_2_lod_02.tscn" id="158_px15p"]
+[ext_resource type="PackedScene" uid="uid://d1auje2dg5lgx" path="res://Prefabs/sm_electricbox_01_lod_02.tscn" id="159_jo4qk"]
+[ext_resource type="PackedScene" uid="uid://ct0rrtlo5b1hl" path="res://Prefabs/sm_electricbox_02_lod_02.tscn" id="160_woue3"]
+[ext_resource type="PackedScene" uid="uid://dowxpp3qshmf8" path="res://Prefabs/sm_electricbox_03_lod_02.tscn" id="161_qksml"]
+[ext_resource type="PackedScene" uid="uid://bpgruhwxm5pph" path="res://Prefabs/sm_electricbox_04_lod_02.tscn" id="162_8gmbo"]
+[ext_resource type="PackedScene" uid="uid://b6yscdy4oj0qe" path="res://Prefabs/sm_electricbox_05_lod_02.tscn" id="163_brimw"]
+[ext_resource type="PackedScene" uid="uid://btonnrcewxt4c" path="res://Prefabs/sm_electricbox_06_lod_02.tscn" id="164_qwld4"]
+[ext_resource type="PackedScene" uid="uid://o5qd31ef7qoj" path="res://Prefabs/sm_electricbox_07_lod_02.tscn" id="165_rcrxa"]
+[ext_resource type="PackedScene" uid="uid://dqq3ijyeiwnn" path="res://Prefabs/sm_electricbox_08_lod_02.tscn" id="166_y85yu"]
+[ext_resource type="PackedScene" uid="uid://byggpreob640g" path="res://Prefabs/sm_electricbox_09_lod_02.tscn" id="167_640gy"]
+[ext_resource type="PackedScene" uid="uid://dghhnjn6eywqg" path="res://Prefabs/sm_fence_01_1_lod_02.tscn" id="168_ywayk"]
+[ext_resource type="PackedScene" uid="uid://bythfbis4i4v3" path="res://Prefabs/sm_fence_01_2_lod_02.tscn" id="169_vv053"]
+[ext_resource type="PackedScene" uid="uid://cxekjlej6jfx1" path="res://Prefabs/sm_fence_01_3_lod_02.tscn" id="170_styw7"]
+[ext_resource type="PackedScene" uid="uid://bfu1djo8lit0b" path="res://Prefabs/sm_fence_01_4_lod_02.tscn" id="171_jlufi"]
+[ext_resource type="PackedScene" uid="uid://c6wdnxqh3ffgu" path="res://Prefabs/sm_fence_01_5_lod_02.tscn" id="172_p6rek"]
+[ext_resource type="PackedScene" uid="uid://boixa3f1wh5o6" path="res://Prefabs/sm_fence_01_6_lod_02.tscn" id="173_tdek6"]
+[ext_resource type="PackedScene" uid="uid://bjfwab2w3fo3e" path="res://Prefabs/sm_jail_01_1_lod_02.tscn" id="174_f2sx8"]
+[ext_resource type="PackedScene" uid="uid://b1df1bg1w1e8c" path="res://Prefabs/sm_jail_01_2_lod_02.tscn" id="175_dt73p"]
+[ext_resource type="PackedScene" uid="uid://blbbv4t1ffyt5" path="res://Prefabs/sm_jail_door_01_1_lod_02.tscn" id="176_ny53h"]
+[ext_resource type="PackedScene" uid="uid://bbx44xwd0umko" path="res://Prefabs/sm_kitchen_cabinet_01_1_lod_02.tscn" id="177_re2dg"]
+[ext_resource type="PackedScene" uid="uid://ctdrr0lvls2j4" path="res://Prefabs/sm_kitchen_cabinet_01_2_lod_02.tscn" id="178_8yc2v"]
+[ext_resource type="PackedScene" uid="uid://j66ydjq3nfod" path="res://Prefabs/sm_kitchen_cabinet_01_3_lod_02.tscn" id="179_j0ll6"]
+[ext_resource type="PackedScene" uid="uid://2ne31qsn0sgp" path="res://Prefabs/sm_kitchen_cabinet_01_4_lod_02.tscn" id="180_mal2e"]
+[ext_resource type="PackedScene" uid="uid://2gcvqapq20cu" path="res://Prefabs/sm_kitchen_cabinet_01_5_lod_02.tscn" id="181_vpmx4"]
+[ext_resource type="PackedScene" uid="uid://coxlnjn6n00n1" path="res://Prefabs/sm_locker_01_1_lod_02.tscn" id="182_g6n2e"]
+[ext_resource type="PackedScene" uid="uid://4wkfxawt4alr" path="res://Prefabs/sm_locker_01_2_lod_02.tscn" id="183_eg1is"]
+[ext_resource type="PackedScene" uid="uid://n2rngb3u834o" path="res://Prefabs/sm_locker_01_3_lod_02.tscn" id="184_vpxxn"]
+[ext_resource type="PackedScene" uid="uid://dyyf5hm518g6k" path="res://Prefabs/sm_locker_01_4_lod_02.tscn" id="185_7k6no"]
+[ext_resource type="PackedScene" uid="uid://dssp48bxg2kah" path="res://Prefabs/sm_locker_01_5_lod_02.tscn" id="186_7cfhx"]
+[ext_resource type="PackedScene" uid="uid://ckmtkh0dpkr85" path="res://Prefabs/sm_locker_01_6_lod_02.tscn" id="187_as8ai"]
+[ext_resource type="PackedScene" uid="uid://c733now4ynfo1" path="res://Prefabs/sm_locker_01_7_lod_02.tscn" id="188_xuiib"]
+[ext_resource type="PackedScene" uid="uid://byhh4hymkavhv" path="res://Prefabs/sm_locker_01_8_lod_02.tscn" id="189_q3i2y"]
+[ext_resource type="PackedScene" uid="uid://ja8h28j4myoq" path="res://Prefabs/sm_locker_01_door_01_1_lod_02.tscn" id="190_oihqf"]
+[ext_resource type="PackedScene" uid="uid://m20j6a756myo" path="res://Prefabs/sm_locker_01_door_01_2_lod_02.tscn" id="191_5blj2"]
+[ext_resource type="PackedScene" uid="uid://dvedeq4ufuoi3" path="res://Prefabs/sm_locker_01_door_01_3_lod_02.tscn" id="192_5shsj"]
+[ext_resource type="PackedScene" uid="uid://ff3rn4nxj73u" path="res://Prefabs/sm_locker_01_drawer_01_1_lod_02.tscn" id="193_ej5jh"]
+[ext_resource type="PackedScene" uid="uid://djtqigr7s3ts6" path="res://Prefabs/sm_locker_01_drawer_01_2_lod_02.tscn" id="194_waigg"]
+[ext_resource type="PackedScene" uid="uid://bmvg4g2kolsvp" path="res://Prefabs/sm_reception_desk_01_1_lod_02.tscn" id="195_qucdy"]
+[ext_resource type="PackedScene" uid="uid://b4kji8unw0et5" path="res://Prefabs/sm_reception_desk_01_2_lod_02.tscn" id="196_7ay6t"]
+[ext_resource type="PackedScene" uid="uid://dk1v3rjbjii5e" path="res://Prefabs/sm_reception_desk_01_3_lod_02.tscn" id="197_d4gun"]
+[ext_resource type="PackedScene" uid="uid://dbpkl31ejmsq8" path="res://Prefabs/sm_reception_desk_01_4_lod_02.tscn" id="198_t0icq"]
+[ext_resource type="PackedScene" uid="uid://d07jwd12kve3p" path="res://Prefabs/sm_roof_01_1_lod_02.tscn" id="199_pw4ak"]
+[ext_resource type="PackedScene" uid="uid://bh5yoi4c7my8s" path="res://Prefabs/sm_roof_01_2_lod_02.tscn" id="200_sm8tk"]
+[ext_resource type="PackedScene" uid="uid://inp3nfvqekia" path="res://Prefabs/sm_roof_01_3_lod_02.tscn" id="201_fiimi"]
+[ext_resource type="PackedScene" uid="uid://d4fla3t8hjbdh" path="res://Prefabs/sm_roof_01_4_lod_02.tscn" id="202_umpei"]
+[ext_resource type="PackedScene" uid="uid://cmrn7av0vetgt" path="res://Prefabs/sm_roof_01_5_lod_02.tscn" id="203_sqm0d"]
+[ext_resource type="PackedScene" uid="uid://c1ubhbm6h4pua" path="res://Prefabs/sm_roof_01_6_lod_02.tscn" id="204_fnch0"]
+[ext_resource type="PackedScene" uid="uid://cihx7qs1mmik0" path="res://Prefabs/sm_roof_01_7_lod_02.tscn" id="205_3t5iv"]
+[ext_resource type="PackedScene" uid="uid://clyvjqykqtn7" path="res://Prefabs/sm_roof_01_8_lod_02.tscn" id="206_l63cf"]
+[ext_resource type="PackedScene" uid="uid://b7dfl2brfvycc" path="res://Prefabs/sm_roof_01_9_lod_02.tscn" id="207_ntp10"]
+[ext_resource type="PackedScene" uid="uid://ce2ros6hpyhii" path="res://Prefabs/sm_roof_attic_01_lod_02.tscn" id="208_t0bqi"]
+[ext_resource type="PackedScene" uid="uid://df02kmvvufw3b" path="res://Prefabs/sm_roof_column_01_lod_02.tscn" id="209_uldp8"]
+[ext_resource type="PackedScene" uid="uid://btl1uf4jqtyoh" path="res://Prefabs/sm_soft_floor_01_lod_02.tscn" id="210_io8bo"]
+[ext_resource type="PackedScene" uid="uid://bgdmidodfmdlh" path="res://Prefabs/sm_soft_wall_01_1_lod_02.tscn" id="211_63onb"]
+[ext_resource type="PackedScene" uid="uid://bmbvak24grjgf" path="res://Prefabs/sm_soft_wall_column_01_lod_02.tscn" id="212_6yw1g"]
+[ext_resource type="PackedScene" uid="uid://drjbj0idkcipf" path="res://Prefabs/sm_soft_wall_door_01_1_lod_02.tscn" id="213_pkm0m"]
+[ext_resource type="PackedScene" uid="uid://ujr6qbs473ch" path="res://Prefabs/sm_stairs_01_3_lod_02.tscn" id="214_4b60d"]
+[ext_resource type="PackedScene" uid="uid://ch2ye1a1wuw63" path="res://Prefabs/sm_stairs_01_4_lod_0_0012.tscn" id="215_ul2yj"]
+[ext_resource type="PackedScene" uid="uid://beg6ysm5yq2a6" path="res://Prefabs/sm_stairs_01_4_lod_0_0022.tscn" id="216_3bct8"]
+[ext_resource type="PackedScene" uid="uid://u73dlh06eks" path="res://Prefabs/sm_stairs_01_5_lod_02.tscn" id="217_cyp7g"]
+[ext_resource type="PackedScene" uid="uid://clc3dd7kf2vc5" path="res://Prefabs/sm_stairs_01_8_lod_02.tscn" id="218_b38k7"]
+[ext_resource type="PackedScene" uid="uid://b5cchfnj0cnog" path="res://Prefabs/sm_wall_column_01_lod_0_0022.tscn" id="219_x1d4g"]
+[ext_resource type="PackedScene" uid="uid://dvk26m710tl2y" path="res://Prefabs/sm_wall_column_01_lod_02.tscn" id="220_f37sb"]
+[ext_resource type="PackedScene" uid="uid://dtb83retoy4bl" path="res://Prefabs/sm_wall_column_02_lod_0_0022.tscn" id="221_cacdh"]
+[ext_resource type="PackedScene" uid="uid://bms7aa3jfcrha" path="res://Prefabs/sm_wall_column_02_lod_02.tscn" id="222_0irll"]
+[ext_resource type="PackedScene" uid="uid://codt7cfpagvex" path="res://Prefabs/sm_wall_column_03_2_lod_02.tscn" id="223_u5pi7"]
+[ext_resource type="PackedScene" uid="uid://dcum37hec416q" path="res://Prefabs/sm_wall_column_03_lod_0_0012.tscn" id="224_okat3"]
+[ext_resource type="PackedScene" uid="uid://sq2kgsqwt2ok" path="res://Prefabs/sm_wall_column_03_lod_02.tscn" id="225_77awy"]
+[ext_resource type="PackedScene" uid="uid://c5s0bhjlojo1b" path="res://Prefabs/sm_wall_column_05_lod_02.tscn" id="226_xwdc5"]
+[ext_resource type="PackedScene" uid="uid://dm4smju88h2tv" path="res://Prefabs/sm_wall_column_06_lod_02.tscn" id="227_sap6q"]
+[ext_resource type="PackedScene" uid="uid://gur0xo33qffh" path="res://Prefabs/sm_wall_door_01_lod_02.tscn" id="228_881ot"]
+[ext_resource type="PackedScene" uid="uid://vy4rii5xqq8s" path="res://Prefabs/sm_wall_door_04_lod_02.tscn" id="229_jkbn6"]
+[ext_resource type="PackedScene" uid="uid://bwdijivyhfsk1" path="res://Prefabs/sm_wall_door_05_lod_02.tscn" id="230_kerr5"]
+[ext_resource type="PackedScene" uid="uid://d2nbmnaby6hpo" path="res://Prefabs/sm_wall_kitchen_hood_01_lod_02.tscn" id="231_828li"]
+[ext_resource type="PackedScene" uid="uid://b507p3v0dn8lw" path="res://Prefabs/sm_wall_roof_01_lod_02.tscn" id="232_2fej2"]
+[ext_resource type="PackedScene" uid="uid://dqsfx8tcbai6l" path="res://Prefabs/sm_wall_roof_02_lod_02.tscn" id="233_mjgac"]
+[ext_resource type="PackedScene" uid="uid://cujbgbo76tlm1" path="res://Prefabs/sm_wall_windows_01_lod_02.tscn" id="234_0dma7"]
+[ext_resource type="PackedScene" uid="uid://bb7k7f70l56oq" path="res://Prefabs/sm_wall_windows_02_lod_02.tscn" id="235_rxp7w"]
+[ext_resource type="PackedScene" uid="uid://b6i3tt88jgipl" path="res://Prefabs/sm_wall_windows_03_lod_02.tscn" id="236_xvonx"]
+[ext_resource type="PackedScene" uid="uid://1bago7p2rfna" path="res://Prefabs/sm_wall_windows_04_lod_02.tscn" id="237_vr2dj"]
+[ext_resource type="PackedScene" uid="uid://bin2wjejuks4q" path="res://Prefabs/sm_wall_windows_05_lod_02.tscn" id="238_bmx5o"]
+[ext_resource type="PackedScene" uid="uid://ddalacb0rs2yl" path="res://Prefabs/sm_wall_windows_06_lod_02.tscn" id="239_7d6dt"]
+[ext_resource type="PackedScene" uid="uid://dm5w674xne28s" path="res://Prefabs/sm_windows_01_1_lod_02.tscn" id="240_cn3xs"]
+[ext_resource type="PackedScene" uid="uid://cou10gbomsgmi" path="res://Prefabs/sm_windows_01_2_lod_02.tscn" id="241_mw7w7"]
+[ext_resource type="PackedScene" uid="uid://dak48pi1gvg8p" path="res://Prefabs/sm_windows_01_3_lod_02.tscn" id="242_tv4sd"]
+[ext_resource type="PackedScene" uid="uid://747fmury5dmv" path="res://Prefabs/sm_windows_01_4_lod_02.tscn" id="243_er0nq"]
+[ext_resource type="PackedScene" uid="uid://4ku8qsewl2bf" path="res://Prefabs/sm_windows_01_5_lod_02.tscn" id="244_6nh2u"]
+[ext_resource type="PackedScene" uid="uid://duxkrrcxgjqwp" path="res://Prefabs/sm_windows_01_6_lod_02.tscn" id="245_4puv6"]
+[ext_resource type="PackedScene" uid="uid://biw5qohsrkxdd" path="res://Prefabs/tree.tscn" id="246_5laj2"]
+[ext_resource type="PackedScene" uid="uid://hwwmy8qspot6" path="res://Prefabs/woodramp_2.tscn" id="247_f4y4k"]
+
 [node name="Museam" type="Node3D" unique_id=2125429642]
+
+[node name="Fantasy_building_03" parent="." unique_id=1165068300 instance=ExtResource("1_0vid6")]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, -106.79646, 0, 35.73352)
+
+[node name="building2" parent="." unique_id=59282063 instance=ExtResource("2_mpyoi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -132.919, 0, 84.26531)
+
+[node name="building12" parent="." unique_id=390671667 instance=ExtResource("3_3x3q7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -166.22324, 0, 64.057625)
+
+[node name="building22" parent="." unique_id=758172697 instance=ExtResource("4_udm5a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -164.33502, 0, 96.338356)
+
+[node name="building32" parent="." unique_id=1505426443 instance=ExtResource("5_5mnyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -165.044, 0, 36.72866)
+
+[node name="building42" parent="." unique_id=101917859 instance=ExtResource("6_tbcs3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -183.66946, 0, 59.196495)
+
+[node name="lightpost" parent="." unique_id=744110130 instance=ExtResource("7_85b5q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.609604, 0, 33.53419)
+
+[node name="MothParticles" parent="." unique_id=555892361 instance=ExtResource("8_m757l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.115074, -3.8146973e-06, 23.561861)
+
+[node name="rampconnector2" parent="." unique_id=1979363767 instance=ExtResource("9_nun68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.58796, 0, 57.350212)
+
+[node name="rock2" parent="." unique_id=809676908 instance=ExtResource("10_dgiyh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.028595, 0, -14.416019)
+
+[node name="rock_0022" parent="." unique_id=1016640045 instance=ExtResource("11_hy8ff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.18475, 0, -39.85248)
+
+[node name="rock_0032" parent="." unique_id=1807796217 instance=ExtResource("12_rc0pk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -153.36493, 0, -35.98408)
+
+[node name="rock_0042" parent="." unique_id=165523204 instance=ExtResource("13_pjc68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.64575, 0, -25.736603)
+
+[node name="rock_0202" parent="." unique_id=323254337 instance=ExtResource("14_em7vu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85.50319, 0, -44.639137)
+
+[node name="rock_0203" parent="." unique_id=1576402913 instance=ExtResource("15_uhaaa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.83507, 0, -36.432472)
+
+[node name="rock_0212" parent="." unique_id=1678072094 instance=ExtResource("16_n51ob")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -110.896164, 0, -52.358376)
+
+[node name="rock_0222" parent="." unique_id=926910209 instance=ExtResource("17_ybgx1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.36227, 0, -47.377804)
+
+[node name="rock_0252" parent="." unique_id=1689319078 instance=ExtResource("18_l5b5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -120.54071, 0, -50.058403)
+
+[node name="rock_0302" parent="." unique_id=201969978 instance=ExtResource("19_yc8a7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.62785, 0, -28.953579)
+
+[node name="rock_0312" parent="." unique_id=1806745311 instance=ExtResource("20_73shg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.72081, 0, -30.914402)
+
+[node name="rock_0342" parent="." unique_id=23842655 instance=ExtResource("21_2lmvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -142.81248, 0, -38.172718)
+
+[node name="rock_0352" parent="." unique_id=1852869911 instance=ExtResource("22_ud8yb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.30909, 0, -35.304016)
+
+[node name="rock_0362" parent="." unique_id=1221681252 instance=ExtResource("23_hoouc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99.35472, 0, -40.113483)
+
+[node name="rock_0372" parent="." unique_id=1971565831 instance=ExtResource("24_jpry6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.34697, 0, -34.858845)
+
+[node name="rock_0382" parent="." unique_id=857276450 instance=ExtResource("25_wryno")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.16159, -3.8146973e-06, -52.892227)
+
+[node name="rock_0392" parent="." unique_id=1685588036 instance=ExtResource("26_hvq1a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -147.98956, 0, -81.508224)
+
+[node name="rock_0402" parent="." unique_id=472537501 instance=ExtResource("27_20g8r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -136.44415, 0, -48.943985)
+
+[node name="rock_0412" parent="." unique_id=394223708 instance=ExtResource("28_h6vv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.307106, 0, -28.607052)
+
+[node name="rock_0422" parent="." unique_id=1643455475 instance=ExtResource("29_jh6pl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150.28015, 0, -51.062416)
+
+[node name="rock_0432" parent="." unique_id=2050487092 instance=ExtResource("30_x1hm8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.9123, 0, -43.501255)
+
+[node name="rock_0442" parent="." unique_id=1051573183 instance=ExtResource("31_1gico")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -126.517715, 0, -33.574642)
+
+[node name="rock_0452" parent="." unique_id=989324538 instance=ExtResource("32_ja2g6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.61938, 0, -42.5962)
+
+[node name="rock_0462" parent="." unique_id=295884618 instance=ExtResource("33_ekphe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.226166, 0, -66.728775)
+
+[node name="rock_0472" parent="." unique_id=90232043 instance=ExtResource("34_c3gv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -165.30136, 0, -34.17903)
+
+[node name="rock_0492" parent="." unique_id=2088224780 instance=ExtResource("35_ct1k0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.282974, 0, -17.485973)
+
+[node name="rock_0512" parent="." unique_id=1654618200 instance=ExtResource("36_7q17b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.119484, 0, -87.2818)
+
+[node name="rock_0522" parent="." unique_id=1710430139 instance=ExtResource("37_mkqpw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.594154, 0, -31.493628)
+
+[node name="rock_0532" parent="." unique_id=292458696 instance=ExtResource("38_qtlsa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.553314, 0, -16.96694)
+
+[node name="rock_0542" parent="." unique_id=247197821 instance=ExtResource("39_kg1es")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130.71638, 0, -18.420874)
+
+[node name="rock_0552" parent="." unique_id=1297596090 instance=ExtResource("40_y8ei7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -116.303444, 0, -15.80891)
+
+[node name="rock_0562" parent="." unique_id=281836052 instance=ExtResource("41_6r3j5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -117.723625, 0, -64.029526)
+
+[node name="rock_0572" parent="." unique_id=1999501913 instance=ExtResource("42_c0y2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -166.86111, 0, -52.54519)
+
+[node name="rock_0582" parent="." unique_id=1666894050 instance=ExtResource("43_07bv2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150.3034, 0, -43.28975)
+
+[node name="SM_AtticBeam01_1_LOD02" parent="." unique_id=913382900 instance=ExtResource("44_1ygq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.902843, 0, 28.90656)
+
+[node name="SM_AtticBeam01_2_LOD02" parent="." unique_id=1595774647 instance=ExtResource("45_v8vvb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.067532, 0, 29.819405)
+
+[node name="SM_AtticBeam01_3_LOD02" parent="." unique_id=27161124 instance=ExtResource("46_5aoug")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.382412, 0, 29.784588)
+
+[node name="SM_AtticBeam01_4_LOD02" parent="." unique_id=2029151534 instance=ExtResource("47_iwarq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.80641, 0, 29.819405)
+
+[node name="SM_AtticBeam01_5_LOD02" parent="." unique_id=481910522 instance=ExtResource("48_eqxrr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.949373, 0, 29.819405)
+
+[node name="SM_Beam01_1_LOD02" parent="." unique_id=1901825127 instance=ExtResource("49_dr3fi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.836789, 0, 5.2051578)
+
+[node name="SM_Beam01_2_LOD02" parent="." unique_id=471219174 instance=ExtResource("50_chj4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.135654, 0, 0)
+
+[node name="SM_Beam01_3_LOD02" parent="." unique_id=654249429 instance=ExtResource("51_32jln")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.135654, 0, 0)
+
+[node name="SM_Beam01_4_LOD02" parent="." unique_id=332851012 instance=ExtResource("52_2tuo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.135654, 0, 2)
+
+[node name="SM_Beam01_5_LOD02" parent="." unique_id=861003808 instance=ExtResource("53_nb1hc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.135654, 0, 0)
+
+[node name="SM_BorderColumn04_1_LOD02" parent="." unique_id=652462578 instance=ExtResource("54_i7v38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1089954, 0, 4.180102)
+
+[node name="SM_BorderColumn04_1_LOD0_0012" parent="." unique_id=2122596066 instance=ExtResource("55_ve7jq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.089752, -4.7683716e-07, 3.5571096)
+
+[node name="SM_BrickCorner01_1_LOD02" parent="." unique_id=815880086 instance=ExtResource("56_unbb2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9434805, 0, 0.58481777)
+
+[node name="SM_Brutalist_01_4M_Archway_A_Corner_012" parent="." unique_id=89796690 instance=ExtResource("57_d4jfq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.08152, 0, 97.3893)
+
+[node name="SM_Brutalist_01_4M_Archway_A_LOD02" parent="." unique_id=2118838384 instance=ExtResource("58_558xa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 116.243706, 0, 75.796005)
+
+[node name="SM_Brutalist_01_4M_Archway_B_LOD02" parent="." unique_id=1090957447 instance=ExtResource("59_dqbbv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.41638, 0, 81.90384)
+
+[node name="SM_Brutalist_01_4M_Archway_Hole_A_LOD02" parent="." unique_id=1931043194 instance=ExtResource("60_1ryku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.08597, 0, 75.667816)
+
+[node name="SM_Brutalist_01_4M_Archway_Vent_A_LOD02" parent="." unique_id=1596843065 instance=ExtResource("61_5ilxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.89748, 0, 81.19475)
+
+[node name="SM_Brutalist_01_4M_Archway_Vent_B_LOD02" parent="." unique_id=1347729960 instance=ExtResource("62_wdex1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.760666, 0, 81.96811)
+
+[node name="SM_Brutalist_01_4M_Archway_Vent_C_LOD02" parent="." unique_id=1935312566 instance=ExtResource("63_mn151")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105.06013, 0, 75.7842)
+
+[node name="SM_Brutalist_01_4M_Corner_A_LOD02" parent="." unique_id=651095963 instance=ExtResource("64_vi0f7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.908875, 0, 76.13796)
+
+[node name="SM_Brutalist_01_4M_Doorway_LOD02" parent="." unique_id=1917252383 instance=ExtResource("65_44rdj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.89142, 0, 82.934845)
+
+[node name="SM_Brutalist_01_4M_Pillar_A_LOD02" parent="." unique_id=1125249904 instance=ExtResource("66_rtw0s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.1782, 0, 85.44301)
+
+[node name="SM_Brutalist_01_4M_Wall_4M_LOD02" parent="." unique_id=2137806750 instance=ExtResource("67_nnkwq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.099106, 0, 85.67082)
+
+[node name="SM_Brutalist_01_4M_Wall_8M_LOD02" parent="." unique_id=220073518 instance=ExtResource("68_xmv1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.26164, 0, 89.00595)
+
+[node name="SM_Brutalist_01_4M_Wall_16M_LOD02" parent="." unique_id=30490923 instance=ExtResource("69_oomkm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.67702, 0, 89.07085)
+
+[node name="SM_Brutalist_01_4M_Wall_Cell_A_LOD02" parent="." unique_id=1090792268 instance=ExtResource("70_p03hx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.7285, 0, 83.446304)
+
+[node name="SM_Brutalist_01_4M_Wall_Cell_B_LOD02" parent="." unique_id=1235391102 instance=ExtResource("71_r1e73")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 147.9017, 0, 84.29322)
+
+[node name="SM_Brutalist_01_4M_Wall_Cell_Corrupted_C_LOD02" parent="." unique_id=1913101284 instance=ExtResource("72_1q207")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.27334, 0, 94.581665)
+
+[node name="SM_Brutalist_01_4M_Wall_Vent_Bottom_A_LOD02" parent="." unique_id=130350147 instance=ExtResource("73_7jw0d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.506355, 0, 71.370804)
+
+[node name="SM_Brutalist_01_4X4_Tunnel_012" parent="." unique_id=1894151104 instance=ExtResource("74_jyo1n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.36802, 0, 81.63656)
+
+[node name="SM_Brutalist_01_Ceiling_Light_A_LOD02" parent="." unique_id=415174104 instance=ExtResource("75_v2lpb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.54684, 0, 68.08189)
+
+[node name="SM_Brutalist_01_Ceiling_Light_B_LOD02" parent="." unique_id=827677863 instance=ExtResource("76_sa74c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.30042, 0, 82.88389)
+
+[node name="SM_Brutalist_01_Ceiling_Light_C_LOD02" parent="." unique_id=99610431 instance=ExtResource("77_7b262")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.89895, 0, 68.17958)
+
+[node name="SM_Brutalist_01_Ceiling_Light_D_LOD02" parent="." unique_id=37780765 instance=ExtResource("78_jrbv6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.92548, 0, 85.465294)
+
+[node name="SM_Brutalist_01_Ductwork_A_LOD02" parent="." unique_id=137199600 instance=ExtResource("79_8370l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.02711, 0, 97.835365)
+
+[node name="SM_Brutalist_01_Ductwork_B_LOD02" parent="." unique_id=1883345101 instance=ExtResource("80_6oo8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.99171, 0, 103.03388)
+
+[node name="SM_Brutalist_01_Ductwork_C_LOD02" parent="." unique_id=425732799 instance=ExtResource("81_8unhn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.66495, 0, 92.65904)
+
+[node name="SM_Brutalist_01_Ductwork_D_LOD02" parent="." unique_id=1104147537 instance=ExtResource("82_phe4g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.75119, 0, 100.77508)
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_01_LOD02" parent="." unique_id=1204854408 instance=ExtResource("83_j8hdr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140.41025, 0, 103.77745)
+
+[node name="SM_Brutalist_01_Ductwork_Exhaust_02_LOD02" parent="." unique_id=406312434 instance=ExtResource("84_fibkb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.25989, 0, 107.1088)
+
+[node name="SM_Brutalist_01_Ductwork_E_LOD02" parent="." unique_id=681561874 instance=ExtResource("85_81cqp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.98341, 0, 102.00246)
+
+[node name="SM_Brutalist_01_Ductwork_Fan_A_LOD02" parent="." unique_id=946558868 instance=ExtResource("86_1mgkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.63446, 0, 98.38619)
+
+[node name="SM_Brutalist_01_Ductwork_FanBlades_01_LOD02" parent="." unique_id=1080907301 instance=ExtResource("87_iqw4g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.70477, 0, 92.87487)
+
+[node name="SM_Brutalist_01_Ductwork_FanClosed_01_LOD02" parent="." unique_id=35653802 instance=ExtResource("88_c03cf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.83147, 0, 99.64707)
+
+[node name="SM_Brutalist_01_Ductwork_Fan_C_LOD02" parent="." unique_id=626131626 instance=ExtResource("89_uytft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.54092, 0, 92.86439)
+
+[node name="SM_Brutalist_01_Ductwork_F_LOD02" parent="." unique_id=130343064 instance=ExtResource("90_l2kjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.70236, 0, 92.14639)
+
+[node name="SM_Brutalist_01_Ductwork_Hatch_A_LOD02" parent="." unique_id=1363431887 instance=ExtResource("91_5p7qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.9277, 0, 100.47006)
+
+[node name="SM_Brutalist_01_Ductwork_Pipe_01_LOD02" parent="." unique_id=1526757259 instance=ExtResource("92_ru44j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.47607, 0, 104.94606)
+
+[node name="SM_Brutalist_01_Ductwork_Pipe_02_LOD02" parent="." unique_id=1647926207 instance=ExtResource("93_csux2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.3635, 0, 97.93805)
+
+[node name="SM_Brutalist_01_Ductwork_Pipe_03_LOD02" parent="." unique_id=1280317247 instance=ExtResource("94_7wkon")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.94888, 0, 105.92526)
+
+[node name="SM_Brutalist_01_Ductwork_Pipe_05_LOD02" parent="." unique_id=898479562 instance=ExtResource("95_mg1cr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 144.0274, 0, 97.09711)
+
+[node name="SM_Brutalist_01_Ductwork_Pipe_06_LOD02" parent="." unique_id=34419798 instance=ExtResource("96_f0fi3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.31831, 0, 95.45289)
+
+[node name="SM_Brutalist_01_Ductwork_Support_01_LOD02" parent="." unique_id=74839434 instance=ExtResource("97_p0gq4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.51993, 0, 96.29736)
+
+[node name="SM_Brutalist_01_Ductwork_Support_02_LOD02" parent="." unique_id=1399724541 instance=ExtResource("98_tmowu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.40782, 0, 94.949715)
+
+[node name="SM_Brutalist_01_Ductwork_Support_03_LOD02" parent="." unique_id=60414486 instance=ExtResource("99_0j4vo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.6903, -2.3841858e-07, 93.889595)
+
+[node name="SM_Brutalist_01_Ductwork_Support_04_LOD02" parent="." unique_id=997717912 instance=ExtResource("100_cvvgw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.63318, 0, 92.776535)
+
+[node name="SM_Brutalist_01_Ductwork_Support_05_LOD02" parent="." unique_id=886575923 instance=ExtResource("101_2wpsi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.67557, 0, 100.533745)
+
+[node name="SM_Brutalist_01_Lightfixture_A_LOD02" parent="." unique_id=1582967078 instance=ExtResource("102_s3boh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.64815, 3.8146973e-06, 34.90742)
+
+[node name="SM_Brutalist_01_Lightfixture_B_LOD02" parent="." unique_id=4048456 instance=ExtResource("103_b1jed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.620502, 3.8146973e-06, 34.77241)
+
+[node name="SM_Brutalist_01_Lightfixture_C_LOD02" parent="." unique_id=579216838 instance=ExtResource("104_agyon")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.62427, 3.8146973e-06, 35.48205)
+
+[node name="SM_Brutalist_01_Lightfixture_D_LOD02" parent="." unique_id=1872620003 instance=ExtResource("105_76m6s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.492115, 3.8146973e-06, 34.93301)
+
+[node name="SM_Brutalist_01_Lightfixture_E_LOD02" parent="." unique_id=1060016897 instance=ExtResource("106_rtqby")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.06856, 3.8146973e-06, 34.917004)
+
+[node name="SM_Brutalist_01_Lightfixture_F_LOD02" parent="." unique_id=367612818 instance=ExtResource("107_7sr3s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.07111, 3.8146973e-06, 35.394886)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD02" parent="." unique_id=1130853508 instance=ExtResource("108_3oydn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.64989, 0, 64.39249)
+
+[node name="SM_Brutalist_01_Pillar_D_LOD02" parent="." unique_id=927827332 instance=ExtResource("109_6k4p7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.91808, -1.9073486e-06, 64.15282)
+
+[node name="SM_Brutalist_01_Stairs_A_LOD02" parent="." unique_id=264113815 instance=ExtResource("110_pqbsr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145.02533, 3.8146973e-06, 73.10822)
+
+[node name="SM_Brutalist_01_Stairs_B_LOD02" parent="." unique_id=1174792715 instance=ExtResource("111_kiv6c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.48286, 3.8146973e-06, 73.660095)
+
+[node name="SM_Brutalist_01_Stairs_C_LOD02" parent="." unique_id=1990112951 instance=ExtResource("112_imfjg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.60518, 3.8146973e-06, 73.37362)
+
+[node name="SM_Brutalist_01_Stairs_D_LOD02" parent="." unique_id=1426596815 instance=ExtResource("113_ma0qq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.83008, 0, 76.123344)
+
+[node name="SM_Brutalist_01_Stairs_E_LOD02" parent="." unique_id=427237656 instance=ExtResource("114_ocg3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.26751, 0, 76.03091)
+
+[node name="SM_Brutalist_01_Stairs_F_LOD02" parent="." unique_id=1125137130 instance=ExtResource("115_mccya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.21324, 0, 82.85359)
+
+[node name="SM_Brutalist_01_Stairs_G_LOD02" parent="." unique_id=570902653 instance=ExtResource("116_2pdcq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 158.15837, 3.8146973e-06, 80.287964)
+
+[node name="SM_Brutalist_01_Wall_Entrance_A_LOD02" parent="." unique_id=1937087267 instance=ExtResource("117_l6tnw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.035385, 0, 44.5918)
+
+[node name="SM_Brutalist_01_Wall_Entrance_B_LOD02" parent="." unique_id=1402397210 instance=ExtResource("118_yirci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.261024, 0, 24.990234)
+
+[node name="SM_Brutalist_01_Wall_Overhang_A_LOD02" parent="." unique_id=1369575846 instance=ExtResource("119_6sfsl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.403305, -3.8146973e-06, 22.901398)
+
+[node name="SM_Brutalist_01_Wall_Overhang_B_LOD02" parent="." unique_id=467693746 instance=ExtResource("120_p5w08")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.09796, 0, 1.9643784)
+
+[node name="SM_Brutalist_01_Wall_Overhang_C_LOD02" parent="." unique_id=336044362 instance=ExtResource("121_5k0ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.21135, 0, 0.6183739)
+
+[node name="SM_Brutalist_02_Ceiling_Light_A_LOD02" parent="." unique_id=104190455 instance=ExtResource("122_7jlra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.45464, 0, 83.8477)
+
+[node name="SM_Brutalist_02_Ceiling_Light_B_LOD02" parent="." unique_id=1605697012 instance=ExtResource("123_8sdv5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.95782, 0, 82.27492)
+
+[node name="SM_Brutalist_02_Ceiling_Light_C_LOD02" parent="." unique_id=650972349 instance=ExtResource("124_82gun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.49156, 0, 83.35957)
+
+[node name="SM_Brutalist_02_Ceiling_Light_D_LOD02" parent="." unique_id=328459058 instance=ExtResource("125_weiea")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145.8146, 0, 81.81546)
+
+[node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD02" parent="." unique_id=644983570 instance=ExtResource("126_14yw4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.80729, 0, 41.22098)
+
+[node name="SM_Brutalist_02_Decorative_Wall_A_LOD02" parent="." unique_id=1433633126 instance=ExtResource("127_3xqw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.294785, 0, 61.79475)
+
+[node name="SM_Brutalist_02_Decorative_Wall_B_LOD02" parent="." unique_id=1517056633 instance=ExtResource("128_h4fod")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.992836, 0, 51.566273)
+
+[node name="SM_Brutalist_02_Decorative_Wall_Doorway_B_LOD02" parent="." unique_id=1771267403 instance=ExtResource("129_gwsjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100.58214, 0, 57.22809)
+
+[node name="SM_Brutalist_03_16M_Corner_LOD02" parent="." unique_id=1773334027 instance=ExtResource("130_wfilp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.66289, -1.9073486e-06, 63.645645)
+
+[node name="SM_Brutalist_03_16M_Doorway_LOD02" parent="." unique_id=50105988 instance=ExtResource("131_iaohm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.00159, -1.9073486e-06, 62.298714)
+
+[node name="SM_Brutalist_Corridor_01_A_LOD02" parent="." unique_id=949323719 instance=ExtResource("132_vlau7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.68191, 0, 70.115845)
+
+[node name="SM_Brutalist_Corridor_01_B_LOD02" parent="." unique_id=920292463 instance=ExtResource("133_uy201")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.57322, 0, 63.384933)
+
+[node name="SM_Brutalist_Corridor_01_C_LOD02" parent="." unique_id=2086996476 instance=ExtResource("134_t78ky")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.958984, 0, 60.79146)
+
+[node name="SM_Brutalist_Corridor_01_D_LOD02" parent="." unique_id=1524791488 instance=ExtResource("135_6e2rg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 107.390976, 0, 69.07738)
+
+[node name="SM_Brutalist_Corridor_01_E_LOD02" parent="." unique_id=2128582244 instance=ExtResource("136_381b1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.50627, 0, 39.75877)
+
+[node name="SM_Brutalist_Fence_01_A_LOD02" parent="." unique_id=827036198 instance=ExtResource("137_mrtof")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.29761, 0, 100.24924)
+
+[node name="SM_Brutalist_Fence_01_B_LOD02" parent="." unique_id=1775896699 instance=ExtResource("138_o0d86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.18085, 0, 97.22457)
+
+[node name="SM_Brutalist_Fence_01_C_LOD02" parent="." unique_id=455000158 instance=ExtResource("139_06j3u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.56421, 0, 97.899155)
+
+[node name="SM_Brutalist_Fence_01_D_LOD02" parent="." unique_id=680022618 instance=ExtResource("140_0nwu0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124.5024, 0, 99.85855)
+
+[node name="SM_Cable_012" parent="." unique_id=2011058341 instance=ExtResource("141_wbor1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 28.598549)
+
+[node name="SM_Cable_022" parent="." unique_id=1146824663 instance=ExtResource("142_n2bq1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 29.008598)
+
+[node name="SM_Cable_032" parent="." unique_id=971254329 instance=ExtResource("143_rthw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 29.474161)
+
+[node name="SM_Cable_042" parent="." unique_id=1548409885 instance=ExtResource("144_2xpsx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 29.916622)
+
+[node name="SM_Cable_052" parent="." unique_id=637043312 instance=ExtResource("145_5u8ke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 30.288244)
+
+[node name="SM_Cable_062" parent="." unique_id=1049684811 instance=ExtResource("146_b7q38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494974, 0, 30.668625)
+
+[node name="SM_Cable_Spool_01_LOD02" parent="." unique_id=1304172662 instance=ExtResource("147_uedno")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.491575, 1.9073486e-06, 30.114471)
+
+[node name="SM_Cable_Spool_02_LOD02" parent="." unique_id=599921463 instance=ExtResource("148_2lv4y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.491575, 1.9073486e-06, 29.480534)
+
+[node name="SM_Ceiling01_5_LOD02" parent="." unique_id=616097456 instance=ExtResource("149_q73c0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18129, 9.536743e-07, 16.259033)
+
+[node name="SM_Door01_1_LOD02" parent="." unique_id=1810624585 instance=ExtResource("150_oor5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.33877)
+
+[node name="SM_Door01_2_LOD02" parent="." unique_id=152528470 instance=ExtResource("151_tflix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.08003)
+
+[node name="SM_Door02_1_LOD02" parent="." unique_id=2144207259 instance=ExtResource("152_yuahx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.884817)
+
+[node name="SM_Door02_2_LOD02" parent="." unique_id=1026914968 instance=ExtResource("153_tu7ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4263623, 0, -7.08003)
+
+[node name="SM_Door03_1_LOD02" parent="." unique_id=1944450147 instance=ExtResource("154_uvsmf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14.738203)
+
+[node name="SM_Door03_2_LOD02" parent="." unique_id=1177916974 instance=ExtResource("155_jnv1n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5669217, 0, -7.08003)
+
+[node name="SM_Door04_1_LOD02" parent="." unique_id=956870337 instance=ExtResource("156_xllo8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7061651, 0, -7.08003)
+
+[node name="SM_Door04_2_LOD02" parent="." unique_id=525290582 instance=ExtResource("157_a2tad")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5097563, 0, -7.08003)
+
+[node name="SM_Door05_2_LOD02" parent="." unique_id=1125202420 instance=ExtResource("158_px15p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.08003)
+
+[node name="SM_Electricbox_01_LOD02" parent="." unique_id=1224607195 instance=ExtResource("159_jo4qk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.358269, -1.9073486e-06, 29.455894)
+
+[node name="SM_Electricbox_02_LOD02" parent="." unique_id=317843278 instance=ExtResource("160_woue3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.74357, -1.9073486e-06, 29.455894)
+
+[node name="SM_Electricbox_03_LOD02" parent="." unique_id=1583115220 instance=ExtResource("161_qksml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.517883, -1.9073486e-06, 30.064508)
+
+[node name="SM_Electricbox_04_LOD02" parent="." unique_id=929505225 instance=ExtResource("162_8gmbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.517883, -1.9073486e-06, 30.581043)
+
+[node name="SM_Electricbox_05_LOD02" parent="." unique_id=497681934 instance=ExtResource("163_brimw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.517883, -1.9073486e-06, 28.416145)
+
+[node name="SM_Electricbox_06_LOD02" parent="." unique_id=1328537863 instance=ExtResource("164_qwld4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.517883, -1.9073486e-06, 29.455894)
+
+[node name="SM_Electricbox_07_LOD02" parent="." unique_id=573770125 instance=ExtResource("165_rcrxa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.929798, -1.9073486e-06, 29.455894)
+
+[node name="SM_Electricbox_08_LOD02" parent="." unique_id=290792380 instance=ExtResource("166_y85yu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.331999, -1.9073486e-06, 29.455894)
+
+[node name="SM_Electricbox_09_LOD02" parent="." unique_id=2124968566 instance=ExtResource("167_640gy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.517883, -1.9073486e-06, 29.455894)
+
+[node name="SM_Fence01_1_LOD02" parent="." unique_id=1737262647 instance=ExtResource("168_ywayk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7096486, 0, 0)
+
+[node name="SM_Fence01_2_LOD02" parent="." unique_id=1477200330 instance=ExtResource("169_vv053")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.863348, -2.3841858e-07, -3.3472993)
+
+[node name="SM_Fence01_3_LOD02" parent="." unique_id=2013737418 instance=ExtResource("170_styw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.334459, 0, 0)
+
+[node name="SM_Fence01_4_LOD02" parent="." unique_id=944436039 instance=ExtResource("171_jlufi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.334459, 0, -3)
+
+[node name="SM_Fence01_5_LOD02" parent="." unique_id=247350014 instance=ExtResource("172_p6rek")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.334459, 0, -3)
+
+[node name="SM_Fence01_6_LOD02" parent="." unique_id=510440228 instance=ExtResource("173_tdek6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.334459, 0, -1.8717132)
+
+[node name="SM_Jail01_1_LOD02" parent="." unique_id=1713729900 instance=ExtResource("174_f2sx8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.565177, 0, 11.223372)
+
+[node name="SM_Jail01_2_LOD02" parent="." unique_id=57221362 instance=ExtResource("175_dt73p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.565177, 0, 15.15558)
+
+[node name="SM_JailDoor01_1_LOD02" parent="." unique_id=412080359 instance=ExtResource("176_ny53h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.565177, 0, 8.894145)
+
+[node name="SM_KitchenCabinet01_1_LOD02" parent="." unique_id=1066332712 instance=ExtResource("177_re2dg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.394356, 0, 0)
+
+[node name="SM_KitchenCabinet01_2_LOD02" parent="." unique_id=1289550446 instance=ExtResource("178_8yc2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.651663, 0.6629286, 0)
+
+[node name="SM_KitchenCabinet01_3_LOD02" parent="." unique_id=1334141577 instance=ExtResource("179_j0ll6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.788282, 0, 0)
+
+[node name="SM_KitchenCabinet01_4_LOD02" parent="." unique_id=765747381 instance=ExtResource("180_mal2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.888346, 0, 0)
+
+[node name="SM_KitchenCabinet01_5_LOD02" parent="." unique_id=2041180629 instance=ExtResource("181_vpmx4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.270243, 0, 0)
+
+[node name="SM_Locker01_1_LOD02" parent="." unique_id=1072765001 instance=ExtResource("182_g6n2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, 4.942018)
+
+[node name="SM_Locker01_2_LOD02" parent="." unique_id=483195639 instance=ExtResource("183_eg1is")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -2.8418312)
+
+[node name="SM_Locker01_3_LOD02" parent="." unique_id=2122288652 instance=ExtResource("184_vpxxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, 7.382801)
+
+[node name="SM_Locker01_4_LOD02" parent="." unique_id=374533175 instance=ExtResource("185_7k6no")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, 1.3310344)
+
+[node name="SM_Locker01_5_LOD02" parent="." unique_id=2088909938 instance=ExtResource("186_7cfhx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -3.7830915)
+
+[node name="SM_Locker01_6_LOD02" parent="." unique_id=25489210 instance=ExtResource("187_as8ai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -1.4444518)
+
+[node name="SM_Locker01_7_LOD02" parent="." unique_id=1537646314 instance=ExtResource("188_xuiib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -5.0901155)
+
+[node name="SM_Locker01_8_LOD02" parent="." unique_id=536240392 instance=ExtResource("189_q3i2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -6.415084)
+
+[node name="SM_Locker01Door01_1_LOD02" parent="." unique_id=334257315 instance=ExtResource("190_oihqf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.51419, 0, 3.0608463)
+
+[node name="SM_Locker01Door01_2_LOD02" parent="." unique_id=1080971889 instance=ExtResource("191_5blj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.524906, 0, 2.8024416)
+
+[node name="SM_Locker01Door01_3_LOD02" parent="." unique_id=366527742 instance=ExtResource("192_5shsj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.70932, 0, 2.2059894)
+
+[node name="SM_Locker01Drawer01_1_LOD02" parent="." unique_id=57886650 instance=ExtResource("193_ej5jh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, -0.23779058)
+
+[node name="SM_Locker01Drawer01_2_LOD02" parent="." unique_id=825933566 instance=ExtResource("194_waigg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.50779, 0, 3.483698)
+
+[node name="SM_ReceptionDesk01_1_LOD02" parent="." unique_id=1682959981 instance=ExtResource("195_qucdy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.236708, 0, 5.206937)
+
+[node name="SM_ReceptionDesk01_2_LOD02" parent="." unique_id=432965482 instance=ExtResource("196_7ay6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.423969, 0, 5.206937)
+
+[node name="SM_ReceptionDesk01_3_LOD02" parent="." unique_id=843739627 instance=ExtResource("197_d4gun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.498785, 0, 5.206937)
+
+[node name="SM_ReceptionDesk01_4_LOD02" parent="." unique_id=2137713029 instance=ExtResource("198_t0icq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.358011, 0, 5.1063237)
+
+[node name="SM_Roof01_1_LOD02" parent="." unique_id=966181679 instance=ExtResource("199_pw4ak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.849436, 0, 18.060581)
+
+[node name="SM_Roof01_2_LOD02" parent="." unique_id=1553529223 instance=ExtResource("200_sm8tk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.388245, 0, 12.927102)
+
+[node name="SM_Roof01_3_LOD02" parent="." unique_id=1329078699 instance=ExtResource("201_fiimi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.757483, 0, 18.060581)
+
+[node name="SM_Roof01_4_LOD02" parent="." unique_id=134306512 instance=ExtResource("202_umpei")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.269276, 0, 12.927102)
+
+[node name="SM_Roof01_5_LOD02" parent="." unique_id=1472028533 instance=ExtResource("203_sqm0d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.113739, 0, 12.927102)
+
+[node name="SM_Roof01_6_LOD02" parent="." unique_id=1762473759 instance=ExtResource("204_fnch0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.27175, 0, 18.060581)
+
+[node name="SM_Roof01_7_LOD02" parent="." unique_id=1601253763 instance=ExtResource("205_3t5iv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6769, 0, 12.927102)
+
+[node name="SM_Roof01_8_LOD02" parent="." unique_id=541421323 instance=ExtResource("206_l63cf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.418077, 0, 18.060581)
+
+[node name="SM_Roof01_9_LOD02" parent="." unique_id=1392283176 instance=ExtResource("207_ntp10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.24587, 0, 18.060581)
+
+[node name="SM_RoofAttic01_LOD02" parent="." unique_id=730408746 instance=ExtResource("208_t0bqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.983397, 0, 12.927102)
+
+[node name="SM_RoofColumn01_LOD02" parent="." unique_id=2140597700 instance=ExtResource("209_uldp8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.879864, 0, 12.927102)
+
+[node name="SM_SoftFloor01_LOD02" parent="." unique_id=1402267224 instance=ExtResource("210_io8bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.664567, 0, 23.307602)
+
+[node name="SM_SoftWall01_1_LOD02" parent="." unique_id=695330338 instance=ExtResource("211_63onb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.760123, 0, 23.307602)
+
+[node name="SM_SoftWallColumn01_LOD02" parent="." unique_id=814298263 instance=ExtResource("212_6yw1g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.760123, 0, 23.307602)
+
+[node name="SM_SoftWallDoor01_1_LOD02" parent="." unique_id=1331323200 instance=ExtResource("213_pkm0m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.237885, 0, 23.307602)
+
+[node name="SM_Stairs01_3_LOD02" parent="." unique_id=354956049 instance=ExtResource("214_4b60d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8068924, 0, -11.192082)
+
+[node name="SM_Stairs01_4_LOD0_0012" parent="." unique_id=433667979 instance=ExtResource("215_ul2yj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.333201, 0, -7.421)
+
+[node name="SM_Stairs01_4_LOD0_0022" parent="." unique_id=763726290 instance=ExtResource("216_3bct8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.697395, 0, -7.421)
+
+[node name="SM_Stairs01_5_LOD02" parent="." unique_id=1509771211 instance=ExtResource("217_cyp7g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8068924, 0, -7.421)
+
+[node name="SM_Stairs01_8_LOD02" parent="." unique_id=933135600 instance=ExtResource("218_b38k7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8068924, 0, -5.4222374)
+
+[node name="SM_WallColumn01_LOD0_0022" parent="." unique_id=2114156002 instance=ExtResource("219_x1d4g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4617176, 0, 8.9187355)
+
+[node name="SM_WallColumn01_LOD02" parent="." unique_id=725178003 instance=ExtResource("220_f37sb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8409295, 0, 0.29315662)
+
+[node name="SM_WallColumn02_LOD0_0022" parent="." unique_id=641009948 instance=ExtResource("221_cacdh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.557707, 0, 6.948536)
+
+[node name="SM_WallColumn02_LOD02" parent="." unique_id=185477486 instance=ExtResource("222_0irll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0284953, 0, 1.9196243)
+
+[node name="SM_WallColumn03_2_LOD02" parent="." unique_id=999425238 instance=ExtResource("223_u5pi7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.109687, 0, 2.9227304)
+
+[node name="SM_WallColumn03_LOD0_0012" parent="." unique_id=1989447982 instance=ExtResource("224_okat3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.394785, 0, 5.305071)
+
+[node name="SM_WallColumn03_LOD02" parent="." unique_id=317343918 instance=ExtResource("225_77awy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.026814, 0, 3.2767324)
+
+[node name="SM_WallColumn05_LOD02" parent="." unique_id=908414709 instance=ExtResource("226_xwdc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8401365, 0, 10.70713)
+
+[node name="SM_WallColumn06_LOD02" parent="." unique_id=470434617 instance=ExtResource("227_sap6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5146465, 0, 2.0063996)
+
+[node name="SM_WallDoor01_LOD02" parent="." unique_id=1517463505 instance=ExtResource("228_881ot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061532974, 0, 9.277536)
+
+[node name="SM_WallDoor04_LOD02" parent="." unique_id=802619728 instance=ExtResource("229_jkbn6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4030063, 0, 5.9346685)
+
+[node name="SM_WallDoor05_LOD02" parent="." unique_id=1587807513 instance=ExtResource("230_kerr5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06983471, 0, 14.172588)
+
+[node name="SM_WallKitchenHood01_LOD02" parent="." unique_id=756359405 instance=ExtResource("231_828li")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.574836, -9.536743e-07, 11.133301)
+
+[node name="SM_WallRoof01_LOD02" parent="." unique_id=1407495961 instance=ExtResource("232_2fej2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0845904, 9.536743e-07, 7.8352737)
+
+[node name="SM_WallRoof02_LOD02" parent="." unique_id=12377660 instance=ExtResource("233_mjgac")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45303, 9.536743e-07, 11.3155)
+
+[node name="SM_WallWindows01_LOD02" parent="." unique_id=1603470148 instance=ExtResource("234_0dma7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6403606, 0, 5.031065)
+
+[node name="SM_WallWindows02_LOD02" parent="." unique_id=385002313 instance=ExtResource("235_rxp7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7583482, 0, 7.748815)
+
+[node name="SM_WallWindows03_LOD02" parent="." unique_id=432330177 instance=ExtResource("236_xvonx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4458461, 0, 11.829088)
+
+[node name="SM_WallWindows04_LOD02" parent="." unique_id=830901779 instance=ExtResource("237_vr2dj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2725234, 0, 4.645525)
+
+[node name="SM_WallWindows05_LOD02" parent="." unique_id=1874918251 instance=ExtResource("238_bmx5o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5343053, 0, 11.34757)
+
+[node name="SM_WallWindows06_LOD02" parent="." unique_id=1734809531 instance=ExtResource("239_7d6dt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3504088, 4.7683716e-07, 16.51248)
+
+[node name="SM_Windows01_1_LOD02" parent="." unique_id=1611310470 instance=ExtResource("240_cn3xs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.411957, 0, -6.5877686)
+
+[node name="SM_Windows01_2_LOD02" parent="." unique_id=652993091 instance=ExtResource("241_mw7w7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.303093, 0, -6.4595404)
+
+[node name="SM_Windows01_3_LOD02" parent="." unique_id=601372710 instance=ExtResource("242_tv4sd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.411957, 0, -12.071522)
+
+[node name="SM_Windows01_4_LOD02" parent="." unique_id=1866600773 instance=ExtResource("243_er0nq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.411957, 0, -13.90951)
+
+[node name="SM_Windows01_5_LOD02" parent="." unique_id=607270569 instance=ExtResource("244_6nh2u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.411957, 0, -4.2264285)
+
+[node name="SM_Windows01_6_LOD02" parent="." unique_id=1350006560 instance=ExtResource("245_4puv6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.411957, 0, -9.477614)
+
+[node name="tree" parent="." unique_id=462834792 instance=ExtResource("246_5laj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.1435, 3.8146973e-06, 64.11383)
+
+[node name="woodramp2" parent="." unique_id=1197093939 instance=ExtResource("247_f4y4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.58796, 0.72035265, 56.538887)

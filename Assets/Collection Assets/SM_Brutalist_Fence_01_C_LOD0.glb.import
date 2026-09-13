@@ -43,8 +43,8 @@ _subresources={
 "materials": {
 "fence": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Materials/CollectionMaterialNoninteractive/Concrete.tres",
-"use_external/path": "uid://lti60gxmtwfp"
+"use_external/fallback_path": "res://Materials/CollectionMaterialNoninteractive/Fence.tres",
+"use_external/path": "uid://dy4nuv7c6o1g7"
 }
 }
 }
