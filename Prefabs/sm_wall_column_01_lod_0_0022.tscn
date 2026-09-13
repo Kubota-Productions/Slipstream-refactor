@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b5cchfnj0cnog"]
+
+[ext_resource type="PackedScene" uid="uid://2tnoh2o3xftx" path="res://Assets/Collection Assets/SM_WallColumn01_LOD0_002.glb" id="1_h5dev"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lqs3x"]
+points = PackedVector3Array(-0.6242426, -2.0000546, -0.6242404, 0.6241191, -2.0000546, -0.6242404, -0.6242426, -2.0000546, 0.6242397, -0.6242426, 1.9995563, -0.6242404, 0.6242413, -2.0000546, 0.6241175, 0.6241191, 1.9995563, -0.6242404, 0.6242413, 1.9995563, 0.56557965, -0.56570464, -2.0000546, 0.6242397, -0.6242426, -0.50005364, 0.6242397, -0.6242426, 1.9999478, -0.5657026, -0.56570464, 1.9999478, -0.6242404, 0.6242413, 1.9995563, 0.6241175, 0.6241191, 1.9999478, -0.5657026, -0.56570464, -0.50005364, 0.6242397, -0.6242426, 1.9995563, 0.6241175)
+
+[node name="SM_WallColumn01_LOD0_0022" unique_id=2114156002 instance=ExtResource("1_h5dev")]
+
+[node name="SM_WallColumn01_LOD0_002" parent="." index="0" unique_id=2111250436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=67499525]
+shape = SubResource("ConvexPolygonShape3D_lqs3x")

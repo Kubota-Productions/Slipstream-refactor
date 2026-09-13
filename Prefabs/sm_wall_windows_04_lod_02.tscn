@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://1bago7p2rfna"]
+
+[ext_resource type="PackedScene" uid="uid://ciymv8dj3uut0" path="res://Assets/Collection Assets/SM_WallWindows04_LOD0.glb" id="1_bik3k"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vr2l0"]
+points = PackedVector3Array(-0.10814601, -0.8620681, -1.3278227, 0.20931429, 1.7399507, 2.0361505, 0.20931429, 1.7399507, -2.0257506, 0.20931429, -2.3219504, 2.0361505, -0.0446291, 1.7399507, 2.0361505, 0.20931429, -2.3219504, -2.0257506, -0.0446291, -2.3219504, 2.0361505, -0.0446291, 1.7399507, -2.0257506, -0.0446291, -2.3219504, -2.0257506, -0.10814601, 1.1688826, 1.2745937, -0.10814601, -1.1161854, 1.2745937, -0.10814601, 1.4226022, -0.8832167, -0.10814601, -1.1794165, -0.6927281, -0.10814601, 0.9147652, -1.3278227, -0.10814601, 1.4226022, 0.8936165, -0.10814601, -0.8620681, 1.3382225, -0.10814601, -1.1161854, -1.2641939, -0.10814601, -1.1794165, 1.0204763, -0.10814601, 0.7879053, 1.3382225, -0.10814601, 1.2957423, -1.1373341, -0.10814601, 1.2957423, 1.1477339, -0.10814601, 1.1052537, -1.2641939)
+
+[node name="SM_WallWindows04_LOD02" unique_id=830901779 instance=ExtResource("1_bik3k")]
+
+[node name="SM_WallWindows04_LOD0" parent="." index="0" unique_id=1275247407]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1475449294]
+shape = SubResource("ConvexPolygonShape3D_vr2l0")

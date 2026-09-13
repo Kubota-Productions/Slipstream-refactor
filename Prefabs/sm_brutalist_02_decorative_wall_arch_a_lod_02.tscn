@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dn1b7ea2omkn"]
+
+[ext_resource type="PackedScene" uid="uid://btkgjgxlg0deg" path="res://Assets/Collection Assets/SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0.glb" id="1_wrhdw"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3ro7g"]
+points = PackedVector3Array(4.8130445, 9.072214, 5.4200997, -5.0860333, 9.205835, 2.0651364, -5.0860333, 10.581949, 2.0651364, -5.0860333, 10.581949, 5.5057964, 5.0658994, 10.581949, 2.0651364, 5.0658994, 10.581949, 5.5057964, -4.8331785, 9.072214, 5.4200997, 5.0658994, 9.205835, 2.0651364, -5.0860333, 9.03365, 4.12933, 5.0658994, 9.03365, 4.12933)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_o0jl2"]
+points = PackedVector3Array(-4.396414, -0.08603287, 4.1295996, 5.0645027, 9.032607, 5.506133, 5.0645027, -0.08603287, 5.506133, -5.08504, 9.032607, 5.506133, 5.0645027, 9.032607, 4.1295996, -5.08504, -0.08603287, 5.506133, -5.08504, 9.032607, 4.1295996, 4.376869, -0.08603287, 4.1295996, -5.08504, 0.9475796, 4.1295996, 5.0645027, 0.9475796, 4.1295996)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_51epj"]
+points = PackedVector3Array(5.0656133, 10.581949, 2.0647998, -4.9706736, 9.051245, -5.4200997, -5.0860333, 9.03365, -4.1291957, 5.0656133, 9.03365, -4.1291957, 5.0656133, 10.581949, -5.506133, -5.0860333, 10.581949, 2.0647998, -5.0860333, 9.205835, 2.0647998, -5.0860333, 10.581949, -5.506133, 5.0656133, 9.205835, 2.0647998, 4.9502535, 9.051245, -5.4200997)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k6hkx"]
+points = PackedVector3Array(5.0645027, 9.032607, -4.1295996, 5.0645027, 0.9475796, -4.1295996, 5.0645027, 9.032607, -5.506133, -5.08504, 9.032607, -4.1295996, 5.0645027, -0.08603287, -5.506133, -5.08504, 9.032607, -5.506133, -4.396414, -0.08603287, -4.1295996, -5.08504, -0.08603287, -5.506133, 4.376869, -0.08603287, -4.1295996, -5.08504, 0.9475796, -4.1295996)
+
+[node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD02" unique_id=644983570 instance=ExtResource("1_wrhdw")]
+
+[node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0" parent="." index="0" unique_id=974197915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="1" unique_id=343640245]
+shape = SubResource("ConvexPolygonShape3D_3ro7g")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="2" unique_id=1981786926]
+shape = SubResource("ConvexPolygonShape3D_o0jl2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="3" unique_id=1141670247]
+shape = SubResource("ConvexPolygonShape3D_51epj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1999739052]
+shape = SubResource("ConvexPolygonShape3D_k6hkx")

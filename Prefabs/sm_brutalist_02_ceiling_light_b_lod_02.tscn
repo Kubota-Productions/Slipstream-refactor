@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://boh3a6cis5rgo"]
+
+[ext_resource type="PackedScene" uid="uid://b1dgadiwstyxv" path="res://Assets/Collection Assets/SM_Brutalist_02_Ceiling_Light_B_LOD0.glb" id="1_1odkb"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u1s1b"]
+points = PackedVector3Array(0.035339713, -10.018749, 0.8249074, 1.1462286, 0.13794899, 1.1424285, 1.1462286, 0.13794899, -0.44455564, 0.035339713, 0.13794899, 1.1424285, 1.1462286, -10.018749, 1.1424285, 0.82870746, -10.018749, -0.44455564, 0.6700557, 0.13794899, -0.44455564, 1.1462286, -10.018749, -0.44455564, 0.035339713, -10.018749, 1.1424285, 0.035339713, 0.13794899, 0.6663022, 0.6700557, -0.18019342, -0.44455564, 0.035339713, -0.18019342, 0.6663022)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u34r2"]
+points = PackedVector3Array(0.6700557, 0.13794899, -0.44455564, 0.035339713, -10.018749, -1.079287, 1.1462286, -10.018749, -1.079287, 0.035339713, 0.13794899, -1.079287, 1.1462286, -10.018749, -0.44455564, 1.1462286, 0.13794899, -1.079287, 0.035339713, -10.018749, -0.76192135, 0.035339713, 0.13794899, -0.60330063, 1.1462286, 0.13794899, -0.44455564, 0.82870746, -10.018749, -0.44455564, 0.035339713, -0.18019342, -0.60330063, 0.6700557, -0.18019342, -0.44455564)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mywjh"]
+points = PackedVector3Array(0.035339713, 0.13794899, 0.66625565, -1.0755491, -10.018749, 0.03153968, -0.75802803, -10.018749, 0.03153968, -1.0755491, -10.018749, 1.1424285, -1.0755491, 0.13794899, 0.03153968, 0.035339713, -10.018749, 1.1424285, -1.0755491, 0.13794899, 1.1424285, 0.035339713, 0.13794899, 1.1424285, -0.59937626, 0.13794899, 0.03153968, 0.035339713, -10.018749, 0.8249074, 0.035339713, -0.18019342, 0.66625565, -0.59937626, -0.18019342, 0.03153968)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cn34c"]
+points = PackedVector3Array(-0.59937626, 0.13794899, 0.03153968, -1.0755491, -10.018749, -1.0793492, 0.035339713, -10.018749, -1.0793492, -1.0755491, -10.018749, 0.03153968, -1.0755491, 0.13794899, -1.0793492, 0.035339713, 0.13794899, -1.0793492, 0.035339713, -10.018749, -0.76182806, -1.0755491, 0.13794899, 0.03153968, 0.035339713, 0.13794899, -0.6031763, -0.75802803, -10.018749, 0.03153968, -0.59937626, -0.18019342, 0.03153968, 0.035339713, -0.18019342, -0.6031763)
+
+[node name="SM_Brutalist_02_Ceiling_Light_B_LOD02" unique_id=1605697012 instance=ExtResource("1_1odkb")]
+
+[node name="SM_Brutalist_02_Ceiling_Light_B_LOD0" parent="." index="0" unique_id=210511609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="1" unique_id=1053898872]
+shape = SubResource("ConvexPolygonShape3D_u1s1b")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="2" unique_id=2052468442]
+shape = SubResource("ConvexPolygonShape3D_u34r2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="3" unique_id=198655977]
+shape = SubResource("ConvexPolygonShape3D_mywjh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1353137908]
+shape = SubResource("ConvexPolygonShape3D_cn34c")

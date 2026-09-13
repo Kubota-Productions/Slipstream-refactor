@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cf3hi71fd25fn"]
+
+[ext_resource type="PackedScene" uid="uid://drpi0fttqaa1g" path="res://Assets/Collection Assets/SM_Brutalist_02_Ceiling_Light_D_LOD0.glb" id="1_g0eb2"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vmxqn"]
+points = PackedVector3Array(0.49355, -0.3036842, 0.48974997, -0.57554924, -10.077351, -0.5793493, -0.57554924, -10.077351, 0.5315397, -0.57554924, 0.07835579, -0.5793493, 0.5353397, -10.077351, -0.5793493, -0.57554924, 0.07835579, 0.5315397, 0.5353397, 0.07835579, -0.5793493, 0.49355, -9.695311, 0.48974997)
+
+[node name="SM_Brutalist_02_Ceiling_Light_D_LOD02" unique_id=328459058 instance=ExtResource("1_g0eb2")]
+
+[node name="SM_Brutalist_02_Ceiling_Light_D_LOD0" parent="." index="0" unique_id=133345111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=285438161]
+shape = SubResource("ConvexPolygonShape3D_vmxqn")
