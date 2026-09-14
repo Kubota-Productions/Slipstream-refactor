@@ -29,9 +29,17 @@ uniform float sway_duration : hint_range(0.01, 10.0) = 2.0;
 uniform vec3 sway_direction = vec3(1.0, 0.0, 0.0);
 uniform float sway_falloff : hint_range(0.1, 8.0) = 1.0;
 
+// Roughness wobble
+uniform float roughness_wobble_amount : hint_range(0.0, 1.0) = 1.0;
+
+// Roughness limits
+uniform float roughness_min : hint_range(0.0, 1.0) = 0.3;
+uniform float roughness_max : hint_range(0.0, 1.0) = 0.7;
+
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
 
+	// Shared sway time
 	float t = TIME / sway_duration * TAU;
 
 	// 0 at the base, 1 at the top, based on UVs
@@ -53,9 +61,43 @@ void fragment() {
 	METALLIC = metallic_tex * metallic;
 	SPECULAR = specular;
 
+	// Roughness texture
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
+
+	// Same phase as tree sway
+	float t = TIME / sway_duration * TAU;
+	float sway_phase = sin(UV.y * sway_scale + t);
+
+	// Convert sine from -1..1 to 0..1
+	float wobble_factor = sway_phase * 0.5 + 0.5;
+
+	// Apply wobble amount
+	wobble_factor = mix(0.5, wobble_factor, roughness_wobble_amount);
+
+	// Oscillate smoothly between minimum and maximum
+	float wobbling_roughness = mix(
+		roughness_min,
+		roughness_max,
+		wobble_factor
+	);
+
+	// Preserve the roughness texture influence
+	float texture_influence = roughness_tex * roughness;
+
+	// Blend the wobbling roughness with the texture
+	ROUGHNESS = mix(
+		wobbling_roughness,
+		roughness_tex,
+		texture_influence
+	);
+
+	// Ensure the final result stays within bounds
+	ROUGHNESS = clamp(
+		ROUGHNESS,
+		roughness_min,
+		roughness_max
+	);
 
 	ALPHA *= albedo.a * albedo_tex.a;
 	ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;

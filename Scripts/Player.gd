@@ -67,11 +67,6 @@ var was_grounded_last_frame := true
 
 # ============================================================
 # OTS EXPLORE MODE
-# A separate, orthogonal camera/input mode toggled by right click.
-# It does NOT replace or plug into GravityController's state machine
-# -- traversal (running/jumping/shifting) keeps using that as before.
-# This mode only exists to let the player stop, walk slowly, and
-# freely look around in a dedicated over-the-shoulder framing.
 # ============================================================
 @export_group("OTS Explore Mode")
 var is_ots_mode: bool = false
@@ -149,10 +144,6 @@ func _physics_process(delta: float) -> void:
 	_read_input(delta)
 	_apply_gravity(delta)
 
-	# OTS mode is grounded-only -- if the player walks off a ledge or
-	# otherwise leaves the floor, drop straight back to the normal
-	# traversal camera instead of leaving the player stuck mid-air
-	# in a walk-only, no-jump, no-shift state.
 	if is_ots_mode and not is_on_floor():
 		is_ots_mode = false
 
@@ -297,21 +288,7 @@ func _update_orientation(delta: float) -> void:
 
 
 func _update_model_orientation(delta: float) -> void:
-	# Keeps model_yaw_basis's up-axis tracking the current gravity
-	# direction every frame, independent of movement input.
-	#
-	# character_model's global_basis is set directly by _apply_lean()
-	# below (not inherited from the player root's transform), which is
-	# what lets the mesh's turning stay smoothly interpolated even when
-	# the physics body snaps instantly (e.g. wall attach). The cost is
-	# that nothing keeps model_yaw_basis in sync with gravity changes
-	# on its own -- previously, with no move input, model_yaw_basis
-	# (and therefore the visible mesh) would just sit at whatever
-	# orientation it last had before a shift/levitate started, i.e.
-	# "stays upright" instead of tumbling to match the new gravity.
-	# This re-aligns its up-axis every frame (preserving its current
-	# facing, projected onto the new up-plane), smoothed the same way
-	# movement-driven turning already is.
+
 	var up := -gravity_controller.gravity_direction
 
 	var current_forward: Vector3 = -model_yaw_basis.z

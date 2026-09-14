@@ -19,7 +19,6 @@ light_color = Color(0.96597, 0.871753, 0.530521, 1)
 light_energy = 0.1
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
-light_specular = 16.0
 shadow_enabled = true
 shadow_opacity = 0.0
 shadow_blur = 0.0

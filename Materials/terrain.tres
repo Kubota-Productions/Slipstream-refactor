@@ -18,5 +18,5 @@ shader_parameter/grass_max_height = 40.0
 shader_parameter/rock_min_height = 24.5950059182625
 shader_parameter/rock_max_height = 100.0
 shader_parameter/snow_min_height = 62.97300774121749
-shader_parameter/uv_scale = 0.10000000475000001
+shader_parameter/uv_scale = 0.10000000475
 shader_parameter/triplanar_sharpness = 1.0
