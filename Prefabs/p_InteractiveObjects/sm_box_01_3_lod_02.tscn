@@ -2,15 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://i7v46bya3c6f" path="res://Assets/InteractiveObjects/SM_Box01_3_LOD0.glb" id="1_y7arn"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4ov2d"]
-points = PackedVector3Array(-1, -0.038300913, -0.2814047, -1, -0.038300913, 0.2814047, -1, -0.005163502, -0.2814047, 1, -0.038300913, -0.2814047, -1, -0.005163502, 0.2814047, 1, -0.038300913, 0.2814047, -0.98688334, 0.02507082, -0.24763393, 1, -0.005163502, -0.2814047, -0.98688334, 0.02507082, 0.24757883, 1, -0.005163502, 0.2814047, 0.98668754, 0.02507082, -0.24763393, 0.98668754, 0.02507082, 0.24757883)
-
 [node name="SM_Box01_3_LOD02" unique_id=1738088454 instance=ExtResource("1_y7arn")]
 
-[node name="SM_Box01_3_LOD0" parent="." index="0" unique_id=2012807949]
+[node name="SM_Box01_3_LOD0" parent="." index="0" unique_id=2017404903]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="RigidBody3D" type="RigidBody3D" parent="SM_Box01_3_LOD0" index="0" unique_id=850003406]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Box01_3_LOD0/RigidBody3D" index="0" unique_id=1387192]
-shape = SubResource("ConvexPolygonShape3D_4ov2d")

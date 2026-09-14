@@ -2,33 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d32eqchb6a1r2" path="res://Assets/InteractiveObjects/SM_AutopsyTable01_LOD0.glb" id="1_mha72"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h6xqe"]
-points = PackedVector3Array(0.95864636, 0.151, 0.5929732, 0.54170877, -0.73140395, -0.58200634, 0.9908068, -0.68557066, -0.523081, 0.54170877, -0.73140395, 0.5952287, 0.3926011, 0.15103851, -0.579804, 0.9991802, 0.151, -0.57975084, 0.36727703, -0.033800706, 0.63892627, 0.9908068, -0.68557066, 0.53630334, 1.065004, -0.033800706, 0.5952287, 0.39262834, 0.15100276, 0.592977, 0.4109191, -0.42602888, -0.05874951, 1.065004, -0.033800706, -0.58200634, 0.36727703, -0.033800706, -0.62570393, 0.97765154, -0.033800706, 0.63892627, 1.0318272, 0.14073287, 0.5392514, 1.0347503, 0.14456913, -0.5309611, 0.4109191, -0.42602888, 0.028398063)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_njwdy"]
-points = PackedVector3Array(-0.37405795, -0.033676952, -0.62570393, 0.36727697, 0.18436274, 0.63892627, 0.36727697, -0.033676952, 0.63892627, 0.36727697, 0.18436274, -0.62570393, -0.37405795, 0.18436274, 0.63892627, -0.37405795, -0.033676952, 0.63892627, 0.36727697, -0.033676952, -0.62570393, -0.37405795, 0.18436274, -0.62570393)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0degu"]
-points = PackedVector3Array(-1.158924, -0.033676952, -0.62570393, -0.37413475, 0.18436274, 0.63892627, -0.37413475, -0.033676952, 0.63892627, -0.37413475, 0.18436274, -0.62570393, -1.158924, 0.18436274, 0.63892627, -1.158924, -0.033676952, 0.63892627, -0.37413475, -0.033676952, -0.62570393, -1.158924, 0.18436274, -0.62570393)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ve6ji"]
-points = PackedVector3Array(-1.1795948, 0.15100276, 0.592977, -1.6822364, -0.73140395, -0.58200634, -1.2026687, -0.73140395, -0.58200634, -1.6822364, -0.73140395, 0.5952287, -1.6645087, 0.15043193, -0.57896626, -1.7257931, 0.18427312, 0.5952287, -1.1795727, 0.15103851, -0.579804, -1.2026687, -0.73140395, 0.5952287, -1.1590009, -0.033800706, 0.63892627, -1.7257931, -0.033800706, -0.58200634, -1.1590009, -0.033800706, -0.62570393, -1.6822364, -0.033800706, -0.62570393, -1.6386242, -0.033800706, 0.63892627, -1.7257931, -0.033800706, 0.5952287, -1.6974759, 0.13852549, -0.52319115)
-
 [node name="SM_AutopsyTable01_LOD02" unique_id=1409604681 instance=ExtResource("1_mha72")]
 
-[node name="SM_AutopsyTable01_LOD0" parent="." index="0" unique_id=307342062]
+[node name="SM_AutopsyTable01_LOD0" parent="." index="0" unique_id=53443294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="RigidBody3D" type="RigidBody3D" parent="SM_AutopsyTable01_LOD0" index="0" unique_id=8634577]
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="SM_AutopsyTable01_LOD0/RigidBody3D" index="0" unique_id=498022216]
-shape = SubResource("ConvexPolygonShape3D_h6xqe")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="SM_AutopsyTable01_LOD0/RigidBody3D" index="1" unique_id=346939568]
-shape = SubResource("ConvexPolygonShape3D_njwdy")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_AutopsyTable01_LOD0/RigidBody3D" index="2" unique_id=2114298988]
-shape = SubResource("ConvexPolygonShape3D_0degu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_AutopsyTable01_LOD0/RigidBody3D" index="3" unique_id=1680452937]
-shape = SubResource("ConvexPolygonShape3D_ve6ji")
