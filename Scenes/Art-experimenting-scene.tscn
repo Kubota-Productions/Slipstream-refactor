@@ -43,7 +43,25 @@
 [ext_resource type="PackedScene" uid="uid://b4tyufgps4lf4" path="res://Prefabs/sm_brutalist_01_stairs_a_lod.tscn" id="41_225i8"]
 [ext_resource type="PackedScene" uid="uid://bgkpkidw2tm8b" path="res://Prefabs/rock_9.tscn" id="42_y4qry"]
 [ext_resource type="PackedScene" uid="uid://b6s300k60fax5" path="res://Prefabs/sm_brutalist_01_stairs_d_lod.tscn" id="43_ddljv"]
+[ext_resource type="PackedScene" uid="uid://c5ndcsix4fu83" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveAutopsyTable.tscn" id="45_mmqww"]
 [ext_resource type="PackedScene" uid="uid://bxqfr05m40b66" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBarrel.tscn" id="46_225i8"]
+[ext_resource type="PackedScene" uid="uid://b0k6o4myyld54" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBarrelOpenTop.tscn" id="46_sbfu8"]
+[ext_resource type="PackedScene" uid="uid://7udi76jr7k0u" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBasin.tscn" id="47_3y7h1"]
+[ext_resource type="PackedScene" uid="uid://flvqntipvv00" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBath.tscn" id="48_g6rni"]
+[ext_resource type="PackedScene" uid="uid://tuh2dry5g1x0" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBox.tscn" id="49_wjypw"]
+[ext_resource type="PackedScene" uid="uid://dt5vfj7tv6iwp" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxTop.tscn" id="50_boic3"]
+[ext_resource type="PackedScene" uid="uid://ctbocy5whyh10" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxWithCloth.tscn" id="51_i2coo"]
+[ext_resource type="PackedScene" uid="uid://koiasoh4f6fb" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBucket.tscn" id="52_jd7y1"]
+[ext_resource type="PackedScene" uid="uid://bqpyk7gkhqil4" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveElectricChair.tscn" id="53_bgp1e"]
+[ext_resource type="PackedScene" uid="uid://y3ew08lt4l8i" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveGastank1.tscn" id="54_j31d6"]
+[ext_resource type="PackedScene" uid="uid://1ecc7upydlnl" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveGastank.tscn" id="55_0n0wc"]
+[ext_resource type="PackedScene" uid="uid://nmse4e64sxf8" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveInfusion.tscn" id="56_bl1ua"]
+[ext_resource type="PackedScene" uid="uid://btbj8m1nd2102" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadder.tscn" id="57_4p4j5"]
+[ext_resource type="PackedScene" uid="uid://bk7nov6p4yeg5" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadderFolded.tscn" id="58_rn3uo"]
+[ext_resource type="PackedScene" uid="uid://bvl2a6dbsdjjv" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMedicalBed.tscn" id="59_vape0"]
+[ext_resource type="PackedScene" uid="uid://ba36xog2h6kr7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePlatter.tscn" id="60_dxrnu"]
+[ext_resource type="PackedScene" uid="uid://bxovgxk45sxt7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveThrowable.tscn" id="61_x0vfv"]
+[ext_resource type="PackedScene" uid="uid://biepfk7ytnwym" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveTrolley.tscn" id="62_8ftc4"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -1044,5 +1062,62 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.0300145, 0.53801715, -48.11
 
 [node name="RigidBody3D12" parent="." unique_id=1428034962 instance=ExtResource("46_225i8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1713376, 0.53801715, -48.076572)
+
+[node name="InteractiveAutopsyTable" parent="." unique_id=1091538620 instance=ExtResource("45_mmqww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.494967, 0.99999905, -47.22099)
+
+[node name="InteractiveBarrel" parent="." unique_id=42831298 instance=ExtResource("46_225i8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.531376, 1, -44.21573)
+
+[node name="InteractiveBarrelOpenTop" parent="." unique_id=462418622 instance=ExtResource("46_sbfu8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.496208, 1, -45.021225)
+
+[node name="InteractiveBasin" parent="." unique_id=191154502 instance=ExtResource("47_3y7h1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.072083, 1, -42.47203)
+
+[node name="InteractiveBath" parent="." unique_id=324994652 instance=ExtResource("48_g6rni")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.747616, 1, -39.345737)
+
+[node name="InteractiveBox" parent="." unique_id=1715028794 instance=ExtResource("49_wjypw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.8242, 1, -45.770298)
+
+[node name="InteractiveElectricChair" parent="." unique_id=865800652 instance=ExtResource("50_boic3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.031353, 1, -44.79375)
+
+[node name="InteractiveBoxWithCloth" parent="." unique_id=682548218 instance=ExtResource("51_i2coo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.072083, 1, -46.65262)
+
+[node name="InteractiveBucket" parent="." unique_id=2052111673 instance=ExtResource("52_jd7y1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.653742, 1, -44.243412)
+
+[node name="InteractiveElectricChair2" parent="." unique_id=1312983384 instance=ExtResource("53_bgp1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.453373, 1, -43.67575)
+
+[node name="InteractiveGastank1" parent="." unique_id=1583132223 instance=ExtResource("54_j31d6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.05108, 1, -44.272312)
+
+[node name="InteractiveGastank" parent="." unique_id=1050082195 instance=ExtResource("55_0n0wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.520514, 1, -44.281746)
+
+[node name="InteractiveInfusion" parent="." unique_id=954757268 instance=ExtResource("56_bl1ua")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.620075, 1, -43.48635)
+
+[node name="InteractiveLadder" parent="." unique_id=1056890812 instance=ExtResource("57_4p4j5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.487572, 1, -43.56747)
+
+[node name="InteractiveLadderFolded" parent="." unique_id=752813761 instance=ExtResource("58_rn3uo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.432934, 1, -44.600372)
+
+[node name="InteractiveMedicalBed" parent="." unique_id=1567548801 instance=ExtResource("59_vape0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.13216, 1, -38.24739)
+
+[node name="InteractivePlatter" parent="." unique_id=257010382 instance=ExtResource("60_dxrnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.448927, 1, -44.735184)
+
+[node name="InteractiveThrowable" parent="." unique_id=1593046134 instance=ExtResource("61_x0vfv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.448742, 1, -42.436428)
+
+[node name="InteractiveTrolley" parent="." unique_id=2108059476 instance=ExtResource("62_8ftc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.743326, 1, -43.53623)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]

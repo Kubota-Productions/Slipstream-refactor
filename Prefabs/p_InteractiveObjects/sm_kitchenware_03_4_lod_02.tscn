@@ -2,15 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dabv7tsv832fg" path="res://Assets/InteractiveObjects/SM_Kitchenware03_4_LOD0.glb" id="1_00qjy"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wl32i"]
-points = PackedVector3Array(-15.651485, 1.063206, 2.327715, -0.7370682, -0.14545375, -3.718542, 29.084663, -0.14545375, -3.718542, -1.5396061, -1.3546656, 2.327715, 55.68914, 0.25715667, 2.327715, -1.9444256, 1.4663686, -0.896048, -16.056305, -1.3546656, -1.2990923, 54.47468, -0.54861647, 1.1179901, -14.841843, 1.4663686, -1.2990923, 46.00187, 0.25715667, -2.5088172, -1.9444256, 1.4663686, 1.9240787, -1.5396061, -1.3546656, -1.2990923, -16.461124, -1.3546656, 1.5210345, 55.28432, -0.54861647, 2.327715, 39.957985, -0.14545375, -3.3143141, -16.056305, 1.063206, -1.7021368, 55.28432, 0.25715667, 0.7149458, -16.461124, 1.4663686, 1.1179901, -11.624592, -1.3546656, 2.327715, 50.44779, -0.54861647, 0.31190133, 50.8384, 0.25715667, -1.2990923, 43.182335, -0.14545375, -2.91127, -16.461124, 1.4663686, -0.49418733, 55.28432, -0.54861647, 1.5210345, 52.862503, 0.25715667, -0.49418733, 55.68914, 0.25715667, 1.5210345, 43.991974, -0.54861647, -0.49418733)
-
 [node name="SM_Kitchenware03_4_LOD02" unique_id=983322502 instance=ExtResource("1_00qjy")]
 
-[node name="SM_Kitchenware03_4_LOD0" parent="." index="0" unique_id=1171523954]
+[node name="SM_Kitchenware03_4_LOD0" parent="." index="0" unique_id=1550250208]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
-
-[node name="RigidBody3D" type="RigidBody3D" parent="SM_Kitchenware03_4_LOD0" index="0" unique_id=635737739]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Kitchenware03_4_LOD0/RigidBody3D" index="0" unique_id=779266461]
-shape = SubResource("ConvexPolygonShape3D_wl32i")
