@@ -7,10 +7,10 @@ points = PackedVector3Array(0.27674177, 0.070362546, -0.0793564, -0.28420934, -0
 
 [node name="SM_Barrel01_1_LOD02" unique_id=8349171 instance=ExtResource("1_kmdmg")]
 
-[node name="SM_Barrel01_1_LOD0" parent="." index="0" unique_id=558421950]
+[node name="SM_Barrel01_1_LOD0" parent="." index="0" unique_id=2053321457]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="RigidBody3D" type="RigidBody3D" parent="SM_Barrel01_1_LOD0" index="0" unique_id=1738863508]
+[node name="RigidBody3D" type="RigidBody3D" parent="SM_Barrel01_1_LOD0" index="0" unique_id=1738863508 groups=["tktarget"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Barrel01_1_LOD0/RigidBody3D" index="0" unique_id=1801223507]
 shape = SubResource("ConvexPolygonShape3D_bktbt")
