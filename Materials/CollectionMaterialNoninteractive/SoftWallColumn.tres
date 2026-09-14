@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://ba1bq2umnblxg"]
 
+[ext_resource type="Texture2D" uid="uid://6nb1h4j68i6w" path="res://Assets/textures/Collection Textures/T_SoftWallColumn01_D.PNG" id="1_3rsas"]
+
 [resource]
+albedo_texture = ExtResource("1_3rsas")

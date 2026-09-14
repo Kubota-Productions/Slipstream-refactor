@@ -701,7 +701,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18129, 9.536743e-07, 16.25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.33877)
 
 [node name="SM_Door01_2_LOD02" parent="." unique_id=152528470 instance=ExtResource("151_tflix")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.08003)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6388183, 0, -7.08003)
 
 [node name="SM_Door02_1_LOD02" parent="." unique_id=2144207259 instance=ExtResource("152_yuahx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.884817)
@@ -884,7 +884,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.664567, 0, 23.307602)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.760123, 0, 23.307602)
 
 [node name="SM_SoftWallColumn01_LOD02" parent="." unique_id=814298263 instance=ExtResource("212_6yw1g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.760123, 0, 23.307602)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.760123, 0, 20.311157)
 
 [node name="SM_SoftWallDoor01_1_LOD02" parent="." unique_id=1331323200 instance=ExtResource("213_pkm0m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.237885, 0, 23.307602)

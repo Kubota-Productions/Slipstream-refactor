@@ -1,3 +1,7 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bem0re3ekilvd"]
 
+[ext_resource type="Texture2D" uid="uid://lqpwrbuewxc4" path="res://Assets/textures/Collection Textures/T_Door05_D.PNG" id="1_3nnbm"]
+
 [resource]
+albedo_texture = ExtResource("1_3nnbm")
+albedo_texture_force_srgb = true

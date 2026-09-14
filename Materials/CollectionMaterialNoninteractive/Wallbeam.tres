@@ -1,3 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://df12gql5d5i3r"]
 
+[ext_resource type="Texture2D" uid="uid://crnqbb8u3ll7s" path="res://Assets/textures/Collection Textures/T_WoodBeam01_D.PNG" id="1_hr1mp"]
+
 [resource]
+albedo_texture = ExtResource("1_hr1mp")

@@ -1,3 +1,8 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bq8asn7qjv8yy"]
 
+[ext_resource type="Texture2D" uid="uid://5hoqdpsi80g4" path="res://Assets/textures/Collection Textures/tdc-dtr-glas-tra.jpg" id="1_pmlyj"]
+
 [resource]
+transparency = 1
+blend_mode = 2
+albedo_texture = ExtResource("1_pmlyj")
