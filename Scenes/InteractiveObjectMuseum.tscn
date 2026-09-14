@@ -1,228 +1,239 @@
 [gd_scene format=3 uid="uid://bjup1xxq1duwq"]
 
-[ext_resource type="PackedScene" uid="uid://b5ppswmki3koi" path="res://Prefabs/p_InteractiveObjects/pillpack.tscn" id="1_apmwo"]
-[ext_resource type="PackedScene" uid="uid://dnigy6f6abpo3" path="res://Prefabs/p_InteractiveObjects/sm_box_01_2_lod_02.tscn" id="9_pnp1v"]
-[ext_resource type="PackedScene" uid="uid://ddwonlloop2gu" path="res://Prefabs/p_InteractiveObjects/sm_box_02_2_lod_02.tscn" id="12_kie7t"]
-[ext_resource type="PackedScene" uid="uid://snxmk7gcxf3b" path="res://Prefabs/p_InteractiveObjects/sm_box_02_3_lod_02.tscn" id="13_8cjey"]
-[ext_resource type="PackedScene" uid="uid://rytbshgs74an" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_1_lod_02.tscn" id="18_5kf3x"]
-[ext_resource type="PackedScene" uid="uid://cggmws1ldh0m3" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_2_lod_02.tscn" id="19_me5te"]
-[ext_resource type="PackedScene" uid="uid://dyf1sb6tbbqw1" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_3_lod_02.tscn" id="20_bn506"]
-[ext_resource type="PackedScene" uid="uid://cdbof1wuti2qe" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_4_lod_02.tscn" id="21_yrirh"]
-[ext_resource type="PackedScene" uid="uid://1msyhnvhynp6" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_5_lod_02.tscn" id="22_yaf3j"]
-[ext_resource type="PackedScene" uid="uid://cuwjiek5ine44" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_6_lod_02.tscn" id="23_tayi5"]
-[ext_resource type="PackedScene" uid="uid://c15sa5k2nqom7" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_7_lod_02.tscn" id="24_61yp7"]
-[ext_resource type="PackedScene" uid="uid://c1waxbf2y31qv" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_8_lod_02.tscn" id="25_q2ge8"]
-[ext_resource type="PackedScene" uid="uid://ba3hlfsgnscib" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_02_1_lod_02.tscn" id="26_cttia"]
-[ext_resource type="PackedScene" uid="uid://5nl4eurc6x5i" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_02_2_lod_02.tscn" id="27_75bkh"]
-[ext_resource type="PackedScene" uid="uid://b5dxadbueopxy" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_02_3_lod_02.tscn" id="28_ep7mb"]
-[ext_resource type="PackedScene" uid="uid://cjblbtj45kdf7" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_03_1_lod_02.tscn" id="29_oak54"]
-[ext_resource type="PackedScene" uid="uid://p4hn3v6cdhrj" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_03_2_lod_02.tscn" id="30_gh8mb"]
-[ext_resource type="PackedScene" uid="uid://cdncm2v4v688s" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_03_3_lod_02.tscn" id="31_c87hu"]
-[ext_resource type="PackedScene" uid="uid://fmyrwivhblho" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_03_4_lod_02.tscn" id="32_d61xg"]
-[ext_resource type="PackedScene" uid="uid://cbfht7lyxwkl1" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_03_5_lod_02.tscn" id="33_rsaus"]
-[ext_resource type="PackedScene" uid="uid://dyws7xehaxcrd" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_04_1_lod_02.tscn" id="34_ha4th"]
-[ext_resource type="PackedScene" uid="uid://cvp7c8hx4evct" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_04_2_lod_02.tscn" id="35_7bg4w"]
-[ext_resource type="PackedScene" uid="uid://c44gko6g1iuq6" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_04_3_lod_02.tscn" id="36_x8238"]
+[ext_resource type="PackedScene" uid="uid://bvf1xoxd5qlpq" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBed.tscn" id="6_xh0kj"]
+[ext_resource type="PackedScene" uid="uid://iq0jm273n5lu" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxTop02.tscn" id="8_apmwo"]
+[ext_resource type="PackedScene" uid="uid://dxypcjjju5ph7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxWithoutTop.tscn" id="11_6ardn"]
+[ext_resource type="PackedScene" uid="uid://bum3jr0pt4igb" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxWithoutTopSmall.tscn" id="12_c3raa"]
+[ext_resource type="PackedScene" uid="uid://fxspsjw7cnvf" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveDrawer1.tscn" id="14_vuy7d"]
+[ext_resource type="PackedScene" uid="uid://cxam3lnlsunbu" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveDrawer02.tscn" id="15_72e6t"]
+[ext_resource type="PackedScene" uid="uid://t42l26mjjc0t" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveFork.tscn" id="17_40f58"]
+[ext_resource type="PackedScene" uid="uid://b1g3tywyj6t3c" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKitchenware_Basin.tscn" id="21_u4646"]
+[ext_resource type="PackedScene" uid="uid://yyyb7mr8olp2" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife1.tscn" id="22_gsq1y"]
+[ext_resource type="PackedScene" uid="uid://kuyura0ck25p" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife2.tscn" id="23_pnp1v"]
+[ext_resource type="PackedScene" uid="uid://g2p5u85wu86j" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife3.tscn" id="24_3isl1"]
+[ext_resource type="PackedScene" uid="uid://c0ram43yxi5bs" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife4.tscn" id="25_eanke"]
+[ext_resource type="PackedScene" uid="uid://dlq2kctkbq5ht" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife5.tscn" id="26_kie7t"]
+[ext_resource type="PackedScene" uid="uid://lkn028vn5n1y" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveKnife.tscn" id="27_8cjey"]
+[ext_resource type="PackedScene" uid="uid://diq7dtg5h52ps" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadle1.tscn" id="30_a78ml"]
+[ext_resource type="PackedScene" uid="uid://88jpt23g268b" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadle2.tscn" id="31_2u4hy"]
+[ext_resource type="PackedScene" uid="uid://b50susggooti2" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadle.tscn" id="32_y6yli"]
+[ext_resource type="PackedScene" uid="uid://dbhtlesjpp7gq" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress01.tscn" id="33_68vxf"]
+[ext_resource type="PackedScene" uid="uid://ip3buq8shq16" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress02.tscn" id="34_5kf3x"]
+[ext_resource type="PackedScene" uid="uid://cy2plnfyplxqt" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress03.tscn" id="35_me5te"]
+[ext_resource type="PackedScene" uid="uid://bx3yfj55vbn7w" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress04.tscn" id="36_bn506"]
+[ext_resource type="PackedScene" uid="uid://d2oup41j4smgb" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress05.tscn" id="37_yrirh"]
 [ext_resource type="PackedScene" uid="uid://c5ndcsix4fu83" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveAutopsyTable.tscn" id="38_apmwo"]
+[ext_resource type="PackedScene" uid="uid://dctddhwj4nvkp" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMattress06.tscn" id="38_yaf3j"]
 [ext_resource type="PackedScene" uid="uid://bxqfr05m40b66" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBarrel.tscn" id="39_6ardn"]
-[ext_resource type="PackedScene" uid="uid://cucs734skuymn" path="res://Prefabs/p_InteractiveObjects/sm_locker_01_drawer_01_1_lod_02.tscn" id="39_gxqxo"]
 [ext_resource type="PackedScene" uid="uid://b0k6o4myyld54" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBarrelOpenTop.tscn" id="40_c3raa"]
-[ext_resource type="PackedScene" uid="uid://b47lq0fdix5wc" path="res://Prefabs/p_InteractiveObjects/sm_locker_01_drawer_01_2_lod_02.tscn" id="40_h0dx3"]
+[ext_resource type="PackedScene" uid="uid://bosh1hke84xk0" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePan.tscn" id="40_tayi5"]
+[ext_resource type="PackedScene" uid="uid://b8p7ik3g2w2t3" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePillsBox.tscn" id="41_61yp7"]
 [ext_resource type="PackedScene" uid="uid://7udi76jr7k0u" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBasin.tscn" id="41_vuy7d"]
-[ext_resource type="PackedScene" uid="uid://dwlv36cmufyhc" path="res://Prefabs/p_InteractiveObjects/sm_mattress_01_1_lod_02.tscn" id="41_xcg3o"]
 [ext_resource type="PackedScene" uid="uid://flvqntipvv00" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBath.tscn" id="42_72e6t"]
-[ext_resource type="PackedScene" uid="uid://dt8l2kjjdfe74" path="res://Prefabs/p_InteractiveObjects/sm_mattress_01_2_lod_02.tscn" id="42_anejk"]
 [ext_resource type="PackedScene" uid="uid://tuh2dry5g1x0" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBox.tscn" id="43_40f58"]
-[ext_resource type="PackedScene" uid="uid://dgup5qeustmtr" path="res://Prefabs/p_InteractiveObjects/sm_mattress_01_3_lod_02.tscn" id="43_u5ggm"]
-[ext_resource type="PackedScene" uid="uid://b82t81y3ijmls" path="res://Prefabs/p_InteractiveObjects/sm_mattress_01_4_lod_02.tscn" id="44_ij3as"]
+[ext_resource type="PackedScene" uid="uid://0ms8vh111ljh" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePot1.tscn" id="43_q2ge8"]
+[ext_resource type="PackedScene" uid="uid://bdx08vcruhbbu" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePot2.tscn" id="44_cttia"]
 [ext_resource type="PackedScene" uid="uid://dt5vfj7tv6iwp" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxTop.tscn" id="44_u4646"]
+[ext_resource type="PackedScene" uid="uid://bsxn4cn5g1l1n" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePot.tscn" id="45_75bkh"]
 [ext_resource type="PackedScene" uid="uid://ctbocy5whyh10" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBoxWithCloth.tscn" id="45_gsq1y"]
-[ext_resource type="PackedScene" uid="uid://b6sode6rk62s" path="res://Prefabs/p_InteractiveObjects/sm_mattress_01_5_lod_02.tscn" id="45_k8kwe"]
+[ext_resource type="PackedScene" uid="uid://bbrxktrr7e4ul" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePotLid1.tscn" id="46_ep7mb"]
 [ext_resource type="PackedScene" uid="uid://koiasoh4f6fb" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBucket.tscn" id="46_pnp1v"]
 [ext_resource type="PackedScene" uid="uid://bqpyk7gkhqil4" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveElectricChair.tscn" id="47_3isl1"]
+[ext_resource type="PackedScene" uid="uid://de5p3mi3cfgkq" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePotLid.tscn" id="47_oak54"]
 [ext_resource type="PackedScene" uid="uid://y3ew08lt4l8i" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveGastank1.tscn" id="48_eanke"]
-[ext_resource type="PackedScene" uid="uid://bbgygurer3w8w" path="res://Prefabs/p_InteractiveObjects/spoon.tscn" id="48_gk5d1"]
-[ext_resource type="PackedScene" uid="uid://chyvjw55ywwh0" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_bed_12.tscn" id="49_15usq"]
+[ext_resource type="PackedScene" uid="uid://huhwfqror7ho" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveSideboard.tscn" id="48_gh8mb"]
+[ext_resource type="PackedScene" uid="uid://dvl6l8mnet5v3" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveSpoon02.tscn" id="49_c87hu"]
 [ext_resource type="PackedScene" uid="uid://1ecc7upydlnl" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveGastank.tscn" id="49_kie7t"]
 [ext_resource type="PackedScene" uid="uid://nmse4e64sxf8" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveInfusion.tscn" id="50_8cjey"]
+[ext_resource type="PackedScene" uid="uid://bh51smp4q65ae" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveStool.tscn" id="50_d61xg"]
 [ext_resource type="PackedScene" uid="uid://btbj8m1nd2102" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadder.tscn" id="51_a78ml"]
-[ext_resource type="PackedScene" uid="uid://d303f63wlal8r" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_matr_12.tscn" id="51_e3jfp"]
+[ext_resource type="PackedScene" uid="uid://glgl0t3ia8x5" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveTable.tscn" id="51_rsaus"]
 [ext_resource type="PackedScene" uid="uid://bk7nov6p4yeg5" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveLadderFolded.tscn" id="52_2u4hy"]
-[ext_resource type="PackedScene" uid="uid://deoncmo81rm5r" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_sideboard_2.tscn" id="52_d0t63"]
-[ext_resource type="PackedScene" uid="uid://w7grrah20aio" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_stool_12.tscn" id="53_05rgt"]
+[ext_resource type="PackedScene" uid="uid://b6on2bgwvvfnx" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveTeapot.tscn" id="52_ha4th"]
 [ext_resource type="PackedScene" uid="uid://bvl2a6dbsdjjv" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveMedicalBed.tscn" id="53_y6yli"]
 [ext_resource type="PackedScene" uid="uid://ba36xog2h6kr7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePlatter.tscn" id="54_68vxf"]
-[ext_resource type="PackedScene" uid="uid://dmx7ad56masfs" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_table_12.tscn" id="54_qwysq"]
 [ext_resource type="PackedScene" uid="uid://bxovgxk45sxt7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveThrowable.tscn" id="55_5kf3x"]
-[ext_resource type="PackedScene" uid="uid://cuj5mg6ci6wgc" path="res://Prefabs/p_InteractiveObjects/tdc_dtr_wheelchair_2.tscn" id="55_7uyna"]
+[ext_resource type="PackedScene" uid="uid://bqex455vcp68x" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveWheelchair.tscn" id="55_7bg4w"]
 [ext_resource type="PackedScene" uid="uid://biepfk7ytnwym" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveTrolley.tscn" id="56_me5te"]
 
 [node name="InteractiveObjectMuseum" type="Node3D" unique_id=762528825]
 
-[node name="pillpack" parent="." unique_id=1341567865 instance=ExtResource("1_apmwo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.863744, -2.3841858e-07, -1.9886677)
-
-[node name="SM_Box01_2_LOD02" parent="." unique_id=267800498 instance=ExtResource("9_pnp1v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.532944, 0, 1.1155157)
-
-[node name="SM_Box02_2_LOD02" parent="." unique_id=1045815144 instance=ExtResource("12_kie7t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3303223, 0, -4.6377306)
-
-[node name="SM_Box02_3_LOD02" parent="." unique_id=1704525766 instance=ExtResource("13_8cjey")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3433614, 0.38374794, -4.6471076)
-
-[node name="SM_Kitchenware01_1_LOD02" parent="." unique_id=220878318 instance=ExtResource("18_5kf3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.123247, 0, 0.36313522)
-
-[node name="SM_Kitchenware01_2_LOD02" parent="." unique_id=1142097453 instance=ExtResource("19_me5te")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.585885, -2.3841858e-07, 0.8101156)
-
-[node name="SM_Kitchenware01_3_LOD02" parent="." unique_id=1553171093 instance=ExtResource("20_bn506")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.535641, 0, 0.6735922)
-
-[node name="SM_Kitchenware01_4_LOD02" parent="." unique_id=783544052 instance=ExtResource("21_yrirh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.029236, 2.3841858e-07, 1.1111236)
-
-[node name="SM_Kitchenware01_5_LOD02" parent="." unique_id=314042894 instance=ExtResource("22_yaf3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.38023, 0, 1.5542768)
-
-[node name="SM_Kitchenware01_6_LOD02" parent="." unique_id=777554552 instance=ExtResource("23_tayi5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.277658, 0, 2.1099482)
-
-[node name="SM_Kitchenware01_7_LOD02" parent="." unique_id=414799391 instance=ExtResource("24_61yp7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.946673, 0, 2.3768563)
-
-[node name="SM_Kitchenware01_8_LOD02" parent="." unique_id=1394559004 instance=ExtResource("25_q2ge8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.934779, 0, 1.483325)
-
-[node name="SM_Kitchenware02_1_LOD02" parent="." unique_id=1941077782 instance=ExtResource("26_cttia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.069721, 0, 1.5845351)
-
-[node name="SM_Kitchenware02_2_LOD02" parent="." unique_id=734440285 instance=ExtResource("27_75bkh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.173367, 1.1920929e-07, 2.204385)
-
-[node name="SM_Kitchenware02_3_LOD02" parent="." unique_id=974425188 instance=ExtResource("28_ep7mb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.821486, 0, 1.8516556)
-
-[node name="SM_Kitchenware03_1_LOD02" parent="." unique_id=764966137 instance=ExtResource("29_oak54")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.950933, 0, 1.831264)
-
-[node name="SM_Kitchenware03_2_LOD02" parent="." unique_id=2136334190 instance=ExtResource("30_gh8mb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.045395, 1.1920929e-07, 2.3896363)
-
-[node name="SM_Kitchenware03_3_LOD02" parent="." unique_id=576368676 instance=ExtResource("31_c87hu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.774269, 0, 2.6871915)
-
-[node name="SM_Kitchenware03_4_LOD02" parent="." unique_id=983322502 instance=ExtResource("32_d61xg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.968979, 0, 2.057036)
-
-[node name="SM_Kitchenware03_5_LOD02" parent="." unique_id=825732947 instance=ExtResource("33_rsaus")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.055531, 0, 2.5258303)
-
-[node name="SM_Kitchenware04_1_LOD02" parent="." unique_id=293667525 instance=ExtResource("34_ha4th")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.178348, 0, 2.6646006)
-
-[node name="SM_Kitchenware04_2_LOD02" parent="." unique_id=1399023118 instance=ExtResource("35_7bg4w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.473883, 0, 2.746587)
-
-[node name="SM_Kitchenware04_3_LOD02" parent="." unique_id=633041793 instance=ExtResource("36_x8238")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.25855, 0, 2.086216)
-
-[node name="SM_Locker01Drawer01_1_LOD02" parent="." unique_id=499523749 instance=ExtResource("39_gxqxo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.684163, 0, -1.0087907)
-
-[node name="SM_Locker01Drawer01_2_LOD02" parent="." unique_id=1977440982 instance=ExtResource("40_h0dx3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7321177, 0, -3.5126312)
-
-[node name="SM_Mattress01_1_LOD02" parent="." unique_id=693965702 instance=ExtResource("41_xcg3o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8754673, 0, 4.1887207)
-
-[node name="SM_Mattress01_2_LOD02" parent="." unique_id=2118895665 instance=ExtResource("42_anejk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.305703, 0, 0.032893658)
-
-[node name="SM_Mattress01_3_LOD02" parent="." unique_id=922573616 instance=ExtResource("43_u5ggm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.805885, 0, -1.6722713)
-
-[node name="SM_Mattress01_4_LOD02" parent="." unique_id=1796052815 instance=ExtResource("44_ij3as")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5108805, 0, 0.028114438)
-
-[node name="SM_Mattress01_5_LOD02" parent="." unique_id=650213110 instance=ExtResource("45_k8kwe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.900855, 0, 2.6005)
-
-[node name="spoon" parent="." unique_id=1442626713 instance=ExtResource("48_gk5d1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7550907, 0, -0.039066985)
-
-[node name="tdc-dtr-bed-12" parent="." unique_id=636859620 instance=ExtResource("49_15usq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.842692, 0, -4.0054502)
-
-[node name="tdc-dtr-matr-12" parent="." unique_id=583019188 instance=ExtResource("51_e3jfp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.960205, 0, -2.3106046)
-
-[node name="tdc-dtr-sideboard2" parent="." unique_id=1550851181 instance=ExtResource("52_d0t63")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4188976, 0, -1.5271742)
-
-[node name="tdc-dtr-stool-12" parent="." unique_id=1608775083 instance=ExtResource("53_05rgt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7845035, 0, -2.7987044)
-
-[node name="tdc-dtr-table-12" parent="." unique_id=1649867264 instance=ExtResource("54_qwysq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.931494, 0, -3.011922)
-
-[node name="tdc-dtr-wheelchair2" parent="." unique_id=1733118090 instance=ExtResource("55_7uyna")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.690895, 0, 0.88307476)
-
 [node name="InteractiveAutopsyTable" parent="." unique_id=478286070 instance=ExtResource("38_apmwo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.505033, -9.536743e-07, -4.22099)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0037704, 0, 7.0444417)
 
-[node name="InteractiveBarrel" parent="." unique_id=54896350 instance=ExtResource("39_6ardn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4686236, 0, -1.2157288)
+[node name="InteractiveBarrel" parent="." unique_id=1666802848 instance=ExtResource("39_6ardn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.30533624, 0, -1.0322547)
 
-[node name="InteractiveBarrelOpenTop" parent="." unique_id=451144234 instance=ExtResource("40_c3raa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5037923, 0, -2.021223)
+[node name="InteractiveBarrelOpenTop" parent="." unique_id=1585294371 instance=ExtResource("40_c3raa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48805225, 0, -0.92847306)
 
-[node name="InteractiveBasin" parent="." unique_id=1976302644 instance=ExtResource("41_vuy7d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9279171, 0, 0.5279688)
+[node name="InteractiveBasin" parent="." unique_id=1861748308 instance=ExtResource("41_vuy7d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99234, 0, -0.08783585)
 
-[node name="InteractiveBath" parent="." unique_id=499738454 instance=ExtResource("42_72e6t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2523849, 0, 3.6542609)
+[node name="InteractiveBath" parent="." unique_id=1664150022 instance=ExtResource("42_72e6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6935247, 0, 3.4635158)
 
-[node name="InteractiveBox" parent="." unique_id=1639483447 instance=ExtResource("43_40f58")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1758003, 0, -2.7702994)
+[node name="InteractiveBed" parent="." unique_id=1087439300 instance=ExtResource("6_xh0kj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4942373, 0, 0.21053284)
 
-[node name="InteractiveElectricChair" parent="." unique_id=925578573 instance=ExtResource("44_u4646")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9686475, 0, -1.7937512)
+[node name="InteractiveBox" parent="." unique_id=694358041 instance=ExtResource("43_40f58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6935525, 0, 3.45449)
 
-[node name="InteractiveBoxWithCloth" parent="." unique_id=422604914 instance=ExtResource("45_gsq1y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9279171, 0, -3.6526198)
+[node name="InteractiveBoxWithoutTop" parent="." unique_id=889672805 instance=ExtResource("8_apmwo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1536703, 0, -0.26576287)
 
-[node name="InteractiveBucket" parent="." unique_id=2082260279 instance=ExtResource("46_pnp1v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3462582, 0, -1.2434113)
+[node name="InteractiveElectricChair" parent="." unique_id=1924789920 instance=ExtResource("44_u4646")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.235166, 0, 4.424623)
 
-[node name="InteractiveElectricChair2" parent="." unique_id=1079298106 instance=ExtResource("47_3isl1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5466267, 0, -0.6757491)
+[node name="InteractiveBoxWithCloth" parent="." unique_id=684301842 instance=ExtResource("45_gsq1y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4495648, 0, 2.618043)
 
-[node name="InteractiveGastank1" parent="." unique_id=383886563 instance=ExtResource("48_eanke")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9489188, 0, -1.2723129)
+[node name="InteractiveBoxWithoutTop2" parent="." unique_id=989248209 instance=ExtResource("11_6ardn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7502322, 0, 4.287951)
 
-[node name="InteractiveGastank" parent="." unique_id=1025576831 instance=ExtResource("49_kie7t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.479486, 0, -1.2817469)
+[node name="InteractiveBoxWithoutTop3" parent="." unique_id=1477025 instance=ExtResource("12_c3raa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2786126, 0, -0.020193756)
 
-[node name="InteractiveInfusion" parent="." unique_id=85843539 instance=ExtResource("50_8cjey")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.379924, 0, -0.48635083)
+[node name="InteractiveBucket" parent="." unique_id=608772584 instance=ExtResource("46_pnp1v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7697667, 0, -2.470511)
 
-[node name="InteractiveLadder" parent="." unique_id=1402901355 instance=ExtResource("51_a78ml")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5124291, 0, -0.5674713)
+[node name="InteractiveDrawer01" parent="." unique_id=863726307 instance=ExtResource("14_vuy7d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1088367, 0, -1.3245823)
 
-[node name="InteractiveLadderFolded" parent="." unique_id=793786952 instance=ExtResource("52_2u4hy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5670668, 0, -1.6003709)
+[node name="InteractiveDrawer02" parent="." unique_id=295804227 instance=ExtResource("15_72e6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38466537, 0, 0.7181228)
 
-[node name="InteractiveMedicalBed" parent="." unique_id=321328974 instance=ExtResource("53_y6yli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.867839, 0, 4.752608)
+[node name="InteractiveElectricChair2" parent="." unique_id=2068587471 instance=ExtResource("47_3isl1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0520701, 0, 2.1502228)
 
-[node name="InteractivePlatter" parent="." unique_id=1630988543 instance=ExtResource("54_68vxf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5510732, 0, -1.7351842)
+[node name="InteractiveKnife5" parent="." unique_id=169061267 instance=ExtResource("17_40f58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1811084, 0, -3.3144996)
 
-[node name="InteractiveThrowable" parent="." unique_id=980251876 instance=ExtResource("55_5kf3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55125725, 0, 0.5635726)
+[node name="InteractiveGastank1" parent="." unique_id=1718945372 instance=ExtResource("48_eanke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0071754, 0, 0.49235886)
 
-[node name="InteractiveTrolley" parent="." unique_id=143532286 instance=ExtResource("56_me5te")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2566745, 0, -0.53622705)
+[node name="InteractiveGastank" parent="." unique_id=1537261375 instance=ExtResource("49_kie7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5277528, 0, 1.085341)
+
+[node name="InteractiveInfusion" parent="." unique_id=462141292 instance=ExtResource("50_8cjey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5874596, -2.3841858e-07, 0.29996294)
+
+[node name="InteractiveKitchenwareBasin" parent="." unique_id=1299333321 instance=ExtResource("21_u4646")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8151774, 4.7683716e-07, -3.5886168)
+
+[node name="InteractiveKnife1" parent="." unique_id=297676685 instance=ExtResource("22_gsq1y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -0.86896783)
+
+[node name="InteractiveKnife2" parent="." unique_id=1525140867 instance=ExtResource("23_pnp1v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -1.3136462)
+
+[node name="InteractiveKnife3" parent="." unique_id=678383386 instance=ExtResource("24_3isl1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -1.5527023)
+
+[node name="InteractiveKnife4" parent="." unique_id=1002409030 instance=ExtResource("25_eanke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -1.1409734)
+
+[node name="InteractiveKnife6" parent="." unique_id=2016055896 instance=ExtResource("26_kie7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -0.99931353)
+
+[node name="InteractiveKnife" parent="." unique_id=1483293771 instance=ExtResource("27_8cjey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7747455, 0, -1.7782394)
+
+[node name="InteractiveLadder" parent="." unique_id=178566275 instance=ExtResource("51_a78ml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.081558, 0, 2.4148889)
+
+[node name="InteractiveLadderFolded" parent="." unique_id=900621900 instance=ExtResource("52_2u4hy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8542576, 0, 2.2106583)
+
+[node name="InteractiveLadle1" parent="." unique_id=1180862350 instance=ExtResource("30_a78ml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8229884, 0, -3.5485196)
+
+[node name="InteractiveLadle2" parent="." unique_id=475974398 instance=ExtResource("31_2u4hy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8597827, 4.7683716e-07, -4.136028)
+
+[node name="InteractiveLadle" parent="." unique_id=1498391251 instance=ExtResource("32_y6yli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2496217, 0, -3.869976)
+
+[node name="InteractiveMattress01_1" parent="." unique_id=1954097973 instance=ExtResource("33_68vxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028261304, 0, 6.287349)
+
+[node name="InteractiveMattress01_2_" parent="." unique_id=1321808613 instance=ExtResource("34_5kf3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0964837, 0, 1.1194739)
+
+[node name="InteractiveMattress3" parent="." unique_id=2021963729 instance=ExtResource("35_me5te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0825067, 0, 1.0784628)
+
+[node name="InteractiveMattress4" parent="." unique_id=1927546111 instance=ExtResource("36_bn506")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2684712, 0, 2.3749933)
+
+[node name="InteractiveMattress5" parent="." unique_id=695721294 instance=ExtResource("37_yrirh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019901633, 0, 4.672327)
+
+[node name="InteractiveMattress01_2" parent="." unique_id=223291823 instance=ExtResource("33_68vxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028261304, 0, 6.287349)
+
+[node name="InteractiveMattress01_2_2" parent="." unique_id=1796698435 instance=ExtResource("34_5kf3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0964837, 0, 1.1194739)
+
+[node name="InteractiveMattress6" parent="." unique_id=89358376 instance=ExtResource("35_me5te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0825067, 0, 1.0784628)
+
+[node name="InteractiveMattress7" parent="." unique_id=2054419941 instance=ExtResource("36_bn506")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2684712, 0, 2.3749933)
+
+[node name="InteractiveMattress8" parent="." unique_id=245321644 instance=ExtResource("37_yrirh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019901633, 0, 4.672327)
+
+[node name="InteractiveMattress06" parent="." unique_id=1369910726 instance=ExtResource("38_yaf3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33761442, 0, -1.8243523)
+
+[node name="InteractiveMedicalBed" parent="." unique_id=1230085420 instance=ExtResource("53_y6yli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1342297, 0, 5.4117494)
+
+[node name="InteractivePan" parent="." unique_id=1761162720 instance=ExtResource("40_tayi5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8225952, 0, -4.0448194)
+
+[node name="InteractivePillpack" parent="." unique_id=2002784732 instance=ExtResource("41_61yp7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5579754, 0, 0.66490966)
+
+[node name="InteractivePlatter" parent="." unique_id=455809061 instance=ExtResource("54_68vxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4409372, 0, -1.1844516)
+
+[node name="InteractivePot1" parent="." unique_id=1945669995 instance=ExtResource("43_q2ge8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.875422, -4.7683716e-07, -2.170138)
+
+[node name="InteractivePot2" parent="." unique_id=1724746564 instance=ExtResource("44_cttia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2175393, 0, -4.6589885)
+
+[node name="InteractivePot" parent="." unique_id=494154554 instance=ExtResource("45_75bkh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.813932, 0, -2.7976649)
+
+[node name="InteractivePotLid" parent="." unique_id=706485560 instance=ExtResource("46_ep7mb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9073113, 0, -3.0659971)
+
+[node name="InteractivePotLid2" parent="." unique_id=919027373 instance=ExtResource("47_oak54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5663692, 0, -4.6154466)
+
+[node name="InteractiveSideboard" parent="." unique_id=1896701087 instance=ExtResource("48_gh8mb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0163598, 0, -0.44963324)
+
+[node name="InteractiveSpoon" parent="." unique_id=821003120 instance=ExtResource("49_c87hu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9866711, 0, -3.593453)
+
+[node name="InteractiveStool" parent="." unique_id=1592286569 instance=ExtResource("50_d61xg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8459587, 0, -0.049313843)
+
+[node name="InteractiveTable" parent="." unique_id=545265558 instance=ExtResource("51_rsaus")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099186, 0, -1.1303673)
+
+[node name="InteractiveTeapot" parent="." unique_id=565595771 instance=ExtResource("52_ha4th")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1257418, 0, 1.0237207)
+
+[node name="InteractiveThrowable" parent="." unique_id=762372582 instance=ExtResource("55_5kf3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62827337, 0, 0.07492721)
+
+[node name="InteractiveTrolley" parent="." unique_id=475438781 instance=ExtResource("56_me5te")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46824408, 0, -1.9568868)
+
+[node name="InteractiveWheelchair" parent="." unique_id=1015146733 instance=ExtResource("55_7bg4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54633355, 0, 0.927808)
