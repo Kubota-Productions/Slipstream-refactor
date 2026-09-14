@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cucs734skuymn"]
+
+[ext_resource type="PackedScene" uid="uid://c66dhs8pskcsc" path="res://Assets/InteractiveObjects/SM_Locker01Drawer01_1_LOD0.glb" id="1_ecegl"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_degye"]
+points = PackedVector3Array(0.31482303, 0.08769761, -0.016912192, -0.09134079, -0.0067626983, -0.09252298, -0.27457604, -0.096499994, -0.032765433, -0.27446035, 0.055999998, 0.48758554, 0.29971024, -0.096499994, 0.48769945, 0.29971024, -0.096499994, -0.032765433, -0.28968883, 0.08769761, -0.016912192, -0.27457604, -0.096499994, 0.48769945, 0.29959455, 0.055999998, 0.48758554, 0.08813107, 0.012118269, -0.09252298, -0.2679377, 0.0809, -0.027268007, 0.2930719, 0.0809, -0.027268007, -0.09134079, 0.012118269, -0.09252298, 0.08813107, -0.0067626983, -0.09252298)
+
+[node name="SM_Locker01Drawer01_1_LOD02" unique_id=499523749 instance=ExtResource("1_ecegl")]
+
+[node name="SM_Locker01Drawer01_1_LOD0" parent="." index="0" unique_id=679622794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="SM_Locker01Drawer01_1_LOD0" index="0" unique_id=657669276]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Locker01Drawer01_1_LOD0/RigidBody3D" index="0" unique_id=55091792]
+shape = SubResource("ConvexPolygonShape3D_degye")

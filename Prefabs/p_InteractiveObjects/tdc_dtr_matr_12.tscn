@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d303f63wlal8r"]
+
+[ext_resource type="PackedScene" uid="uid://cnjq4vuwsxn1m" path="res://Assets/InteractiveObjects/tdc-dtr-matr-1.glb" id="1_0a2h3"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5uojj"]
+points = PackedVector3Array(0.2789, 0.0545, 0.087322146, 0.26469445, 0.0545, 0.10155551, 0.26469445, -0.0449, 0.38559997, 0.26469445, -0.0449, -0.5232, -0.20389445, -0.0449, 0.38559997, -0.20389445, 0.04029444, 0.38559997, -0.20389445, 0.04029444, -0.5232, -0.20389445, -0.0449, -0.5232, 0.26469445, 0.04029444, -0.5232, 0.26469445, 0.04029444, 0.38559997, -0.14702356, 0.0545, 0.31452215, -0.21810001, 0.026098609, -0.23915552, 0.23628332, 0.0545, 0.0021888763, -0.13286665, 0.0545, 0.22938886, -0.10440688, 0.0545, 0.3287555, 0.2789, 0.04029444, 0.0021888763, 0.2789, 0.0545, 0.05894439, -0.14702356, 0.0545, 0.24353325, 0.25048888, 0.0545, 0.0021888763, -0.13286665, 0.0545, 0.3287555)
+
+[node name="tdc-dtr-matr-12" unique_id=583019188 instance=ExtResource("1_0a2h3")]
+
+[node name="tdc-dtr-matr-1" parent="." index="0" unique_id=276601504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="tdc-dtr-matr-1" index="0" unique_id=625940705]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tdc-dtr-matr-1/RigidBody3D" index="0" unique_id=1992813306]
+shape = SubResource("ConvexPolygonShape3D_5uojj")

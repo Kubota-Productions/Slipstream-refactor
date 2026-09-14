@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bcfvpjfj3s66b"]
+
+[ext_resource type="PackedScene" uid="uid://bryjl042e6qbg" path="res://Assets/InteractiveObjects/SM_MedicalBed01_LOD0.glb" id="1_l2mae"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_esey2"]
+points = PackedVector3Array(1.3070184, 0.3408797, 0.4768143, -1.2647543, 0.3408797, -0.49298254, -1.1803777, 0.39566684, -0.46063313, -1.3070184, 0.3408797, 0.4768143, 0.8482777, -0.4224316, -0.4517231, -0.8776851, -0.4364712, 0.4509346, 1.3492825, 0.42519748, -0.40859047, -1.138226, -0.29146034, -0.45073906, 1.138226, -0.29146034, 0.43457082, -1.3492825, 0.42519748, 0.43457082, 0.8776851, -0.4364712, 0.4509346, -0.8482777, -0.4224316, -0.4517231, 1.3492825, 0.42519748, 0.43457082, 1.138226, -0.29146034, -0.45073906, 1.2647543, 0.3408797, -0.49298254, -1.138226, -0.29146034, 0.43457082, -1.3492825, 0.42519748, -0.40859047, -1.3492825, 0.3408797, -0.45073906, 1.3492825, 0.3408797, -0.45073906, -1.3492825, 0.3408797, 0.43457082, 1.3492825, 0.3408797, 0.43457082, 1.1803777, 0.39566684, -0.46063313)
+
+[node name="SM_MedicalBed01_LOD02" unique_id=1734475920 instance=ExtResource("1_l2mae")]
+
+[node name="SM_MedicalBed01_LOD0" parent="." index="0" unique_id=2065489516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="SM_MedicalBed01_LOD0" index="0" unique_id=263568550]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_MedicalBed01_LOD0/RigidBody3D" index="0" unique_id=392302883]
+shape = SubResource("ConvexPolygonShape3D_esey2")
