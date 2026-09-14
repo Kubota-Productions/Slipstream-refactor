@@ -601,6 +601,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 158.15837, 3.8146973e-06, 80.
 [node name="SM_Brutalist_01_Wall_Entrance_A_LOD02" parent="." unique_id=1937087267 instance=ExtResource("117_l6tnw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.035385, 0, 44.5918)
 
+[node name="SM_Brutalist_01_Wall_Entrance_A_LOD03" parent="." unique_id=930590739 instance=ExtResource("117_l6tnw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.035385, 0, 44.5918)
+
 [node name="SM_Brutalist_01_Wall_Entrance_B_LOD02" parent="." unique_id=1402397210 instance=ExtResource("118_yirci")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.261024, 0, 24.990234)
 
