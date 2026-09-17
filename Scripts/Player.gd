@@ -113,12 +113,19 @@ func rotate_velocity(rotation: Quaternion) -> void:
 ## stops more crisply than it starts. Applied when there's no input.
 @export var move_deceleration: float = 45.0
 @export var rotation_speed: float = 8.0
-## Braking acceleration applied while grounded and travelling faster
-## than max_landing_speed. Replaces the old hard velocity clamp on the
-## landing frame -- same intent, but bleeds the speed off over a few
-## frames instead of snapping it.
+## Braking acceleration applied after a hard landing. Replaces the old
+## hard velocity clamp on the landing frame -- same intent, but bleeds
+## the speed off over a few frames instead of snapping it.
 @export var landing_brake_acceleration: float = 60.0
+## Only speed carried in from a FALL gets braked, and only for this
+## long after touchdown. Deliberately not a continuous grounded speed
+## cap: ordinary locomotion is already limited by its own target
+## speed, so a permanent cap here would just fight power sprinting
+## (which exceeds max_landing_speed by design) and silently pin it.
+@export var landing_brake_time: float = 0.3
 @export var max_landing_speed: float = 8.0
+
+var landing_brake_timer: float = 0.0
 @export var run_ramp_time: float = 0.35
 @export var power_sprint_speed: float = 9.0
 @export var power_sprint_ramp_time: float = 0.25
@@ -138,6 +145,14 @@ const RUN_THRESHOLD := 0.40
 @export var lean_max_angle_deg: float = 20.0
 @export var lean_smoothing_speed: float = 6.0
 @export var lean_turn_rate_reference: float = 3.0  # turn_rate (rad/s) that maps to full lean
+## Lean angle is multiplied by this at top speed, so the character
+## banks harder the faster they're going rather than just reaching the
+## same max angle sooner. 1.0 disables the effect.
+@export var lean_high_speed_multiplier: float = 1.8
+## Shapes how lean ramps in across the speed range. Above 1.0 keeps
+## lean subtle at walking pace and saves most of it for genuinely
+## fast movement; 1.0 is a straight linear ramp.
+@export var lean_speed_curve_power: float = 1.5
 
 var model_yaw_basis: Basis = Basis.IDENTITY
 var current_lean: float = 0.0
@@ -320,22 +335,29 @@ func _read_input(delta: float) -> void:
 func _apply_gravity(delta):
 
 	if is_on_floor():
-		# Landing/ground speed limit. Previously this hard-clamped
-		# planar velocity on the exact frame of touchdown; now it's a
-		# braking acceleration applied whenever grounded speed exceeds
-		# the limit, so excess momentum bleeds off over a few frames
-		# instead of vanishing in one.
 		var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
-		if planar_velocity.length() > max_landing_speed:
-			var capped: Vector3 = planar_velocity.normalized() * max_landing_speed
-			add_acceleration(
-				acceleration_toward(planar_velocity, capped, landing_brake_acceleration, delta)
-			)
+
+		# Arm the brake only on the frame we actually touch down, and
+		# only if we arrived faster than the limit. Running this check
+		# every grounded frame instead would cap ALL ground movement at
+		# max_landing_speed, which silently cancels power sprinting.
+		if not was_grounded_last_frame and planar_velocity.length() > max_landing_speed:
+			landing_brake_timer = landing_brake_time
+
+		if landing_brake_timer > 0.0:
+			landing_brake_timer -= delta
+
+			if planar_velocity.length() > max_landing_speed:
+				var capped: Vector3 = planar_velocity.normalized() * max_landing_speed
+				add_acceleration(
+					acceleration_toward(planar_velocity, capped, landing_brake_acceleration, delta)
+				)
 
 		coyote_timer = coyote_time
 		jumps_used = 0
 	else:
 		coyote_timer -= delta
+		landing_brake_timer = 0.0
 
 	was_grounded_last_frame = is_on_floor()
 
@@ -523,13 +545,23 @@ func _update_turn_rate(delta: float) -> void:
 func _apply_lean(delta: float) -> void:
 	var target_lean := 0.0
 
-	if is_on_floor():
-		var planar_speed := velocity.slide(gravity_controller.gravity_direction).length()
-		var speed_fraction := clampf(planar_speed / max(run_speed, 0.001), 0.0, 1.0)
-		var normalized_turn := clampf(turn_rate / lean_turn_rate_reference, -1.0, 1.0)
-		target_lean = normalized_turn * deg_to_rad(lean_max_angle_deg) * speed_fraction
+	# Normalized against TOP speed (sprint), not run_speed -- against
+	# run_speed this saturated at 1.0 the moment you started running,
+	# so running and sprinting leaned identically and the extra speed
+	# read as nothing.
+	var top_speed: float = maxf(maxf(power_sprint_speed, run_speed), 0.001)
+	var speed_fraction: float = clampf(get_planar_speed() / top_speed, 0.0, 1.0)
+	var shaped_fraction: float = pow(speed_fraction, max(lean_speed_curve_power, 0.001))
 
-	var max_step := deg_to_rad(lean_max_angle_deg) * lean_smoothing_speed * delta
+	# Faster travel both reaches the lean sooner AND raises the ceiling
+	# on how far it can bank.
+	var max_angle: float = deg_to_rad(lean_max_angle_deg) * lerpf(1.0, lean_high_speed_multiplier, shaped_fraction)
+
+	if is_on_floor():
+		var normalized_turn := clampf(turn_rate / lean_turn_rate_reference, -1.0, 1.0)
+		target_lean = normalized_turn * max_angle * shaped_fraction
+
+	var max_step := max_angle * lean_smoothing_speed * delta
 	current_lean = move_toward(current_lean, target_lean, max_step)
 
 	character_model.global_basis = model_yaw_basis.rotated(model_yaw_basis.z, current_lean)
@@ -582,6 +614,13 @@ func _predict_trajectory(_delta: float) -> void:
 # ============================================================
 func is_moving() -> bool:
 	return move_input.length_squared() > 0.001
+
+
+## Actual current speed across the ground plane, with motion along the
+## gravity axis (falling, jumping) excluded. This is what locomotion
+## animations should blend on -- it's what the feet are really doing.
+func get_planar_speed() -> float:
+	return velocity.slide(gravity_controller.gravity_direction).length()
 
 
 func force_idle() -> void:

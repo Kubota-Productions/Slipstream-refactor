@@ -4,7 +4,7 @@ class_name PlayerAnimationController
 # ============================================================
 # REFERENCES
 # ============================================================
-@export var player: CharacterBody3D
+@export var player: Player
 @export var character_model: Node3D
 
 var animation_tree: AnimationTree
@@ -33,6 +33,20 @@ var left_bone_idx: int = -1
 var right_bone_idx: int = -1
 var left_weight: float = 0.0
 var right_weight: float = 0.0
+
+# ============================================================
+# LOCOMOTION BLEND
+# Blends on the character's ACTUAL planar speed rather than the
+# predicted (look-ahead) speed. Prediction runs ahead of reality by
+# design, so the legs were cycling at a speed the body hadn't reached
+# yet -- which is exactly what makes footfalls look like they're
+# skating. Lightly smoothed, since raw per-frame speed can jitter
+# slightly on collisions and slopes.
+# ============================================================
+@export_group("Locomotion Blend")
+@export var speed_blend_smoothing_time: float = 0.06
+
+var smoothed_locomotion_speed: float = 0.0
 
 # ============================================================
 # LANDING ANTICIPATION
@@ -222,6 +236,7 @@ func update(delta: float) -> void:
 		landing_timer -= delta
 		if landing_timer <= 0.0:
 			land_anim_active = false
+		_update_locomotion_speed(delta)
 		_update_foot_ik(delta)
 		return
 
@@ -246,6 +261,7 @@ func update(delta: float) -> void:
 			if current_anim_state != AnimState.FALL:
 				current_anim_state = AnimState.FALL
 				anim_playback.travel("Fall")
+		_update_locomotion_speed(delta)
 		_update_foot_ik(delta)
 		return
 
@@ -261,9 +277,20 @@ func update(delta: float) -> void:
 	if not was_grounded_locomotion:
 		anim_playback.travel("BlendSpace1D")
 
-	animation_tree.set(LOCOMOTION_BLEND_PARAM, player.predicted_speed)
+	_update_locomotion_speed(delta)
+	animation_tree.set(LOCOMOTION_BLEND_PARAM, smoothed_locomotion_speed)
 
 	_update_foot_ik(delta)
+
+
+## Tracks the character's real planar speed, lightly smoothed. Kept
+## updated even while airborne/landing so that re-entering locomotion
+## blends from the speed the body is actually carrying rather than
+## from a stale value.
+func _update_locomotion_speed(delta: float) -> void:
+	var actual_speed: float = player.get_planar_speed()
+	var weight: float = 1.0 - exp(-delta / max(speed_blend_smoothing_time, 0.001))
+	smoothed_locomotion_speed = lerpf(smoothed_locomotion_speed, actual_speed, weight)
 
 ## Call this from Player.gd at the exact frame the double jump is executed.
 func play_double_jump() -> void:
@@ -325,6 +352,7 @@ func _solve_foot(bone_idx: int, target: Node3D, delta: float, is_left: bool) -> 
 
 func force_idle() -> void:
 	current_anim_state = AnimState.IDLE
+	smoothed_locomotion_speed = 0.0
 	if animation_tree and anim_playback:
 		anim_playback.travel("BlendSpace1D")
 		animation_tree.set(LOCOMOTION_BLEND_PARAM, 0.0)
