@@ -16,17 +16,19 @@ points = PackedVector3Array(5.0645027, 9.032607, -4.1295996, 5.0645027, 0.947579
 
 [node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD02" unique_id=644983570 instance=ExtResource("1_wrhdw")]
 
-[node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0" parent="." index="0" unique_id=974197915]
+[node name="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0" parent="." index="0" unique_id=834625027]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="1" unique_id=343640245]
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0" index="0" unique_id=998245583]
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0/StaticBody3D" index="0" unique_id=343640245]
 shape = SubResource("ConvexPolygonShape3D_3ro7g")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="2" unique_id=1981786926]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0/StaticBody3D" index="1" unique_id=1981786926]
 shape = SubResource("ConvexPolygonShape3D_o0jl2")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="3" unique_id=1141670247]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0/StaticBody3D" index="2" unique_id=1141670247]
 shape = SubResource("ConvexPolygonShape3D_51epj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1999739052]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_02_Decorative_Wall_Arch_A_LOD0/StaticBody3D" index="3" unique_id=1999739052]
 shape = SubResource("ConvexPolygonShape3D_k6hkx")

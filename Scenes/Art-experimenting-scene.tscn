@@ -625,6 +625,30 @@ transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -145.
 [node name="SM_Brutalist_01_Pillar_C_LOD07" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=2126256199 instance=ExtResource("25_7gpkf")]
 transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -145.47473, 29.943277, -28.745655)
 
+[node name="SM_Brutalist_01_Pillar_C_LOD08" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=2055671568 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -145.47473, 2.5928497, -11.651636)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD09" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=269597120 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -145.47473, 29.943277, -11.651636)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD10" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=126305855 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -119.83372, 2.5928497, -11.651633)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD11" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=665537455 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -119.83372, 29.943277, -11.651633)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD12" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=2078611497 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -145.47473, 2.5928497, -11.651636)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD13" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=2092388099 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -145.47473, 29.943277, -11.651636)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD14" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=482386867 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -119.83372, 2.5928497, -11.651633)
+
+[node name="SM_Brutalist_01_Pillar_C_LOD15" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1833954842 instance=ExtResource("25_7gpkf")]
+transform = Transform3D(-1.7094017, 0, 1.4944065e-07, 0, 1.7094017, 0, -1.4944065e-07, 0, -1.7094017, -119.83372, 29.943277, -11.651633)
+
 [node name="SM_WallColumn02_LOD0_0022" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=641009948 instance=ExtResource("27_5fuyh")]
 transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, -14.566307, 13.042153, -39.67298)
 
@@ -713,7 +737,7 @@ transform = Transform3D(-7.4720326e-08, -1.7094017, 0, 1.7094017, -7.4720326e-08
 transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, 93.12658, 187.21118, -31.123306)
 
 [node name="building17" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=129280483 instance=ExtResource("11_loese")]
-transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, 93.12658, 187.21118, -85.82414)
+transform = Transform3D(-7.4720326e-08, 0, -1.7094017, 0, 1.7094017, 0, 1.7094017, 0, -7.4720326e-08, 93.12658, 187.21118, -85.82414)
 
 [node name="building14" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=328623678 instance=ExtResource("11_loese")]
 transform = Transform3D(-7.4720326e-08, 0, -1.7094017, 0, 1.7094017, 0, 1.7094017, 0, -7.4720326e-08, 55.519737, 21.399225, -65.311356)
@@ -724,6 +748,7 @@ transform = Transform3D(-7.4720326e-08, 0, -1.7094017, 0, 1.7094017, 0, 1.709401
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=1262705985]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -201.70941, 30.217022, -53.27648)
 material_override = ExtResource("5_v6l47")
+use_collision = true
 polygon = PackedVector2Array(85, 25, 126, 50, -7, 50, -7, 25)
 depth = 40.19
 

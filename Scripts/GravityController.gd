@@ -51,7 +51,7 @@ var gravity_state := GravityState.GROUNDED
 var gravity_direction := Vector3.DOWN
 var shift_speed := 0.0
 
-var player : CharacterBody3D
+var player : Player
 var camera: Camera3D
 
 @export var floor_normal_buffer_deg: float = 5.0
@@ -64,7 +64,7 @@ var last_shift_time: float = 0.0
 func _ready():
 	print(camera)
 
-func setup(owner: CharacterBody3D, cam: Camera3D):
+func setup(owner: Player, cam: Camera3D):
 	player = owner
 	camera = cam
 	ground_ray_origin = player.get_node("GroundRayOrigin")
@@ -87,12 +87,14 @@ func check_shift_surface():
 	var hit = player.get_world_3d().direct_space_state.intersect_ray(query)
 	return hit
 	
-func apply_gravity(delta):
+func apply_gravity(_delta):
 
 	if gravity_state == GravityState.LEVITATING:
 		return
 
-	player.velocity += gravity_direction * gravity_strength * delta
+	# Gravity was already the one acceleration-shaped thing in here --
+	# now it goes through the accumulator like everything else.
+	player.add_acceleration(gravity_direction * gravity_strength)
 
 func _try_levitate_transition() -> bool:
 	var now: float = Time.get_ticks_msec() / 1000.0
@@ -164,10 +166,29 @@ func update_shift(delta):
 
 	var target_velocity: Vector3 = gravity_direction * shift_speed
 
-	player.velocity = player.velocity.move_toward(target_velocity, shift_momentum_acceleration * delta)
+	# Was move_toward() straight onto velocity. Same no-overshoot
+	# behavior, but expressed as a force so it stacks with everything
+	# else contributing this frame instead of overwriting it.
+	player.add_acceleration(
+		Player.acceleration_toward(
+			player.velocity,
+			target_velocity,
+			shift_momentum_acceleration,
+			delta
+		)
+	)
 	
 func update_levitating(delta: float) -> void:
-	player.velocity = player.velocity.move_toward(Vector3.ZERO, levitate_deceleration * delta)
+	# Decelerate toward a dead stop -- as a braking force, so it eases
+	# to rest rather than snapping the last fraction of velocity away.
+	player.add_acceleration(
+		Player.acceleration_toward(
+			player.velocity,
+			Vector3.ZERO,
+			levitate_deceleration,
+			delta
+		)
+	)
 
 func update_shift_power(delta: float, is_power_sprinting: bool = false) -> void:
 	var draining := gravity_state == GravityState.LEVITATING \
@@ -235,7 +256,11 @@ func update_wall_follow(delta: float) -> void:
 
 		gravity_direction = (step_rotation * gravity_direction).normalized()
 		player.up_direction = -gravity_direction
-		player.velocity = step_rotation * player.velocity
+
+		# Not an acceleration -- the gravity frame itself is rotating,
+		# so existing momentum gets reinterpreted in the new basis at
+		# unchanged magnitude.
+		player.rotate_velocity(step_rotation)
 
 ## Deducts `amount` from shift_power immediately and marks it as
 ## reserved, so update_shift_power()'s regen can't climb back past
@@ -306,7 +331,9 @@ func attach_to_surface(hit):
 
 	if normal.angle_to(Vector3.UP) <= deg_to_rad(floor_normal_buffer_deg):
 		return_to_ground()
-		player.velocity = Vector3.ZERO
+		# Intentional hard stop: the body is being snapped to the hit
+		# position, so carrying momentum across that teleport is wrong.
+		player.hard_stop()
 		player.global_position = hit.position
 		if spring_arm:
 			spring_arm.rotation.y = 0.0
@@ -314,7 +341,8 @@ func attach_to_surface(hit):
 
 	gravity_direction = -normal
 	player.up_direction = normal
-	player.velocity = Vector3.ZERO
+	# Same reasoning -- position is being snapped, so is velocity.
+	player.hard_stop()
 	player.global_position = hit.position + normal * wall_attach_clearance
 
 	var forward: Vector3 = -player.global_basis.z

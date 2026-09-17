@@ -14,14 +14,110 @@ extends CharacterBody3D
 @export var animation_controller: Node  # assign the AnimationController node in the editor
 
 # ============================================================
+# ACCELERATION ACCUMULATOR
+# ============================================================
+# Velocity is mutated in exactly ONE place: _integrate_velocity(),
+# which runs once per physics frame immediately before
+# move_and_slide() and does the single "v += a * delta" step.
+#
+# Every system that wants to affect motion -- movement input, gravity,
+# gravity shifting, levitation, landing braking -- contributes an
+# acceleration to this accumulator instead of assigning to velocity.
+# Nothing snaps, because an acceleration can only ever change velocity
+# by (a * delta) in a frame; there is no code path that can set a
+# velocity component straight to a value.
+#
+# The handful of genuine exceptions (respawns, wall-attach teleports)
+# go through hard_stop()/rotate_velocity() so they're explicit and
+# greppable rather than scattered assignments.
+# ============================================================
+var pending_acceleration: Vector3 = Vector3.ZERO
+var _current_delta: float = 0.016
+
+
+## Returns the acceleration that moves `current` toward `target` as
+## fast as `max_accel` allows, without ever overshooting it.
+##
+## This is the workhorse that replaces every lerp()/move_toward() that
+## used to be applied straight to velocity. A naive
+## "(target - current).normalized() * max_accel" would never settle --
+## it applies full force right up to the target, blows past it, then
+## applies full force back the other way, oscillating forever. So:
+## first work out the acceleration that would land exactly on target
+## this frame, and only clamp it when that exceeds max_accel. Far from
+## the target that's a constant-force approach; close in it eases down
+## and settles.
+static func acceleration_toward(
+	current: Vector3,
+	target: Vector3,
+	max_accel: float,
+	delta: float
+) -> Vector3:
+	var needed: Vector3 = (target - current) / max(delta, 0.0001)
+
+	if needed.length() > max_accel:
+		return needed.normalized() * max_accel
+
+	return needed
+
+
+## Contribute an acceleration (units/sec^2) for this frame.
+func add_acceleration(accel: Vector3) -> void:
+	pending_acceleration += accel
+
+
+## Contribute an instantaneous velocity change (units/sec) -- a jump,
+## a launch pad, a knockback. Routed through the same accumulator (as
+## accel = impulse/delta, which integrates back to exactly the
+## impulse) so velocity still has a single mutation point. Impulses
+## are deliberately still supported: a jump genuinely IS an impulse,
+## and modelling one as a sustained force would make jump height
+## depend on frame timing and be far harder to tune.
+func add_impulse(impulse: Vector3) -> void:
+	pending_acceleration += impulse / max(_current_delta, 0.0001)
+
+
+func _integrate_velocity(delta: float) -> void:
+	velocity += pending_acceleration * delta
+	pending_acceleration = Vector3.ZERO
+
+
+## Hard velocity reset. An intentional exception to the acceleration
+## model, for events where the body is being repositioned/teleported
+## rather than moving continuously (wall attach, respawn, cutscene) --
+## carrying momentum across a teleport is wrong, not smooth.
+func hard_stop() -> void:
+	velocity = Vector3.ZERO
+	pending_acceleration = Vector3.ZERO
+
+
+## Rotates existing velocity without changing its magnitude. Used when
+## the gravity frame itself rotates (wall following) -- the character's
+## momentum is being reinterpreted in a new basis, not accelerated.
+func rotate_velocity(rotation: Quaternion) -> void:
+	velocity = rotation * velocity
+
+# ============================================================
 # MOVEMENT
 # ============================================================
 @export_group("Movement")
 @export var walk_speed: float = 2.5
 @export var run_speed: float = 5.0
 @export var speed_acceleration: float = 8.0
-@export var acceleration: float = 10.0
+## NOTE: now a REAL acceleration in units/sec^2, not the old lerp
+## weight. The old value (10.0) was a blend factor and does not carry
+## over -- these will need retuning. As a starting point, reaching
+## run_speed (5.0) in ~0.15s needs roughly 5/0.15 = 33 units/sec^2.
+@export var move_acceleration: float = 35.0
+## Separate, usually higher than move_acceleration so the character
+## stops more crisply than it starts. Applied when there's no input.
+@export var move_deceleration: float = 45.0
 @export var rotation_speed: float = 8.0
+## Braking acceleration applied while grounded and travelling faster
+## than max_landing_speed. Replaces the old hard velocity clamp on the
+## landing frame -- same intent, but bleeds the speed off over a few
+## frames instead of snapping it.
+@export var landing_brake_acceleration: float = 60.0
 @export var max_landing_speed: float = 8.0
 @export var run_ramp_time: float = 0.35
 @export var power_sprint_speed: float = 9.0
@@ -138,6 +234,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 
+	_current_delta = delta
+
 	aim_pivot.global_position = global_position
 	spring_arm.update_look(delta)
 
@@ -160,6 +258,10 @@ func _physics_process(delta: float) -> void:
 
 	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
 		_update_orientation(delta)
+
+	# Every contributor has had its say -- collapse the frame's total
+	# acceleration into velocity, once, here.
+	_integrate_velocity(delta)
 
 	move_and_slide()
 
@@ -218,11 +320,17 @@ func _read_input(delta: float) -> void:
 func _apply_gravity(delta):
 
 	if is_on_floor():
-		if not was_grounded_last_frame:
-			var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
-			if planar_velocity.length() > max_landing_speed:
-				planar_velocity = planar_velocity.normalized() * max_landing_speed
-			velocity = planar_velocity + velocity.project(gravity_controller.gravity_direction)
+		# Landing/ground speed limit. Previously this hard-clamped
+		# planar velocity on the exact frame of touchdown; now it's a
+		# braking acceleration applied whenever grounded speed exceeds
+		# the limit, so excess momentum bleeds off over a few frames
+		# instead of vanishing in one.
+		var planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
+		if planar_velocity.length() > max_landing_speed:
+			var capped: Vector3 = planar_velocity.normalized() * max_landing_speed
+			add_acceleration(
+				acceleration_toward(planar_velocity, capped, landing_brake_acceleration, delta)
+			)
 
 		coyote_timer = coyote_time
 		jumps_used = 0
@@ -241,15 +349,19 @@ func _handle_jump(_delta: float) -> void:
 	if jump_buffer_timer > 0.0:
 
 		if coyote_timer > 0.0:
-			velocity -= gravity_controller.gravity_direction * jump_velocity
+			add_impulse(-gravity_controller.gravity_direction * jump_velocity)
 			jump_buffer_timer = 0.0
 			coyote_timer = 0.0
 			jumps_used = 1
 
 		elif jumps_used < max_jumps and gravity_controller.drain_power(air_jump_power_cost):
 			var up: Vector3 = -gravity_controller.gravity_direction
-			velocity -= velocity.project(up)
-			velocity += up * jump_velocity
+
+			# Cancel whatever vertical momentum is already there and
+			# replace it with a fresh jump, as one combined impulse --
+			# an air jump should feel identical whether you're rising
+			# or falling when you press it.
+			add_impulse(-velocity.project(up) + up * jump_velocity)
 
 			jump_buffer_timer = 0.0
 
@@ -360,21 +472,24 @@ func _handle_movement(delta: float) -> void:
 	var target_velocity: Vector3 = target["target_velocity"]
 
 	var air_control := 0.45 if !is_on_floor() else 1.0
+	var is_moving_input: bool = move_input.length_squared() > 0.0
 
-	var current_planar_velocity = velocity.slide(gravity_controller.gravity_direction)
-	var target_planar_velocity = target_velocity.slide(gravity_controller.gravity_direction)
+	# Both sides projected onto the gravity plane, so the movement
+	# acceleration only ever acts horizontally and never fights gravity
+	# or a jump along the up axis.
+	var current_planar_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
+	var target_planar_velocity: Vector3 = target_velocity.slide(gravity_controller.gravity_direction)
 
-	current_planar_velocity = current_planar_velocity.lerp(
-		target_planar_velocity,
-		acceleration * air_control * delta
+	var max_accel: float = (move_acceleration if is_moving_input else move_deceleration) * air_control
+
+	add_acceleration(
+		acceleration_toward(current_planar_velocity, target_planar_velocity, max_accel, delta)
 	)
 
-	velocity = current_planar_velocity + velocity.project(gravity_controller.gravity_direction)
-
-	# Runs every frame, regardless of move_input -- this is the fix.
+	# Runs every frame, regardless of move_input.
 	_update_model_orientation(delta)
 
-	if move_input.length_squared() > 0.0:
+	if is_moving_input:
 		move_direction = target["target_forward"]
 		current_speed = lerpf(lerpf(walk_speed, run_speed, run_blend), power_sprint_speed, power_blend)
 
@@ -426,17 +541,25 @@ func _predict_trajectory(_delta: float) -> void:
 
 	var gravity_up := -gravity_controller.gravity_direction
 	var air_control := 0.45 if !is_on_floor() else 1.0
+	var is_moving_input: bool = move_input.length_squared() > 0.0
 
 	var sim_velocity: Vector3 = velocity.slide(gravity_controller.gravity_direction)
+	var sim_target: Vector3 = target_velocity.slide(gravity_controller.gravity_direction)
 	var sim_forward: Vector3 = (-character_model.global_basis.z).slide(gravity_up).normalized()
 	var start_forward := sim_forward
+
+	var max_accel: float = (move_acceleration if is_moving_input else move_deceleration) * air_control
 
 	var safe_substep: float = max(prediction_substep, 0.005)   # never 0, never near-0
 	var steps: int = int(ceil(prediction_horizon / safe_substep))
 	var actual_step: float = prediction_horizon / float(steps)
 
 	for i in steps:
-		sim_velocity = sim_velocity.lerp(target_velocity, acceleration * air_control * actual_step)
+		# Mirrors _handle_movement's acceleration model exactly, so
+		# predicted_speed stays consistent with what actually happens
+		# (it feeds the animation blend).
+		var accel: Vector3 = acceleration_toward(sim_velocity, sim_target, max_accel, actual_step)
+		sim_velocity += accel * actual_step
 
 		if target_forward.length_squared() > 0.001 and sim_forward.length_squared() > 0.001:
 			var current_basis := Basis.looking_at(sim_forward, gravity_up)
@@ -462,7 +585,9 @@ func is_moving() -> bool:
 
 
 func force_idle() -> void:
-	velocity = Vector3.ZERO
+	# Intentional hard stop -- this is a "reset the character" call
+	# (respawn/cutscene), not continuous motion.
+	hard_stop()
 	move_input = Vector2.ZERO
 	run_timer = 0.0
 	is_running = false
@@ -472,12 +597,14 @@ func force_idle() -> void:
 
 
 func stop_horizontal_velocity() -> void:
-	velocity.x = 0.0
-	velocity.z = 0.0
+	# Intentional hard stop on the planar axes only, preserving motion
+	# along gravity. Kept as an explicit, separate call rather than
+	# something the movement code does implicitly.
+	velocity -= velocity.slide(gravity_controller.gravity_direction)
 
 
 func launch(direction: Vector3, force: float) -> void:
-	velocity += direction.normalized() * force
+	add_impulse(direction.normalized() * force)
 
 
 func set_running(enabled: bool) -> void:
