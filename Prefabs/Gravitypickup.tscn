@@ -10,6 +10,7 @@
 [node name="Area3D" type="Area3D" parent="." unique_id=795806627]
 script = ExtResource("1_tadse")
 refill_amount = 1000.0
+float_height = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=880565840]
 shape = SubResource("BoxShape3D_g4v7s")

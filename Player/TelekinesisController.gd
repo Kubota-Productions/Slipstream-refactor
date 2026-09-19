@@ -58,6 +58,7 @@ var gravity_controller: GravityController
 @export var hold_smoothing_time: float = 0.08
 @export var max_hold_speed: float = 25.0
 @export var hold_break_distance: float = 3.0
+@export var pickup_snap_distance: float = 0.35
 @export var rotation_freeze_time: float = 0.4
 @export var hold_spin_speed_deg: float = 15.0
 
@@ -298,7 +299,7 @@ func _update_held_object(
 	# PULL-IN STATE / CONFIRMATION
 	# --------------------------------------------------------
 	if data.is_pulling_in:
-		if true_distance < 0.15:
+		if true_distance <= pickup_snap_distance:
 			data.is_pulling_in = false
 
 			if not data.confirmed:

@@ -172,6 +172,9 @@ states/TripleJump/position = Vector2(631, -164)
 transitions = ["Fall", "Land", SubResource("AnimationNodeStateMachineTransition_ps8ct"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_7uipr"), "Start", "BlendSpace1D", SubResource("AnimationNodeStateMachineTransition_7v5gs"), "BlendSpace1D", "Fall", SubResource("AnimationNodeStateMachineTransition_8sa4y"), "BlendSpace1D", "Jump", SubResource("AnimationNodeStateMachineTransition_3nb2p"), "Land", "BlendSpace1D", SubResource("AnimationNodeStateMachineTransition_d7xyo"), "TripleJump", "Fall", SubResource("AnimationNodeStateMachineTransition_4b3p2"), "Jump", "DoubleJump", SubResource("AnimationNodeStateMachineTransition_438ru"), "DoubleJump", "Fall", SubResource("AnimationNodeStateMachineTransition_dywd4"), "DoubleJump", "TripleJump", SubResource("AnimationNodeStateMachineTransition_1ldg3")]
 graph_offset = Vector2(94, -11)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_cyp3t"]
+margin = 0.1
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hkcx0"]
 frequency = 0.055
 
@@ -240,10 +243,12 @@ ground_contact_offset = -0.5
 
 [node name="GravityController" type="Node" parent="Player" unique_id=1621988856]
 script = ExtResource("4_cyp3t")
-shift_drain_rate = 30.0
+shift_drain_rate = 50.0
 levitate_drain_rate = 20.0
-wall_drain_rate = 10.0
+wall_drain_rate = 1.0
 power_sprint_drain_rate = 25.0
+wall_follow_smoothing_time = 0.2
+wall_attach_clearance = 0.1
 
 [node name="TelekinesisController" type="Node" parent="Player" unique_id=1374011184]
 script = ExtResource("5_hkcx0")
@@ -254,6 +259,7 @@ object_spacing = 0.1
 formation_vertical_spacing = 0.1
 pull_in_time = 0.2
 max_hold_speed = 40.0
+pickup_snap_distance = 1.0
 rotation_freeze_time = 0.8
 hold_spin_speed_deg = 50.0
 bob_amplitude = 0.6
@@ -265,11 +271,12 @@ gravity_meter_cost = 10.0
 [node name="Mad" parent="Player/CharacterModel" unique_id=1345165419 instance=ExtResource("8_8ks28")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Player/CharacterModel/Mad/rig" parent_id_path=PackedInt32Array(1345165419, 810173847) index="0" unique_id=1650494163]
+[node name="Skeleton3D" parent="Player/CharacterModel/Mad/rig" parent_id_path=PackedInt32Array(1345165419, 498212264) index="0" unique_id=207443908]
 bones/1/position = Vector3(-0.01828818, 0, 0.2107552)
 bones/1/rotation = Quaternion(0.18427613, -4.091752e-17, 0, 0.9828745)
 bones/3/rotation = Quaternion(0, 4.200526e-25, -1.8094576e-25, 1)
 bones/4/rotation = Quaternion(0, 4.394396e-25, -1.8094573e-25, 1)
+bones/6/rotation = Quaternion(0, 3.5542908e-26, 1.033976e-25, 1)
 bones/7/rotation = Quaternion(7.4505815e-09, -3.9743443e-25, 1.29247e-25, 1)
 bones/10/rotation = Quaternion(0.9246034, 0.004539909, -0.0018799477, 0.38089946)
 bones/11/rotation = Quaternion(-0.0036844492, -0.08665251, 0.9948736, -0.052004356)
@@ -291,9 +298,12 @@ bones/35/position = Vector3(0, 0.12754206, -0.16300589)
 bones/35/rotation = Quaternion(0.0374963, -2.7872837e-17, -1.6002085e-18, 0.9992968)
 bones/36/position = Vector3(2.6366382e-24, -0.005324103, 0.17244549)
 bones/36/rotation = Quaternion(0.23845229, 1.134494e-16, -7.8613115e-17, 0.9711542)
+bones/37/position = Vector3(2.6366382e-24, -0.005324103, 0.17244549)
 bones/37/rotation = Quaternion(0.09917553, -2.184959e-17, -3.886339e-18, 0.99507)
+bones/38/position = Vector3(2.6366382e-24, -0.005324103, 0.17244549)
 bones/38/rotation = Quaternion(0.049649023, 2.7906314e-17, -8.32593e-19, 0.9987667)
 bones/39/rotation = Quaternion(0.7295256, 4.914265e-16, 5.2417067e-16, 0.68395346)
+bones/40/position = Vector3(-8.725069e-23, -0.11254392, 6.2449406e-09)
 bones/40/rotation = Quaternion(-0.6946685, -5.1684505e-16, -4.9912544e-16, 0.71933013)
 bones/45/rotation = Quaternion(0.7640933, 0.0011600704, -0.07573585, 0.6406436)
 bones/45/scale = Vector3(1.0187131, 0.9635994, 1.0187131)
@@ -358,6 +368,7 @@ bones/112/position = Vector3(1.009651e-06, 0.10030275, -9.109884e-06)
 bones/112/rotation = Quaternion(-0.045133416, 0.9530985, -0.29894203, -0.0141370455)
 bones/117/position = Vector3(2.6366382e-24, -0.005324103, 0.17244549)
 bones/117/rotation = Quaternion(0.12009532, 2.7777737e-17, -2.8023037e-18, 0.9927624)
+bones/118/position = Vector3(3.5430816e-15, -2.5093081e-08, -5.805695e-08)
 bones/118/rotation = Quaternion(0.64447254, 9.115072e-08, 7.682713e-08, 0.76462746)
 bones/119/position = Vector3(-3.2787447e-15, 1.755133e-08, -1.5832457e-08)
 bones/119/rotation = Quaternion(0.081844985, -1.1880938e-07, 9.756689e-09, 0.9966451)
@@ -397,6 +408,7 @@ bones/180/rotation = Quaternion(-0.039316643, 0.8526534, 0.16458136, -0.49431723
 bones/183/rotation = Quaternion(-0.22020288, 0.89466536, 0.154653, -0.3566048)
 bones/186/rotation = Quaternion(-0.22020295, 0.89466536, 0.15465309, -0.3566048)
 bones/201/rotation = Quaternion(0.9448885, -7.545511e-09, -0.32739228, -2.229465e-08)
+bones/220/rotation = Quaternion(0.7300719, -1.4758456e-08, -0.68337035, 1.0966626e-08)
 bones/239/rotation = Quaternion(0.23002167, -2.0654161e-07, 0.9731856, -2.9470777e-07)
 bones/246/rotation = Quaternion(-0.14620778, -0.63549477, 0.75600904, 0.056745686)
 bones/247/rotation = Quaternion(-0.1350039, 0.025047472, 0.0034140695, 0.9905226)
@@ -618,7 +630,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Player" unique_id=1184963165 node_paths=PackedStringArray("camera_3D", "aim_pivot", "mouse_aim", "center_camera_focus")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_mask = 2
+shape = SubResource("BoxShape3D_cyp3t")
 spring_length = 3.0
 script = ExtResource("7_lueyi")
 camera_3D = NodePath("Cameraoffset/Camera3D")
