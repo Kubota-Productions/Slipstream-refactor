@@ -13,23 +13,61 @@ class_name GravityPickup
 ## finish before freeing the object, so the sound isn't cut off.
 @export var wait_for_effect: bool = false
 
+
+# --- Pickup floating/rotation settings ---
+
+## How high/low the pickup moves while floating.
+@export var float_height: float = 0.25
+
+## How quickly the pickup bobs up and down.
+@export var float_speed: float = 2.0
+
+## How quickly the pickup rotates around its Y axis.
+@export var rotation_speed: float = 2.0
+
+
 var _collected := false
+var _start_position: Vector3
+var _float_time: float = 0.0
 
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
+	# Store the pickup's starting position so the sine wave
+	# moves it relative to where it was originally placed.
+	_start_position = position
+
+	# Give each pickup a slightly different starting point in the
+	# sine wave so multiple pickups don't all bob in perfect sync.
+	_float_time = randf_range(0.0, TAU)
+
+
+func _process(delta: float) -> void:
+	if _collected:
+		return
+
+	_float_time += delta * float_speed
+
+	# Smooth sine-wave floating motion.
+	position.y = _start_position.y + sin(_float_time) * float_height
+
+	# Continuous rotation around the Y axis.
+	rotate_y(rotation_speed * delta)
+
 
 func _on_body_entered(body: Node3D) -> void:
 	print("Body entered: ", body.name)
+
 	if _collected:
 		return
 
 	var gravity_controller: GravityController = body.get_node_or_null("GravityController")
 	print("Found controller: ", gravity_controller)
+
 	if not gravity_controller:
 		return
-		
+
 	_collected = true
 	gravity_controller.refill_shift_power(refill_amount)
 
@@ -47,8 +85,10 @@ func _play_effect_and_free() -> void:
 		sound.global_position = global_position
 		sound.play()
 		sound.finished.connect(sound.queue_free)
+
 	elif pickup_effect is GPUParticles3D:
 		pickup_effect.emitting = true
+
 	elif pickup_effect is AnimationPlayer:
 		pickup_effect.play("pickup")
 
