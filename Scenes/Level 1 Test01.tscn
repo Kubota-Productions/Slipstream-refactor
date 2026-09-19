@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://b8p7ik3g2w2t3" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePillsBox.tscn" id="16_l843y"]
 [ext_resource type="PackedScene" uid="uid://bgi13korlyro4" path="res://Prefabs/sm_brutalist_01_4m_doorway_lod.tscn" id="16_pb132"]
 [ext_resource type="PackedScene" uid="uid://d1auje2dg5lgx" path="res://Prefabs/sm_electricbox_01_lod_02.tscn" id="17_bxkpr"]
+[ext_resource type="PackedScene" uid="uid://bgdmidodfmdlh" path="res://Prefabs/sm_soft_wall_01_1_lod_02.tscn" id="17_nupky"]
 [ext_resource type="PackedScene" uid="uid://di5cgy1ovij76" path="res://Prefabs/sm_brutalist_01_4m_wall_8m_lod.tscn" id="17_q7eme"]
 [ext_resource type="PackedScene" uid="uid://ba36xog2h6kr7" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractivePlatter.tscn" id="17_vabsx"]
 [ext_resource type="PackedScene" uid="uid://dysdh1qi1mef1" path="res://Prefabs/sm_brutalist_01_ductwork_fan_a_lod.tscn" id="18_6daed"]
@@ -35,6 +36,9 @@
 [ext_resource type="PackedScene" uid="uid://bxqfr05m40b66" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveBarrel.tscn" id="33_qq0ho"]
 [ext_resource type="PackedScene" uid="uid://nmse4e64sxf8" path="res://Prefabs/p_InteractiveObjects/InteractiveObjectproperlysetup/InteractiveInfusion.tscn" id="36_cog8n"]
 [ext_resource type="PackedScene" uid="uid://basv1ilbruh4u" path="res://Prefabs/rock_29.tscn" id="36_l843y"]
+[ext_resource type="PackedScene" uid="uid://8kbaqy03r87q" path="res://Prefabs/sm_brutalist_01_pillar_d_lod.tscn" id="37_gxflr"]
+[ext_resource type="PackedScene" uid="uid://drjbj0idkcipf" path="res://Prefabs/sm_soft_wall_door_01_1_lod_02.tscn" id="38_j85jt"]
+[ext_resource type="PackedScene" uid="uid://bmbvak24grjgf" path="res://Prefabs/sm_soft_wall_column_01_lod_02.tscn" id="39_e784q"]
 
 [sub_resource type="Environment" id="Environment_7lnje"]
 background_mode = 1
@@ -114,6 +118,7 @@ size = Vector3(265.36963, 44, 260.3792)
 [node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=987143140]
 transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, 1, 0, -1, -4.3711392e-08, 165.51324, 8.84647, -149.04677)
 material_override = ExtResource("5_pb132")
+use_collision = true
 size = Vector3(15, 22, 1)
 
 [node name="SM_Brutalist_01_4M_Doorway_LOD02" parent="NavigationRegion3D/StaticBody3D/ENV/CSGBox3D3" unique_id=1917252383 instance=ExtResource("16_pb132")]
@@ -183,10 +188,10 @@ transform = Transform3D(1.7094017, 0, 0, 0, -7.472032e-08, -1.7094017, 0, 1.7094
 transform = Transform3D(1.7094017, 0, 0, 0, -7.472032e-08, -1.7094017, 0, 1.7094017, -7.472032e-08, -3.6696014, 7.2805023, -5.972332)
 
 [node name="InteractivePillpack" parent="NavigationRegion3D/StaticBody3D/ENV/CSGBox3D3" unique_id=1087439300 instance=ExtResource("16_l843y")]
-transform = Transform3D(1.7094017, 0, 0, 0, -7.47203e-08, -1.7094017, 0, 1.7094017, -7.47203e-08, 4.572235, -5.2559357, -4.293241)
+transform = Transform3D(1.7094017, 0, 0, 0, -7.472029e-08, -1.7094017, 0, 1.7094017, -7.472029e-08, 0.9694061, -5.2559357, -4.293241)
 
 [node name="InteractivePlatter" parent="NavigationRegion3D/StaticBody3D/ENV/CSGBox3D3" unique_id=478286070 instance=ExtResource("17_vabsx")]
-transform = Transform3D(1.7094017, 0, 0, 0, -7.4720305e-08, -1.7094017, 0, 1.7094017, -7.4720305e-08, 4.7653503, -7.552368, -4.305426)
+transform = Transform3D(1.7094017, 0, 0, 0, -7.47203e-08, -1.7094017, 0, 1.7094017, -7.47203e-08, 1.1625061, -7.552368, -4.305426)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=144143572]
 transform = Transform3D(1, 0, 0, 0, -4.3711747e-08, 1, 0, -1, -4.3711747e-08, 32.26066, 19.75355, -118.6103)
@@ -201,16 +206,16 @@ use_collision = true
 size = Vector3(55, 27, 31.17395)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=264750356]
-transform = Transform3D(-4.371139e-08, 1, 4.3714838e-08, 2.429206e-14, -4.3714834e-08, 1, 1, 4.371139e-08, -2.429206e-14, 145.3931, 14.534823, -83.754196)
+transform = Transform3D(-4.371139e-08, 1, 4.3714838e-08, 2.429206e-14, -4.3714834e-08, 1, 1, 4.371139e-08, -2.429206e-14, 146.31277, 13.85071, -83.754196)
 material_override = ExtResource("4_eqlol")
 use_collision = true
-size = Vector3(55, 27, 31.17395)
+size = Vector3(55, 27.160645, 29.805725)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=234034342]
-transform = Transform3D(-4.371139e-08, 1, 4.3714838e-08, 1.214603e-12, -4.3714834e-08, 1, 1, 4.371139e-08, -1.214603e-12, 6.532196, 29.849207, 6.255438)
+transform = Transform3D(-4.371139e-08, 1, 4.3714838e-08, 1.2146027e-12, -4.3714834e-08, 1, 1, 4.371139e-08, -1.2146027e-12, 21.43135, 35.0354, 89.45104)
 material_override = ExtResource("4_eqlol")
 use_collision = true
-size = Vector3(99.94031, 109.68176, 77.44168)
+size = Vector3(139.04758, 144.24075, 103.43222)
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=2036662804]
 transform = Transform3D(1, 0, 0, 0, -4.3715445e-08, 1, 0, -1, -4.3715445e-08, 123.44074, 21.482977, -239.104)
@@ -386,6 +391,12 @@ transform = Transform3D(1, 0, 0, 0, 1, -2.4868982e-14, 0, 2.4868982e-14, 1, 0, -
 [node name="SM_Brutalist_Fence_01_A_LOD44" parent="NavigationRegion3D/StaticBody3D/ENV/SM_Brutalist_Fence_01_A_LOD34" unique_id=640250262 instance=ExtResource("4_1h022")]
 transform = Transform3D(1, 0, 0, 0, 1, 7.105441e-15, 0, -7.105441e-15, 1, 0, -9.536743e-07, 56)
 
+[node name="SM_SoftWall01_1_LOD02" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=695330338 instance=ExtResource("17_nupky")]
+transform = Transform3D(1.7094017, 0, 0, 0, 1.7094017, 0, 0, 0, 1.7094017, 170.65503, 6.204466, -143.24326)
+
+[node name="SM_SoftWall01_1_LOD03" parent="NavigationRegion3D/StaticBody3D/ENV" unique_id=45018843 instance=ExtResource("17_nupky")]
+transform = Transform3D(-7.4720326e-08, 0, -1.7094017, 0, 1.7094017, 0, 1.7094017, 0, -7.4720326e-08, 169.85583, 5.8455286, -139.41933)
+
 [node name="building2" parent="." unique_id=59282063 instance=ExtResource("5_y3la3")]
 transform = Transform3D(2.9802322e-08, 0, 1, 0, 1, 0, -1, 0, 2.9802322e-08, 111.932724, 2.1110773, -110.92445)
 
@@ -496,7 +507,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 81.4
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 87.90431, 0.41451812, -34.258213)
 
 [node name="InteractiveAutopsyTable" parent="." unique_id=1829434989 instance=ExtResource("31_vabsx")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 125.68848, 1.4210455, -69.53598)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 123.58082, 1.4210455, -69.53598)
 
 [node name="InteractiveElectricChair" parent="." unique_id=1877494739 instance=ExtResource("32_cog8n")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 120.55915, 1.53634, -74.888596)
@@ -529,7 +540,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122.17558, 2.8816583, -64.495
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.04922, 2.8816583, -64.495415)
 
 [node name="InteractiveInfusion" parent="." unique_id=228066029 instance=ExtResource("36_cog8n")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 125.42921, 1.6057904, -71.81007)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 123.32155, 1.6057904, -71.81007)
 
 [node name="rock_0532" parent="." unique_id=292458696 instance=ExtResource("36_l843y")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 75.04797, 0.9296689, -4.035681)
@@ -545,3 +556,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.24684, 12.526502, -55.8834
 
 [node name="Gravitypickup4" parent="." unique_id=596768964 instance=ExtResource("6_vabsx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.24684, 19.798145, -47.805313)
+
+[node name="SM_Brutalist_01_Pillar_D_LOD02" parent="." unique_id=927827332 instance=ExtResource("37_gxflr")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 119, -0.20655632, -51)
+
+[node name="SM_Brutalist_01_Pillar_D_LOD03" parent="." unique_id=1339659320 instance=ExtResource("37_gxflr")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 105, -0.20655632, -51)
+
+[node name="SM_Brutalist_01_Pillar_D_LOD04" parent="." unique_id=737383635 instance=ExtResource("37_gxflr")]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 105, -0.20655632, -20)
+
+[node name="SM_Brutalist_01_Pillar_D_LOD05" parent="." unique_id=666309031 instance=ExtResource("37_gxflr")]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 119, -0.20655632, -20)
+
+[node name="SM_SoftWallDoor01_1_LOD02" parent="." unique_id=1331323200 instance=ExtResource("38_j85jt")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 123.059204, 3.2118733, -68.05219)
+
+[node name="SM_SoftWallColumn01_LOD02" parent="." unique_id=814298263 instance=ExtResource("39_e784q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.08589, 2.631243, -68.25771)
