@@ -11,3 +11,4 @@ size = Vector3(0.8, 0.8, 0.8)
 shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="throwable" parent="CollisionShape3D" unique_id=1141163935 instance=ExtResource("1_47uws")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.015108, 0, 1.0231638)
