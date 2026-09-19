@@ -297,7 +297,7 @@ func play_double_jump() -> void:
 	if not animation_tree or not anim_playback:
 		return
 	current_anim_state = AnimState.DOUBLE_JUMP
-	anim_playback.travel("Doublejump")
+	anim_playback.travel("DoubleJump")
 
 
 ## Call this from Player.gd at the exact frame the triple jump is executed.
@@ -305,7 +305,7 @@ func play_triple_jump() -> void:
 	if not animation_tree or not anim_playback:
 		return
 	current_anim_state = AnimState.TRIPLE_JUMP
-	anim_playback.travel("Triplejump")
+	anim_playback.travel("TripleJump")
 
 
 func _update_foot_ik(delta: float) -> void:
