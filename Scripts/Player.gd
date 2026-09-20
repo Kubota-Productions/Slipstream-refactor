@@ -98,6 +98,63 @@ func rotate_velocity(rotation: Quaternion) -> void:
 	velocity = rotation * velocity
 
 # ============================================================
+# ROTATION PIVOT
+# ============================================================
+# A CharacterBody3D's origin is usually at the FEET, but the body
+# should rotate about its CENTER. Assigning global_basis directly
+# pivots around the origin, which swings the whole capsule through an
+# arc centred on the feet -- so flipping upright while stuck to a
+# ceiling sweeps the body up into the ceiling geometry and clips.
+#
+# set_basis_preserving_center() instead holds the collision shape's
+# world-space centre fixed and rotates around that, then corrects
+# global_position to match. The body spins in place rather than
+# swinging, so no part of it travels further than its own radius.
+# ============================================================
+## Optional. Auto-detected from the first CollisionShape3D child if
+## left unassigned -- a CollisionShape3D's local position IS the
+## centre of its shape, which is exactly the offset needed here.
+@export var collision_shape: CollisionShape3D
+## Overrides the auto-detected centre offset (local space, origin ->
+## collision centre) when set to anything other than zero.
+@export var body_center_offset_override: Vector3 = Vector3.ZERO
+
+var body_center_offset: Vector3 = Vector3.ZERO
+
+
+func _resolve_body_center_offset() -> void:
+	if body_center_offset_override != Vector3.ZERO:
+		body_center_offset = body_center_offset_override
+		return
+
+	if not collision_shape:
+		for child in get_children():
+			if child is CollisionShape3D:
+				collision_shape = child
+				break
+
+	if collision_shape:
+		body_center_offset = collision_shape.position
+	else:
+		push_warning("Player: no CollisionShape3D found -- rotation will pivot around the body origin (feet), which can clip geometry when flipping upright. Set body_center_offset_override.")
+		body_center_offset = Vector3.ZERO
+
+
+## Current world-space position of the collision shape's centre.
+func get_body_center() -> Vector3:
+	return global_position + global_basis * body_center_offset
+
+
+## Sets global_basis while holding the body's CENTRE still, adjusting
+## global_position so the centre doesn't move. Use this anywhere the
+## character's orientation changes while it's standing in the world --
+## direct global_basis assignment pivots around the feet and clips.
+func set_basis_preserving_center(new_basis: Basis) -> void:
+	var world_center: Vector3 = get_body_center()
+	global_basis = new_basis
+	global_position = world_center - new_basis * body_center_offset
+
+# ============================================================
 # MOVEMENT
 # ============================================================
 @export_group("Movement")
@@ -129,6 +186,19 @@ var landing_brake_timer: float = 0.0
 @export var run_ramp_time: float = 0.35
 @export var power_sprint_speed: float = 9.0
 @export var power_sprint_ramp_time: float = 0.25
+## Grip while power sprinting. At high speed the same acceleration
+## takes proportionally longer to change or kill momentum, which is
+## what reads as "slidey" -- so the sprint scales its own accel and
+## decel up to compensate. These blend in with power_blend, so they
+## only apply as much as the sprint is actually engaged.
+@export var power_sprint_acceleration_multiplier: float = 1.8
+@export var power_sprint_deceleration_multiplier: float = 2.5
+
+# ============================================================
+# RUN DUST
+# ============================================================
+@export_group("Run Dust")
+@export var Particle_Controller: ParticleController
 
 var move_input: Vector2 = Vector2.ZERO
 var move_direction: Vector3 = Vector3.ZERO
@@ -202,12 +272,17 @@ func _ready() -> void:
 
 	model_yaw_basis = character_model.global_basis
 
+	_resolve_body_center_offset()
+
 	gravity_controller.setup(
 		self,
 		$SpringArm3D/Cameraoffset/Camera3D
 	)
 
 	telekinesis_controller.setup(self, camera_3d)
+
+	if Particle_Controller:
+		Particle_Controller.setup(self)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -285,6 +360,9 @@ func _physics_process(delta: float) -> void:
 	spring_arm.update_pivot_position(delta)
 
 	telekinesis_controller.update(delta)
+
+	if Particle_Controller:
+		Particle_Controller.update(delta)
 
 	_predict_trajectory(delta)
 	
@@ -413,12 +491,14 @@ func _update_orientation(delta: float) -> void:
 
 	var target_basis := Basis.looking_at(forward, up)
 
-	global_basis = Basis(
+	# Pivots about the body's centre rather than its origin/feet, so
+	# reorienting never sweeps the capsule through nearby geometry.
+	set_basis_preserving_center(Basis(
 		global_basis.get_rotation_quaternion().slerp(
 			target_basis.get_rotation_quaternion(),
 			delta * 5.0
 		)
-	)
+	))
 
 
 func _update_model_orientation(delta: float) -> void:
@@ -503,6 +583,7 @@ func _handle_movement(delta: float) -> void:
 	var target_planar_velocity: Vector3 = target_velocity.slide(gravity_controller.gravity_direction)
 
 	var max_accel: float = (move_acceleration if is_moving_input else move_deceleration) * air_control
+	max_accel *= _get_sprint_grip_multiplier(is_moving_input)
 
 	add_acceleration(
 		acceleration_toward(current_planar_velocity, target_planar_velocity, max_accel, delta)
@@ -528,6 +609,18 @@ func _handle_movement(delta: float) -> void:
 
 	_update_turn_rate(delta)
 	_apply_lean(delta)
+
+
+## Extra grip blended in as the power sprint engages. Shared by
+## _handle_movement and _predict_trajectory so the prediction can't
+## drift out of sync with what the movement code actually does.
+func _get_sprint_grip_multiplier(is_moving_input: bool) -> float:
+	var target_multiplier: float = (
+		power_sprint_acceleration_multiplier
+		if is_moving_input
+		else power_sprint_deceleration_multiplier
+	)
+	return lerpf(1.0, target_multiplier, power_blend)
 
 
 func _update_turn_rate(delta: float) -> void:
@@ -581,6 +674,7 @@ func _predict_trajectory(_delta: float) -> void:
 	var start_forward := sim_forward
 
 	var max_accel: float = (move_acceleration if is_moving_input else move_deceleration) * air_control
+	max_accel *= _get_sprint_grip_multiplier(is_moving_input)
 
 	var safe_substep: float = max(prediction_substep, 0.005)   # never 0, never near-0
 	var steps: int = int(ceil(prediction_horizon / safe_substep))
@@ -630,6 +724,9 @@ func force_idle() -> void:
 	move_input = Vector2.ZERO
 	run_timer = 0.0
 	is_running = false
+
+	if Particle_Controller:
+		Particle_Controller.clear()
 
 	if animation_controller:
 		animation_controller.force_idle()
