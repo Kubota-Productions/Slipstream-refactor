@@ -10,11 +10,13 @@ points = PackedVector3Array(-0.3420447, -0.4902627, -0.3420447, -0.30659366, -0.
 
 [node name="SM_Fence01_5_LOD02" unique_id=247350014 instance=ExtResource("1_6exep")]
 
-[node name="SM_Fence01_5_LOD0" parent="." index="0" unique_id=1473235317]
+[node name="SM_Fence01_5_LOD0" parent="." index="0" unique_id=649027337]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="1" unique_id=1737948104]
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Fence01_5_LOD0" index="0" unique_id=1000376865]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_Fence01_5_LOD0/StaticBody3D" index="0" unique_id=1737948104]
 shape = SubResource("ConvexPolygonShape3D_eumb7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=658086823]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Fence01_5_LOD0/StaticBody3D" index="1" unique_id=658086823]
 shape = SubResource("ConvexPolygonShape3D_ynnjq")

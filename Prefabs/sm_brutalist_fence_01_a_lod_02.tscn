@@ -94,95 +94,97 @@ points = PackedVector3Array(0.020809725, 0.094109535, -0.952381, -0.04266369, -0
 
 [node name="SM_Brutalist_Fence_01_A_LOD02" unique_id=827036198 instance=ExtResource("1_6yeib")]
 
-[node name="SM_Brutalist_Fence_01_A_LOD0" parent="." index="0" unique_id=922191649]
+[node name="SM_Brutalist_Fence_01_A_LOD0" parent="." index="0" unique_id=193221261]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CollisionShape3D30" type="CollisionShape3D" parent="." index="1" unique_id=1230316147]
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_Fence_01_A_LOD0" index="0" unique_id=464672166]
+
+[node name="CollisionShape3D30" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="0" unique_id=1230316147]
 shape = SubResource("ConvexPolygonShape3D_yge5b")
 
-[node name="CollisionShape3D29" type="CollisionShape3D" parent="." index="2" unique_id=737561186]
+[node name="CollisionShape3D29" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="1" unique_id=737561186]
 shape = SubResource("ConvexPolygonShape3D_21whp")
 
-[node name="CollisionShape3D28" type="CollisionShape3D" parent="." index="3" unique_id=306262563]
+[node name="CollisionShape3D28" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="2" unique_id=306262563]
 shape = SubResource("ConvexPolygonShape3D_sw8bj")
 
-[node name="CollisionShape3D27" type="CollisionShape3D" parent="." index="4" unique_id=2090469625]
+[node name="CollisionShape3D27" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="3" unique_id=2090469625]
 shape = SubResource("ConvexPolygonShape3D_388c8")
 
-[node name="CollisionShape3D26" type="CollisionShape3D" parent="." index="5" unique_id=2113584278]
+[node name="CollisionShape3D26" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="4" unique_id=2113584278]
 shape = SubResource("ConvexPolygonShape3D_vf24n")
 
-[node name="CollisionShape3D25" type="CollisionShape3D" parent="." index="6" unique_id=644183766]
+[node name="CollisionShape3D25" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="5" unique_id=644183766]
 shape = SubResource("ConvexPolygonShape3D_0jbda")
 
-[node name="CollisionShape3D24" type="CollisionShape3D" parent="." index="7" unique_id=1658449309]
+[node name="CollisionShape3D24" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="6" unique_id=1658449309]
 shape = SubResource("ConvexPolygonShape3D_urask")
 
-[node name="CollisionShape3D23" type="CollisionShape3D" parent="." index="8" unique_id=1763212301]
+[node name="CollisionShape3D23" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="7" unique_id=1763212301]
 shape = SubResource("ConvexPolygonShape3D_c1cua")
 
-[node name="CollisionShape3D22" type="CollisionShape3D" parent="." index="9" unique_id=1163957282]
+[node name="CollisionShape3D22" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="8" unique_id=1163957282]
 shape = SubResource("ConvexPolygonShape3D_ci5fe")
 
-[node name="CollisionShape3D21" type="CollisionShape3D" parent="." index="10" unique_id=2014252999]
+[node name="CollisionShape3D21" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="9" unique_id=2014252999]
 shape = SubResource("ConvexPolygonShape3D_box2x")
 
-[node name="CollisionShape3D20" type="CollisionShape3D" parent="." index="11" unique_id=1878097751]
+[node name="CollisionShape3D20" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="10" unique_id=1878097751]
 shape = SubResource("ConvexPolygonShape3D_wh5ps")
 
-[node name="CollisionShape3D19" type="CollisionShape3D" parent="." index="12" unique_id=828004794]
+[node name="CollisionShape3D19" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="11" unique_id=828004794]
 shape = SubResource("ConvexPolygonShape3D_l4oxj")
 
-[node name="CollisionShape3D18" type="CollisionShape3D" parent="." index="13" unique_id=1076133816]
+[node name="CollisionShape3D18" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="12" unique_id=1076133816]
 shape = SubResource("ConvexPolygonShape3D_7hcsj")
 
-[node name="CollisionShape3D17" type="CollisionShape3D" parent="." index="14" unique_id=2056274409]
+[node name="CollisionShape3D17" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="13" unique_id=2056274409]
 shape = SubResource("ConvexPolygonShape3D_a7sbk")
 
-[node name="CollisionShape3D16" type="CollisionShape3D" parent="." index="15" unique_id=295996167]
+[node name="CollisionShape3D16" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="14" unique_id=295996167]
 shape = SubResource("ConvexPolygonShape3D_tm7y5")
 
-[node name="CollisionShape3D15" type="CollisionShape3D" parent="." index="16" unique_id=922801938]
+[node name="CollisionShape3D15" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="15" unique_id=922801938]
 shape = SubResource("ConvexPolygonShape3D_rql1l")
 
-[node name="CollisionShape3D14" type="CollisionShape3D" parent="." index="17" unique_id=975864442]
+[node name="CollisionShape3D14" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="16" unique_id=975864442]
 shape = SubResource("ConvexPolygonShape3D_f2faj")
 
-[node name="CollisionShape3D13" type="CollisionShape3D" parent="." index="18" unique_id=1367118132]
+[node name="CollisionShape3D13" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="17" unique_id=1367118132]
 shape = SubResource("ConvexPolygonShape3D_mtrpk")
 
-[node name="CollisionShape3D12" type="CollisionShape3D" parent="." index="19" unique_id=1900371337]
+[node name="CollisionShape3D12" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="18" unique_id=1900371337]
 shape = SubResource("ConvexPolygonShape3D_bs2xp")
 
-[node name="CollisionShape3D11" type="CollisionShape3D" parent="." index="20" unique_id=1323339938]
+[node name="CollisionShape3D11" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="19" unique_id=1323339938]
 shape = SubResource("ConvexPolygonShape3D_60xqw")
 
-[node name="CollisionShape3D10" type="CollisionShape3D" parent="." index="21" unique_id=938984827]
+[node name="CollisionShape3D10" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="20" unique_id=938984827]
 shape = SubResource("ConvexPolygonShape3D_vd2b2")
 
-[node name="CollisionShape3D9" type="CollisionShape3D" parent="." index="22" unique_id=869424494]
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="21" unique_id=869424494]
 shape = SubResource("ConvexPolygonShape3D_i5p1b")
 
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="." index="23" unique_id=439197906]
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="22" unique_id=439197906]
 shape = SubResource("ConvexPolygonShape3D_n0vl3")
 
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="." index="24" unique_id=1067468613]
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="23" unique_id=1067468613]
 shape = SubResource("ConvexPolygonShape3D_xqcq3")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="." index="25" unique_id=449089775]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="24" unique_id=449089775]
 shape = SubResource("ConvexPolygonShape3D_nw35v")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="." index="26" unique_id=355940225]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="25" unique_id=355940225]
 shape = SubResource("ConvexPolygonShape3D_p11sv")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="27" unique_id=1098345295]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="26" unique_id=1098345295]
 shape = SubResource("ConvexPolygonShape3D_gaf3f")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="28" unique_id=751971433]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="27" unique_id=751971433]
 shape = SubResource("ConvexPolygonShape3D_ab58m")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="29" unique_id=1978965209]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="28" unique_id=1978965209]
 shape = SubResource("ConvexPolygonShape3D_1cguo")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="30" unique_id=436457258]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_Fence_01_A_LOD0/StaticBody3D" index="29" unique_id=436457258]
 shape = SubResource("ConvexPolygonShape3D_i7jrf")

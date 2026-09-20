@@ -7,8 +7,10 @@ data = PackedVector3Array(16, 0.009099999, 4.9912, 15.9911995, 0.00029999999, 4.
 
 [node name="SM_Brutalist_01_Wall_Entrance_B_LOD02" unique_id=1402397210 instance=ExtResource("1_hgfw6")]
 
-[node name="SM_Brutalist_01_Wall_Entrance_B_LOD0" parent="." index="0" unique_id=943134988]
+[node name="SM_Brutalist_01_Wall_Entrance_B_LOD0" parent="." index="0" unique_id=963858705]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1044421128]
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Wall_Entrance_B_LOD0" index="0" unique_id=488608520]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Wall_Entrance_B_LOD0/StaticBody3D" index="0" unique_id=1044421128]
 shape = SubResource("ConcavePolygonShape3D_pouue")
