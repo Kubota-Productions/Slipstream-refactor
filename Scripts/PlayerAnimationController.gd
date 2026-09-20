@@ -247,11 +247,16 @@ func update(delta: float) -> void:
 		var is_shifting_airborne := gravity_state == GravityController.GravityState.LEVITATING \
 			or gravity_state == GravityController.GravityState.SHIFTING
 
+		# Gravity-relative, NOT velocity.y. On a wall or ceiling "up"
+		# has nothing to do with world +Y, so the world-space check
+		# played Fall during an upward wall jump and vice versa.
+		var rising: bool = player.velocity.dot(-player.gravity_controller.gravity_direction) > 0.0
+
 		if is_shifting_airborne:
 			if current_anim_state != AnimState.FALL:
 				current_anim_state = AnimState.FALL
 				anim_playback.travel("Fall")
-		elif player.velocity.y > 0.0:
+		elif rising:
 			if current_anim_state != AnimState.JUMP \
 			and current_anim_state != AnimState.DOUBLE_JUMP \
 			and current_anim_state != AnimState.TRIPLE_JUMP:

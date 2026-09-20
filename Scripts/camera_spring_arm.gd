@@ -28,17 +28,25 @@ var gravity_controller: GravityController
 
 # ============================================================
 # SHIFTING CAMERA FOCUS
-# The one and only mechanism for gravity-shift/levitate framing:
-# the pivot targets this point (instead of the player), and free
-# yaw/pitch (via the arm-tilt path below) orbits around it. There is
-# no separate "chase" reconstruction anymore -- SHIFTING and
-# LEVITATING both go through this single path.
+# The pivot crossfades between the normal player anchor (feet-height,
+# above the body) and the body's CENTRE while SHIFTING/LEVITATING, so
+# the camera orbits around the character's middle during a shift
+# instead of its usual over-the-shoulder point.
+#
+# Both ends of this crossfade must be derived from get_body_center()/
+# get_camera_anchor() -- NOT from a child marker's global_position.
+# A marker parented to the player has its world position computed as
+# player_transform * local_offset, which is exactly the value that
+# swings through an arc every time set_basis_preserving_center()
+# reorients the body (see Player.gd). Reading a child marker's
+# position here silently reintroduces that arc as camera jitter,
+# which is what the old center_camera_focus node did -- removed for
+# that reason.
 # ============================================================
 @export_group("Shifting Camera Focus")
-@export var center_camera_focus: Node3D
-## How long the pivot takes to crossfade between CenterCameraFocus and
-## the normal player anchor when entering/leaving a shift. This is
-## deliberately separate from pivot_position_smoothing_time (Root
+## How long the pivot takes to crossfade between the body-centre
+## anchor and the normal player anchor when entering/leaving a shift.
+## Deliberately separate from pivot_position_smoothing_time (Root
 ## Offset) so the crossfade itself is a controlled, visible transition
 ## rather than an instant target-swap that the position lerp has to
 ## chase and can overshoot.
@@ -74,7 +82,6 @@ var smoothed_up: Vector3 = Vector3.UP
 # ROOT OFFSET
 # ============================================================
 @export_group("Root Offset")
-@export var frame_anchor_height_offset: float = 1.3
 @export var pivot_position_smoothing_time: float = 0.03
 @export var walk_lag_distance: float = 0.0  # positive = lags behind movement direction, negative = leads ahead
 @export var walk_lag_smoothing_time: float = 0.2  # how quickly the lag offset fades in/out with movement
@@ -189,6 +196,17 @@ func _ready() -> void:
 	player = get_parent()
 	gravity_controller = player.get_node("GravityController")
 
+	# Without this, the arm's own collision cast can hit the player's
+	# body it's rooted inside of. Normally that's masked by the arm
+	# mostly casting outward from near the surface -- but while
+	# SHIFTING the pivot sits at the body CENTRE (see
+	# update_pivot_position) and shifting_spring_length is the longest
+	# profile in use, so a cast from inside an un-excluded capsule hit
+	# immediately, collapsed the arm, recovered, and hit again as the
+	# rotating body swept through the cast -- fast in/out jitter along
+	# the view axis specifically during shifts.
+	add_excluded_object(player.get_rid())
+
 	look_forward = -global_basis.z
 	pitch_angle = 0.0
 	last_up = Vector3.UP
@@ -209,8 +227,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func get_boresight_pos() -> Vector3:
+	# get_body_center(), not global_position -- the reticle and the
+	# head look-at target both read this, and at aim_distance = 500 a
+	# small origin wobble (the arc set_basis_preserving_center produces
+	# while reorienting) becomes a large screen-space one.
 	if player:
-		return (smoothed_boresight_dir_stage2 * aim_distance) + player.global_position
+		return (smoothed_boresight_dir_stage2 * aim_distance) + player.get_body_center()
 	if camera_3D:
 		return (-camera_3D.global_transform.basis.z * aim_distance) + camera_3D.global_position
 	return (-global_transform.basis.z * aim_distance) + global_position
@@ -247,15 +269,19 @@ func update_pivot_position(delta: float) -> void:
 	# previously the target jumped instantly and only the position lerp
 	# (fast, 0.03s by default) chased it, which could overshoot if the
 	# two anchors were far apart. Now the anchor itself blends smoothly.
-	var focus_target_weight: float = 1.0 if (_is_shifting_or_levitating() and center_camera_focus != null) else 0.0
+	var focus_target_weight: float = 1.0 if (_is_shifting_or_levitating() and player != null) else 0.0
 	var focus_blend_speed: float = 1.0 - exp(-delta / max(focus_pivot_transition_time, 0.001))
 	focus_pivot_blend_weight = move_toward(focus_pivot_blend_weight, focus_target_weight, focus_blend_speed)
 
-	var player_anchor: Vector3 = player.global_position + player.up_direction * frame_anchor_height_offset
+	# Both ends of this crossfade are centre-derived now. The old
+	# version lerped toward a child marker's global_position, which
+	# reintroduced the rotation-arc jitter this whole pivot scheme
+	# exists to avoid -- see the note above _ready()'s exclude call and
+	# the Shifting Camera Focus header comment.
+	var player_anchor: Vector3 = player.get_camera_anchor()
+	var shift_anchor: Vector3 = player.get_body_center()
 
-	var target_position: Vector3 = player_anchor
-	if center_camera_focus:
-		target_position = player_anchor.lerp(center_camera_focus.global_position, focus_pivot_blend_weight)
+	var target_position: Vector3 = player_anchor.lerp(shift_anchor, focus_pivot_blend_weight)
 
 	# Walk lag fades out as the focus pivot fades in, instead of
 	# freezing at a stale value while a shift is active.
@@ -276,7 +302,7 @@ func update_pivot_position(delta: float) -> void:
 	var weight: float = 1.0 - exp(-delta / max(pivot_position_smoothing_time, 0.001))
 	smoothed_pivot_position = smoothed_pivot_position.lerp(target_position, weight)
 	global_position = smoothed_pivot_position
-	
+
 func update_look(delta: float) -> void:
 	var target_up: Vector3 = Vector3.UP
 	if gravity_controller:
@@ -314,8 +340,8 @@ func update_look(delta: float) -> void:
 
 	if _is_shifting_or_levitating():
 		# Levitating / actively shifting -- whole arm tilts. Combined
-		# with update_pivot_position() targeting CenterCameraFocus,
-		# this orbits the camera freely around the character's center.
+		# with update_pivot_position() targeting the body centre, this
+		# orbits the camera freely around the character's center.
 		var right: Vector3 = flat_forward.cross(up).normalized()
 		var final_forward: Vector3 = flat_forward.rotated(right, pitch_angle).normalized()
 		global_basis = Basis.looking_at(final_forward, up)
@@ -439,12 +465,11 @@ func _update_camera_distance(delta: float) -> void:
 
 
 func _get_subject_world_pos() -> Vector3:
-	if _is_shifting_or_levitating() and center_camera_focus:
-		return center_camera_focus.global_position
+	if _is_shifting_or_levitating() and player:
+		return player.get_body_center()
 	if player:
-		return player.global_position + player.up_direction * frame_anchor_height_offset
+		return player.get_camera_anchor()
 	return global_position
-
 
 func _update_pitch_pivot() -> void:
 	if not camera_3D:
@@ -500,7 +525,7 @@ func _update_pitch_pivot() -> void:
 		back_offset = pitch_ratio * up_back_range * distance_scale
 
 	camera_3D.position += Vector3(0.0, height_offset, back_offset)
-	
+
 func _update_panini(delta: float) -> void:
 	if not panini_rect or not camera_3D:
 		return

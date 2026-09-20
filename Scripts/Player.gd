@@ -12,25 +12,6 @@ extends CharacterBody3D
 @onready var telekinesis_controller: TelekinesisController = $TelekinesisController
 
 @export var animation_controller: Node  # assign the AnimationController node in the editor
-
-# ============================================================
-# ACCELERATION ACCUMULATOR
-# ============================================================
-# Velocity is mutated in exactly ONE place: _integrate_velocity(),
-# which runs once per physics frame immediately before
-# move_and_slide() and does the single "v += a * delta" step.
-#
-# Every system that wants to affect motion -- movement input, gravity,
-# gravity shifting, levitation, landing braking -- contributes an
-# acceleration to this accumulator instead of assigning to velocity.
-# Nothing snaps, because an acceleration can only ever change velocity
-# by (a * delta) in a frame; there is no code path that can set a
-# velocity component straight to a value.
-#
-# The handful of genuine exceptions (respawns, wall-attach teleports)
-# go through hard_stop()/rotate_velocity() so they're explicit and
-# greppable rather than scattered assignments.
-# ============================================================
 var pending_acceleration: Vector3 = Vector3.ZERO
 var _current_delta: float = 0.016
 
@@ -41,7 +22,7 @@ var _current_delta: float = 0.016
 ## This is the workhorse that replaces every lerp()/move_toward() that
 ## used to be applied straight to velocity. A naive
 ## "(target - current).normalized() * max_accel" would never settle --
-## it applies full force right up to the target, blows past it, then
+## it applies full force right up to the target, blows past it, sthen
 ## applies full force back the other way, oscillating forever. So:
 ## first work out the acceleration that would land exactly on target
 ## this frame, and only clamp it when that exceeds max_accel. Far from
@@ -106,43 +87,56 @@ func rotate_velocity(rotation: Quaternion) -> void:
 # arc centred on the feet -- so flipping upright while stuck to a
 # ceiling sweeps the body up into the ceiling geometry and clips.
 #
-# set_basis_preserving_center() instead holds the collision shape's
-# world-space centre fixed and rotates around that, then corrects
+# set_basis_preserving_center() instead holds rotation_pivot's
+# world-space position fixed and rotates around that, then corrects
 # global_position to match. The body spins in place rather than
 # swinging, so no part of it travels further than its own radius.
+#
+# CONSEQUENCE FOR ANYTHING TRACKING THE PLAYER: global_position is now
+# the thing that MOVES during a rotation (it swings through an arc to
+# hold the centre still). The centre is the stable point. Cameras, aim
+# pivots and anything else that follows the character must track
+# get_body_center() / get_camera_anchor(), never global_position --
+# anchoring on the origin feeds the rotation arc straight through as
+# visible jitter.
 # ============================================================
-## Optional. Auto-detected from the first CollisionShape3D child if
-## left unassigned -- a CollisionShape3D's local position IS the
-## centre of its shape, which is exactly the offset needed here.
-@export var collision_shape: CollisionShape3D
-## Overrides the auto-detected centre offset (local space, origin ->
-## collision centre) when set to anything other than zero.
-@export var body_center_offset_override: Vector3 = Vector3.ZERO
+## Drag in a Node3D (e.g. a Marker3D) positioned at the point the body
+## should rotate around -- typically the visual/collision centre.
+## Its offset from the Player origin is measured once at _ready() and
+## cached; the node only needs to exist in the scene, it isn't read
+## from every frame.
+@export var rotation_pivot: Node3D
+
+## Height of the camera/aim anchor above the body CENTRE (not the
+## feet). This is smaller than the old SpringArm-side value by roughly
+## the pivot node's height off the ground -- retune it once rather
+## than keeping a second copy on the camera.
+@export var frame_anchor_height_offset: float = 0.3
 
 var body_center_offset: Vector3 = Vector3.ZERO
 
 
 func _resolve_body_center_offset() -> void:
-	if body_center_offset_override != Vector3.ZERO:
-		body_center_offset = body_center_offset_override
+	if not rotation_pivot:
+		push_warning("Player: 'rotation_pivot' not assigned -- rotation will pivot around the body origin (feet), which can clip geometry when flipping upright.")
+		body_center_offset = Vector3.ZERO
 		return
 
-	if not collision_shape:
-		for child in get_children():
-			if child is CollisionShape3D:
-				collision_shape = child
-				break
-
-	if collision_shape:
-		body_center_offset = collision_shape.position
-	else:
-		push_warning("Player: no CollisionShape3D found -- rotation will pivot around the body origin (feet), which can clip geometry when flipping upright. Set body_center_offset_override.")
-		body_center_offset = Vector3.ZERO
+	# Local-space offset from the Player's origin to the pivot node,
+	# expressed in the Player's own (possibly already-rotated) basis.
+	body_center_offset = global_basis.inverse() * (rotation_pivot.global_position - global_position)
 
 
 ## Current world-space position of the collision shape's centre.
 func get_body_center() -> Vector3:
 	return global_position + global_basis * body_center_offset
+
+
+## The point the camera and aim pivot should track. Based on the body
+## CENTRE rather than global_position -- see the note above; following
+## the origin turns every reorientation into camera jitter.
+func get_camera_anchor() -> Vector3:
+	return get_body_center() + (-gravity_controller.gravity_direction) * frame_anchor_height_offset
 
 
 ## Sets global_basis while holding the body's CENTRE still, adjusting
@@ -154,17 +148,24 @@ func set_basis_preserving_center(new_basis: Basis) -> void:
 	global_basis = new_basis
 	global_position = world_center - new_basis * body_center_offset
 
+
+## Places the body so its CENTRE lands at `world_center`, for the
+## teleport-style repositions (wall attach, respawn) that would
+## otherwise bury the capsule by putting its origin at a surface hit
+## point and letting the centre fall wherever the new basis puts it.
+func set_body_center(world_center: Vector3) -> void:
+	global_position = world_center - global_basis * body_center_offset
+
 # ============================================================
 # MOVEMENT
 # ============================================================
 @export_group("Movement")
 @export var walk_speed: float = 2.5
 @export var run_speed: float = 5.0
-@export var speed_acceleration: float = 8.0
-## NOTE: now a REAL acceleration in units/sec^2, not the old lerp
-## weight. The old value (10.0) was a blend factor and does not carry
-## over -- these will need retuning. As a starting point, reaching
-## run_speed (5.0) in ~0.15s needs roughly 5/0.15 = 33 units/sec^2.
+## NOTE: a REAL acceleration in units/sec^2, not the old lerp weight.
+## The old value (10.0) was a blend factor and does not carry over --
+## these will need retuning. As a starting point, reaching run_speed
+## (5.0) in ~0.15s needs roughly 5/0.15 = 33 units/sec^2.
 @export var move_acceleration: float = 35.0
 ## Separate, usually higher than move_acceleration so the character
 ## stops more crisply than it starts. Applied when there's no input.
@@ -231,10 +232,13 @@ var current_lean: float = 0.0
 # ============================================================
 @export_group("Jumping")
 @export var jump_velocity: float = 10.0
-@export var gravity_multiplier: float = 1.0
 @export var coyote_time: float = 0.15
 @export var jump_buffer: float = 0.15
-@export var max_jumps: int = 2
+## Total jumps including the initial ground/coyote one. 3 = ground
+## jump + double + triple. Kept at 3 so the play_triple_jump() branch
+## in _handle_jump is actually reachable from the script default and
+## not only when the inspector overrides it.
+@export var max_jumps: int = 3
 ## Gravity meter cost for each jump PAST the first (double jump, triple
 ## jump, etc). The initial ground/coyote jump is always free -- only
 ## the extra air jumps draw from shift_power, and if there isn't
@@ -253,7 +257,15 @@ var was_grounded_last_frame := true
 var is_ots_mode: bool = false
 
 # ============================================================
-# TRAJECTORY PREDICTION  (consumed by the animation controller)
+# TRAJECTORY PREDICTION
+# ============================================================
+# NOTE: since the animation controller switched to blending on ACTUAL
+# planar speed, the only remaining consumer of predicted_speed is the
+# HUD speed-lines intensity, and predicted_turn_rate has no consumer
+# at all. Kept because the look-ahead is genuinely better for the
+# speed lines (they ramp in just before you hit the speed rather than
+# just after) -- but if that stops mattering, deleting
+# _predict_trajectory saves a per-frame Basis/Quaternion loop.
 # ============================================================
 @export_group("Trajectory Prediction")
 @export var prediction_horizon: float = 0.15
@@ -305,8 +317,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			gravity_controller.begin_shift()
 
 		if event.is_action_pressed("CancelShift"):
-			if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
-			or gravity_controller.gravity_state == GravityController.GravityState.WALL:
+			if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING:
+				gravity_controller.return_to_ground()
+			elif gravity_controller.gravity_state == GravityController.GravityState.WALL:
+				# Deferred: cancelling while stuck to a wall/ceiling can
+				# happen with the body flush against that surface --
+				# reorienting immediately sweeps it through. Rotation
+				# freezes until the player lands or starts steering.
 				gravity_controller.return_to_ground()
 
 	if event is InputEventMouseMotion:
@@ -326,7 +343,11 @@ func _physics_process(delta: float) -> void:
 
 	_current_delta = delta
 
-	aim_pivot.global_position = global_position
+	# update_look has to stay here -- _get_target_motion reads
+	# aim_pivot.global_basis, so the arm's ORIENTATION must be current
+	# before movement runs. The aim pivot's POSITION is updated after
+	# move_and_slide instead (see below), so the camera isn't reading a
+	# pre-move transform for position and a post-move one for rotation.
 	spring_arm.update_look(delta)
 
 	_read_input(delta)
@@ -346,17 +367,17 @@ func _physics_process(delta: float) -> void:
 	elif gravity_controller.gravity_state == GravityController.GravityState.WALL:
 		gravity_controller.update_wall_follow(delta)
 
-	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
+	_resolve_frozen_orientation(delta)
+
+	if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED and not orientation_frozen:
 		_update_orientation(delta)
 
-	# Every contributor has had its say -- collapse the frame's total
-	# acceleration into velocity, once, here.
 	_integrate_velocity(delta)
 
+	gravity_controller.detect_wall()
 	move_and_slide()
 
-	gravity_controller.detect_wall()
-
+	aim_pivot.global_position = get_body_center()
 	spring_arm.update_pivot_position(delta)
 
 	telekinesis_controller.update(delta)
@@ -365,7 +386,7 @@ func _physics_process(delta: float) -> void:
 		Particle_Controller.update(delta)
 
 	_predict_trajectory(delta)
-	
+
 	# Animation reads fully-updated physics state for this frame.
 	if animation_controller:
 		animation_controller.update(delta)
@@ -448,18 +469,21 @@ func _handle_jump(_delta: float) -> void:
 
 	if jump_buffer_timer > 0.0:
 
+		var up: Vector3 = -gravity_controller.gravity_direction
+
 		if coyote_timer > 0.0:
-			add_impulse(-gravity_controller.gravity_direction * jump_velocity)
+			# Cancel whatever motion already exists along the up axis
+			# before applying the jump, exactly like the air jump does.
+			# Without this, a jump taken at the tail of the coyote
+			# window (already falling) gets noticeably less height than
+			# the same jump taken standing on the ground.
+			add_impulse(-velocity.project(up) + up * jump_velocity)
 			jump_buffer_timer = 0.0
 			coyote_timer = 0.0
 			jumps_used = 1
 
 		elif jumps_used < max_jumps and gravity_controller.drain_power(air_jump_power_cost):
-			var up: Vector3 = -gravity_controller.gravity_direction
-
-			# Cancel whatever vertical momentum is already there and
-			# replace it with a fresh jump, as one combined impulse --
-			# an air jump should feel identical whether you're rising
+			# An air jump should feel identical whether you're rising
 			# or falling when you press it.
 			add_impulse(-velocity.project(up) + up * jump_velocity)
 
@@ -477,12 +501,106 @@ func _handle_jump(_delta: float) -> void:
 # ============================================================
 # ORIENTATION  (physics body -- drives movement-direction math)
 # ============================================================
-func _update_orientation(delta: float) -> void:
+## While true, _update_orientation is skipped and the body keeps
+## whatever rotation it already has. Set by GravityController when a
+## shift/wall-attach is cancelled mid-air -- reorienting at that exact
+## moment (e.g. cancelling while stuck to a ceiling) can sweep the
+## body through the surface it was just attached to, the same clipping
+## problem set_basis_preserving_center alone couldn't fully solve,
+## since the issue was never just WHICH point it pivoted around but
+## WHEN it was allowed to pivot at all. Cleared once the player either
+## starts steering, actually lands, or the timeout below expires.
+var orientation_frozen: bool = false
+
+## Hard ceiling on how long orientation can stay frozen. Without it,
+## cancelling off a wall into a drift with no input means neither
+## is_on_floor() nor is_moving() ever becomes true and the body stays
+## frozen indefinitely.
+@export var orientation_freeze_timeout: float = 0.5
+
+var orientation_freeze_timer: float = 0.0
+
+
+## Persistent up-reference for the acceleration-facing orientation used
+## while SHIFTING (see _update_orientation). Deliberately NOT recomputed
+## from global_basis.y each frame -- that reads back a value which is
+## itself the output of this same computation one frame earlier, with
+## no external anchor, and drifted into visible roll jitter. Carrying
+## this across frames and only re-orthogonalizing it against the
+## current forward keeps it changing smoothly instead.
+var shift_facing_up: Vector3 = Vector3.UP
+
+
+func freeze_orientation() -> void:
+	orientation_frozen = true
+	orientation_freeze_timer = orientation_freeze_timeout
+
+
+## Call once per frame. Unfreezes and performs the deferred snap the
+## instant any release condition is met -- landing, the player giving
+## enough input to actually be steering rather than just drifting, or
+## the freeze simply timing out.
+func _resolve_frozen_orientation(delta: float) -> void:
+	if not orientation_frozen:
+		return
+
+	orientation_freeze_timer -= delta
+
+	if not (is_on_floor() or is_moving() or orientation_freeze_timer <= 0.0):
+		return
+
+	orientation_frozen = false
 
 	var up := -gravity_controller.gravity_direction
-
-	var forward: Vector3 = -aim_pivot.global_basis.z
+	var forward: Vector3 = -global_basis.z
 	forward = forward.slide(up)
+	if forward.length_squared() < 0.001:
+		forward = global_basis.x.slide(up)
+	if forward.length_squared() < 0.001:
+		return
+
+	forward = forward.normalized()
+	set_basis_preserving_center(Basis.looking_at(forward, up))
+
+
+func _update_orientation(delta: float) -> void:
+
+	var forward: Vector3
+	var up: Vector3
+
+	if gravity_controller.gravity_state == GravityController.GravityState.SHIFTING \
+	and velocity.length_squared() > 0.01:
+		# Face the direction of travel while shifting, so the body
+		# reads as being pulled/launched along its path.
+		#
+		# Uses velocity, NOT raw pending_acceleration. Acceleration this
+		# frame is gravity + shift force + planar movement input all
+		# summed together, and movement input alone can swing it by an
+		# amount comparable to gravity itself -- so steering mid-shift
+		# made the facing direction visibly lurch frame to frame.
+		# Velocity is the integral of that same acceleration, so it
+		# still reads as "launched along the thrust" without the
+		# per-frame noise, and since get_body_center() (used by the
+		# camera anchor) depends on global_basis, this lurch was a
+		# direct contributor to the shifting camera jitter.
+		forward = velocity.normalized()
+
+		# Carry the up-reference across frames and only re-orthogonalize
+		# it against the current forward. Reading global_basis.y here
+		# instead would feed this function its own previous output with
+		# no external anchor, which is what produced the roll jitter.
+		var up_ref: Vector3 = shift_facing_up
+		if abs(forward.dot(up_ref)) > 0.999:
+			up_ref = global_basis.x
+		up = (up_ref - forward * forward.dot(up_ref)).normalized()
+		shift_facing_up = up
+	else:
+		var gravity_up := -gravity_controller.gravity_direction
+		forward = (-aim_pivot.global_basis.z).slide(gravity_up)
+		up = gravity_up
+		# Keep the reference current so the next shift starts from a
+		# sane axis rather than a stale one.
+		shift_facing_up = gravity_up
 
 	if forward.length_squared() < 0.001:
 		return
@@ -654,7 +772,10 @@ func _apply_lean(delta: float) -> void:
 		var normalized_turn := clampf(turn_rate / lean_turn_rate_reference, -1.0, 1.0)
 		target_lean = normalized_turn * max_angle * shaped_fraction
 
-	var max_step := max_angle * lean_smoothing_speed * delta
+	# Stepped against the BASE angle, not the speed-scaled one --
+	# otherwise lean_smoothing_speed silently means "faster response at
+	# high speed" rather than a fixed rate.
+	var max_step := deg_to_rad(lean_max_angle_deg) * lean_smoothing_speed * delta
 	current_lean = move_toward(current_lean, target_lean, max_step)
 
 	character_model.global_basis = model_yaw_basis.rotated(model_yaw_basis.z, current_lean)
@@ -682,8 +803,7 @@ func _predict_trajectory(_delta: float) -> void:
 
 	for i in steps:
 		# Mirrors _handle_movement's acceleration model exactly, so
-		# predicted_speed stays consistent with what actually happens
-		# (it feeds the animation blend).
+		# predicted_speed stays consistent with what actually happens.
 		var accel: Vector3 = acceleration_toward(sim_velocity, sim_target, max_accel, actual_step)
 		sim_velocity += accel * actual_step
 
@@ -719,11 +839,24 @@ func get_planar_speed() -> float:
 
 func force_idle() -> void:
 	# Intentional hard stop -- this is a "reset the character" call
-	# (respawn/cutscene), not continuous motion.
+	# (respawn/cutscene), not continuous motion. Everything with
+	# carry-over state gets cleared, or a respawn mid-sprint resumes at
+	# sprint target speed with a banked model and a live landing brake.
 	hard_stop()
 	move_input = Vector2.ZERO
 	run_timer = 0.0
 	is_running = false
+	is_power_sprinting = false
+	run_blend = 0.0
+	power_blend = 0.0
+	current_speed = 0.0
+	current_lean = 0.0
+	turn_rate = 0.0
+	predicted_speed = 0.0
+	predicted_turn_rate = 0.0
+	landing_brake_timer = 0.0
+	orientation_frozen = false
+	orientation_freeze_timer = 0.0
 
 	if Particle_Controller:
 		Particle_Controller.clear()

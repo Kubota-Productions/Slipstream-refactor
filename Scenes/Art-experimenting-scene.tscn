@@ -82,6 +82,7 @@
 [ext_resource type="PackedScene" uid="uid://beg6ysm5yq2a6" path="res://Prefabs/sm_stairs_01_4_lod_0_0022.tscn" id="78_210gq"]
 [ext_resource type="PackedScene" uid="uid://u73dlh06eks" path="res://Prefabs/sm_stairs_01_5_lod_02.tscn" id="79_l8e8d"]
 [ext_resource type="PackedScene" uid="uid://5nuf5bj8mf50" path="res://Prefabs/sm_brutalist_01_stairs_f_lod.tscn" id="80_qe8tt"]
+[ext_resource type="PackedScene" uid="uid://bs73wvqjewtdf" path="res://Assets/Collection Assets/mound.glb" id="83_sfnks"]
 
 [sub_resource type="Environment" id="Environment_g4v7s"]
 background_mode = 1
@@ -1809,5 +1810,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.04224, 26.754707, -47.297
 
 [node name="SM_WallColumn01_LOD03" parent="." unique_id=1170858455 instance=ExtResource("73_tfkqn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.41228, 25.558031, -46.874256)
+
+[node name="mound" parent="." unique_id=1436997678 instance=ExtResource("83_sfnks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.827682, 0.32694864, -76.35755)
+
+[node name="mound5" parent="." unique_id=863817642 instance=ExtResource("83_sfnks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8276825, 0.32694864, -56.35755)
+
+[node name="mound6" parent="." unique_id=393943086 instance=ExtResource("83_sfnks")]
+transform = Transform3D(-0.258819, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, -0.258819, 3.8276825, 0.120394945, -63.35755)
+
+[node name="mound2" parent="." unique_id=558661013 instance=ExtResource("83_sfnks")]
+transform = Transform3D(0.25881907, 0, -0.9659258, -0.25, 0.9659258, -0.066987306, 0.93301266, 0.25881904, 0.25000003, 41.616093, 0.32694864, -76.52192)
+
+[node name="mound3" parent="." unique_id=1651676243 instance=ExtResource("83_sfnks")]
+transform = Transform3D(0.25854838, -0.04572637, -0.9649156, 0.011834842, 0.998954, -0.044168282, 0.9659258, 0, 0.25881907, 41.616093, 0.32694864, -33.52192)
+
+[node name="mound7" parent="." unique_id=218421177 instance=ExtResource("83_sfnks")]
+transform = Transform3D(0.25854838, -0.04572637, -0.9649156, 0.011834842, 0.998954, -0.044168282, 0.9659258, 0, 0.25881907, -3.3839073, 0.32694864, -39.52192)
+
+[node name="mound10" parent="." unique_id=409536952 instance=ExtResource("83_sfnks")]
+transform = Transform3D(-0.8224083, -0.33764455, -0.45786515, -0.31435725, 0.94051, -0.12892026, 0.474156, 0.037908103, -0.8796245, -1.0001335, -0.79025507, -42.377544)
+
+[node name="mound8" parent="." unique_id=1977248929 instance=ExtResource("83_sfnks")]
+transform = Transform3D(-0.9975891, 0.063662544, -0.027623206, 0.06448522, 0.9974679, -0.02999023, 0.025644094, -0.03169922, -0.9991685, -5.0780845, 0.32694864, -36.664402)
+
+[node name="mound9" parent="." unique_id=63237917 instance=ExtResource("83_sfnks")]
+transform = Transform3D(-0.9975891, 0.063662544, -0.027623206, 0.06448522, 0.9974679, -0.02999023, 0.025644094, -0.03169922, -0.9991685, 1.9219155, -0.67305136, -32.664402)
+
+[node name="mound4" parent="." unique_id=66660589 instance=ExtResource("83_sfnks")]
+transform = Transform3D(0.9645619, -0.05960151, 0.25703713, 0.051656216, 0.99795836, 0.037559576, -0.25875095, -0.022950955, 0.9656714, 43.26873, 0.32694864, -25.520372)
 
 [connection signal="curve_changed" from="Path3D" to="Path3D" method="_on_curve_changed"]
