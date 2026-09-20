@@ -206,22 +206,30 @@ func update_shift_power(delta: float, is_power_sprinting: bool = false) -> void:
 				rate = shift_drain_rate
 
 		shift_power = max(shift_power - rate * delta, 0.0)
+
 		if shift_power <= 0.0:
 			regen_delay_timer = shift_regen_delay_after_empty
 			return_to_ground()
+
 	elif gravity_state == GravityState.GROUNDED and is_power_sprinting:
-		shift_power = max(shift_power - power_sprint_drain_rate * delta, 0.0)
+		shift_power = max(
+			shift_power - power_sprint_drain_rate * delta,
+			0.0
+		)
+
 		if shift_power <= 0.0:
 			regen_delay_timer = shift_regen_delay_after_empty
+
 	elif gravity_state == GravityState.GROUNDED:
 		if regen_delay_timer > 0.0:
 			regen_delay_timer -= delta
-		else:
-			# Regen is capped below max_shift_power by whatever is
-			# currently reserved (e.g. held telekinesis objects), so
-			# those chunks stay drained until explicitly released.
+		elif player.is_on_floor():
+			# Only recover power when actually grounded.
 			var regen_ceiling: float = max_shift_power - reserved_power
-			shift_power = min(shift_power + shift_regen_rate * delta, regen_ceiling)
+			shift_power = min(
+				shift_power + shift_regen_rate * delta,
+				regen_ceiling
+			)
 
 	shift_power_changed.emit(shift_power, max_shift_power)
 

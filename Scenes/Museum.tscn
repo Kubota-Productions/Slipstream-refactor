@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://dg0acp526lltp"]
 
-[ext_resource type="PackedScene" uid="uid://bfslf2bf8vtac" path="res://Prefabs/bl1.tscn" id="1_0vid6"]
 [ext_resource type="PackedScene" uid="uid://ch0ukrsp0rawv" path="res://Prefabs/building.tscn" id="2_mpyoi"]
 [ext_resource type="PackedScene" uid="uid://x81jyxeoaaqp" path="res://Prefabs/building_1.tscn" id="3_3x3q7"]
 [ext_resource type="PackedScene" uid="uid://77c0a1x7ae46" path="res://Prefabs/building_2.tscn" id="4_udm5a"]
@@ -247,11 +246,12 @@
 [ext_resource type="PackedScene" uid="uid://duxkrrcxgjqwp" path="res://Prefabs/sm_windows_01_6_lod_02.tscn" id="245_4puv6"]
 [ext_resource type="PackedScene" uid="uid://biw5qohsrkxdd" path="res://Prefabs/tree.tscn" id="246_5laj2"]
 [ext_resource type="PackedScene" uid="uid://hwwmy8qspot6" path="res://Prefabs/woodramp_2.tscn" id="247_f4y4k"]
+[ext_resource type="PackedScene" uid="uid://dl6n5f2afh046" path="res://Assets/Collection Assets/roundBuilding1.tscn" id="247_udm5a"]
+[ext_resource type="PackedScene" uid="uid://dtpwhiiswsf2a" path="res://Assets/Collection Assets/roundBuilding2.tscn" id="248_5mnyu"]
+[ext_resource type="PackedScene" uid="uid://d07oo5kgds378" path="res://Assets/Collection Assets/roundBuilding3.tscn" id="249_tbcs3"]
+[ext_resource type="PackedScene" uid="uid://be04chgybns6s" path="res://Assets/Collection Assets/roundBuilding4.tscn" id="250_85b5q"]
 
 [node name="Museam" type="Node3D" unique_id=2125429642]
-
-[node name="Fantasy_building_03" parent="." unique_id=1165068300 instance=ExtResource("1_0vid6")]
-transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, -106.79646, 0, 35.73352)
 
 [node name="building2" parent="." unique_id=59282063 instance=ExtResource("2_mpyoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -132.919, 0, 84.26531)
@@ -993,3 +993,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.1435, 3.8146973e-06, 64.1
 
 [node name="woodramp2" parent="." unique_id=1197093939 instance=ExtResource("247_f4y4k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.58796, 0.72035265, 56.538887)
+
+[node name="Building1" parent="." unique_id=234806596 instance=ExtResource("247_udm5a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -129.09262, 0, 25.87725)
+
+[node name="Building2" parent="." unique_id=1089520361 instance=ExtResource("248_5mnyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99.38436, 0, 48.755272)
+
+[node name="Building3" parent="." unique_id=2027641920 instance=ExtResource("249_tbcs3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.531395, 0, 85.51097)
+
+[node name="Building4" parent="." unique_id=772311980 instance=ExtResource("250_85b5q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.31581, 0, 109.53655)
