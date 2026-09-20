@@ -2,19 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqtq5qb1cq312"
-path="res://.godot/imported/mound_moundbase_Base_color-moundbase_Opacity.png-83cf42a1a0e2773b68dd3254223b001d.ctex"
+uid="uid://d2dvq7nq3ovcs"
+path="res://.godot/imported/palette_eeve.png-f0446c6606bed4362232fd81b4d29ea1.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "2e9b1dff529bac35aa276178909b2796"
 }
 
 [deps]
 
-source_file="res://Assets/Collection Assets/mound_moundbase_Base_color-moundbase_Opacity.png"
-dest_files=["res://.godot/imported/mound_moundbase_Base_color-moundbase_Opacity.png-83cf42a1a0e2773b68dd3254223b001d.ctex"]
+source_file="res://Assets/palette_eeve.png"
+dest_files=["res://.godot/imported/palette_eeve.png-f0446c6606bed4362232fd81b4d29ea1.ctex"]
 
 [params]
 
@@ -26,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
