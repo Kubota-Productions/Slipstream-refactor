@@ -22,23 +22,25 @@ points = PackedVector3Array(0.23507206, 0.11758691, 1.0244889, 0.26909715, -1.10
 
 [node name="SM_Fence01_4_LOD02" unique_id=944436039 instance=ExtResource("1_54dio")]
 
-[node name="SM_Fence01_4_LOD0" parent="." index="0" unique_id=134263126]
+[node name="SM_Fence01_4_LOD0" parent="." index="0" unique_id=1975872994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="." index="1" unique_id=636576328]
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Fence01_4_LOD0" index="0" unique_id=1253759750]
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="0" unique_id=636576328]
 shape = SubResource("ConvexPolygonShape3D_mtxpu")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="." index="2" unique_id=1768862469]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="1" unique_id=1768862469]
 shape = SubResource("ConvexPolygonShape3D_ufyd8")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="3" unique_id=420417785]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="2" unique_id=420417785]
 shape = SubResource("ConvexPolygonShape3D_66yqb")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="4" unique_id=798920682]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="3" unique_id=798920682]
 shape = SubResource("ConvexPolygonShape3D_jrubh")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="5" unique_id=596637620]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="4" unique_id=596637620]
 shape = SubResource("ConvexPolygonShape3D_h0ka6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="6" unique_id=1779273831]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Fence01_4_LOD0/StaticBody3D" index="5" unique_id=1779273831]
 shape = SubResource("ConvexPolygonShape3D_qppn5")
