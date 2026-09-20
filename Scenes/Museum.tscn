@@ -725,7 +725,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7061651, 0, -7.08003)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5097563, 0, -7.08003)
 
 [node name="SM_Door05_2_LOD02" parent="." unique_id=1125202420 instance=ExtResource("158_px15p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.08003)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.257472, -1.1967492, 23.412739)
 
 [node name="SM_Electricbox_01_LOD02" parent="." unique_id=1224607195 instance=ExtResource("159_jo4qk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.358269, -1.9073486e-06, 29.455894)
