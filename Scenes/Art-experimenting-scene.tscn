@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bvjpv4qus0xr0"]
 
 [ext_resource type="Shader" uid="uid://dcdqyha0m6pma" path="res://Shaders/Dither.gdshader" id="2_tfkqn"]
-[ext_resource type="Texture2D" uid="uid://ux437wyyhq4t" path="res://Assets/bayer16tile2.png" id="3_lyh1h"]
 [ext_resource type="PackedScene" uid="uid://cml8lgcsc0pqy" path="res://Player/playerprefab2.tscn" id="3_vevt6"]
 [ext_resource type="Material" uid="uid://ymvn1xryu3wm" path="res://Materials/CollectionMaterialNoninteractive/brickwalltriplanar.tres" id="4_jovtt"]
 [ext_resource type="Shader" uid="uid://dekqua2bb7q82" path="res://Shaders/Water.gdshader" id="4_xm3oa"]
@@ -84,7 +83,6 @@
 [ext_resource type="PackedScene" uid="uid://beg6ysm5yq2a6" path="res://Prefabs/sm_stairs_01_4_lod_0_0022.tscn" id="78_210gq"]
 [ext_resource type="PackedScene" uid="uid://u73dlh06eks" path="res://Prefabs/sm_stairs_01_5_lod_02.tscn" id="79_l8e8d"]
 [ext_resource type="PackedScene" uid="uid://5nuf5bj8mf50" path="res://Prefabs/sm_brutalist_01_stairs_f_lod.tscn" id="80_qe8tt"]
-[ext_resource type="PackedScene" uid="uid://bs73wvqjewtdf" path="res://Assets/Collection Assets/mound.glb" id="83_sfnks"]
 [ext_resource type="PackedScene" uid="uid://cuaw0ylwvtsj7" path="res://Player/Madchild.glb" id="86_vevt6"]
 
 [sub_resource type="Gradient" id="Gradient_tfkqn"]
@@ -94,20 +92,23 @@ colors = PackedColorArray(0, 0, 0, 1, 0.55744374, 0.18546924, 0, 1, 0.90203667, 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_2epxk"]
 gradient = SubResource("Gradient_tfkqn")
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tfkqn"]
+load_path = "res://.godot/imported/bayer16tile2.png-237be4ac8244c5880847bae49bedcb96.ctex"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vevt6"]
 render_priority = 0
 shader = ExtResource("2_tfkqn")
-shader_parameter/dither_tex = ExtResource("3_lyh1h")
-shader_parameter/dither_size = 4.68800017518
+shader_parameter/dither_tex = SubResource("CompressedTexture2D_tfkqn")
+shader_parameter/dither_size = 2.5430000732925
 shader_parameter/color_tex = SubResource("GradientTexture1D_2epxk")
 shader_parameter/palette_strength = 1.0
 shader_parameter/bit_depth = 256
 shader_parameter/contrast = 1.01200004807
-shader_parameter/offset = 0.0050000477375000685
+shader_parameter/offset = 0.00500004773750006
 shader_parameter/alpha = 1.0
 shader_parameter/depth_fade_enabled = true
-shader_parameter/depth_fade_near = 62.50000296875
-shader_parameter/depth_fade_far = 227.45201080397
+shader_parameter/depth_fade_near = 11.36400053979
+shader_parameter/depth_fade_far = 62.6290029748775
 shader_parameter/depth_fade_invert = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tfkqn"]
@@ -1865,69 +1866,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.04224, 26.754707, -47.297
 
 [node name="SM_WallColumn01_LOD03" parent="." unique_id=1170858455 instance=ExtResource("73_tfkqn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.41228, 25.558031, -46.874256)
-
-[node name="mound" parent="." unique_id=1436997678 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.76, 0, 0, 0, 0.76, 0, 0, 0, 0.76, 43.888695, 0.18216646, -74.99399)
-
-[node name="mound5" parent="." unique_id=863817642 instance=ExtResource("83_sfnks")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8276825, 0.32694864, -56.35755)
-
-[node name="mound6" parent="." unique_id=393943086 instance=ExtResource("83_sfnks")]
-transform = Transform3D(-0.16693828, 0, 0.62302214, 0, 0.645, 0, -0.62302214, 0, -0.16693828, 5.8276825, 0.120394945, -60.35755)
-
-[node name="mound19" parent="." unique_id=236353967 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.4560838, 0, 0.45608371, 0, 0.6449999, 0, -0.45608371, 0, 0.4560838, 9.8276825, 0.120394945, -56.35755)
-
-[node name="mound2" parent="." unique_id=558661013 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.72, 0, 0, 0, 0.72, 0, 0, 0, 0.72, 38.616093, 0.23345017, -75.52192)
-
-[node name="mound21" parent="." unique_id=1244647688 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.7106556, 0, 0.11562268, 0, 0.72, 0, -0.11562268, 0, 0.7106556, 46.433872, 0.23345017, -53.52192)
-
-[node name="mound3" parent="." unique_id=1651676243 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.25854838, -0.045726366, -0.9649156, 0.01183484, 0.99895394, -0.044168286, 0.9659258, 1.6763805e-08, 0.2588191, 41.616093, 0.32694864, -33.52192)
-
-[node name="mound11" parent="." unique_id=583215574 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 46.616093, -4.000827, 3.4780807)
-
-[node name="mound14" parent="." unique_id=562589126 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.25854838, -0.045726366, -0.9649156, 0.01183484, 0.99895394, -0.044168286, 0.9659258, 1.6763805e-08, 0.2588191, 22.616093, -3.572609, 42.47808)
-
-[node name="mound15" parent="." unique_id=867976628 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.9998289, 0.018464036, -0.0010780029, -0.018493628, 0.99885345, -0.044155903, 0.00026147065, 0.044168282, 0.99902415, 6.6160927, -4.008506, 45.399117)
-
-[node name="mound13" parent="." unique_id=1344458344 instance=ExtResource("83_sfnks")]
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -42.383907, -3.711765, 36.47808)
-
-[node name="mound12" parent="." unique_id=1637416650 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.25874925, -0.023239776, -0.9656649, 0.0060148844, 0.99972975, -0.022447906, 0.9659258, 1.536682e-08, 0.25881913, 47.616093, -3.5003529, 36.51332)
-
-[node name="mound7" parent="." unique_id=218421177 instance=ExtResource("83_sfnks")]
-transform = Transform3D(-0.53527856, -0.07619632, -0.84123194, -0.01242377, 0.9965253, -0.08235709, 0.8445842, -0.033632707, -0.5343654, -2.8745725, -0.12230086, -40.014477)
-
-[node name="mound10" parent="." unique_id=409536952 instance=ExtResource("83_sfnks")]
-transform = Transform3D(-0.6217805, -0.05872963, -0.33769786, -0.06446152, 0.70705473, -0.004276449, 0.3366507, 0.026914792, -0.6245334, 0.9998665, 0.38397157, -41.377544)
-
-[node name="mound8" parent="." unique_id=1977248929 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.06448518, 0.9974679, -0.029990131, 0.99758905, -0.06366249, 0.027623288, 0.025644096, -0.03169912, -0.9991684, 0.089354515, 3.6886764, -45.664402)
-
-[node name="mound9" parent="." unique_id=63237917 instance=ExtResource("83_sfnks")]
-transform = Transform3D(-0.99758905, 0.06366252, -0.027623355, 0.06448522, 0.9974678, -0.029990235, 0.025644153, -0.03169922, -0.9991685, 1.9219155, -0.67305136, -32.664402)
-
-[node name="mound4" parent="." unique_id=66660589 instance=ExtResource("83_sfnks")]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 43.26873, -0.04491496, -25.520372)
-
-[node name="mound20" parent="." unique_id=404201247 instance=ExtResource("83_sfnks")]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 43.26873, -0.04491496, -43.52037)
-
-[node name="mound16" parent="." unique_id=890759997 instance=ExtResource("83_sfnks")]
-transform = Transform3D(0.999598, -0.02835106, 0, 0.028322943, 0.9986067, 0.04452506, -0.0012623327, -0.044507165, 0.99900824, 24, 0.3360486, -70)
-
-[node name="mound18" parent="." unique_id=619188628 instance=ExtResource("83_sfnks")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.59179544, -64)
-
-[node name="mound17" parent="." unique_id=1390526741 instance=ExtResource("83_sfnks")]
-transform = Transform3D(-0.258819, 0, -0.96592575, 0, 1, 0, 0.96592575, 0, -0.258819, 20, 0.7190597, -74)
 
 [node name="Madchild" parent="." unique_id=336479959 instance=ExtResource("86_vevt6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.113319635, -47)
