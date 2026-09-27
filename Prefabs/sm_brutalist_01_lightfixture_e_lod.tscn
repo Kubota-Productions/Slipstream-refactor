@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bbfmoq6t13klx"]
+
+[ext_resource type="PackedScene" uid="uid://co8crb4id3ap7" path="res://Assets/Collection Assets/SM_Brutalist_01_Lightfixture_E_LOD0.glb" id="1_mkskw"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_i1r6n"]
+points = PackedVector3Array(-0.06794727, -0.6900649, 0.0023219064, -0.06563269, -0.6900649, -9.357876e-08, -0.06563269, -0.69236916, 0.0023219064, -0.06794727, -0.6900649, 0.03850274, -0.06794727, 0.68992954, 0.0023219064, 0.06561963, -0.6900649, -9.357876e-08, -0.06563269, 0.68992954, -9.357876e-08, -0.06563269, -0.69236916, 0.03850274, 0.06561963, -0.69236916, 0.0023219064, -0.06563269, -0.6868118, 0.04082474, -0.06794727, 0.68992954, 0.03850274, -0.06563269, 0.6923693, 0.0023219064, 0.0679342, -0.6900649, 0.0023219064, 0.06561963, 0.68992954, -9.357876e-08, 0.06794751, 0.68992954, 0.0023219064, 0.06561963, -0.69236916, 0.03850274, 0.062334, -0.6900649, 0.04082874, -0.062347062, -0.6900649, 0.04082474, 0.050135925, -0.67786574, 0.04082874, -0.06563269, 0.68667644, 0.04082474, -0.06563269, 0.6923693, 0.03850274, 0.06561963, 0.69223374, 0.0023219064, 0.0679342, -0.6900649, 0.03850274, 0.06561963, 0.69223374, 0.03850274, 0.0679342, 0.68992954, 0.03850274, 0.06561963, -0.6868118, 0.04082874, 0.053421557, -0.67461264, 0.04082874, -0.062347062, 0.68992954, 0.04082474, 0.062334, 0.68992954, 0.04082474, 0.06561963, 0.68667644, 0.04082474)
+
+[node name="SM_Brutalist_01_Lightfixture_E_LOD02" unique_id=1060016897 instance=ExtResource("1_mkskw")]
+
+[node name="SM_Brutalist_01_Lightfixture_E_LOD0" parent="." index="0" unique_id=87777868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Brutalist_01_Lightfixture_E_LOD0" index="0" unique_id=1863218453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.20484245)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Lightfixture_E_LOD0" index="1" unique_id=1578440519]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Lightfixture_E_LOD0/StaticBody3D" index="0" unique_id=1676311049]
+shape = SubResource("ConvexPolygonShape3D_i1r6n")

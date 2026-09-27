@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://tnms810414km"]
+
+[ext_resource type="PackedScene" uid="uid://d32eqchb6a1r2" path="res://Assets/InteractiveObjects/SM_AutopsyTable01_LOD0.glb" id="1_mha72"]
+
+[node name="SM_AutopsyTable01_LOD02" unique_id=1409604681 instance=ExtResource("1_mha72")]
+
+[node name="SM_AutopsyTable01_LOD0" parent="." index="0" unique_id=53443294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://diq7dtg5h52ps"]
+
+[ext_resource type="PackedScene" uid="uid://b5dxadbueopxy" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_02_3_lod_02.tscn" id="1_6qmh1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qmh1"]
+size = Vector3(66.91635, 4.4565387, 19.121521)
+
+[node name="InteractiveLadle1" type="RigidBody3D" unique_id=478286070 groups=["tktarget"]]
+
+[node name="SM_Kitchenware02_3_LOD02" parent="." unique_id=974425188 instance=ExtResource("1_6qmh1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1909068270]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -0.015148125, 0.001457119, 1.4972686e-06)
+shape = SubResource("BoxShape3D_6qmh1")

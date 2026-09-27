@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://slufuufda4iv"]
+
+[ext_resource type="PackedScene" uid="uid://bj5uluh35hv2" path="res://Assets/InteractiveObjects/platter.glb" id="1_0ytd2"]
+
+[node name="platter" unique_id=465831576 instance=ExtResource("1_0ytd2")]
+
+[node name="Platter" parent="." index="0" unique_id=693250131]
+transform = Transform3D(0.3, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)

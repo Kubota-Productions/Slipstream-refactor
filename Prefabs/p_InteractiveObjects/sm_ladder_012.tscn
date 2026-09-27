@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://27lsbrna30mf"]
+
+[ext_resource type="PackedScene" uid="uid://daac2awq2ktwt" path="res://Assets/InteractiveObjects/SM_Ladder_01.glb" id="1_dkc8i"]
+
+[node name="SM_Ladder_012" unique_id=517484233 instance=ExtResource("1_dkc8i")]
+
+[node name="SM_Ladder_01" parent="." index="0" unique_id=1195779231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cxtv8k2kjmeu8"]
+
+[ext_resource type="PackedScene" uid="uid://d81xrfhalk71" path="res://Assets/Collection Assets/SM_Brutalist_01_Lightfixture_C_LOD0.glb" id="1_pwtyj"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_oxt2k"]
+points = PackedVector3Array(0.07134403, -0.030523187, 0.18960105, 0.06862044, -0.002716571, 0.19231234, 0.06862044, -0.030523187, 0.19231234, 0.064779475, -0.033236504, 0.18960105, 0.06862044, -0.033236504, 0.1857601, 0.06862044, -0.033236504, -0.18579783, 0.07133007, -0.030523187, -0.1896388, 0.07133007, -0.002716571, -0.1896388, 0.07133007, -0.002716571, 0.18960105, -0.068634614, -0.002716571, 0.19234999, 0.06862044, 0, 0.18960105, -0.068634614, -0.030523187, 0.19231234, -0.064793654, -0.033236504, 0.18960105, 0.064779475, -0.033236504, -0.1896388, 0.06862044, -0.030523187, -0.19235007, 0.06862044, -0.002716571, -0.19235007, 0.06862044, 0, -0.1896388, -0.068634614, 0, 0.18960105, -0.07134424, -0.002716571, 0.18960105, -0.07134424, -0.030523187, 0.18960105, -0.068634614, -0.033236504, 0.1857601, -0.064793654, -0.033236504, -0.1896388, -0.068634614, -0.030523187, -0.19235007, -0.068634614, -0.002716571, -0.19235007, -0.068634614, 0, -0.1896388, -0.07134424, -0.002716571, -0.1896388, -0.07134424, -0.030523187, -0.1896388, -0.068634614, -0.033236504, -0.18579783)
+
+[node name="SM_Brutalist_01_Lightfixture_C_LOD02" unique_id=579216838 instance=ExtResource("1_pwtyj")]
+
+[node name="SM_Brutalist_01_Lightfixture_C_LOD0" parent="." index="0" unique_id=1377940743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Lightfixture_C_LOD0" index="0" unique_id=727961017]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Lightfixture_C_LOD0/StaticBody3D" index="0" unique_id=1739688039]
+shape = SubResource("ConvexPolygonShape3D_oxt2k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SM_Brutalist_01_Lightfixture_C_LOD0/StaticBody3D" index="1" unique_id=1149078844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25502625, 0)

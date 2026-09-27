@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bjev66yl8dqe3"]
+
+[ext_resource type="Texture2D" uid="uid://c7bli2yq06eir" path="res://Assets/leaftexture1.png" id="1_7ad3g"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_7ad3g")
+metallic_specular = 0.0
+roughness = 0.0
+stencil_flags = 2

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dssp48bxg2kah"]
+
+[ext_resource type="PackedScene" uid="uid://c7ggcqrs4tdbq" path="res://Assets/Collection Assets/SM_Locker01_5_LOD0.glb" id="1_slusb"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rwbwr"]
+points = PackedVector3Array(0.8344816, 0.17703113, 0.1369, -0.94943494, 0.28921196, -0.18113491, -0.94943494, 0.34854874, -0.18113491, -0.94943494, 0.28921196, 0.204573, 0.91950953, 0.3782273, 0.17489736, 0.94943494, 0.34854874, -0.18113491, -0.8014046, 0.18089034, -0.1085, 0.91950953, 0.20025763, -0.15145926, -0.91950953, 0.3782273, 0.17489736, -0.8344816, 0.17703113, 0.1369, -0.91950953, 0.3782273, -0.15145926, 0.94943494, 0.28921196, 0.204573, 0.91950953, 0.3782273, -0.15145926, -0.91950953, 0.20025763, 0.17489736, -0.91950953, 0.20025763, -0.15145926, 0.8014046, 0.18089034, -0.1085, 0.94943494, 0.34854874, 0.204573, 0.91950953, 0.20025763, 0.17489736, -0.94943494, 0.34854874, 0.204573, 0.94943494, 0.28921196, -0.18113491)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pnle3"]
+points = PackedVector3Array(-0.8321284, -0.97758937, -0.1131, 0.8344974, 0.13352163, 0.1369, 0.8664966, -1.0005312, 0.1417, 0.8900516, 0.17055869, -0.12179524, -0.834541, 0.13352163, 0.1369, -0.89009523, 0.17055869, -0.12179524, -0.86654025, -1.0005312, 0.1417, 0.8320848, -0.97758937, -0.1131)
+
+[node name="SM_Locker01_5_LOD02" unique_id=2088909938 instance=ExtResource("1_slusb")]
+
+[node name="SM_Locker01_5_LOD0" parent="." index="0" unique_id=319498816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="1" unique_id=552844358]
+shape = SubResource("ConvexPolygonShape3D_rwbwr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=942489808]
+shape = SubResource("ConvexPolygonShape3D_pnle3")

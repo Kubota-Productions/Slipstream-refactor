@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ymvn1xryu3wm"]
+
+[ext_resource type="Texture2D" uid="uid://j8oa7fj2adgb" path="res://Assets/textures/Collection Textures/T_WallBrick02_D.PNG" id="1_qi5vc"]
+[ext_resource type="Texture2D" uid="uid://bcr4ta0wfsv6j" path="res://Assets/textures/Collection Textures/T_WallBrick01_N.PNG" id="2_iklm7"]
+
+[resource]
+albedo_texture = ExtResource("1_qi5vc")
+normal_enabled = true
+normal_texture = ExtResource("2_iklm7")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true

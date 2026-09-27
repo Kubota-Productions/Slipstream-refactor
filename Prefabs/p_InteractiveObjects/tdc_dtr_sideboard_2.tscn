@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://deoncmo81rm5r"]
+
+[ext_resource type="PackedScene" uid="uid://lj1i7fyswcdn" path="res://Assets/InteractiveObjects/tdc-dtr-sideboard.glb" id="1_p2nng"]
+
+[node name="tdc-dtr-sideboard2" unique_id=1550851181 instance=ExtResource("1_p2nng")]
+
+[node name="tdc-dtr-sideboard" parent="." index="0" unique_id=154375752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

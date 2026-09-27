@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bgv7mewyt6j43"]
+
+[ext_resource type="PackedScene" uid="uid://du8n0aam1803b" path="res://Assets/InteractiveObjects/SM_Barrel01_1_LOD0.glb" id="1_kmdmg"]
+
+[node name="SM_Barrel01_1_LOD02" unique_id=8349171 instance=ExtResource("1_kmdmg")]
+
+[node name="SM_Barrel01_1_LOD0" parent="." index="0" unique_id=2053321457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

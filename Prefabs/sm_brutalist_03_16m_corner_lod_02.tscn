@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bpidsmgoh00yy"]
+
+[ext_resource type="PackedScene" uid="uid://voc7cttprtxn" path="res://Assets/Collection Assets/SM_Brutalist_03_16M_Corner_LOD0.glb" id="1_0vk44"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vjo1c"]
+points = PackedVector3Array(0.21220148, 16.123802, -2.326487, -2.326487, -0.123802185, -0.5493553, -2.326487, -0.123802185, 0.21220148, -2.326487, 16.123802, -0.5493553, 0.21220148, -0.123802185, 0.21220148, 0.21220148, 16.123802, 0.21220148, -0.5493553, -0.123802185, -2.326487, 0.21220148, -0.123802185, -2.326487, -2.326487, 16.123802, 0.21220148, -0.5493553, 16.123802, -2.326487)
+
+[node name="SM_Brutalist_03_16M_Corner_LOD02" unique_id=1773334027 instance=ExtResource("1_0vk44")]
+
+[node name="SM_Brutalist_03_16M_Corner_LOD0" parent="." index="0" unique_id=1128924519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=863425810]
+shape = SubResource("ConvexPolygonShape3D_vjo1c")

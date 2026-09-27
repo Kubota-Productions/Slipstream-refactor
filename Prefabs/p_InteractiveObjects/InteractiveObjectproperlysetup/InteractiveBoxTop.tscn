@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dt5vfj7tv6iwp"]
+
+[ext_resource type="PackedScene" uid="uid://c6lysbbh12rjf" path="res://Prefabs/p_InteractiveObjects/sm_box_01_3_lod_02.tscn" id="1_fyu5u"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0o23y"]
+points = PackedVector3Array(-1, -0.038300913, -0.2814047, -1, -0.038300913, 0.2814047, -1, -0.005163502, -0.2814047, 1, -0.038300913, -0.2814047, -1, -0.005163502, 0.2814047, 1, -0.038300913, 0.2814047, -0.98688334, 0.02507082, -0.24763393, 1, -0.005163502, -0.2814047, -0.98688334, 0.02507082, 0.24757883, 1, -0.005163502, 0.2814047, 0.98668754, 0.02507082, -0.24763393, 0.98668754, 0.02507082, 0.24757883)
+
+[node name="InteractiveElectricChair" type="RigidBody3D" unique_id=478286070 groups=["tktarget"]]
+
+[node name="SM_Box01_3_LOD02" parent="." unique_id=1738088454 instance=ExtResource("1_fyu5u")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=117299957]
+shape = SubResource("ConvexPolygonShape3D_0o23y")

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://w7grrah20aio"]
+
+[ext_resource type="PackedScene" uid="uid://c3icb1m42e16w" path="res://Assets/InteractiveObjects/tdc-dtr-stool-1.glb" id="1_u32rx"]
+
+[node name="tdc-dtr-stool-12" unique_id=1608775083 instance=ExtResource("1_u32rx")]
+
+[node name="tdc-dtr-stool-1" parent="." index="0" unique_id=749293922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

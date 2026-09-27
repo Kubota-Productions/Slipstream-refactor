@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dmrskqf0nmll2"]
+
+[ext_resource type="PackedScene" uid="uid://jqdrp0eqpnth" path="res://Assets/Collection Assets/SM_Door03_2_LOD0.glb" id="1_o8iui"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hj4m4"]
+points = PackedVector3Array(-0.19884443, 0.048544455, -0.2827623, 0.21604443, 0.13152224, 0.33937603, 0.046659775, 0.16619764, 0.50267905, -0.07432904, 0.0070555657, 0.5469667, 0.21604443, 0.048544455, -0.2827623, -0.07432904, 0.17301112, -0.53174436, -0.19884443, 0.13152224, 0.33937603, -0.07432904, 0.0070555657, -0.53174436, 0.21604443, 0.13152224, -0.2827623, 0.21604443, 0.048544455, 0.33937603, -0.07432904, 0.17301112, 0.5469667, 0.0466, 0.013988671, -0.4866792, -0.19884443, 0.048544455, 0.33937603, -0.19884443, 0.13152224, -0.2827623, 0.0466, 0.16607802, -0.4866792, 0.046665348, 0.013857897, 0.5027515)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4ye30"]
+points = PackedVector3Array(0.0466, -1.0660443, -0.48638874, 0.0466674, -0.039134618, 0.5024873, 0.09157778, -0.53242993, -0.44875032, -0.074377775, 0.007055521, -0.53174436, -0.074377775, -1.1131444, 0.5469667, 0.09157778, -1.1131444, 0.50536406, -0.074377775, -1.1131444, -0.53174436, -0.074377775, 0.007055521, 0.5469667, 0.0466, -0.04004455, -0.48638874, 0.09157778, -1.1131444, -0.44875032, 0.09157778, -0.53242993, -0.53174436, 0.09157778, -0.8641258, 0.50536406, 0.09157778, -0.69822305, -0.53174436)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_134yb"]
+points = PackedVector3Array(0.09157778, 1.0027199, -0.53174436, 0.04661203, 1.4847761, 0.50176746, -0.074377775, 1.5421444, 0.5469667, -0.074377775, 0.17301118, 0.5469667, -0.074377775, 1.5421444, -0.53174436, -0.074377775, 0.17301118, -0.53174436, 0.046657573, 0.22962797, 0.5023595, 0.0466, 0.23057795, -0.48638874, 0.0466, 1.4845777, -0.48638874, 0.09157778, 1.1685008, -0.44875032, 0.09157778, 1.1685008, -0.53174436, 0.09157778, 1.0027199, -0.44875032)
+
+[node name="SM_Door03_2_LOD02" unique_id=1177916974 instance=ExtResource("1_o8iui")]
+
+[node name="SM_Door03_2_LOD0" parent="." index="0" unique_id=1441657150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="1" unique_id=1522623905]
+shape = SubResource("ConvexPolygonShape3D_hj4m4")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="2" unique_id=263414578]
+shape = SubResource("ConvexPolygonShape3D_4ye30")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3" unique_id=1514764328]
+shape = SubResource("ConvexPolygonShape3D_134yb")

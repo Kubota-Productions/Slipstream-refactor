@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c3awbqvglm8nx"]
+
+[ext_resource type="PackedScene" uid="uid://df5617qu86e40" path="res://Assets/InteractiveObjects/SM_Bath01_LOD0.glb" id="1_r50qu"]
+
+[node name="SM_Bath01_LOD02" unique_id=2041625982 instance=ExtResource("1_r50qu")]
+
+[node name="SM_Bath01_LOD0" parent="." index="0" unique_id=786897806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

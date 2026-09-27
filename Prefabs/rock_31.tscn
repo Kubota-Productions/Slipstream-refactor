@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://770efeqg4bxe"]
+
+[ext_resource type="PackedScene" uid="uid://bwur7vyt6i15n" path="res://Assets/Collection Assets/rock_055.glb" id="1_ve1m3"]
+
+[node name="rock_0552" unique_id=1297596090 instance=ExtResource("1_ve1m3")]
+
+[node name="rock_055" parent="." index="0" unique_id=1414958715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

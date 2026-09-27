@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cc2wqmqmywgyt"]
+
+[ext_resource type="PackedScene" uid="uid://yrl0bqvp2qyq" path="res://Assets/Collection Assets/SM_Brutalist_01_Wall_Overhang_C_LOD0.glb" id="1_nc0p7"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_q0gcr"]
+points = PackedVector3Array(4.666401, -0.22222328, 3.5419023, 28.222122, 16.222338, 5.3193445, 28.222122, 12.66654, 5.3193445, 4.666401, -0.22222328, 5.3193445, 4.666401, 16.222338, 5.3193445, 28.222122, 16.222338, 3.5419023, 4.666401, 16.222338, 3.5419023, 28.222122, 12.66654, 3.5419023, 6.889161, -0.22222328, 3.5419023, 6.889161, -0.22222328, 5.3193445)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1ogpo"]
+points = PackedVector3Array(0, 0.5262655, 0.6332056, 4.4880915, 15.622572, 5.125, 4.6664, 16.222338, 3.5413802, 4.6664, -0.22222328, 3.5413802, -0.000289963, 15.474824, 5.0770817, 4.1651998, 15.989543, 0.06164837, -9.365607e-06, 0.526234, 5.0767756, -0.0002888348, 15.47482, 0.22858542, 4.1651998, 2.1706107, 0.06164837, 4.4880915, 0.3775423, 5.125, -9.305256e-06, 2.5468588, 0.22889036, 4.0603857, 0.44150153, 0.6103)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vfvgq"]
+points = PackedVector3Array(4.666401, -0.22222328, -5.3470497, 28.222122, 16.222338, -3.5696075, 28.222122, 12.66654, -3.5696075, 4.666401, -0.22222328, -3.5696075, 4.666401, 16.222338, -3.5696075, 28.222122, 16.222338, -5.3470497, 4.666401, 16.222338, -5.3470497, 28.222122, 12.66654, -5.3470497, 6.889161, -0.22222328, -5.3470497, 6.889161, -0.22222328, -3.5696075)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pbv6w"]
+points = PackedVector3Array(4.4626946, 0.46296665, -5.125, 4.1651998, 15.989543, -0.08935356, -0.0002888348, 15.47482, -0.2562906, 4.4626946, 15.5371475, -5.125, -0.00029020687, 15.474825, -5.1047873, 0, 0.5262655, -0.6609108, 4.1651998, 2.1706107, -0.08935356, -9.609421e-06, 0.52623314, -5.104481, 4.6664, -0.22222328, -3.5690854, 4.6664, 16.222338, -3.5690854, -9.305256e-06, 2.5468588, -0.25659555, 4.085323, 0.33897626, -0.6103)
+
+[node name="SM_Brutalist_01_Wall_Overhang_C_LOD02" unique_id=336044362 instance=ExtResource("1_nc0p7")]
+
+[node name="SM_Brutalist_01_Wall_Overhang_C_LOD0" parent="." index="0" unique_id=842459630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="1" unique_id=870434754]
+shape = SubResource("ConvexPolygonShape3D_q0gcr")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="2" unique_id=506545712]
+shape = SubResource("ConvexPolygonShape3D_1ogpo")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="3" unique_id=1056255685]
+shape = SubResource("ConvexPolygonShape3D_vfvgq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1096603477]
+shape = SubResource("ConvexPolygonShape3D_pbv6w")

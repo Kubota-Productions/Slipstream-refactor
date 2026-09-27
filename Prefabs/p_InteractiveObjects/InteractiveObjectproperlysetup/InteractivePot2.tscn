@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bdx08vcruhbbu"]
+
+[ext_resource type="PackedScene" uid="uid://cggmws1ldh0m3" path="res://Prefabs/p_InteractiveObjects/sm_kitchenware_01_2_lod_02.tscn" id="1_xyrab"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7sdwj"]
+height = 22.039028
+radius = 16.829687
+
+[node name="InteractivePot2" type="RigidBody3D" unique_id=478286070 groups=["tktarget"]]
+
+[node name="SM_Kitchenware01_2_LOD02" parent="." unique_id=1142097453 instance=ExtResource("1_xyrab")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=461074535]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 1.9073486e-08, -0.050943162, -5.7220458e-08)
+shape = SubResource("CylinderShape3D_7sdwj")

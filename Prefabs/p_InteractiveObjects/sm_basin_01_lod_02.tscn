@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bff0itn6iri4h"]
+
+[ext_resource type="PackedScene" uid="uid://wl1adiqelpf4" path="res://Assets/InteractiveObjects/SM_Basin01_LOD0.glb" id="1_duajc"]
+
+[node name="SM_Basin01_LOD02" unique_id=1420672499 instance=ExtResource("1_duajc")]
+
+[node name="SM_Basin01_LOD0" parent="." index="0" unique_id=2117506981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

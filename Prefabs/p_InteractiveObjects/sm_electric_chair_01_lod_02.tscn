@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bjcfw7m67bvqc"]
+
+[ext_resource type="PackedScene" uid="uid://b8a41x4xjbwbp" path="res://Assets/InteractiveObjects/SM_ElectricChair01_LOD0.glb" id="1_mvf0r"]
+
+[node name="SM_ElectricChair01_LOD02" unique_id=2055961643 instance=ExtResource("1_mvf0r")]
+
+[node name="SM_ElectricChair01_LOD0" parent="." index="0" unique_id=961676850]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://byggpreob640g"]
+
+[ext_resource type="PackedScene" uid="uid://nbhcrkqaug5s" path="res://Assets/Collection Assets/SM_Electricbox_09_LOD0.glb" id="1_s5thn"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g5vl1"]
+points = PackedVector3Array(0.016978025, 0.59974986, 0.06654182, 0.022116143, 0.59974986, 0.064402565, -0.03643464, 0.59974986, 0.06654182, 0.016978025, -0.6342394, 0.06654182, 0.024248607, 0.59974986, 0.059271067, 0.022116143, -0.6342394, 0.064402565, -0.03643464, 0.59974986, -0.071778566, -0.03643464, -0.6342394, 0.06654182, 0.02424267, 0.59974986, -0.06452135, 0.024248607, -0.6342394, 0.059271067, 0.016978025, 0.59974986, -0.071778566, -0.03643464, -0.6342394, -0.071778566, 0.022116143, 0.59974986, -0.06965285, 0.02424267, -0.6342394, -0.06452135, 0.016978025, -0.6342394, -0.071778566, 0.022116143, -0.6342394, -0.06965285)
+
+[node name="SM_Electricbox_09_LOD02" unique_id=2124968566 instance=ExtResource("1_s5thn")]
+
+[node name="SM_Electricbox_09_LOD0" parent="." index="0" unique_id=569090868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1029691326]
+shape = SubResource("ConvexPolygonShape3D_g5vl1")

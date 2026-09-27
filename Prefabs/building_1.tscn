@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://x81jyxeoaaqp"]
+
+[ext_resource type="PackedScene" uid="uid://dl35xft67vdpr" path="res://Assets/Collection Assets/building1.glb" id="1_sv3io"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sv3io"]
+points = PackedVector3Array(5.4021153, 4.618329, 3.189685, 5.4021153, 3.5778732, 3.189685, 5.8194585, 4.6170797, 3.07137, 7.0124545, 4.6170797, 1.6998422, 5.4021153, 4.618329, -2.111686, -5.403489, 4.618329, 3.189685, 5.4021153, -8.1419325, 3.1891663, 5.8194585, -8.1419325, 3.07137, -5.403489, 3.5778732, 3.189685, 7.011081, -8.1419325, 1.6998422, 7.0124545, 4.6170797, -0.6223618, 5.8194585, 4.6170797, -1.9938893, 5.4021153, -8.1419325, -2.111686, -5.403489, 4.618329, -2.111686, -7.0124545, 4.6170797, 1.6998422, -5.8208313, 4.6170797, 3.07137, -5.403489, -8.1419325, 3.1891663, -5.8208313, -8.1419325, 3.07137, 7.011081, -8.1419325, -0.6223618, 5.8194585, -8.1419325, -1.9938893, -5.403489, -8.1419325, -2.111686, -5.8208313, 4.6170797, -1.9938893, -7.0124545, 4.6170797, -0.6223618, -7.0124545, -8.1419325, 1.6998422, -5.8208313, -8.1419325, -1.9938893, -7.0124545, -8.1419325, -0.6223618)
+
+[node name="building12" unique_id=390671667 instance=ExtResource("1_sv3io")]
+
+[node name="building1" parent="." index="0" unique_id=416124442]
+transform = Transform3D(-6.6350304e-07, 0, 1.8552889, 0, 1.8552889, 0, -1.8552889, 0, -6.6350304e-07, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building1" index="0" unique_id=587172777]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building1/StaticBody3D" index="0" unique_id=627368913]
+shape = SubResource("ConvexPolygonShape3D_sv3io")

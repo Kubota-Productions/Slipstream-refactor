@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b2oj4tmd5cfcw"]
+
+[ext_resource type="PackedScene" uid="uid://bp08palda4qsq" path="res://Assets/InteractiveObjects/SM_Gastank_02.glb" id="1_dqijg"]
+
+[node name="SM_Gastank_022" unique_id=1076907923 instance=ExtResource("1_dqijg")]
+
+[node name="SM_Gastank_02" parent="." index="0" unique_id=1703631312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

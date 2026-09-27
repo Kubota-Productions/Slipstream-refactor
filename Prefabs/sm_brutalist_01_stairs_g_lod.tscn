@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cfayt0sqe2qu7"]
+
+[ext_resource type="PackedScene" uid="uid://dhayo6xlyd5sv" path="res://Assets/Collection Assets/SM_Brutalist_01_Stairs_G_LOD0.glb" id="1_a0ydo"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5scfb"]
+points = PackedVector3Array(-2.4769983, 2.3730159, -9.102265, -0.00064635277, 0.30960453, 0.18163109, -6.6025286, 0.30960453, 0.18163109, -2.5457141, -2.220446e-16, -8.715436, -0.00064635277, 2.166505, -2.5010297, -6.6025286, 0.30960453, -9.102265, -0.00064635277, -0.10317469, -4.1513386, -3.478927, 2.2, -3.1297498, -6.32745, 0, -0.20519823, -3.9200292, 2.166505, -9.102265, -0.00064635277, 2.3730159, -4.1513386, -6.32745, 0, -8.715436, -0.27572498, 0, -0.20519823, -4.539117, 1.7539682, -2.0884526, -3.5077345, 2.3730159, -9.102265, -6.395735, 0.51587296, -9.102265, -6.395735, 0.51587296, -0.23185492)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mjeox"]
+points = PackedVector3Array(2.4769983, 2.3730159, -9.102265, 6.6025286, 0.30960453, 0.18163109, 6.32745, 0, -0.20519823, 0.00064635277, 0.30960453, 0.18163109, 2.5457141, -2.220446e-16, -8.715436, 6.6025286, 0.30960453, -9.102265, 0.00064635277, 2.166505, -2.5010297, 0.00064635277, -0.10317469, -4.1513386, 3.478927, 2.2, -3.1297498, 3.9200292, 2.166505, -9.102265, 0.00064635277, 2.3730159, -4.1513386, 6.32745, 0, -8.715436, 0.27572498, 0, -0.20519823, 4.539117, 1.7539682, -2.0884526, 3.5077345, 2.3730159, -9.102265, 6.395735, 0.51587296, -9.102265, 6.395735, 0.51587296, -0.23185492)
+
+[node name="SM_Brutalist_01_Stairs_G_LOD02" unique_id=570902653 instance=ExtResource("1_a0ydo")]
+
+[node name="SM_Brutalist_01_Stairs_G_LOD0" parent="." index="0" unique_id=455059019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Brutalist_01_Stairs_G_LOD0" index="0" unique_id=571052920]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Brutalist_01_Stairs_G_LOD0/StaticBody3D" index="0" unique_id=973270419]
+shape = SubResource("ConvexPolygonShape3D_5scfb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SM_Brutalist_01_Stairs_G_LOD0/StaticBody3D" index="1" unique_id=518281716]
+shape = SubResource("ConvexPolygonShape3D_mjeox")

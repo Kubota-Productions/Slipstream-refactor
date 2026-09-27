@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bbx44xwd0umko"]
+
+[ext_resource type="PackedScene" uid="uid://82sxi13vk1y5" path="res://Assets/Collection Assets/SM_KitchenCabinet01_1_LOD0.glb" id="1_khdr7"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lg4ur"]
+points = PackedVector3Array(-0.5101088, 0.117638655, 0.7096822, 0.51056445, 0.3422087, 0.8117495, 0.51056445, 0.3422087, 0.7096822, -0.5101088, 0.3422087, 0.8117495, 0.51056445, 0.117638655, 0.8117495, 0.51056445, 0.117638655, 0.7096822, -0.5101088, 0.3422087, 0.7096822, -0.5101088, 0.117638655, 0.8117495)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ylhjg"]
+points = PackedVector3Array(0.48920172, 0.09496772, 0.0301, -0.4934385, -0.9468348, 0.026909413, 0.49389413, -0.9468348, 0.026909413, -0.49777085, -0.95142794, 0.8009, -0.4924538, 0.079162486, -0.051288698, 0.49822646, 0.10453583, 0.8009, -0.49777085, 0.10453583, 0.8009, 0.49822646, -0.95142794, 0.8009, 0.51056445, 0.035842866, -0.06611931, -0.5101088, 0.035842866, -0.06611931, -0.4887461, 0.09496772, 0.0301, 0.39123696, 0.075114585, -0.06757678, -0.3907449, 0.07519005, -0.0676419, 0.49290943, 0.079162486, -0.051288698)
+
+[node name="SM_KitchenCabinet01_1_LOD02" unique_id=1066332712 instance=ExtResource("1_khdr7")]
+
+[node name="SM_KitchenCabinet01_1_LOD0" parent="." index="0" unique_id=769585532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="1" unique_id=1907862909]
+shape = SubResource("ConvexPolygonShape3D_lg4ur")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=1891391581]
+shape = SubResource("ConvexPolygonShape3D_ylhjg")
