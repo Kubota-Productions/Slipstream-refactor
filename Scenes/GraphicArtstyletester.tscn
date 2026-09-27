@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b53le0xlo2r07"]
 
-[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="1_fec2m"]
+[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineeverythingShader.gdshader" id="1_fec2m"]
 [ext_resource type="Texture2D" uid="uid://dqgfpuyes7tf4" path="res://Assets/skybox-space.png" id="1_huk1a"]
 [ext_resource type="Shader" uid="uid://dekqua2bb7q82" path="res://Shaders/Water.gdshader" id="3_xwm54"]
 [ext_resource type="PackedScene" uid="uid://du6onvlqwq0hq" path="res://Prefabs/lightpost.tscn" id="5_c5r5i"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bj7xtvgc6sgy" path="res://Assets/Buildings/bl3.tscn" id="34_2cc4s"]
 [ext_resource type="PackedScene" uid="uid://fke3elxona2a" path="res://Prefabs/Gravitypickup.tscn" id="48_somiq"]
 [ext_resource type="PackedScene" uid="uid://bdm4ifmovhg37" path="res://Prefabs/Grassfab.tscn" id="49_huk1a"]
+
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3h32h"]
 panorama = ExtResource("1_huk1a")

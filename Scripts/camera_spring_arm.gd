@@ -182,6 +182,26 @@ var ots_blend_weight: float = 0.0  # 0 = fully shifting framing, 1 = fully groun
 var ots_explore_blend_weight: float = 0.0
 
 # ============================================================
+# COMBAT AIM ZOOM
+# Layered on top of every other profile above (grounded, wall,
+# shifting, OTS explore) since aiming a headshot can happen from any
+# of those base states. is_combat_aiming is set every physics frame
+# by CombatController while right-click is held in focused/OTS view --
+# this script only owns the resulting FOV/spring-length blend, same
+# as every other camera profile here.
+# ============================================================
+@export_group("Combat Aim Zoom")
+@export var combat_zoom_fov: float = 40.0
+@export var combat_zoom_spring_length: float = 1.0
+@export var combat_zoom_transition_time: float = 0.15
+
+## Set by CombatController.update() -- true while actively holding the
+## headshot button in focused view.
+var is_combat_aiming: bool = false
+
+var combat_zoom_blend_weight: float = 0.0
+
+# ============================================================
 # PANINI PROJECTION
 # ============================================================
 @export_group("Panini Projection")
@@ -455,6 +475,16 @@ func _update_camera_distance(delta: float) -> void:
 	target_length = lerp(target_length, ots_explore_spring_length, ots_explore_blend_weight)
 	target_offset = target_offset.lerp(ots_explore_shoulder_offset, ots_explore_blend_weight)
 	target_fov = lerp(target_fov, ots_explore_fov, ots_explore_blend_weight)
+
+	# --- Combat Aim Zoom layers on top of everything above. Its own
+	# transition time keeps the zoom itself feeling like a deliberate
+	# snap-in rather than inheriting ots_transition_time's pacing. ---
+	var combat_target_weight: float = 1.0 if is_combat_aiming else 0.0
+	var combat_blend_speed: float = 1.0 - exp(-delta / max(combat_zoom_transition_time, 0.001))
+	combat_zoom_blend_weight = move_toward(combat_zoom_blend_weight, combat_target_weight, combat_blend_speed)
+
+	target_length = lerp(target_length, combat_zoom_spring_length, combat_zoom_blend_weight)
+	target_fov = lerp(target_fov, combat_zoom_fov, combat_zoom_blend_weight)
 
 	spring_length = lerp(spring_length, target_length, blend_speed)
 	smoothed_shoulder_offset = smoothed_shoulder_offset.lerp(target_offset, blend_speed)

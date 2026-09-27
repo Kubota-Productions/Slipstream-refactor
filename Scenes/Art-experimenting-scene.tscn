@@ -199,6 +199,7 @@ buffer = PackedFloat32Array(-0.87659717, -0.006099065, 0.48118645, 179.4277, -5.
 [node name="Shader" type="Node3D" parent="." unique_id=70660071]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Shader" unique_id=1887805118]
+visible = false
 material_override = SubResource("ShaderMaterial_vevt6")
 cast_shadow = 0
 extra_cull_margin = 16384.0
@@ -1746,6 +1747,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.98038, 26.754707, -47.297
 
 [node name="Gravitypickup20" parent="." unique_id=1463557412 instance=ExtResource("16_k6uxl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145.14664, 25.356367, -47.15741)
+
+[node name="Gravitypickup21" parent="." unique_id=885653688 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.14664, 9.356367, -60.15741)
 
 [node name="SM_Brutalist_01_Stairs_F_LOD02" parent="." unique_id=1125137130 instance=ExtResource("80_qe8tt")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 145.63585, 23.973392, -46.68153)

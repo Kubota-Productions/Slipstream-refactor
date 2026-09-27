@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://c5selm5ammn52" path="res://Assets/textures/cherub_cherubbase_Metallic.png" id="3_klhdo"]
 [ext_resource type="Texture2D" uid="uid://cy6napq8lgqlw" path="res://Assets/textures/cherub_cherubbase_Normal.png" id="4_xlyr1"]
 [ext_resource type="ArrayMesh" uid="uid://x3st0n2mhbk2" path="res://Prefabs/klener.obj" id="5_hnvt8"]
+[ext_resource type="Texture2D" uid="uid://byuo1rnupmk8a" path="res://Assets/Bloodparticle.png" id="6_rrvfn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yglu3"]
 radius = 0.20654297
@@ -915,9 +918,43 @@ _data = {
 &"Walk": SubResource("Animation_nig1p")
 }
 
-[node name="Cherub" type="CharacterBody3D" unique_id=1253847387]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g4v7s"]
+angle_min = 139.50002
+angle_max = 139.50002
+direction = Vector3(0, 20.175, 0)
+spread = 0.0
+initial_velocity_min = 11.63
+initial_velocity_max = 11.63
+turbulence_enabled = true
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klhdo"]
+transparency = 1
+albedo_color = Color(0.71327215, 0, 0.16505602, 1)
+albedo_texture = ExtResource("6_rrvfn")
+roughness = 0.0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rrvfn"]
+material = SubResource("StandardMaterial3D_klhdo")
+orientation = 2
+
+[node name="NPCInstance" type="CharacterBody3D" unique_id=1253847387 node_paths=PackedStringArray("death_particles")]
 script = ExtResource("1_hnvt8")
 animation_player_path = NodePath("CollisionShape3D/AnimationPlayer")
+death_particles = NodePath("BloodExplosionParticles")
+
+[node name="NPCHead" type="Area3D" parent="." unique_id=1799143375 groups=["npc_heads"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8622725, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCHead" unique_id=1618823083]
+transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
+shape = SubResource("BoxShape3D_g4v7s")
+debug_color = Color(0.9986029, 0, 0.1494804, 0.41960785)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1558508970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0820935, 0)
@@ -1289,3 +1326,9 @@ use_3d_avoidance = true
 [node name="Klener" type="MeshInstance3D" parent="." unique_id=978880622]
 transform = Transform3D(-0.027999999, 0, 2.4478377e-09, 0, 0.027999999, 0, -2.4478377e-09, 0, -0.027999999, 0, 0, 0)
 mesh = ExtResource("5_hnvt8")
+
+[node name="BloodExplosionParticles" type="GPUParticles3D" parent="." unique_id=882367024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9134967, 0)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_g4v7s")
+draw_pass_1 = SubResource("PlaneMesh_rrvfn")
