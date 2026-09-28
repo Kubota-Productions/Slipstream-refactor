@@ -20,3 +20,7 @@ func set_train_rotation(direction: Vector3):
 	basis.y = basis.z.cross(basis.x).normalized()
 
 	transform.basis = basis
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body is Player:
+		get_tree().call_group("game_timer", "escape")

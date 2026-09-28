@@ -45,6 +45,8 @@ var animation_player: AnimationPlayer
 ## scene along with the corpse instead of being freed with the NPC.
 @export var death_decal: Decal
 
+@export_group("Kill Reward")
+@export var time_bonus_on_kill: float = 5.0
 @export_group("Death Decal")
 ## Fraction of the decal's full footprint (X and Z) it starts at when it
 ## appears. Depth (Y) is never scaled.
@@ -403,6 +405,7 @@ func explode_head() -> void:
 	if is_dying:
 		return
 	is_dying = true
+	get_tree().call_group("game_timer", "add_time", time_bonus_on_kill) 
 	is_focused = false
 	speed_multiplier = 1.0
 	_facing_player = false
