@@ -14,7 +14,7 @@ points = PackedVector3Array(-1.158924, -0.033676952, -0.62570393, -0.37413475, 0
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_iq6fy"]
 points = PackedVector3Array(-1.1795948, 0.15100276, 0.592977, -1.6822364, -0.73140395, -0.58200634, -1.2026687, -0.73140395, -0.58200634, -1.6822364, -0.73140395, 0.5952287, -1.6645087, 0.15043193, -0.57896626, -1.7257931, 0.18427312, 0.5952287, -1.1795727, 0.15103851, -0.579804, -1.2026687, -0.73140395, 0.5952287, -1.1590009, -0.033800706, 0.63892627, -1.7257931, -0.033800706, -0.58200634, -1.1590009, -0.033800706, -0.62570393, -1.6822364, -0.033800706, -0.62570393, -1.6386242, -0.033800706, 0.63892627, -1.7257931, -0.033800706, 0.5952287, -1.6974759, 0.13852549, -0.52319115)
 
-[node name="InteractiveAutopsyTable" type="RigidBody3D" unique_id=478286070 groups=["tktarget"]]
+[node name="InteractiveAutopsyTable" type="RigidBody3D" unique_id=478286070 groups=["interactable", "tktarget"]]
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="." unique_id=1448594339]
 shape = SubResource("ConvexPolygonShape3D_q3iij")

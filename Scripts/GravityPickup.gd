@@ -57,13 +57,13 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	print("Body entered: ", body.name)
+	
 
 	if _collected:
 		return
 
 	var gravity_controller: GravityController = body.get_node_or_null("GravityController")
-	print("Found controller: ", gravity_controller)
+	
 
 	if not gravity_controller:
 		return

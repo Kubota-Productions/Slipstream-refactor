@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://c6lxgm6jgvlg8" path="res://Scripts/Main.gd" id="1_4kpch"]
 [ext_resource type="PackedScene" uid="uid://ccdc06etdbopk" path="res://Player/Player.tscn" id="2_grg3l"]
-[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineShader.gdshader" id="4_1p5hy"]
+[ext_resource type="Shader" uid="uid://byathce16bj4s" path="res://Shaders/OutlineeverythingShader.gdshader" id="4_1p5hy"]
 [ext_resource type="Script" uid="uid://bes0wqgvuko4" path="res://Scripts/NPCBrain.gd" id="6_erwvk"]
 [ext_resource type="PackedScene" uid="uid://by24r100orn7w" path="res://Prefabs/cherubfull.tscn" id="7_2w5on"]
 [ext_resource type="PackedScene" uid="uid://cysi1ri0hnfpe" path="res://Prefabs/locomotive.tscn" id="8_346fj"]
 [ext_resource type="Script" uid="uid://x2rhqsbxf7fe" path="res://Scripts/tracktiling.gd" id="9_0sclb"]
 [ext_resource type="ArrayMesh" uid="uid://dy5indenclqou" path="res://Assets/traintracksingle.res" id="10_sxkr1"]
 [ext_resource type="PackedScene" uid="uid://d0abl7hgn6mmk" path="res://Assets/EnvironmentBases/ENV1.fbx" id="11_fq0cl"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bl2xt"]
 render_priority = 0

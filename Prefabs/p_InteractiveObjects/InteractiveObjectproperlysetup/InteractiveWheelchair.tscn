@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://bqex455vcp68x"]
 
 [ext_resource type="Texture2D" uid="uid://4ygpefsdgmaw" path="res://Assets/textures/Collection Textures/tdc-dtr-wheelchair_tdc-dtr-leather1-1.jpg" id="1_a1jm8"]
+[ext_resource type="Material" uid="uid://dmbj6lph7m7lv" path="res://Materials/OutlineShader.tres" id="1_vwi71"]
 [ext_resource type="Texture2D" uid="uid://drjeen7jygjx5" path="res://Assets/textures/Collection Textures/tdc-dtr-wheelchair_tdc-dtr-rust2.jpg" id="2_vwi71"]
 [ext_resource type="Texture2D" uid="uid://bciwbgbjj41g5" path="res://Assets/textures/Collection Textures/tdc-dtr-wheelchair_tdc-dtr-glas-tra.jpg" id="3_xawhr"]
 
@@ -131,9 +132,10 @@ shadow_mesh = SubResource("ArrayMesh_pw850")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_q7pst"]
 points = PackedVector3Array(-0.13073254, -0.18081948, -0.104746975, -0.13092482, -0.17392077, -0.12646389, -0.11356575, 0.22092222, -0.10978834, 0.117173396, -0.039629698, 0.2624222, -0.11356575, -0.039629698, 0.2624222, 0.113082, -0.18126303, 0.13908756, 0.10588568, 0.20643473, -0.17679064, 0.13340478, -0.13676068, -0.17500861, -0.143353, -0.07682277, -0.20656028, 0.114699125, 0.14279537, 0.07894857, -0.12847431, 0.1464559, 0.083755545, -0.11604932, -0.18025996, 0.13850395, -0.121005096, 0.20601292, -0.18422112, 0.15439999, 0.019847156, 0.016831335, 0.13205208, -0.18852223, -0.10978834, -0.15082222, -0.009851191, 0.03156865, 0.13358325, -0.0158299, -0.20380121, 0.117173396, 0.22092222, -0.10978834, 0.15439999, -0.08427742, 0.03156865, -0.15082222, -0.11405592, 0.016831335, -0.15082222, 0.057120387, -0.11720364, 0.15439999, -0.09173206, -0.17675918, -0.143353, -0.15874372, -0.15446666, 0.12765995, -0.08088959, -0.20599, 0.11009595, 0.12450912, 0.108031906, -0.121005096, 0.22092222, -0.15446666, -0.115559526, -0.17231932, 0.15224631, -0.143353, -0.18106759, -0.05023279, -0.143353, -0.12896521, -0.18422112, 0.15439999, 0.042251173, -0.0055544656, -0.13120957, -0.01612253, -0.20588426, -0.107415564, 0.1254348, 0.10874839)
 
-[node name="InteractiveWheelchair" type="RigidBody3D" unique_id=1087439300 groups=["tktarget"]]
+[node name="InteractiveWheelchair" type="RigidBody3D" unique_id=1087439300 groups=["interactable", "tktarget"]]
 
 [node name="tdc-dtr-wheelchair" type="MeshInstance3D" parent="." unique_id=642073042]
+material_overlay = ExtResource("1_vwi71")
 mesh = SubResource("ArrayMesh_bxewy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1736564626]

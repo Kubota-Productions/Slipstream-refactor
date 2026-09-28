@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dxypcjjju5ph7"]
 
 [ext_resource type="Texture2D" uid="uid://bygo7qkg1bmma" path="res://Assets/textures/Collection Textures/SM_Box01_2_LOD0_T_Box01_D.png" id="1_eo6a1"]
+[ext_resource type="Material" uid="uid://dmbj6lph7m7lv" path="res://Materials/OutlineShader.tres" id="1_hgvnr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbm7e"]
 resource_name = "Box.1"
@@ -46,9 +47,10 @@ shadow_mesh = SubResource("ArrayMesh_t01bu")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mrkxr"]
 points = PackedVector3Array(1.0313916, 0.38660777, 0.2644149, 0.98656607, 0.38625526, 0.3093521, 1.0313916, -0.27777457, 0.2644149, 1.0313916, 0.38660777, -0.26447546, -1.0313885, 0.38660777, 0.2644149, 0.98656607, -0.27742213, 0.3093521, -0.98676497, 0.38625526, 0.3093521, 1.0313916, -0.27777457, -0.26447546, 0.9998927, -0.303363, 0.2813723, 0.98656607, -0.33353335, 0.24757856, 0.98656607, 0.38625526, -0.3093521, -1.0313885, 0.38660777, -0.26447546, -1.0313885, -0.27777457, 0.2644149, -0.98676497, -0.27742213, 0.3093521, 0.98656607, -0.33353335, -0.24763915, 0.9998927, -0.303363, -0.2814329, 0.98656607, -0.27742213, -0.3093521, -1.0000914, -0.303363, 0.2813723, -0.98676497, -0.33353335, 0.24757856, -0.98676497, 0.38625526, -0.3093521, -1.0313885, -0.27777457, -0.26447546, -0.98676497, -0.33353335, -0.24763915, -1.0000914, -0.303363, -0.2814329, -0.98676497, -0.27742213, -0.3093521)
 
-[node name="InteractiveBoxWithoutTop" type="RigidBody3D" unique_id=1087439300 groups=["tktarget"]]
+[node name="InteractiveBoxWithoutTop" type="RigidBody3D" unique_id=1087439300 groups=["interactable", "tktarget"]]
 
 [node name="SM_Box01_2_LOD0" type="MeshInstance3D" parent="." unique_id=810862270]
+material_overlay = ExtResource("1_hgvnr")
 mesh = SubResource("ArrayMesh_hgvnr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1703421009]

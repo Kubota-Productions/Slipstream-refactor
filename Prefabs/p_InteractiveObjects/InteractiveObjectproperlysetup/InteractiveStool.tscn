@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://bh51smp4q65ae"]
 
 [ext_resource type="Texture2D" uid="uid://bo33ubo8ht4jj" path="res://Assets/textures/Collection Textures/tdc-dtr-stool-1_tdc-dtr-metal1-tex.jpg" id="1_d0mgd"]
+[ext_resource type="Material" uid="uid://dmbj6lph7m7lv" path="res://Materials/OutlineShader.tres" id="1_hbgtk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijfof"]
 resource_name = "Metal"
@@ -45,9 +46,10 @@ shadow_mesh = SubResource("ArrayMesh_7niw4")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sekqc"]
 points = PackedVector3Array(0.09591256, 0.17126207, -0.099038884, -0.107279, -0.19676414, -0.05679986, -0.098390326, 0.19070049, -0.07958526, 0.10442251, -0.19605121, -0.056488004, 0.07646401, -0.0035618371, 0.14059323, -0.0789646, -0.0035618371, 0.14059323, 0.11536111, -0.2044389, 0.13415097, -0.117838874, -0.2044389, 0.13415097, 0.10237258, 0.18420748, -0.07958526, -0.10487317, 0.18420748, -0.09254589, 0.037612565, 0.21013889, -0.08607826, -0.11135603, 0.17126207, -0.07958526, 0.10887826, 0.16476908, -0.07958526, -0.098390326, 0.17126207, -0.099038884, -0.09190747, -0.010054833, 0.13415097, 0.08942971, -0.0035618371, 0.12765798, -0.10641782, -0.19514301, 0.1542623, 0.11536111, -0.17846692, 0.1471116, -0.117838874, -0.17846692, 0.1471116, -0.04009033, 0.21013889, -0.08607826, 0.1036701, -0.19463484, 0.15394469, 0.09591256, 0.19070049, -0.099038884, -0.098390326, 0.19070049, -0.099038884, 0.08942971, 0.19070049, -0.07958526, 0.037612565, 0.21013889, -0.09254589, 0.08294686, -0.010054833, 0.14059323, 0.10237258, 0.18420748, -0.09254589, -0.08544745, -0.010054833, 0.14059323, -0.10487317, 0.18420748, -0.07958526, 0.08294686, 0.1971529, -0.08607826, -0.08544745, 0.1971529, -0.08607826, -0.117838874, -0.17846692, 0.13415097)
 
-[node name="InteractiveStool" type="RigidBody3D" unique_id=1087439300 groups=["tktarget"]]
+[node name="InteractiveStool" type="RigidBody3D" unique_id=1087439300 groups=["interactable", "tktarget"]]
 
 [node name="tdc-dtr-stool-1" type="MeshInstance3D" parent="." unique_id=1154674795]
+material_overlay = ExtResource("1_hbgtk")
 mesh = SubResource("ArrayMesh_hbgtk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1688278243]

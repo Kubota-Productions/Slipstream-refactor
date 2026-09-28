@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dcr4fc7tsc585"]
 
 [ext_resource type="PackedScene" uid="uid://j4223ds1kju6" path="res://Assets/InteractiveObjects/SM_Box01_1_LOD0.glb" id="1_44va2"]
+[ext_resource type="Material" uid="uid://dmbj6lph7m7lv" path="res://Materials/OutlineShader.tres" id="2_2lr8v"]
 
 [node name="SM_Box01_1_LOD02" unique_id=1647985040 instance=ExtResource("1_44va2")]
 
-[node name="SM_Box01_1_LOD0" parent="." index="0" unique_id=104111231]
+[node name="SM_Box01_1_LOD0" parent="." index="0" unique_id=56368776]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_overlay = ExtResource("2_2lr8v")

@@ -10,6 +10,8 @@ extends CharacterBody3D
 @onready var camera_3d: Camera3D = $SpringArm3D/Cameraoffset/Camera3D
 @onready var aim_pivot: Node3D = $"../AimPivot"
 @onready var telekinesis_controller: TelekinesisController = $TelekinesisController
+@onready var combat_controller: CombatController = $CombatController
+@onready var interaction_highlight_controller: InteractionHighlightController = $InteractionHighlightController
 
 @export var animation_controller: Node  # assign the AnimationController node in the editor
 var pending_acceleration: Vector3 = Vector3.ZERO
@@ -292,6 +294,8 @@ func _ready() -> void:
 	)
 
 	telekinesis_controller.setup(self, camera_3d)
+	combat_controller.setup(self, camera_3d)
+	interaction_highlight_controller.setup(self, camera_3d)
 
 	if Particle_Controller:
 		Particle_Controller.setup(self)
@@ -306,6 +310,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			is_ots_mode = true
 
 	telekinesis_controller.handle_input(event)
+	combat_controller.handle_input(event)
 
 	# Jumping and gravity-shifting are entirely off-limits while
 	# exploring -- gate them here so there's no path to trigger them.
@@ -381,6 +386,8 @@ func _physics_process(delta: float) -> void:
 	spring_arm.update_pivot_position(delta)
 
 	telekinesis_controller.update(delta)
+	combat_controller.update(delta)
+	interaction_highlight_controller.update(delta)
 
 	if Particle_Controller:
 		Particle_Controller.update(delta)
