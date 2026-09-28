@@ -252,87 +252,6 @@ calculate_tangents = false
 use_collision = true
 size = Vector3(1000, 1, 1000)
 
-[node name="throwable" parent="." unique_id=1141163935 instance=ExtResource("19_hpjud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.806467, 0.60581946, -12.488039)
-
-[node name="throwable2" parent="." unique_id=1130228868 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 22.798151, 0.60581946, -12.488039)
-
-[node name="throwable4" parent="." unique_id=123968906 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.3228017, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.3228017, 23.463812, 0.6058196, -13.440296)
-
-[node name="throwable3" parent="." unique_id=1557635758 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 23.394718, 1.4993193, -12.835272)
-
-[node name="throwable5" parent="." unique_id=1497524596 instance=ExtResource("19_hpjud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.581047, 1.0726838, -13.326168)
-
-[node name="throwable6" parent="." unique_id=199265904 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 28.572733, 1.0726838, -13.326168)
-
-[node name="throwable7" parent="." unique_id=106204711 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32280168, 29.238394, 1.0726839, -14.278427)
-
-[node name="throwable8" parent="." unique_id=1045258727 instance=ExtResource("19_hpjud")]
-transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 29.1693, 1.9121432, -13.673401)
-
-[node name="Gravitypickup" parent="." unique_id=332084249 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.626492, -2.6687236, 22.824522)
-
-[node name="Gravitypickup11" parent="." unique_id=929581712 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.62649, 1.3312764, -10.175478)
-
-[node name="Gravitypickup12" parent="." unique_id=1327408798 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.626492, 1.3312764, -39.175476)
-
-[node name="Gravitypickup13" parent="." unique_id=346603350 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.62649, 0.75604033, 38.474335)
-
-[node name="Gravitypickup2" parent="." unique_id=797381112 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.095501, -2.645834, 22.820564)
-
-[node name="Gravitypickup3" parent="." unique_id=1180308449 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.177267, 27.314852, 98.80966)
-
-[node name="Gravitypickup4" parent="." unique_id=1523373543 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.637566, -2.874115, 12.185525)
-
-[node name="Gravitypickup5" parent="." unique_id=884761993 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4466324, 0.56075287, 16.648598)
-
-[node name="Gravitypickup6" parent="." unique_id=532933098 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15881538, -1.2940273, 26.357517)
-
-[node name="Gravitypickup16" parent="." unique_id=725040129 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.65551, 11.865572, 46.357517)
-
-[node name="Gravitypickup17" parent="." unique_id=1212491934 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.65551, 11.865572, 45.357517)
-
-[node name="Gravitypickup18" parent="." unique_id=1195367309 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.65551, 11.865572, 45.357517)
-
-[node name="Gravitypickup19" parent="." unique_id=1326039344 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.65551, 11.865572, 43.357517)
-
-[node name="Gravitypickup7" parent="." unique_id=1596006060 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.85225, 3.0313873, 115.81706)
-
-[node name="Gravitypickup14" parent="." unique_id=1825079335 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.85225, 2.0313873, 85.81706)
-
-[node name="Gravitypickup15" parent="." unique_id=317025590 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.85225, 2.0313873, 64.81706)
-
-[node name="Gravitypickup8" parent="." unique_id=77434993 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.941875, -1.4872069, -0.6038208)
-
-[node name="Gravitypickup9" parent="." unique_id=1519489870 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1577168, -2.487207, 2.3717003)
-
-[node name="Gravitypickup10" parent="." unique_id=874190161 instance=ExtResource("16_k6uxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.838802, -2.487207, 1.8823195)
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1049371339]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00033569336, 0.0017309189, 0.0015525818)
 navigation_mesh = SubResource("NavigationMesh_s03iu")
@@ -1119,7 +1038,8 @@ script = ExtResource("17_lsmg2")
 nav_region = NodePath("../NavigationRegion3D")
 player = NodePath("../Playerprefab2")
 npc_scene = ExtResource("15_cmavu")
-num_npcs = 20
+num_npcs = 100
+min_spawn_separation = 5.0
 
 [node name="Locomotive" parent="." unique_id=1546860108 instance=ExtResource("15_du7os")]
 transform = Transform3D(1.11, 0, 0, 0, 1.11, 0, 0, 0, 1.11, 0, 0, 0)
@@ -1135,6 +1055,87 @@ transform = Transform3D(-0.87447923, -0.006172333, 0.4849364, -6.984725e-10, 0.9
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Path3D" unique_id=319033002]
 multimesh = SubResource("MultiMesh_75a1x")
+
+[node name="throwable" parent="." unique_id=1141163935 instance=ExtResource("19_hpjud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.806467, 0.60581946, -12.488039)
+
+[node name="throwable2" parent="." unique_id=1130228868 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 22.798151, 0.60581946, -12.488039)
+
+[node name="throwable4" parent="." unique_id=123968906 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.3228017, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.3228017, 23.463812, 0.6058196, -13.440296)
+
+[node name="throwable3" parent="." unique_id=1557635758 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 23.394718, 1.4993193, -12.835272)
+
+[node name="throwable5" parent="." unique_id=1497524596 instance=ExtResource("19_hpjud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.581047, 1.0726838, -13.326168)
+
+[node name="throwable6" parent="." unique_id=199265904 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 28.572733, 1.0726838, -13.326168)
+
+[node name="throwable7" parent="." unique_id=106204711 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.32280168, 0, -0.94646657, 0, 1, 0, 0.94646657, 0, 0.32280168, 29.238394, 1.0726839, -14.278427)
+
+[node name="throwable8" parent="." unique_id=1045258727 instance=ExtResource("19_hpjud")]
+transform = Transform3D(0.6755223, 0, -0.73733956, 0, 1, 0, 0.73733956, 0, 0.6755223, 29.1693, 1.9121432, -13.673401)
+
+[node name="Gravitypickup" parent="." unique_id=332084249 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.626492, -2.6687236, 22.824522)
+
+[node name="Gravitypickup11" parent="." unique_id=929581712 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.62649, 1.3312764, -10.175478)
+
+[node name="Gravitypickup12" parent="." unique_id=1327408798 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.626492, 1.3312764, -39.175476)
+
+[node name="Gravitypickup13" parent="." unique_id=346603350 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.62649, 0.75604033, 38.474335)
+
+[node name="Gravitypickup2" parent="." unique_id=797381112 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.095501, -2.645834, 22.820564)
+
+[node name="Gravitypickup3" parent="." unique_id=1180308449 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.177267, 27.314852, 98.80966)
+
+[node name="Gravitypickup4" parent="." unique_id=1523373543 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.637566, -2.874115, 12.185525)
+
+[node name="Gravitypickup5" parent="." unique_id=884761993 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4466324, 0.56075287, 16.648598)
+
+[node name="Gravitypickup6" parent="." unique_id=532933098 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15881538, -1.2940273, 26.357517)
+
+[node name="Gravitypickup16" parent="." unique_id=725040129 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.65551, 11.865572, 46.357517)
+
+[node name="Gravitypickup17" parent="." unique_id=1212491934 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.65551, 11.865572, 45.357517)
+
+[node name="Gravitypickup18" parent="." unique_id=1195367309 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.65551, 11.865572, 45.357517)
+
+[node name="Gravitypickup19" parent="." unique_id=1326039344 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.65551, 11.865572, 43.357517)
+
+[node name="Gravitypickup7" parent="." unique_id=1596006060 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.85225, 3.0313873, 115.81706)
+
+[node name="Gravitypickup14" parent="." unique_id=1825079335 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.85225, 2.0313873, 85.81706)
+
+[node name="Gravitypickup15" parent="." unique_id=317025590 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.85225, 2.0313873, 64.81706)
+
+[node name="Gravitypickup8" parent="." unique_id=77434993 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.941875, -1.4872069, -0.6038208)
+
+[node name="Gravitypickup9" parent="." unique_id=1519489870 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1577168, -2.487207, 2.3717003)
+
+[node name="Gravitypickup10" parent="." unique_id=874190161 instance=ExtResource("16_k6uxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.838802, -2.487207, 1.8823195)
 
 [node name="Spoon" parent="." unique_id=587874787 instance=ExtResource("20_s03iu")]
 transform = Transform3D(0.034361705, 0, 0.99940944, 0, 1, 0, -0.99940944, 0, 0.034361705, 34.394974, 3.5261147, -24.492268)

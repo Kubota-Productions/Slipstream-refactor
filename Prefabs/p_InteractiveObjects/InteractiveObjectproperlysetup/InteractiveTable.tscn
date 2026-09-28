@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://glgl0t3ia8x5"]
 
+[ext_resource type="Material" uid="uid://dmbj6lph7m7lv" path="res://Materials/OutlineShader.tres" id="1_a51b4"]
 [ext_resource type="Texture2D" uid="uid://0hs2w08ui6yb" path="res://Assets/textures/Collection Textures/tdc-dtr-table-1_tdc-dtr-metal1-tex.jpg" id="1_km00t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1hlck"]
@@ -66,9 +67,10 @@ points = PackedVector3Array(0.003721729, -0.010080691, -0.38165385, 0.26081425, 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_676ev"]
 points = PackedVector3Array(-0.20204286, -0.010085728, -0.38165385, 0.0036714226, 0.041342843, 0.41542858, -0.20204286, 0.041342843, 0.41542858, 0.0036714226, 0.041342843, -0.40742856, 0.0036714226, -0.010085728, 0.38965386, -0.20204286, 0.041342843, -0.40742856, -0.20204286, -0.010085728, 0.38965386, 0.0036714226, -0.010085728, -0.38165385)
 
-[node name="InteractiveTable" type="RigidBody3D" unique_id=1087439300 groups=["tktarget"]]
+[node name="InteractiveTable" type="RigidBody3D" unique_id=1087439300 groups=["interactable", "tktarget"]]
 
 [node name="tdc-dtr-table-1" type="MeshInstance3D" parent="." unique_id=643520375]
+material_overlay = ExtResource("1_a51b4")
 mesh = SubResource("ArrayMesh_a51b4")
 
 [node name="CollisionShape3D8" type="CollisionShape3D" parent="." unique_id=1261236959]

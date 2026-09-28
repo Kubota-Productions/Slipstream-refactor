@@ -7,5 +7,5 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_o7qov")
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/outline_width = 0.01600000076
-shader_parameter/highlight_amount = 0.7950000377625
+shader_parameter/outline_width = 0.06000000285
+shader_parameter/highlight_amount = 1.0

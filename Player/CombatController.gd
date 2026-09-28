@@ -66,6 +66,9 @@ var charge_elapsed: float = 0.0
 var lose_target_timer: float = 0.0
 var power_reserved: bool = false
 
+## The NPC currently being focused (slowed down) -- owner of current_target.
+var focused_npc: Node = null
+
 
 func setup(owner: CharacterBody3D, cam: Camera3D) -> void:
 	player = owner
@@ -133,6 +136,9 @@ func update(delta: float) -> void:
 		_cancel_charge()
 		current_target = target
 
+	# Slow the NPC down for as long as it's held under focus.
+	_set_focused_npc(_get_npc_from_head(current_target))
+
 	# Continuous drain -- costs power for every second the charge is
 	# held, right up until the kill lands. Running out mid-charge
 	# breaks the charge instead of the rest of the hold being free.
@@ -178,6 +184,30 @@ func _cancel_charge() -> void:
 	current_target = null
 	charge_elapsed = 0.0
 	lose_target_timer = 0.0
+	_set_focused_npc(null)
+
+
+## Tells the NPC currently under focus to slow down, and releases the
+## previous one. Passing null releases whoever was focused.
+func _set_focused_npc(npc: Node) -> void:
+	if npc == focused_npc:
+		return
+
+	if is_instance_valid(focused_npc) and focused_npc.has_method("set_focused"):
+		focused_npc.set_focused(false)
+
+	focused_npc = npc
+
+	if is_instance_valid(focused_npc) and focused_npc.has_method("set_focused"):
+		focused_npc.set_focused(true)
+
+
+## Walks up from a head hitbox to the NPC that owns it.
+func _get_npc_from_head(head: Node) -> Node:
+	var node := head
+	while node and not node.has_method("set_focused"):
+		node = node.get_parent()
+	return node
 
 
 func _pop_head(head: Node3D) -> void:

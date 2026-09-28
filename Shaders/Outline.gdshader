@@ -33,7 +33,7 @@ uniform vec4 highlight_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 // How far the outline extends beyond the mesh's own surface, in the
 // mesh's local units. Larger objects usually want a slightly larger
 // value to read clearly at a distance.
-uniform float outline_width : hint_range(0.0, 0.1) = 0.015;
+uniform float outline_width : hint_range(0.0, 1) = 0.015;
 
 // 0 = fully hidden, 1 = fully visible. Set from script.
 uniform float highlight_amount : hint_range(0.0, 1.0) = 0.0;
