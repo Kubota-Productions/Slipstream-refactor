@@ -4,31 +4,39 @@ extends Node3D
 @onready var pathFollow: PathFollow3D
 @onready var direction: Vector3
 
+var moving := false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_to_group("train_wheels")
 	var path3D = get_node("../../../Path3D")
 	var curve3D = path3D.get_curve()
 	var startingPoint = curve3D.get_point_position(0)
 	position = startingPoint
 	pathFollow = get_node("../../../Path3D/PathFollow3D")
 
+func start_moving():
+	moving = true
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	var oldPosition = position
 	var justSetToTrue = false
+	var step = Speed * delta if moving else 0.0
 	if get_parent().get_meta("path_follow_updated"):
 		#print("De-offseting path follow")
 		pathFollow.progress -= get_meta("path_offset")
 	else:
 		#print("------------------------")
 		#print("Wheel movement loop start !")
-		pathFollow.progress += Speed * delta - get_meta("path_offset")
+		pathFollow.progress += step - get_meta("path_offset")
 		get_parent().set_meta("path_follow_updated", true)
 		
 	position = pathFollow.position
 	
 	direction = (position - oldPosition).normalized()
-	set_train_rotation(direction)
+	if direction.length_squared() > 0.0001:
+		set_train_rotation(direction)
 	
 	pathFollow.progress += get_meta("path_offset")
 	

@@ -8,24 +8,24 @@ class_name NPCBrain
 @export var min_spawn_separation: float = 2.0  # Minimum distance between NPCs
 
 # Configuration variables
-var wander_area: Vector3 = Vector3(50, 0, 50)
-var speed: float = 1.5
-var run_away_speed: float = 6.0
-var wait_time_range: Vector2 = Vector2(1, 5)
-var player_detection_radius: float = 5
-var flee_distance: float = 6.0
-var obstacle_avoidance_distance: float = 3.0
-var speed_variation: float = 0.2
-var personality_cohesion: float = 1.0
-var personality_separation: float = 1.0
-var flee_update_interval: float = 1.0
-var target_update_interval: float = 2.0
-var wait_probability: float = 0.001
-var max_angle_change: float = deg_to_rad(30)
-var max_slope_angle: float = deg_to_rad(60)
-var stuck_threshold: float = 0.1
-var stuck_time_threshold: float = 1.0
-var jump_probability: float = 0.01
+@export var wander_area: Vector3 = Vector3(50, 0, 50)
+@export var speed: float = 1.5
+@export var run_away_speed: float = 6.0
+@export var wait_time_range: Vector2 = Vector2(1, 5)
+@export var player_detection_radius: float = 5
+@export var flee_distance: float = 6.0
+@export var obstacle_avoidance_distance: float = 3.0
+@export var speed_variation: float = 0.2
+@export var personality_cohesion: float = 1.0
+@export var personality_separation: float = 1.0
+@export var flee_update_interval: float = 1.0
+@export var target_update_interval: float = 2.0
+@export var wait_probability: float = 0.001
+@export var max_angle_change: float = deg_to_rad(30)
+@export var max_slope_angle: float = deg_to_rad(60)
+@export var stuck_threshold: float = 0.1
+@export var stuck_time_threshold: float = 1.0
+@export var jump_probability: float = 0.01
 
 # References
 var npcs: Array = []  # Array of NPC instances
@@ -34,7 +34,11 @@ var npc_states: Dictionary = {}  # Per-NPC state
 func _ready():
 	# Wait for proper initialization
 	await get_tree().process_frame
+	if not is_inside_tree():
+		return  # scene was reloaded/torn down while we were waiting
 	await get_tree().physics_frame
+	if not is_inside_tree():
+		return
 	
 	if not nav_region or not player or not npc_scene:
 		push_error("NPCBrain: nav_region, player, or npc_scene not set")
@@ -46,6 +50,8 @@ func _ready():
 	
 	# Wait for physics to be ready
 	await get_tree().physics_frame
+	if not is_inside_tree():
+		return
 	
 	spawn_npcs()
 	
@@ -118,6 +124,8 @@ func spawn_npcs():
 func is_valid_spawn_position(pos: Vector3) -> bool:
 	# Wait for physics to be ready
 	await get_tree().physics_frame
+	if not is_inside_tree():
+		return false
 	
 	var world = get_world_3d()
 	if world == null:
@@ -143,6 +151,8 @@ func is_valid_spawn_position(pos: Vector3) -> bool:
 			if result != null:
 				break
 			await get_tree().physics_frame  # Wait if first attempt fails
+			if not is_inside_tree():
+				return false
 			
 		if result:
 			var normal = result.normal

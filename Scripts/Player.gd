@@ -16,6 +16,7 @@ extends CharacterBody3D
 @export var animation_controller: Node  # assign the AnimationController node in the editor
 var pending_acceleration: Vector3 = Vector3.ZERO
 var _current_delta: float = 0.016
+var movement_locked: bool = false
 
 
 ## Returns the acceleration that moves `current` toward `target` as
@@ -314,7 +315,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Jumping and gravity-shifting are entirely off-limits while
 	# exploring -- gate them here so there's no path to trigger them.
-	if not is_ots_mode:
+	if not is_ots_mode and not movement_locked:
 		if event.is_action_pressed("GravityShift"):
 			gravity_controller.enter_levitating()
 
@@ -403,6 +404,14 @@ func _physics_process(delta: float) -> void:
 # INPUT HANDLING
 # ============================================================
 func _read_input(delta: float) -> void:
+
+	if movement_locked:
+		move_input = Vector2.ZERO
+		run_timer = 0.0
+		is_running = false
+		is_power_sprinting = false
+		jump_buffer_timer = 0.0
+		return
 
 	move_input.x = Input.get_axis("left", "right")
 	move_input.y = Input.get_axis("forward", "backwards")
@@ -887,3 +896,29 @@ func set_running(enabled: bool) -> void:
 	is_running = enabled
 	if !enabled:
 		run_timer = 0.0
+		
+
+func set_captured(locked: bool) -> void:
+	movement_locked = locked
+	if locked:
+		move_input = Vector2.ZERO
+		is_running = false
+		is_power_sprinting = false
+		run_timer = 0.0
+		jump_buffer_timer = 0.0
+
+		if gravity_controller.gravity_state != GravityController.GravityState.GROUNDED:
+			gravity_controller.return_to_ground()
+
+		hard_stop()
+
+func remove_for_escape() -> void:
+	set_physics_process(false)
+	set_process_unhandled_input(false)
+	spring_arm.set_process_unhandled_input(false)
+	hard_stop()
+	visible = false
+	if character_model:
+		character_model.visible = false
+	collision_layer = 0
+	collision_mask = 0

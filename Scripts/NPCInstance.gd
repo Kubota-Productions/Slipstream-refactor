@@ -45,6 +45,8 @@ var animation_player: AnimationPlayer
 ## scene along with the corpse instead of being freed with the NPC.
 @export var death_decal: Decal
 
+@export_group("Kill Reward")
+@export var time_bonus_on_kill: float = 5.0
 @export_group("Death Decal")
 ## Fraction of the decal's full footprint (X and Z) it starts at when it
 ## appears. Depth (Y) is never scaled.
@@ -113,7 +115,6 @@ var _is_moving: bool = false
 @export var line_enabled: bool = true
 ## The line appears when the player is closer than this (world units).
 @export var line_trigger_distance: float = 10.0
-@export var line_color: Color = Color.RED
 @export var line_thickness: float = 0.03
 ## Where the line starts, as an offset from the NPC's origin (e.g. eye height).
 @export var line_start_offset: Vector3 = Vector3(0, 1.6, 0)
@@ -123,10 +124,43 @@ var _is_moving: bool = false
 ## the player, and ignores the brain's rotation requests.
 @export var face_player_when_line_drawn: bool = true
 
+@export_subgroup("Colors")
+## Color the line starts at the moment the NPC spots the player.
+@export var line_safe_color: Color = Color.WHITE
+## Color it flashes toward as detection builds up.
+@export var line_alert_color: Color = Color(1.0, 0.15, 0.15)
+
+@export_subgroup("Detection")
+## Seconds the player can stay spotted (white line) before it starts
+## flashing red as a warning.
+@export var detection_warning_time: float = 2.0
+## Total seconds of unbroken detection, counted from when the line first
+## appears, before this NPC calls it in -- GameController.capture() fires
+## and the round ends. Must be greater than detection_warning_time.
+@export var detection_capture_time: float = 4.0
+## How fast the red flash pulses right when the warning starts.
+@export var flash_speed_min: float = 2.0
+## How fast it pulses right before capture -- speeds up as the deadline
+## approaches, same idea as the HUD's low-power flash.
+@export var flash_speed_max: float = 8.0
+
+@export_subgroup("Line of Sight")
+## If true, an obstacle between the NPC and the player breaks the line
+## (and resets detection) even within line_trigger_distance.
+@export var require_clear_line_of_sight: bool = true
+## Layers checked for obstructions -- should match your level geometry,
+## not other NPCs/pickups/etc, or they'll block sight too.
+@export_flags_3d_physics var line_of_sight_mask: int = 0xFFFFFFFF
+
 var _line_mesh: MeshInstance3D
+var _line_material: StandardMaterial3D
 var _facing_player: bool = false
 var _player_body: Node3D
 var _warned_no_player_body: bool = false
+
+var _detection_timer: float = 0.0
+var _flash_time: float = 0.0
+var _capture_triggered: bool = false
 
 func _ready():
 	_resolve_animation_player()
@@ -305,13 +339,12 @@ func _warn_missing_animations() -> void:
 # ============================================================
 func _create_player_line() -> void:
 	var box := BoxMesh.new()
-	# Length runs along Z and gets scaled to the real distance every frame.
 	box.size = Vector3(line_thickness, line_thickness, 1.0)
 
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.albedo_color = line_color
-	box.material = mat
+	_line_material = StandardMaterial3D.new()
+	_line_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_line_material.albedo_color = line_safe_color
+	box.material = _line_material
 
 	_line_mesh = MeshInstance3D.new()
 	_line_mesh.mesh = box
@@ -320,8 +353,8 @@ func _create_player_line() -> void:
 	_line_mesh.visible = false
 	add_child(_line_mesh)
 
-func _process(_delta: float) -> void:
-	_update_player_line()
+func _process(delta: float) -> void:
+	_update_player_line(delta)
 
 ## brain.player can point at the player scene's root, which doesn't move
 ## when the character does. This finds the physics body inside it that
@@ -349,19 +382,26 @@ func _get_player_body() -> Node3D:
 
 	return _player_body
 
-func _update_player_line() -> void:
+func _update_player_line(delta: float) -> void:
 	_facing_player = false
 
 	if not is_instance_valid(_line_mesh):
 		return
 
+	if _capture_triggered:
+		return  # already called it in -- the round is ending
+
 	if is_dying or not line_enabled:
 		_line_mesh.visible = false
+		_detection_timer = 0.0
+		_flash_time = 0.0
 		return
 
 	var player := _get_player_body()
 	if not player:
 		_line_mesh.visible = false
+		_detection_timer = 0.0
+		_flash_time = 0.0
 		return
 
 	var from := global_position + line_start_offset
@@ -369,8 +409,10 @@ func _update_player_line() -> void:
 	var dir := to - from
 	var dist := dir.length()
 
-	if dist > line_trigger_distance or dist < 0.01:
+	if dist > line_trigger_distance or dist < 0.01 or not _has_clear_line_of_sight(from, to, player):
 		_line_mesh.visible = false
+		_detection_timer = 0.0
+		_flash_time = 0.0
 		return
 
 	dir /= dist
@@ -383,6 +425,8 @@ func _update_player_line() -> void:
 
 	if face_player_when_line_drawn:
 		_face_position(player.global_position)
+
+	_update_detection(delta)
 
 ## Turns the NPC left/right toward target_pos. The target is flattened to
 ## the NPC's own height so it never tilts up or down.
@@ -403,6 +447,7 @@ func explode_head() -> void:
 	if is_dying:
 		return
 	is_dying = true
+	get_tree().call_group("game_timer", "register_kill", time_bonus_on_kill)
 	is_focused = false
 	speed_multiplier = 1.0
 	_facing_player = false
@@ -525,3 +570,45 @@ func _emit_death_particles() -> void:
 	for particles in death_particles:
 		if is_instance_valid(particles) and "emitting" in particles:
 			particles.emitting = true
+			
+## Checked in addition to line_trigger_distance -- an obstacle between the
+## NPC and the player breaks the line even within range.
+func _has_clear_line_of_sight(from: Vector3, to: Vector3, player_body: Node3D) -> bool:
+	if not require_clear_line_of_sight:
+		return true
+
+	var space := get_world_3d().direct_space_state
+	if not space:
+		return true  # fail open rather than falsely block detection
+
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+	query.exclude = [self, player_body]
+	query.collision_mask = line_of_sight_mask
+	var result := space.intersect_ray(query)
+	return result.is_empty()
+
+
+## Advances the detection clock while the line is showing: white while
+## safe, flashing red (faster as the deadline nears) once past the
+## warning time, and calls in the capture once the timer runs out.
+func _update_detection(delta: float) -> void:
+	_detection_timer += delta
+
+	if _detection_timer < detection_warning_time:
+		_line_material.albedo_color = line_safe_color
+		_flash_time = 0.0
+	else:
+		var alert_progress: float = clampf(
+			(_detection_timer - detection_warning_time) /
+			max(detection_capture_time - detection_warning_time, 0.001),
+			0.0, 1.0
+		)
+		var speed: float = lerpf(flash_speed_min, flash_speed_max, alert_progress)
+		_flash_time += delta * speed
+		var pulse: float = (sin(_flash_time * TAU) + 1.0) * 0.5
+		_line_material.albedo_color = line_safe_color.lerp(line_alert_color, pulse)
+
+	if _detection_timer >= detection_capture_time:
+		_capture_triggered = true
+		_line_mesh.visible = false
+		get_tree().call_group("game_timer", "capture")
