@@ -23,4 +23,5 @@ func set_train_rotation(direction: Vector3):
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Player:
+		get_tree().call_group("train_wheels", "start_moving")
 		get_tree().call_group("game_timer", "escape")
