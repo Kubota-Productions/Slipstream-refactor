@@ -1,112 +1,59 @@
 extends CanvasLayer
 class_name GameController
 
-## Countdown timer + win/lose state shown at the top of the screen.
-##  - Timer hits 0        -> capture(): "Captured", movement disabled
-##  - escape() is called  -> "Escaped", plus time taken and NPCs killed.
-##                           The player is removed and a pre-placed camera
-##                           on the train (assigned below) takes over.
-## Killing NPCs adds time -- NPCInstance calls register_kill() through the
-## "game_timer" group when an NPC dies.
-
 signal captured
 signal escaped
 
 enum State { RUNNING, CAPTURED, ESCAPED }
 
-# ============================================================
-# SCENE REFERENCES
-# ============================================================
 @export_group("Scene References")
-## The Player node -- or the root of the Player scene instance, if that's
-## what you're able to select in the Inspector. Cast to Player at the
-## call sites below rather than typed here, so this works either way.
 @export var player: Node3D
-
-## A Camera3D already placed in the scene (e.g. as a child of a carriage's
-## train_top, positioned in the editor). Its "Current" checkbox should be
-## OFF -- this script turns it on when the player escapes. If it's nested
-## inside an instanced carriage scene and you can't select it here,
-## right-click that scene instance in the Scene dock and turn on
-## "Editable Children" -- that's what exposes its internal nodes for
-## picking.
 @export var chase_camera: Camera3D
 
-# ============================================================
-# ESCAPE REQUIREMENTS
-# ============================================================
 @export_group("Escape Requirements")
-## NPCs that must be killed before escape() will actually let the player
-## go. 0 = no requirement. Touching the train before this is met just
-## flashes a reminder instead of ending the round.
 @export var required_kills_to_escape: int = 0
-
-## %d is replaced with how many more kills are still needed.
 @export var not_enough_kills_message: String = "Kill %d more to escape"
 
-# ============================================================
-# TIMER
-# ============================================================
-@export_group("Timer")
-## Seconds on the clock when the scene starts.
-@export var start_time: float = 60.0
+@export_group("Keys")
+@export var keys_text: String = "Keys: %d / %d"
+@export var all_keys_text: String = "All keys collected, get to the train!!!"
+@export var keys_font_size: int = 32
+@export var keys_color: Color = Color.WHITE
+@export var all_keys_color: Color = Color(0.4, 1.0, 0.4)
 
-## The clock can never go above this. 0 = no cap.
+@export_group("Timer")
+@export var start_time: float = 60.0
 @export var max_time: float = 0.0
 
-# ============================================================
-# END MESSAGES
-# ============================================================
 @export_group("End Messages")
 @export var captured_text: String = "Captured"
 @export var escaped_text: String = "Escaped"
 @export var captured_color: Color = Color(1.0, 0.2, 0.2)
 @export var escaped_color: Color = Color(0.4, 1.0, 0.4)
 @export var end_font_size: int = 72
-
-## Shown under the "Escaped" text.
 @export var stats_font_size: int = 28
 @export var escape_time_prefix: String = "Time: "
 @export var escape_kills_prefix: String = "NPCs killed: "
-
-## Seconds the end message stays up before the scene reloads. Only
-## applies to Captured, and to Escaped if restart_after_escape is on.
 @export var restart_delay: float = 3.0
-
-## Captured always reloads the scene after restart_delay. Turn this on to
-## reload after Escaped as well; off leaves the "Escaped" message up.
 @export var restart_after_escape: bool = false
 
-# ============================================================
-# DISPLAY
-# ============================================================
 @export_group("Display")
 @export var font_size: int = 48
-## Gap between the top of the screen and the timer text.
 @export var top_margin: int = 20
 @export var normal_color: Color = Color.WHITE
 @export var low_time_color: Color = Color(1.0, 0.2, 0.2)
-## At or below this many seconds the text pulses toward low_time_color.
 @export var low_time_threshold: float = 10.0
 @export var bonus_color: Color = Color(0.4, 1.0, 0.4)
 @export var bonus_font_size: int = 28
 
-# ============================================================
-# RUNTIME STATE
-# ============================================================
 var time_left: float = 0.0
 var state: State = State.RUNNING
-
-## How long the round has actually been running for, independent of the
-## countdown (which can go up from kill bonuses). This is what's shown
-## as "time taken" on Escaped.
 var elapsed_time: float = 0.0
-
-## Number of NPCs killed this round. Incremented by register_kill().
 var npc_kills: int = 0
 
 var _pulse_time: float = 0.0
 var _label: Label
+var _keys_label: Label
 var _stats_label: Label
 var _bonus_label: Label
 var _bonus_tween: Tween
@@ -119,6 +66,7 @@ func _ready() -> void:
 	npc_kills = 0
 	_build_ui()
 	_update_label(0.0)
+	_update_keys_label()
 
 
 func _physics_process(delta: float) -> void:
@@ -135,11 +83,6 @@ func _physics_process(delta: float) -> void:
 	_update_label(delta)
 
 
-# ============================================================
-# PUBLIC API
-# ============================================================
-## Adds (or, if negative, removes) seconds from the clock. Ignored once
-## the game has ended.
 func add_time(seconds: float) -> void:
 	if state != State.RUNNING:
 		return
@@ -152,19 +95,15 @@ func add_time(seconds: float) -> void:
 	_show_bonus(seconds)
 
 
-## Called by NPCInstance when an NPC dies -- counts the kill AND adds the
-## time bonus, so both numbers always agree.
 func register_kill(time_bonus: float) -> void:
 	if state != State.RUNNING:
 		return
 
 	npc_kills += 1
+	_update_keys_label()
 	add_time(time_bonus)
 
 
-## Player got caught -- also what happens automatically when time runs out.
-## Leaves the player and camera exactly as they are; only movement is
-## disabled.
 func capture() -> void:
 	if state != State.RUNNING:
 		return
@@ -183,9 +122,6 @@ func capture() -> void:
 	_schedule_reload()
 
 
-## Player made it out. Removes the player character, hands the view over
-## to chase_camera, and shows how long it took plus how many NPCs died
-## along the way.
 func escape() -> void:
 	if state != State.RUNNING:
 		return
@@ -222,9 +158,6 @@ func escape() -> void:
 		_schedule_reload()
 
 
-## Puts the clock back to start_time and clears any end message, without
-## reloading the scene. Does not restore the player/camera -- that's what
-## a scene reload is for.
 func reset_timer() -> void:
 	state = State.RUNNING
 	time_left = start_time
@@ -235,11 +168,9 @@ func reset_timer() -> void:
 	if _stats_label:
 		_stats_label.visible = false
 	_update_label(0.0)
+	_update_keys_label()
 
 
-# ============================================================
-# SCENE RELOAD
-# ============================================================
 func _schedule_reload() -> void:
 	get_tree().create_timer(restart_delay).timeout.connect(_reload_scene)
 
@@ -248,9 +179,6 @@ func _reload_scene() -> void:
 	get_tree().reload_current_scene()
 
 
-# ============================================================
-# UI
-# ============================================================
 func _build_ui() -> void:
 	var margin := MarginContainer.new()
 	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -272,7 +200,15 @@ func _build_ui() -> void:
 	_label.add_theme_constant_override("outline_size", 10)
 	box.add_child(_label)
 
-	# Shown only on Escaped: "Time: 1:23    NPCs killed: 4".
+	_keys_label = Label.new()
+	_keys_label.text = ""
+	_keys_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_keys_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_keys_label.add_theme_font_size_override("font_size", keys_font_size)
+	_keys_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	_keys_label.add_theme_constant_override("outline_size", 8)
+	box.add_child(_keys_label)
+
 	_stats_label = Label.new()
 	_stats_label.text = ""
 	_stats_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -284,8 +220,6 @@ func _build_ui() -> void:
 	_stats_label.visible = false
 	box.add_child(_stats_label)
 
-	# "+5" popup shown under the clock when time is added. Always present
-	# (just invisible) so the layout doesn't jump when it appears.
 	_bonus_label = Label.new()
 	_bonus_label.text = " "
 	_bonus_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -315,6 +249,20 @@ func _update_label(delta: float) -> void:
 	_label.add_theme_color_override("font_color", color)
 
 
+func _update_keys_label() -> void:
+	if not _keys_label:
+		return
+
+	_keys_label.visible = required_kills_to_escape > 0
+
+	if npc_kills >= required_kills_to_escape:
+		_keys_label.text = all_keys_text
+		_keys_label.add_theme_color_override("font_color", all_keys_color)
+	else:
+		_keys_label.text = keys_text % [npc_kills, required_kills_to_escape]
+		_keys_label.add_theme_color_override("font_color", keys_color)
+
+
 func _show_end_message(message: String, color: Color, stats_text: String = "") -> void:
 	if not _label:
 		return
@@ -323,11 +271,13 @@ func _show_end_message(message: String, color: Color, stats_text: String = "") -
 	_label.add_theme_font_size_override("font_size", end_font_size)
 	_label.add_theme_color_override("font_color", color)
 
+	if _keys_label:
+		_keys_label.visible = false
+
 	if _stats_label:
 		_stats_label.text = stats_text
 		_stats_label.visible = not stats_text.is_empty()
 
-	# Clear any "+5s" popup that's still fading out.
 	if _bonus_tween and _bonus_tween.is_valid():
 		_bonus_tween.kill()
 	if _bonus_label:

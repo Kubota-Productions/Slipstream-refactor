@@ -108,6 +108,10 @@ transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0.78170395, 0)
 shape = SubResource("BoxShape3D_g4v7s")
 debug_color = Color(0.9986029, 0, 0.1494804, 0.41960785)
 
+[node name="Aimpoint" type="Marker3D" parent="NPCHead" unique_id=1461889745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.810853, 0)
+gizmo_extents = 0.32
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1558508970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_yglu3")
