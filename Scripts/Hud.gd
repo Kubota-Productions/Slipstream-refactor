@@ -110,7 +110,7 @@ func update_graphics(delta: float) -> void:
 			speed_ratio *= alignment_factor
 		else:
 			speed_ratio = clampf(
-				player.predicted_speed / max(player.power_sprint_speed, 0.001),
+				player.get_planar_speed() / max(player.lean_top_speed, 0.001),
 				0.0, 1.0
 			)
 

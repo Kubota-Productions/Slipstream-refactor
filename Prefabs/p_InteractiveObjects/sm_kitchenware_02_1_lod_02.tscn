@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://ba3hlfsgnscib"]
-
-[ext_resource type="PackedScene" uid="uid://ctgrvdwohamhg" path="res://Assets/InteractiveObjects/SM_Kitchenware02_1_LOD0.glb" id="1_knocd"]
-
-[node name="SM_Kitchenware02_1_LOD02" unique_id=1941077782 instance=ExtResource("1_knocd")]
-
-[node name="SM_Kitchenware02_1_LOD0" parent="." index="0" unique_id=2108354518]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)

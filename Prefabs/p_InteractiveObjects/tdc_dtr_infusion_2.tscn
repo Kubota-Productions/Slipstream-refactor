@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://cl1lw1e1tx1et"]
-
-[ext_resource type="PackedScene" uid="uid://yhpmdpgbp5wb" path="res://Assets/InteractiveObjects/tdc-dtr-infusion.glb" id="1_fs72y"]
-
-[node name="tdc-dtr-infusion2" unique_id=1360944847 instance=ExtResource("1_fs72y")]
-
-[node name="tdc-dtr-infusion" parent="." index="0" unique_id=733635818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

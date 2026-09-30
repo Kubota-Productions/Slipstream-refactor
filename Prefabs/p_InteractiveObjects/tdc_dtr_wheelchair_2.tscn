@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://cuj5mg6ci6wgc"]
-
-[ext_resource type="PackedScene" uid="uid://c1w25bw2ncuib" path="res://Assets/InteractiveObjects/tdc-dtr-wheelchair.glb" id="1_4b6o7"]
-
-[node name="tdc-dtr-wheelchair2" unique_id=1733118090 instance=ExtResource("1_4b6o7")]
-
-[node name="tdc-dtr-wheelchair" parent="." index="0" unique_id=202703562]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

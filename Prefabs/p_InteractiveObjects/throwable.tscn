@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://bx5akm00v05dj"]
-
-[ext_resource type="PackedScene" uid="uid://cl1kpxaiha1rh" path="res://Assets/InteractiveObjects/throwable.glb" id="1_2uqiw"]
-
-[node name="throwable" unique_id=376503194 instance=ExtResource("1_2uqiw")]

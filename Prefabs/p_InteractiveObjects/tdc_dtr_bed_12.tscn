@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://chyvjw55ywwh0"]
-
-[ext_resource type="PackedScene" uid="uid://bsp7vhd1poq8q" path="res://Assets/InteractiveObjects/tdc-dtr-bed-1.glb" id="1_wvfhc"]
-
-[node name="tdc-dtr-bed-12" unique_id=636859620 instance=ExtResource("1_wvfhc")]
-
-[node name="tdc-dtr-bed-1" parent="." index="0" unique_id=1348780172]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
